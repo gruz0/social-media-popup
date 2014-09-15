@@ -1,0 +1,237 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Social Community Popup\n"
+"POT-Creation-Date: 2014-03-23 17:27+0400\n"
+"PO-Revision-Date: 2014-03-23 17:28+0400\n"
+"Last-Translator: Alexander Gruzov <support@gruz0.ru>\n"
+"Language-Team: Alexander Gruzov <support@gruz0.ru>\n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.3\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../social-community-popup.class.php:170
+msgid "Common Settings"
+msgstr "Общие настройки"
+
+#: ../social-community-popup.class.php:178
+msgid "Display After N-days"
+msgstr "Повторный показ окна через N дней после закрытия"
+
+#: ../social-community-popup.class.php:190
+msgid "Display After Visiting N-pages"
+msgstr "Показать окно после просмотра N страниц сайта"
+
+#: ../social-community-popup.class.php:202
+msgid "Display After Delay of N-seconds"
+msgstr "Задержка в секундах перед показом окна"
+
+#: ../social-community-popup.class.php:214
+msgid "Tabs Order"
+msgstr "Порядок отображения табов"
+
+#: ../social-community-popup.class.php:226
+msgid "Remove Settings On Uninstall Plugin"
+msgstr "Удалить все настройки плагина при его удалении"
+
+#: ../social-community-popup.class.php:267
+msgid "Facebook Community Widget"
+msgstr "Виджет групп Facebook"
+
+#: ../social-community-popup.class.php:275
+msgid "Use Facebook"
+msgstr "Использовать виджет Facebook"
+
+#: ../social-community-popup.class.php:287
+#: ../social-community-popup.class.php:478
+#: ../social-community-popup.class.php:641
+msgid "Tab Caption"
+msgstr "Надпись на вкладке"
+
+#: ../social-community-popup.class.php:299
+#: ../social-community-popup.class.php:490
+#: ../social-community-popup.class.php:653
+msgid "Show Description Above The Widget"
+msgstr "Показывать текстовое описание над виджетом"
+
+#: ../social-community-popup.class.php:311
+#: ../social-community-popup.class.php:502
+#: ../social-community-popup.class.php:665
+msgid "Description Above The Widget"
+msgstr "Текстовое описание над виджетом"
+
+#: ../social-community-popup.class.php:323
+msgid "Application ID"
+msgstr "ID приложения"
+
+#: ../social-community-popup.class.php:335
+msgid "Facebook Page URL"
+msgstr "Адрес страницы Facebook (http://)"
+
+#: ../social-community-popup.class.php:347
+msgid "Facebook Locale"
+msgstr "Языковая версия (ru_RU, en_US)"
+
+#: ../social-community-popup.class.php:359
+#: ../social-community-popup.class.php:526
+#: ../social-community-popup.class.php:689
+msgid "Widget Width"
+msgstr "Ширина виджета в пикселях"
+
+#: ../social-community-popup.class.php:371
+#: ../social-community-popup.class.php:538
+#: ../social-community-popup.class.php:701
+msgid "Widget Height"
+msgstr "Высота виджета в пикселях"
+
+#: ../social-community-popup.class.php:383
+msgid "Show Widget Header"
+msgstr "Показывать заголовок виджета"
+
+#: ../social-community-popup.class.php:395
+msgid "Show Border"
+msgstr "Показывать границы"
+
+#: ../social-community-popup.class.php:407
+msgid "Show Faces"
+msgstr "Показывать лица участников"
+
+#: ../social-community-popup.class.php:419
+msgid "Show Stream"
+msgstr "Показывать ленту новостей"
+
+#: ../social-community-popup.class.php:458
+msgid "VKontakte Community Widget"
+msgstr "Виджет сообществ и групп ВКонтакте"
+
+#: ../social-community-popup.class.php:466
+msgid "Use VKontakte"
+msgstr "Использовать виджет ВКонтакте"
+
+#: ../social-community-popup.class.php:514
+msgid "VKontakte Page or Group ID"
+msgstr "ID страницы или группы"
+
+#: ../social-community-popup.class.php:550
+msgid "Layout"
+msgstr "Тип выводимой информации"
+
+#: ../social-community-popup.class.php:562
+msgid "Background Color"
+msgstr "Цвет фона"
+
+#: ../social-community-popup.class.php:574
+msgid "Text Color"
+msgstr "Цвет текста"
+
+#: ../social-community-popup.class.php:586
+msgid "Button Color"
+msgstr "Цвет кнопки"
+
+#: ../social-community-popup.class.php:621
+msgid "Odnoklassniki Community Widget"
+msgstr "Виджет групп Одноклассников"
+
+#: ../social-community-popup.class.php:629
+msgid "Use Odnoklassniki"
+msgstr "Использовать виджет Одноклассников"
+
+#: ../social-community-popup.class.php:677
+msgid "Odnoklassniki Group ID"
+msgstr "ID группы"
+
+#: ../social-community-popup.class.php:715
+msgid "Common settings"
+msgstr "Общие настройки"
+
+#: ../social-community-popup.class.php:722
+msgid ""
+"In this section, you must fill out the data to display the Facebook page in "
+"a popup window"
+msgstr "В этом разделе вам необходимо заполнить параметры виджета Facebook"
+
+#: ../social-community-popup.class.php:729
+msgid ""
+"In this section, you must fill out the data to display the VK.com page in a "
+"popup window"
+msgstr "В этом разделе вам необходимо заполнить параметры виджета ВКонтакте"
+
+#: ../social-community-popup.class.php:736
+msgid ""
+"In this section, you must fill out the data to display the Odnoklassniki "
+"group in a popup window"
+msgstr ""
+"В этом разделе вам необходимо заполнить параметры виджета Одноклассники"
+
+#: ../social-community-popup.class.php:791
+msgid "Members"
+msgstr "Участники"
+
+#: ../social-community-popup.class.php:793
+msgid "News"
+msgstr "Новости"
+
+#: ../social-community-popup.class.php:795
+msgid "Name"
+msgstr "Только имена"
+
+#: ../social-community-popup.class.php:816
+msgid "Closed Social Networks Marked As Red"
+msgstr "Отключенные социальные сети помечены красным цветом"
+
+#: ../social-community-popup.class.php:826 ../templates/settings.php:3
+msgid "Social Community Popup Options"
+msgstr "Настройки плагина Social Community Popup"
+
+#: ../social-community-popup.class.php:827
+msgid "SCP Options"
+msgstr "SCP Настройки"
+
+#: ../social-community-popup.class.php:837
+#: ../templates/settings-facebook.php:3
+msgid "Facebook Options"
+msgstr "Настройка виджета Facebook"
+
+#: ../social-community-popup.class.php:838
+msgid "Facebook"
+msgstr "Facebook"
+
+#: ../social-community-popup.class.php:847
+#: ../templates/settings-vkontakte.php:3
+msgid "VKontakte Options"
+msgstr "Настройка виджета ВКонтакте"
+
+#: ../social-community-popup.class.php:848
+msgid "VKontakte"
+msgstr "ВКонтакте"
+
+#: ../social-community-popup.class.php:857
+#: ../templates/settings-odnoklassniki.php:3
+msgid "Odnoklassniki Options"
+msgstr "Настройка виджета Одноклассников"
+
+#: ../social-community-popup.class.php:858
+msgid "Odnoklassniki"
+msgstr "Одноклассники"
+
+#: ../social-community-popup.class.php:884
+#: ../social-community-popup.class.php:895
+#: ../social-community-popup.class.php:906
+#: ../social-community-popup.class.php:917
+msgid "You do not have sufficient permissions to access this page."
+msgstr "У вас нет полномочий для доступа к этой странице."
+
+#: ../social-community-popup.php:29
+msgid "Settings"
+msgstr "Настройки"
+
+#: ../templates/popup.php:58
+msgid "Close"
+msgstr "Закрыть"

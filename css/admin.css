@@ -1,0 +1,9 @@
+.social-community-popup-settings { }
+    .social-community-popup-settings table {width:100%;}
+    .social-community-popup-settings table tbody th {width:35%;}
+    .social-community-popup-settings table input[type=text] {width:350px;}
+    .social-community-popup-settings .copyright {text-align:right;font-size:small;}
+
+	#scp-sortable {width:40%;margin-top:0;}
+	#scp-sortable li {padding:5px 10px;}
+	#scp-sortable .disabled {color:#d00;}
