@@ -976,13 +976,6 @@ class Social_Community_Popup {
 
 		$tabs_order            = explode(',', get_option( SCP_PREFIX . 'setting_tabs_order' ) );
 
-		//TODO: Не забыть удалить!
-		if ( ! is_user_logged_in() ) return;
-		$after_n_days = 1;
-		$visit_n_pages = 0;
-		$cookie_popup_views = 0;
-		$delay_after_n_seconds = 3;
-
 		require( sprintf( "%s/templates/popup.php", dirname( __FILE__ ) ) );
     }
 
