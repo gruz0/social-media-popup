@@ -18,21 +18,18 @@
 	#social-community-popup #popup {
 		background-color: #fff;
 		z-index:99999;
-		width:460px !important;
-		height:340px !important;
 		left:0;
 		right:0;
 		top:0;
 		bottom:0;
 		position:fixed;
 		margin:auto;
+		border-radius:5px;
 	}
 
 	#social-community-popup .section {
 		position:relative;
 		overflow:hidden;
-		width:400px !important;
-		height:320px !important;
 		display:block;
 		margin:10px auto;
 		padding:0 !important;

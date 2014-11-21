@@ -50,10 +50,13 @@ class Social_Community_Popup {
 			'version',
 
 			// Общие настройки
+			'setting_debug_mode',
         	'setting_display_after_n_days',
         	'setting_display_after_visiting_n_pages',
         	'setting_display_after_delay_of_n_seconds',
         	'setting_tabs_order',
+			'setting_container_width',
+			'setting_container_height',
         	'setting_remove_settings_on_uninstall',
 
 			// Facebook
@@ -91,7 +94,19 @@ class Social_Community_Popup {
 			'setting_odnoklassniki_description',
 			'setting_odnoklassniki_group_id',
 			'setting_odnoklassniki_width',
-			'setting_odnoklassniki_height'
+			'setting_odnoklassniki_height',
+
+			// Google+
+			'setting_use_googleplus',
+			'setting_googleplus_tab_caption',
+			'setting_googleplus_show_description',
+			'setting_googleplus_description',
+			'setting_googleplus_page_url',
+			'setting_googleplus_locale',
+			'setting_googleplus_size',
+			'setting_googleplus_theme',
+			'setting_googleplus_show_cover_photo',
+			'setting_googleplus_show_tagline'
 		);
 
 		for ( $idx = 0; $idx < count( $options ); $idx++ ) {
@@ -147,6 +162,36 @@ class Social_Community_Popup {
 		}
 
 		if ( '0.5' > get_option( $version ) ) {
+			// Добавляем Google+ в таблицу сортировки
+			$tabs_order = get_option( SCP_PREFIX . 'setting_tabs_order' );
+			$tabs_order = ( $tabs_order ) ? explode( ',', $tabs_order ) : array();
+			$tabs_order[] = 'googleplus';
+			$tabs_order = array_unique( $tabs_order );
+
+        	update_option( SCP_PREFIX . 'setting_tabs_order', join( ',', $tabs_order ) );
+
+			// Добавляем новые системные опции
+			update_option( SCP_PREFIX . 'setting_debug_mode',                       1 );
+			update_option( SCP_PREFIX . 'setting_container_width',                  400 );
+			update_option( SCP_PREFIX . 'setting_container_height',                 476 );
+
+			// Добавляем настроки Google+
+			update_option( SCP_PREFIX . 'setting_use_googleplus',                   0 );
+			update_option( SCP_PREFIX . 'setting_googleplus_tab_caption',           'Google+' );
+			update_option( SCP_PREFIX . 'setting_googleplus_show_description',      0 );
+			update_option( SCP_PREFIX . 'setting_googleplus_description',           '' );
+			update_option( SCP_PREFIX . 'setting_googleplus_page_url',              '//plus.google.com/u/0/117676776729232885815' );
+			update_option( SCP_PREFIX . 'setting_googleplus_locale',                'ru' );
+			update_option( SCP_PREFIX . 'setting_googleplus_size',                  300 );
+			update_option( SCP_PREFIX . 'setting_googleplus_theme',                 'light' );
+			update_option( SCP_PREFIX . 'setting_googleplus_show_cover_photo',      1 );
+			update_option( SCP_PREFIX . 'setting_googleplus_show_tagline',          1 );
+
+			// Обнови высоту контейнеров других социальных сетей
+			update_option( SCP_PREFIX . 'setting_facebook_height',                  400 );
+			update_option( SCP_PREFIX . 'setting_vkontakte_height',                 400 );
+			update_option( SCP_PREFIX . 'setting_odnoklassniki_height',             400 );
+
 			update_option( $version, '0.5' );
 		}
 
@@ -176,6 +221,7 @@ class Social_Community_Popup {
 		$this->init_settings_facebook( $prefix );
 		$this->init_settings_vkontakte( $prefix );
 		$this->init_settings_odnoklassniki( $prefix );
+		$this->init_settings_googleplus( $prefix );
 	}
 
 	/**
@@ -193,10 +239,13 @@ class Social_Community_Popup {
 		$section = $prefix . '-section-common';
 
 		// Не забывать добавлять новые опции в uninstall()
+        register_setting( $group, SCP_PREFIX . 'setting_debug_mode' );
         register_setting( $group, SCP_PREFIX . 'setting_display_after_n_days' );
         register_setting( $group, SCP_PREFIX . 'setting_display_after_visiting_n_pages' );
         register_setting( $group, SCP_PREFIX . 'setting_display_after_delay_of_n_seconds' );
         register_setting( $group, SCP_PREFIX . 'setting_tabs_order' );
+        register_setting( $group, SCP_PREFIX . 'setting_container_width' );
+        register_setting( $group, SCP_PREFIX . 'setting_container_height' );
 		register_setting( $group, SCP_PREFIX . 'setting_remove_settings_on_uninstall' );
 
         add_settings_section(
@@ -204,6 +253,18 @@ class Social_Community_Popup {
             __( 'Common Settings', L10N_SCP_PREFIX ),
             array( & $this, 'settings_section_common' ),
 			$options_page
+        );
+
+        // Активен плагин или нет
+        add_settings_field(
+            $prefix . '-common-debug-mode',
+            __( 'Debug Mode', L10N_SCP_PREFIX ),
+            array( & $this, 'settings_field_checkbox' ),
+            $options_page,
+            $section,
+            array(
+                'field' => SCP_PREFIX . 'setting_debug_mode'
+            )
         );
 
         // Повторный показ окна через N дней
@@ -251,6 +312,30 @@ class Social_Community_Popup {
             $section,
             array(
                 'field' => SCP_PREFIX . 'setting_tabs_order'
+            )
+        );
+
+        // Ширина основного контейнера
+        add_settings_field(
+            $prefix . '-common-container-width',
+            __( 'Container Width', L10N_SCP_PREFIX ),
+            array( & $this, 'settings_field_input_text' ),
+            $options_page,
+            $section,
+            array(
+                'field' => SCP_PREFIX . 'setting_container_width'
+            )
+        );
+
+        // Высота основного контейнера
+        add_settings_field(
+            $prefix . '-common-container-height',
+            __( 'Container Height', L10N_SCP_PREFIX ),
+            array( & $this, 'settings_field_input_text' ),
+            $options_page,
+            $section,
+            array(
+                'field' => SCP_PREFIX . 'setting_container_height'
             )
         );
 
@@ -742,6 +827,160 @@ class Social_Community_Popup {
         );
     }
 
+	/**
+	 * Настройки Google+
+	 */
+	private function init_settings_googleplus( $prefix ) {
+
+		// Используется в settings_field и do_settings_field
+		$group = $prefix . '-group-googleplus';
+
+		// Используется в do_settings_section
+		$options_page = $prefix . '_googleplus_options';
+
+		// ID секции
+		$section = $prefix . '-section-googleplus';
+
+		// Не забывать добавлять новые опции в uninstall()
+        register_setting( $group, SCP_PREFIX . 'setting_use_googleplus' );
+        register_setting( $group, SCP_PREFIX . 'setting_googleplus_tab_caption', 'sanitize_text_field' );
+        register_setting( $group, SCP_PREFIX . 'setting_googleplus_show_description' );
+        register_setting( $group, SCP_PREFIX . 'setting_googleplus_description', 'wp_kses_post' );
+        register_setting( $group, SCP_PREFIX . 'setting_googleplus_page_url', 'esc_url' );
+        register_setting( $group, SCP_PREFIX . 'setting_googleplus_locale', 'sanitize_text_field' );
+        register_setting( $group, SCP_PREFIX . 'setting_googleplus_size', 'absint' );
+        register_setting( $group, SCP_PREFIX . 'setting_googleplus_theme', 'sanitize_text_field' );
+        register_setting( $group, SCP_PREFIX . 'setting_googleplus_show_cover_photo' );
+        register_setting( $group, SCP_PREFIX . 'setting_googleplus_show_tagline' );
+
+        add_settings_section(
+            $section,
+            __( 'Google+ Community Widget', L10N_SCP_PREFIX ),
+            array( & $this, 'settings_section_googleplus' ),
+            $options_page
+        );
+
+        // Используем Google+ или нет
+        add_settings_field(
+            $prefix . '-use-googleplus',
+            __( 'Use Google+', L10N_SCP_PREFIX ),
+            array( & $this, 'settings_field_checkbox' ),
+            $options_page,
+            $section,
+            array(
+                'field' => SCP_PREFIX . 'setting_use_googleplus',
+            )
+        );
+
+        // Название вкладки
+        add_settings_field(
+            $prefix . '-googleplus-tab-caption',
+            __( 'Tab Caption', L10N_SCP_PREFIX ),
+            array( & $this, 'settings_field_input_text' ),
+            $options_page,
+            $section,
+            array(
+                'field' => SCP_PREFIX . 'setting_googleplus_tab_caption'
+            )
+        );
+
+        // Показывать надпись над виджетом?
+        add_settings_field(
+            $prefix . '-googleplus-show-description',
+            __( 'Show Description Above The Widget', L10N_SCP_PREFIX ),
+            array( & $this, 'settings_field_checkbox' ),
+            $options_page,
+            $section,
+            array(
+                'field' => SCP_PREFIX . 'setting_googleplus_show_description'
+            )
+        );
+
+        // Надпись над виджетом
+        add_settings_field(
+            $prefix . '-googleplus-description',
+            __( 'Description Above The Widget', L10N_SCP_PREFIX ),
+            array( & $this, 'settings_field_input_text' ),
+            $options_page,
+            $section,
+            array(
+                'field' => SCP_PREFIX . 'setting_googleplus_description'
+            )
+        );
+
+        // URL страницы или группы Google+
+        add_settings_field(
+            $prefix . '-googleplus-page-url',
+            __( 'Google+ Page URL', L10N_SCP_PREFIX ),
+            array( & $this, 'settings_field_input_text' ),
+            $options_page,
+            $section,
+            array(
+                'field' => SCP_PREFIX . 'setting_googleplus_page_url'
+            )
+        );
+
+        // Локаль, например ru, en
+        add_settings_field(
+            $prefix . '-googleplus-locale',
+            __( 'Google+ Locale', L10N_SCP_PREFIX ),
+            array( & $this, 'settings_field_googleplus_locale' ),
+            $options_page,
+            $section,
+            array(
+                'field' => SCP_PREFIX . 'setting_googleplus_locale'
+            )
+        );
+
+        // Размер виджета 
+        add_settings_field(
+            $prefix . '-googleplus-size',
+            __( 'Widget Size', L10N_SCP_PREFIX ),
+            array( & $this, 'settings_field_input_text' ),
+            $options_page,
+            $section,
+            array(
+                'field' => SCP_PREFIX . 'setting_googleplus_size'
+            )
+        );
+
+        // Цветовая схема
+        add_settings_field(
+            $prefix . '-googleplus-theme',
+            __( 'Google+ Theme', L10N_SCP_PREFIX ),
+            array( & $this, 'settings_field_googleplus_theme' ),
+            $options_page,
+            $section,
+            array(
+                'field' => SCP_PREFIX . 'setting_googleplus_theme'
+            )
+        );
+
+        // Показывать обложку?
+        add_settings_field(
+            $prefix . '-googleplus-show-cover-photo',
+            __( 'Show Cover Photo', L10N_SCP_PREFIX ),
+            array( & $this, 'settings_field_checkbox' ),
+            $options_page,
+            $section,
+            array(
+                'field' => SCP_PREFIX . 'setting_googleplus_show_cover_photo'
+            )
+        );
+
+        // В двух словах
+        add_settings_field(
+            $prefix . '-googleplus-show-tagline',
+            __( 'Show Tagline', L10N_SCP_PREFIX ),
+            array( & $this, 'settings_field_checkbox' ),
+            $options_page,
+            $section,
+            array(
+                'field' => SCP_PREFIX . 'setting_googleplus_show_tagline'
+            )
+        );
+    }
+
     /**
      * Описание общих настроек
      */
@@ -852,6 +1091,34 @@ class Social_Community_Popup {
     }
 
     /**
+     * Callback-шаблон для формирования радио-кнопок для выбора темы Google+
+     */
+    public function settings_field_googleplus_theme( $args ) {
+        $field = $args[ 'field' ];
+        $value = get_option( $field );
+		$format = '<input type="radio" id="%s" name="%s" value="%s"%s />';
+		$format .= '<label for="%s">%s</label>';
+		$html = sprintf( $format, $field . '_0', $field, 'light', checked( $value, 'light', false ), $field . '_0', __( 'Light', L10N_SCP_PREFIX ) );
+		$html .= '<br />';
+		$html .= sprintf( $format, $field . '_1', $field, 'dark', checked( $value, 'dark', false ), $field . '_1', __( 'Dark', L10N_SCP_PREFIX ) );
+		echo $html;
+    }
+
+    /**
+     * Callback-шаблон для формирования радио-кнопок для выбора локали Google+
+     */
+    public function settings_field_googleplus_locale( $args ) {
+        $field = $args[ 'field' ];
+        $value = get_option( $field );
+		$format = '<input type="radio" id="%s" name="%s" value="%s"%s />';
+		$format .= '<label for="%s">%s</label>';
+		$html = sprintf( $format, $field . '_0', $field, 'ru', checked( $value, 'ru', false ), $field . '_0', __( 'Russian', L10N_SCP_PREFIX ) );
+		$html .= '<br />';
+		$html .= sprintf( $format, $field . '_1', $field, 'en', checked( $value, 'en', false ), $field . '_1', __( 'English', L10N_SCP_PREFIX ) );
+		echo $html;
+	}
+
+    /**
      * Добавление пункта меню
      */
     public function add_menu() {
@@ -893,6 +1160,16 @@ class Social_Community_Popup {
 			'administrator',
 			'social_community_popup_odnoklassniki_options',
 			array( & $this, 'plugin_settings_page_odnoklassniki_options' )
+		);
+
+		// Google+
+		add_submenu_page(
+			'social_community_popup', // Родительский пункт меню
+			__( 'Google+ Options', L10N_SCP_PREFIX ), // Название пункта на его странице
+			__( 'Google+', L10N_SCP_PREFIX ), // Пункт меню
+			'administrator',
+			'social_community_popup_googleplus_options',
+			array( & $this, 'plugin_settings_page_googleplus_options' )
 		);
     }
 
@@ -955,26 +1232,51 @@ class Social_Community_Popup {
     }
 
     /**
+     * Страница настроек Google+
+     */
+    public function plugin_settings_page_googleplus_options() {
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+        }
+
+        include( sprintf( "%s/templates/settings-googleplus.php", dirname( __FILE__ ) ) );
+    }
+
+    /**
      * Добавляем всплывающее окно в подвале сайта
      */
     public function wp_footer() {
 		// Отключаем работу плагина на мобильных устройствах
 		if ( wp_is_mobile() ) return;
 
-		if ( isset( $_COOKIE[ 'social-community-popup' ] ) ) return;
+		$debug_mode = (int) get_option( SCP_PREFIX . 'setting_debug_mode' );
 
-		$after_n_days          = (int) get_option( SCP_PREFIX . 'setting_display_after_n_days' );
-		$visit_n_pages         = (int) get_option( SCP_PREFIX . 'setting_display_after_visiting_n_pages' );
-		$cookie_popup_views    = isset( $_COOKIE[ 'social-community-popup-views' ] ) 
-			? (int) $_COOKIE[ 'social-community-popup-views' ] 
-			: 0;
-		$delay_after_n_seconds = (int) get_option( SCP_PREFIX . 'setting_display_after_delay_of_n_seconds' );
+		if ( $debug_mode && is_user_logged_in() ) {
+			$after_n_days          = 1;
+			$visit_n_pages         = 0;
+			$cookie_popup_views    = 0;
+			$delay_after_n_seconds = 1;
 
-    	$use_facebook          = get_option( SCP_PREFIX . 'setting_use_facebook' )      === '1';
-        $use_vkontakte         = get_option( SCP_PREFIX . 'setting_use_vkontakte' )     === '1';
-        $use_odnoklassniki     = get_option( SCP_PREFIX . 'setting_use_odnoklassniki' ) === '1';
+		} else {
+			if ( isset( $_COOKIE[ 'social-community-popup' ] ) ) return;
+
+			$after_n_days          = (int) get_option( SCP_PREFIX . 'setting_display_after_n_days' );
+			$visit_n_pages         = (int) get_option( SCP_PREFIX . 'setting_display_after_visiting_n_pages' );
+			$cookie_popup_views    = isset( $_COOKIE[ 'social-community-popup-views' ] ) 
+				? (int) $_COOKIE[ 'social-community-popup-views' ] 
+				: 0;
+			$delay_after_n_seconds = (int) get_option( SCP_PREFIX . 'setting_display_after_delay_of_n_seconds' );
+		}
+
+		$use_facebook          = get_option( SCP_PREFIX . 'setting_use_facebook' )      === '1';
+		$use_vkontakte         = get_option( SCP_PREFIX . 'setting_use_vkontakte' )     === '1';
+		$use_odnoklassniki     = get_option( SCP_PREFIX . 'setting_use_odnoklassniki' ) === '1';
+		$use_googleplus        = get_option( SCP_PREFIX . 'setting_use_googleplus' )    === '1';
 
 		$tabs_order            = explode(',', get_option( SCP_PREFIX . 'setting_tabs_order' ) );
+
+		$container_width       = get_option( SCP_PREFIX . 'setting_container_width' );
+		$container_height      = get_option( SCP_PREFIX . 'setting_container_height' ) ;
 
 		require( sprintf( "%s/templates/popup.php", dirname( __FILE__ ) ) );
     }

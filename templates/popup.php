@@ -20,7 +20,7 @@
         });
 
 		<?php // Facebook
-			if ( get_option( SCP_PREFIX . 'setting_use_facebook' ) === '1' ) :
+			if ( $use_facebook ) :
 
 				// Заменяем Application ID на наш из настроек
 				$prepend_facebook = sprintf( 
@@ -40,6 +40,25 @@
 				}
 			<?php
 			endif; // use_facebook
+
+			// Google+
+			if ( $use_googleplus ) :
+
+				$prepend_googleplus = sprintf(
+					file_get_contents( dirname( __FILE__ ) . '/googleplus_prepend.php' ),
+					get_option( SCP_PREFIX . 'setting_googleplus_locale' )
+				);
+
+				// Удаляем переносы строк, иначе jQuery ниже не отработает
+				$prepend_googleplus = str_replace("\n", '', $prepend_googleplus);
+
+				// Переводим код в сущности
+				$prepend_googleplus = htmlspecialchars( $prepend_googleplus, ENT_QUOTES );
+			?>
+				$('body').prepend( $("<div/>").html('<?php echo $prepend_googleplus; ?>').text());
+			<?php
+			endif; // use_googleplus
+
 		endif;
 		?>
     });
@@ -50,13 +69,13 @@
 		return;
 	}
 
-    if ( $use_facebook || $use_vkontakte || $use_odnoklassniki ) :
+    if ( $use_facebook || $use_vkontakte || $use_odnoklassniki || $use_googleplus ) :
 ?>
 <div id="social-community-popup">
     <div class="parent_popup"></div> 
 
-    <div id="popup">
-        <div class="section">
+    <div id="popup" style="width:<?php echo $container_width + 60; ?>px !important;height:<?php echo $container_height + 10; ?>px !important;">
+        <div class="section" style="width:<?php echo $container_width; ?>px !important;height:<?php echo $container_height; ?>px !important;">
             <span class="close"><?php _e( 'Close', L10N_SCP_PREFIX ); ?></span>
             <ul class="tabs">  
                 
@@ -77,6 +96,12 @@
                 			if ( $use_odnoklassniki )
                     			scp_tab_caption( 'setting_odnoklassniki_tab_caption' );
 							break;
+
+						case 'googleplus':
+                			if ( $use_googleplus )
+                    			scp_tab_caption( 'setting_googleplus_tab_caption' );
+							break;
+
 					}
 				}
 			?>
@@ -98,6 +123,11 @@
 						case 'odnoklassniki':
 							if ( $use_odnoklassniki )
 								scp_odnoklassniki_container();
+							break;
+
+						case 'googleplus':
+							if ( $use_googleplus )
+								scp_googleplus_container();
 							break;
 					}
 				}
@@ -178,6 +208,28 @@ function scp_odnoklassniki_container() {
 				get_option( SCP_PREFIX . 'setting_odnoklassniki_height' )
 			);
 			echo $odnoklassniki_container;
+		?>
+	</div>  
+<?php
+}
+
+function scp_googleplus_container() {
+?>
+	<div class="box">
+		<?php if ( get_option( SCP_PREFIX . 'setting_googleplus_show_description' ) === '1' ) : ?>
+			<p><b><?php echo get_option( SCP_PREFIX . 'setting_googleplus_description' ); ?></b></p>
+		<?php endif; ?>
+
+		<?php
+			$googleplus_container = sprintf( 
+				file_get_contents( dirname( __FILE__ ) . '/googleplus_container.php' ),
+				get_option( SCP_PREFIX . 'setting_googleplus_size' ),
+				get_option( SCP_PREFIX . 'setting_googleplus_page_url' ),
+				get_option( SCP_PREFIX . 'setting_googleplus_theme' ),
+				get_option( SCP_PREFIX . 'setting_googleplus_show_tagline' ),
+				get_option( SCP_PREFIX . 'setting_googleplus_show_cover_photo' )
+			);
+			echo $googleplus_container;
 		?>
 	</div>  
 <?php
