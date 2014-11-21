@@ -182,7 +182,7 @@ class Social_Community_Popup {
 			update_option( SCP_PREFIX . 'setting_googleplus_description',           '' );
 			update_option( SCP_PREFIX . 'setting_googleplus_page_url',              '//plus.google.com/u/0/117676776729232885815' );
 			update_option( SCP_PREFIX . 'setting_googleplus_locale',                'ru' );
-			update_option( SCP_PREFIX . 'setting_googleplus_size',                  300 );
+			update_option( SCP_PREFIX . 'setting_googleplus_size',                  400 );
 			update_option( SCP_PREFIX . 'setting_googleplus_theme',                 'light' );
 			update_option( SCP_PREFIX . 'setting_googleplus_show_cover_photo',      1 );
 			update_option( SCP_PREFIX . 'setting_googleplus_show_tagline',          1 );
