@@ -464,7 +464,7 @@ class Social_Community_Popup {
         add_settings_field(
             $prefix . '-facebook-locale',
             __( 'Facebook Locale', L10N_SCP_PREFIX ),
-            array( & $this, 'settings_field_input_text' ),
+            array( & $this, 'settings_field_facebook_locale' ),
             $options_page,
             $section,
             array(
@@ -1010,6 +1010,14 @@ class Social_Community_Popup {
     }
 
     /**
+     * Описание настроек Google+
+     */
+    public function settings_section_googleplus() {
+		_e( 'In this section, you must fill out the data to display the Google+ page in a popup window', L10N_SCP_PREFIX );	
+    }
+
+
+    /**
      * Callback-шаблон для формирования текстового поля на странице настроек
      */
     public function settings_field_input_text( $args ) {
@@ -1051,6 +1059,20 @@ class Social_Community_Popup {
         );
         wp_editor( wp_kses_post( $value , ENT_QUOTES, 'UTF-8' ), $field, $settings );
     }
+
+    /**
+     * Callback-шаблон для формирования радио-кнопок для выбора локали Facebook
+     */
+    public function settings_field_facebook_locale( $args ) {
+        $field = $args[ 'field' ];
+        $value = get_option( $field );
+		$format = '<input type="radio" id="%s" name="%s" value="%s"%s />';
+		$format .= '<label for="%s">%s</label>';
+		$html = sprintf( $format, $field . '_0', $field, 'ru_RU', checked( $value, 'ru_RU', false ), $field . '_0', __( 'Russian', L10N_SCP_PREFIX ) );
+		$html .= '<br />';
+		$html .= sprintf( $format, $field . '_1', $field, 'en_US', checked( $value, 'en_US', false ), $field . '_1', __( 'English', L10N_SCP_PREFIX ) );
+		echo $html;
+	}
 
     /**
      * Callback-шаблон для формирования радио-кнопок для выбора типа макета 
