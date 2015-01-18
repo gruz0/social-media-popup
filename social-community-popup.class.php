@@ -1050,7 +1050,7 @@ class Social_Community_Popup {
 		register_setting( $group, SCP_PREFIX . 'setting_twitter_show_replies', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_twitter_width', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_twitter_height', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_twitter_chrome', array( $this, 'sanitize_setting_twitter_chrome' ) );
+		register_setting( $group, SCP_PREFIX . 'setting_twitter_chrome' );
 
 		add_settings_section(
 			$section,
@@ -1214,16 +1214,6 @@ class Social_Community_Popup {
 				'field' => SCP_PREFIX . 'setting_twitter_chrome'
 			)
 		);
-	}
-
-	/**
-	 * Необходим для склейки нужных нам значений Twitter Chrome в массив
-	 */
-	public function sanitize_setting_twitter_chrome( $args ) {
-		//TODO: Наверно эту функцию можно будет отрефакторить, как только появится вторая соц. сеть с чекбоксами
-		//FIXME: Непонятно что сделал. Изменить возврат значения из функции.
-		$keys = join( ",", array_keys( $args ) );
-		return $args;
 	}
 
 	/**

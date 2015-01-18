@@ -7,5 +7,5 @@
 		<?php do_settings_sections( 'social_community_popup_vkontakte_options' ); ?>
 		<?php submit_button(); ?>
 	</form>
-	<?php require( sprintf( "%s/copyright.php", dirname( __FILE__ ) ) ); ?>
+	<?php require( sprintf( "%s/../copyright.php", dirname( __FILE__ ) ) ); ?>
 </div>
