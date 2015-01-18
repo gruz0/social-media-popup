@@ -1183,7 +1183,7 @@ class Social_Community_Popup {
         // Ширина виджета
         add_settings_field(
             $prefix . '-twitter-width',
-            __( 'Width', L10N_SCP_PREFIX ),
+            __( 'Widget Width', L10N_SCP_PREFIX ),
             array( & $this, 'settings_field_input_text' ),
             $options_page,
             $section,
@@ -1195,7 +1195,7 @@ class Social_Community_Popup {
         // Высота виджета
         add_settings_field(
             $prefix . '-twitter-height',
-            __( 'Height', L10N_SCP_PREFIX ),
+            __( 'Widget Height', L10N_SCP_PREFIX ),
             array( & $this, 'settings_field_input_text' ),
             $options_page,
             $section,
