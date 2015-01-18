@@ -106,7 +106,22 @@ class Social_Community_Popup {
 			'setting_googleplus_size',
 			'setting_googleplus_theme',
 			'setting_googleplus_show_cover_photo',
-			'setting_googleplus_show_tagline'
+			'setting_googleplus_show_tagline',
+
+			// Twitter
+			'setting_use_twitter',
+			'setting_twitter_tab_caption',
+			'setting_twitter_show_description',
+			'setting_twitter_description',
+			'setting_twitter_username',
+			'setting_twitter_widget_id',
+			'setting_twitter_theme',
+			'setting_twitter_link_color',
+			'setting_twitter_tweet_limit',
+			'setting_twitter_show_replies',
+			'setting_twitter_width',
+			'setting_twitter_height',
+			'setting_twitter_chrome'
 		);
 
 		for ( $idx = 0; $idx < count( $options ); $idx++ ) {
@@ -175,7 +190,7 @@ class Social_Community_Popup {
 			update_option( SCP_PREFIX . 'setting_container_width',                  400 );
 			update_option( SCP_PREFIX . 'setting_container_height',                 476 );
 
-			// Добавляем настроки Google+
+			// Добавляем настройки Google+
 			update_option( SCP_PREFIX . 'setting_use_googleplus',                   0 );
 			update_option( SCP_PREFIX . 'setting_googleplus_tab_caption',           'Google+' );
 			update_option( SCP_PREFIX . 'setting_googleplus_show_description',      0 );
@@ -187,12 +202,39 @@ class Social_Community_Popup {
 			update_option( SCP_PREFIX . 'setting_googleplus_show_cover_photo',      1 );
 			update_option( SCP_PREFIX . 'setting_googleplus_show_tagline',          1 );
 
-			// Обнови высоту контейнеров других социальных сетей
+			// Обновим высоту контейнеров других социальных сетей
 			update_option( SCP_PREFIX . 'setting_facebook_height',                  400 );
 			update_option( SCP_PREFIX . 'setting_vkontakte_height',                 400 );
 			update_option( SCP_PREFIX . 'setting_odnoklassniki_height',             400 );
 
 			update_option( $version, '0.5' );
+		}
+
+		if ( '0.6' > get_option( $version ) ) {
+			// Добавляем Twitter в таблицу сортировки
+			$tabs_order = get_option( SCP_PREFIX . 'setting_tabs_order' );
+			$tabs_order = ( $tabs_order ) ? explode( ',', $tabs_order ) : array();
+			$tabs_order[] = 'twitter';
+			$tabs_order = array_unique( $tabs_order );
+
+        	update_option( SCP_PREFIX . 'setting_tabs_order', join( ',', $tabs_order ) );
+
+			// Добавляем настройки Twitter
+			update_option( SCP_PREFIX . 'setting_use_twitter',                       0 );
+			update_option( SCP_PREFIX . 'setting_twitter_tab_caption',               'Twitter' );
+			update_option( SCP_PREFIX . 'setting_twitter_show_description',          0 );
+			update_option( SCP_PREFIX . 'setting_twitter_description',               '' );
+			update_option( SCP_PREFIX . 'setting_twitter_username',                  '' );
+			update_option( SCP_PREFIX . 'setting_twitter_widget_id',                 '' );
+			update_option( SCP_PREFIX . 'setting_twitter_theme',                     'light' );
+			update_option( SCP_PREFIX . 'setting_twitter_link_color',                '#CC0000' );
+			update_option( SCP_PREFIX . 'setting_twitter_tweet_limit',               5 );
+			update_option( SCP_PREFIX . 'setting_twitter_show_replies',              0 );
+			update_option( SCP_PREFIX . 'setting_twitter_width',                     400 );
+			update_option( SCP_PREFIX . 'setting_twitter_height',                    400 );
+			update_option( SCP_PREFIX . 'setting_twitter_chrome',                    '' );
+
+			update_option( $version, '0.6' );
 		}
 
 	}
@@ -222,6 +264,7 @@ class Social_Community_Popup {
 		$this->init_settings_vkontakte( $prefix );
 		$this->init_settings_odnoklassniki( $prefix );
 		$this->init_settings_googleplus( $prefix );
+		$this->init_settings_twitter( $prefix );
 	}
 
 	/**
@@ -981,6 +1024,208 @@ class Social_Community_Popup {
         );
     }
 
+	/**
+	 * Настройки Twitter
+	 */
+	private function init_settings_twitter( $prefix ) {
+
+		// Используется в settings_field и do_settings_field
+		$group = $prefix . '-group-twitter';
+
+		// Используется в do_settings_section
+		$options_page = $prefix . '_twitter_options';
+
+		// ID секции
+		$section = $prefix . '-section-twitter';
+
+		// Не забывать добавлять новые опции в uninstall()
+        register_setting( $group, SCP_PREFIX . 'setting_use_twitter' );
+        register_setting( $group, SCP_PREFIX . 'setting_twitter_tab_caption', 'sanitize_text_field' );
+        register_setting( $group, SCP_PREFIX . 'setting_twitter_show_description' );
+        register_setting( $group, SCP_PREFIX . 'setting_twitter_description', 'wp_kses_post' );
+        register_setting( $group, SCP_PREFIX . 'setting_twitter_username', 'sanitize_text_field' );
+        register_setting( $group, SCP_PREFIX . 'setting_twitter_widget_id', 'sanitize_text_field' );
+        register_setting( $group, SCP_PREFIX . 'setting_twitter_theme', 'sanitize_text_field' );
+        register_setting( $group, SCP_PREFIX . 'setting_twitter_link_color', 'sanitize_text_field' );
+        register_setting( $group, SCP_PREFIX . 'setting_twitter_tweet_limit', 'absint' );
+        register_setting( $group, SCP_PREFIX . 'setting_twitter_show_replies', 'absint' );
+        register_setting( $group, SCP_PREFIX . 'setting_twitter_width', 'absint' );
+        register_setting( $group, SCP_PREFIX . 'setting_twitter_height', 'absint' );
+        register_setting( $group, SCP_PREFIX . 'setting_twitter_chrome', array( $this, 'sanitize_setting_twitter_chrome' ) );
+
+        add_settings_section(
+            $section,
+            __( 'Twitter Timeline Widget', L10N_SCP_PREFIX ),
+            array( & $this, 'settings_section_twitter' ),
+            $options_page
+        );
+
+        // Используем Twitter или нет
+        add_settings_field(
+            $prefix . '-use-twitter',
+            __( 'Use Twitter', L10N_SCP_PREFIX ),
+            array( & $this, 'settings_field_checkbox' ),
+            $options_page,
+            $section,
+            array(
+                'field' => SCP_PREFIX . 'setting_use_twitter',
+            )
+        );
+
+        // Название вкладки
+        add_settings_field(
+            $prefix . '-twitter-tab-caption',
+            __( 'Tab Caption', L10N_SCP_PREFIX ),
+            array( & $this, 'settings_field_input_text' ),
+            $options_page,
+            $section,
+            array(
+                'field' => SCP_PREFIX . 'setting_twitter_tab_caption'
+            )
+        );
+
+        // Показывать надпись над виджетом?
+        add_settings_field(
+            $prefix . '-twitter-show-description',
+            __( 'Show Description Above The Widget', L10N_SCP_PREFIX ),
+            array( & $this, 'settings_field_checkbox' ),
+            $options_page,
+            $section,
+            array(
+                'field' => SCP_PREFIX . 'setting_twitter_show_description'
+            )
+        );
+
+        // Надпись над виджетом
+        add_settings_field(
+            $prefix . '-twitter-description',
+            __( 'Description Above The Widget', L10N_SCP_PREFIX ),
+            array( & $this, 'settings_field_input_text' ),
+            $options_page,
+            $section,
+            array(
+                'field' => SCP_PREFIX . 'setting_twitter_description'
+            )
+        );
+
+        // Логин пользователя
+        add_settings_field(
+            $prefix . '-twitter-username',
+            __( '@Username', L10N_SCP_PREFIX ),
+            array( & $this, 'settings_field_input_text' ),
+            $options_page,
+            $section,
+            array(
+                'field' => SCP_PREFIX . 'setting_twitter_username'
+            )
+        );
+
+        // ID виджета
+        add_settings_field(
+            $prefix . '-twitter-widget-id',
+            __( 'Widget ID', L10N_SCP_PREFIX ),
+            array( & $this, 'settings_field_input_text' ),
+            $options_page,
+            $section,
+            array(
+                'field' => SCP_PREFIX . 'setting_twitter_widget_id'
+            )
+        );
+
+        // Тема оформления
+        add_settings_field(
+            $prefix . '-twitter-theme',
+            __( 'Theme', L10N_SCP_PREFIX ),
+            array( & $this, 'settings_field_twitter_theme' ),
+            $options_page,
+            $section,
+            array(
+                'field' => SCP_PREFIX . 'setting_twitter_theme'
+            )
+        );
+
+        // Цвет ссылок
+        add_settings_field(
+            $prefix . '-twitter-link-color',
+            __( 'Link Color', L10N_SCP_PREFIX ),
+            array( & $this, 'settings_field_input_text' ),
+            $options_page,
+            $section,
+            array(
+                'field' => SCP_PREFIX . 'setting_twitter_link_color'
+            )
+        );
+
+        // Количество выводимых твитов
+        add_settings_field(
+            $prefix . '-twitter-tweet-limit',
+            __( 'Tweet Limit', L10N_SCP_PREFIX ),
+            array( & $this, 'settings_field_input_text' ),
+            $options_page,
+            $section,
+            array(
+                'field' => SCP_PREFIX . 'setting_twitter_tweet_limit'
+            )
+        );
+
+        // Показывать реплаи или нет
+        add_settings_field(
+            $prefix . '-twitter-show-replies',
+            __( 'Show Replies', L10N_SCP_PREFIX ),
+            array( & $this, 'settings_field_checkbox' ),
+            $options_page,
+            $section,
+            array(
+                'field' => SCP_PREFIX . 'setting_twitter_show_replies'
+            )
+        );
+
+        // Ширина виджета
+        add_settings_field(
+            $prefix . '-twitter-width',
+            __( 'Width', L10N_SCP_PREFIX ),
+            array( & $this, 'settings_field_input_text' ),
+            $options_page,
+            $section,
+            array(
+                'field' => SCP_PREFIX . 'setting_twitter_width'
+            )
+        );
+
+        // Высота виджета
+        add_settings_field(
+            $prefix . '-twitter-height',
+            __( 'Height', L10N_SCP_PREFIX ),
+            array( & $this, 'settings_field_input_text' ),
+            $options_page,
+            $section,
+            array(
+                'field' => SCP_PREFIX . 'setting_twitter_height'
+            )
+        );
+
+        // Свойства виджета
+        add_settings_field(
+            $prefix . '-twitter-chrome',
+            __( 'Chrome', L10N_SCP_PREFIX ),
+            array( & $this, 'settings_field_twitter_chrome' ),
+            $options_page,
+            $section,
+            array(
+                'field' => SCP_PREFIX . 'setting_twitter_chrome'
+            )
+        );
+    }
+
+	/**
+	 * Необходим для склейки нужных нам значений Twitter Chrome в массив
+	 */
+	public function sanitize_setting_twitter_chrome( $args ) {
+		//TODO: Наверно эту функцию можно будет отрефакторить, как только появится вторая соц. сеть с чекбоксами
+		$keys = join( ",", array_keys( $args ) );
+		return $args;
+	}
+
     /**
      * Описание общих настроек
      */
@@ -1016,6 +1261,12 @@ class Social_Community_Popup {
 		_e( 'In this section, you must fill out the data to display the Google+ page in a popup window', L10N_SCP_PREFIX );	
     }
 
+    /**
+     * Описание настроек Twitter
+     */
+    public function settings_section_twitter() {
+		_e( 'In this section, you must fill out the data to display the Twitter timeline in a popup window', L10N_SCP_PREFIX );	
+    }
 
     /**
      * Callback-шаблон для формирования текстового поля на странице настроек
@@ -1075,8 +1326,7 @@ class Social_Community_Popup {
 	}
 
     /**
-     * Callback-шаблон для формирования радио-кнопок для выбора типа макета 
-	 * ВКонтакте
+     * Callback-шаблон для формирования радио-кнопок для выбора типа макета ВКонтакте
      */
     public function settings_field_vkontakte_layout( $args ) {
         $field = $args[ 'field' ];
@@ -1088,6 +1338,47 @@ class Social_Community_Popup {
 		$html .= sprintf( $format, $field . '_2', $field, '2', checked( $value, 2, false ), $field . '_2', __( 'News', L10N_SCP_PREFIX ) );
 		$html .= '<br />';
 		$html .= sprintf( $format, $field . '_1', $field, '1', checked( $value, 1, false ), $field . '_1', __( 'Name', L10N_SCP_PREFIX ) );
+		echo $html;
+    }
+
+    /**
+     * Callback-шаблон для формирования радио-кнопок для выбора свойств виджета Twitter
+     */
+    public function settings_field_twitter_chrome( $args ) {
+        $field = $args[ 'field' ];
+        $value = get_option( $field );
+
+		// Проверяем наличие всех нужных нам ключей в массиве. Если нет — инициализируем "выключенным" значением.
+		$allowed_values = array( 'noheader', 'nofooter', 'noborders', 'noscrollbars', 'transparent' );
+		for ( $idx = 0; $idx < count($allowed_values); $idx++ ) {
+			if ( !isset( $value[$allowed_values[$idx]] ) ) $value[$allowed_values[$idx]] = 0;
+		}
+
+		$format = '<input type="checkbox" id="%s" name="%s[%s]" value="%s"%s />';
+		$format .= '<label for="%s">%s</label>';
+		$html = sprintf( $format, $field . '_noheader', $field, 'noheader', '1', checked( $value['noheader'], 1, false ), $field . '_noheader', __( 'No Header', L10N_SCP_PREFIX ) );
+		$html .= '<br />';
+		$html .= sprintf( $format, $field . '_nofooter', $field, 'nofooter', '1', checked( $value['nofooter'], 1, false ), $field . '_nofooter', __( 'No Footer', L10N_SCP_PREFIX ) );
+		$html .= '<br />';
+		$html .= sprintf( $format, $field . '_noborders', $field, 'noborders', '1', checked( $value['noborders'], 1, false ), $field . '_noborders', __( 'No Borders', L10N_SCP_PREFIX ) );
+		$html .= '<br />';
+		$html .= sprintf( $format, $field . '_noscrollbars', $field, 'noscrollbars', '1', checked( $value['noscrollbars'], 1, false ), $field . '_noscrollbars', __( 'No Scrollbars', L10N_SCP_PREFIX ) );
+		$html .= '<br />';
+		$html .= sprintf( $format, $field . '_transparent', $field, 'transparent', '1', checked( $value['transparent'], 1, false ), $field . '_transparent', __( 'Transparent (Removes the background color)', L10N_SCP_PREFIX ) );
+		echo $html;
+    }
+
+    /**
+     * Callback-шаблон для формирования радио-кнопок для выбора темы Twitter
+     */
+    public function settings_field_twitter_theme( $args ) {
+        $field = $args[ 'field' ];
+        $value = get_option( $field );
+		$format = '<input type="radio" id="%s" name="%s" value="%s"%s />';
+		$format .= '<label for="%s">%s</label>';
+		$html = sprintf( $format, $field . '_0', $field, 'light', checked( $value, 'light', false ), $field . '_0', __( 'Light', L10N_SCP_PREFIX ) );
+		$html .= '<br />';
+		$html .= sprintf( $format, $field . '_1', $field, 'dark', checked( $value, 'dark', false ), $field . '_1', __( 'Dark', L10N_SCP_PREFIX ) );
 		echo $html;
     }
 
@@ -1193,6 +1484,16 @@ class Social_Community_Popup {
 			'social_community_popup_googleplus_options',
 			array( & $this, 'plugin_settings_page_googleplus_options' )
 		);
+
+		// Twitter
+		add_submenu_page(
+			'social_community_popup', // Родительский пункт меню
+			__( 'Twitter Options', L10N_SCP_PREFIX ), // Название пункта на его странице
+			__( 'Twitter', L10N_SCP_PREFIX ), // Пункт меню
+			'administrator',
+			'social_community_popup_twitter_options',
+			array( & $this, 'plugin_settings_page_twitter_options' )
+		);
     }
 
     /**
@@ -1265,6 +1566,17 @@ class Social_Community_Popup {
     }
 
     /**
+     * Страница настроек Twitter
+     */
+    public function plugin_settings_page_twitter_options() {
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+        }
+
+        include( sprintf( "%s/templates/settings-twitter.php", dirname( __FILE__ ) ) );
+    }
+
+    /**
      * Добавляем всплывающее окно в подвале сайта
      */
     public function wp_footer() {
@@ -1294,6 +1606,7 @@ class Social_Community_Popup {
 		$use_vkontakte         = get_option( SCP_PREFIX . 'setting_use_vkontakte' )     === '1';
 		$use_odnoklassniki     = get_option( SCP_PREFIX . 'setting_use_odnoklassniki' ) === '1';
 		$use_googleplus        = get_option( SCP_PREFIX . 'setting_use_googleplus' )    === '1';
+		$use_twitter           = get_option( SCP_PREFIX . 'setting_use_twitter' )       === '1';
 
 		$tabs_order            = explode(',', get_option( SCP_PREFIX . 'setting_tabs_order' ) );
 

@@ -3,11 +3,11 @@ defined( 'ABSPATH' ) or exit;
 /*
 Plugin Name: Social Community Popup
 Plugin URI: http://gruz0.ru/
-Description: Social Community Popup
+Description: Плагин всплывающего окна с виджетами групп популярных социальных сетей
 Author: Alexander Gruzov
 Author URI: http://gruz0.ru/
 Text Domain: social-community-popup
-Version: 0.5
+Version: 0.6
 License: GPL2
 */
 

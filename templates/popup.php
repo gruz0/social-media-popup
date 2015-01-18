@@ -69,7 +69,7 @@
 		return;
 	}
 
-    if ( $use_facebook || $use_vkontakte || $use_odnoklassniki || $use_googleplus ) :
+    if ( $use_facebook || $use_vkontakte || $use_odnoklassniki || $use_googleplus || $use_twitter ) :
 ?>
 <div id="social-community-popup">
     <div class="parent_popup"></div> 
@@ -102,6 +102,11 @@
                     			scp_tab_caption( 'setting_googleplus_tab_caption' );
 							break;
 
+						case 'twitter':
+                			if ( $use_twitter )
+                    			scp_tab_caption( 'setting_twitter_tab_caption' );
+							break;
+
 					}
 				}
 			?>
@@ -128,6 +133,11 @@
 						case 'googleplus':
 							if ( $use_googleplus )
 								scp_googleplus_container();
+							break;
+
+						case 'twitter':
+							if ( $use_twitter )
+								scp_twitter_container();
 							break;
 					}
 				}
@@ -230,6 +240,33 @@ function scp_googleplus_container() {
 				get_option( SCP_PREFIX . 'setting_googleplus_show_cover_photo' )
 			);
 			echo $googleplus_container;
+		?>
+	</div>  
+<?php
+}
+
+function scp_twitter_container() {
+?>
+	<div class="box">
+		<?php if ( get_option( SCP_PREFIX . 'setting_twitter_show_description' ) === '1' ) : ?>
+			<p><b><?php echo get_option( SCP_PREFIX . 'setting_twitter_description' ); ?></b></p>
+		<?php endif; ?>
+
+		<?php
+			$twitter_container = sprintf( 
+				file_get_contents( dirname( __FILE__ ) . '/twitter_container.php' ),
+				get_option( SCP_PREFIX . 'setting_twitter_username' ),
+				get_option( SCP_PREFIX . 'setting_twitter_widget_id' ),
+				get_option( SCP_PREFIX . 'setting_twitter_theme' ),
+				get_option( SCP_PREFIX . 'setting_twitter_link_color' ),
+				join( " ", array_keys( (array)get_option( SCP_PREFIX . 'setting_twitter_chrome' ) ) ),
+				get_option( SCP_PREFIX . 'setting_twitter_tweet_limit' ),
+				get_option( SCP_PREFIX . 'setting_twitter_show_replies' ),
+				get_option( SCP_PREFIX . 'setting_twitter_width' ),
+				get_option( SCP_PREFIX . 'setting_twitter_height' ),
+				get_option( SCP_PREFIX . 'setting_twitter_username' )
+			);
+			echo $twitter_container;
 		?>
 	</div>  
 <?php
