@@ -1517,7 +1517,7 @@ class Social_Community_Popup {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 		}
 
-		include( sprintf( "%s/templates/settings/settings.php", dirname( __FILE__ ) ) );
+		include( sprintf( "%s/templates/settings.php", dirname( __FILE__ ) ) );
 	}
 
 	/**
