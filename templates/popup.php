@@ -1,6 +1,6 @@
 <?php defined( 'ABSPATH' ) or exit; ?>
 <script type="text/javascript">
-    jQuery(document).ready(function($) {
+	jQuery(document).ready(function($) {
 
 		scp_setCookie('social-community-popup-views', <?php echo $cookie_popup_views + 1; ?>, { 'path': '/' } );
 
@@ -12,19 +12,19 @@
 		<?php endif; ?>
 		scp_deleteCookie('social-community-popup-views');
 
-        $('#social-community-popup .close').click(function() {
-            var date = new Date( new Date().getTime() + <?php echo 1000 * 60 * 60 * 24 * $after_n_days; ?>);
-            scp_setCookie('social-community-popup', 'true', { 'expires': date, 'path': '/' } );
+		$('#social-community-popup .close').click(function() {
+			var date = new Date( new Date().getTime() + <?php echo 1000 * 60 * 60 * 24 * $after_n_days; ?>);
+			scp_setCookie('social-community-popup', 'true', { 'expires': date, 'path': '/' } );
 			scp_deleteCookie('social-community-popup-views');
-            $('#social-community-popup').remove();
-        });
+			$('#social-community-popup').remove();
+		});
 
 		<?php // Facebook
 			if ( $use_facebook ) :
 
 				// Заменяем Application ID на наш из настроек
 				$prepend_facebook = sprintf( 
-					file_get_contents( dirname( __FILE__ ) . '/facebook_prepend.php' ),
+					file_get_contents( dirname( __FILE__ ) . '/partials/facebook_prepend.php' ),
 					get_option( SCP_PREFIX . 'setting_facebook_locale' ),
 					get_option( SCP_PREFIX . 'setting_facebook_application_id' )
 				);
@@ -45,7 +45,7 @@
 			if ( $use_googleplus ) :
 
 				$prepend_googleplus = sprintf(
-					file_get_contents( dirname( __FILE__ ) . '/googleplus_prepend.php' ),
+					file_get_contents( dirname( __FILE__ ) . '/partials/googleplus_prepend.php' ),
 					get_option( SCP_PREFIX . 'setting_googleplus_locale' )
 				);
 
@@ -69,54 +69,53 @@
 		return;
 	}
 
-    if ( $use_facebook || $use_vkontakte || $use_odnoklassniki || $use_googleplus || $use_twitter ) :
+	if ( $use_facebook || $use_vkontakte || $use_odnoklassniki || $use_googleplus || $use_twitter ) :
 ?>
 <div id="social-community-popup">
-    <div class="parent_popup"></div> 
+	<div class="parent_popup"></div>
 
-    <div id="popup" style="width:<?php echo $container_width + 60; ?>px !important;height:<?php echo $container_height + 10; ?>px !important;">
-        <div class="section" style="width:<?php echo $container_width; ?>px !important;height:<?php echo $container_height; ?>px !important;">
-            <span class="close"><?php _e( 'Close', L10N_SCP_PREFIX ); ?></span>
-            <ul class="tabs">  
-                
+	<div id="popup" style="width:<?php echo $container_width + 60; ?>px !important;height:<?php echo $container_height + 10; ?>px !important;">
+		<div class="section" style="width:<?php echo $container_width; ?>px !important;height:<?php echo $container_height; ?>px !important;">
+			<span class="close"><?php _e( 'Close', L10N_SCP_PREFIX ); ?></span>
+			<ul class="tabs">
+
 			<?php
 				for ( $idx = 0; $idx < count( $tabs_order ); $idx++ ) {
 					switch ( $tabs_order[ $idx ] ) {
 						case 'facebook':
-                			if ( $use_facebook )
-                    			scp_tab_caption( 'setting_facebook_tab_caption' );
+							if ( $use_facebook )
+								scp_tab_caption( 'setting_facebook_tab_caption' );
 							break;
 
 						case 'vkontakte':
-                			if ( $use_vkontakte )
-                    			scp_tab_caption( 'setting_vkontakte_tab_caption' );
+							if ( $use_vkontakte )
+								scp_tab_caption( 'setting_vkontakte_tab_caption' );
 							break;
 
 						case 'odnoklassniki':
-                			if ( $use_odnoklassniki )
-                    			scp_tab_caption( 'setting_odnoklassniki_tab_caption' );
+							if ( $use_odnoklassniki )
+								scp_tab_caption( 'setting_odnoklassniki_tab_caption' );
 							break;
 
 						case 'googleplus':
-                			if ( $use_googleplus )
-                    			scp_tab_caption( 'setting_googleplus_tab_caption' );
+							if ( $use_googleplus )
+								scp_tab_caption( 'setting_googleplus_tab_caption' );
 							break;
 
 						case 'twitter':
-                			if ( $use_twitter )
-                    			scp_tab_caption( 'setting_twitter_tab_caption' );
+							if ( $use_twitter )
+								scp_tab_caption( 'setting_twitter_tab_caption' );
 							break;
-
 					}
 				}
 			?>
-            </ul>  
+			</ul>
 
 			<?php
 				for ( $idx = 0; $idx < count( $tabs_order ); $idx++ ) {
 					switch ( $tabs_order[ $idx ] ) {
 						case 'facebook':
-                			if ( $use_facebook ) 
+							if ( $use_facebook )
 								scp_facebook_container();
 							break;
 
@@ -142,8 +141,8 @@
 					}
 				}
 			?>
-        </div>
-    </div>
+		</div>
+	</div>
 </div>
 <?php endif; ?>
 
@@ -163,7 +162,7 @@ function scp_facebook_container() {
 		<?php
 			// Заменяем Application ID на наш из настроек
 			$facebook_container = sprintf( 
-				file_get_contents( dirname( __FILE__ ) . '/facebook_container.php' ),
+				file_get_contents( dirname( __FILE__ ) . '/partials/facebook_container.php' ),
 				get_option( SCP_PREFIX . 'setting_facebook_page_url' ),
 				get_option( SCP_PREFIX . 'setting_facebook_width' ),
 				get_option( SCP_PREFIX . 'setting_facebook_height' ),
@@ -174,7 +173,7 @@ function scp_facebook_container() {
 			);
 			echo $facebook_container;
 		?>
-	</div>  
+	</div>
 <?php
 }
 
@@ -188,7 +187,7 @@ function scp_vkontakte_container() {
 		<?php
 			// Заменяем Application ID на наш из настроек
 			$vkontakte_container = sprintf( 
-				file_get_contents( dirname( __FILE__ ) . '/vkontakte_container.php' ),
+				file_get_contents( dirname( __FILE__ ) . '/partials/vkontakte_container.php' ),
 				get_option( SCP_PREFIX . 'setting_vkontakte_layout' ),
 				get_option( SCP_PREFIX . 'setting_vkontakte_width' ),
 				get_option( SCP_PREFIX . 'setting_vkontakte_height' ),
@@ -199,7 +198,7 @@ function scp_vkontakte_container() {
 			);
 			echo $vkontakte_container;
 		?>
-	</div> 
+	</div>
 <?php
 }
 
@@ -212,14 +211,14 @@ function scp_odnoklassniki_container() {
 
 		<?php
 			$odnoklassniki_container = sprintf( 
-				file_get_contents( dirname( __FILE__ ) . '/odnoklassniki_container.php' ),
+				file_get_contents( dirname( __FILE__ ) . '/partials/odnoklassniki_container.php' ),
 				get_option( SCP_PREFIX . 'setting_odnoklassniki_group_id' ),
 				get_option( SCP_PREFIX . 'setting_odnoklassniki_width' ),
 				get_option( SCP_PREFIX . 'setting_odnoklassniki_height' )
 			);
 			echo $odnoklassniki_container;
 		?>
-	</div>  
+	</div>
 <?php
 }
 
@@ -232,7 +231,7 @@ function scp_googleplus_container() {
 
 		<?php
 			$googleplus_container = sprintf( 
-				file_get_contents( dirname( __FILE__ ) . '/googleplus_container.php' ),
+				file_get_contents( dirname( __FILE__ ) . '/partials/googleplus_container.php' ),
 				get_option( SCP_PREFIX . 'setting_googleplus_size' ),
 				get_option( SCP_PREFIX . 'setting_googleplus_page_url' ),
 				get_option( SCP_PREFIX . 'setting_googleplus_theme' ),
@@ -241,7 +240,7 @@ function scp_googleplus_container() {
 			);
 			echo $googleplus_container;
 		?>
-	</div>  
+	</div>
 <?php
 }
 
@@ -254,7 +253,7 @@ function scp_twitter_container() {
 
 		<?php
 			$twitter_container = sprintf( 
-				file_get_contents( dirname( __FILE__ ) . '/twitter_container.php' ),
+				file_get_contents( dirname( __FILE__ ) . '/partials/twitter_container.php' ),
 				get_option( SCP_PREFIX . 'setting_twitter_username' ),
 				get_option( SCP_PREFIX . 'setting_twitter_widget_id' ),
 				get_option( SCP_PREFIX . 'setting_twitter_theme' ),
@@ -268,6 +267,7 @@ function scp_twitter_container() {
 			);
 			echo $twitter_container;
 		?>
-	</div>  
+	</div>
 <?php
 }
+
