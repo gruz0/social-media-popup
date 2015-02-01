@@ -74,7 +74,8 @@
 <div id="social-community-popup">
 	<div class="parent_popup"></div>
 
-	<div id="popup" style="width:<?php echo $container_width + 60; ?>px !important;height:<?php echo $container_height + 10; ?>px !important;">
+	<?php $border_radius_css = $border_radius > 0 ? "border-radius:{$border_radius}px !important;" : ""; ?>
+	<div id="popup" style="width:<?php echo $container_width + 60; ?>px !important;height:<?php echo $container_height + 10; ?>px !important;<?php echo $border_radius_css; ?>">
 		<div class="section" style="width:<?php echo $container_width; ?>px !important;height:<?php echo $container_height; ?>px !important;">
 			<span class="close"><?php _e( 'Close', L10N_SCP_PREFIX ); ?></span>
 			<ul class="tabs">
@@ -156,7 +157,7 @@ function scp_facebook_container() {
 ?>
 	<div class="box">
 		<?php if ( get_option( SCP_PREFIX . 'setting_facebook_show_description' ) === '1' ) : ?>
-			<p><b><?php echo get_option( SCP_PREFIX . 'setting_facebook_description' ); ?></b></p>
+			<p class="widget-description"><b><?php echo get_option( SCP_PREFIX . 'setting_facebook_description' ); ?></b></p>
 		<?php endif; ?>
 
 		<?php
@@ -181,7 +182,7 @@ function scp_vkontakte_container() {
 ?>
 	<div class="box">
 		<?php if ( get_option( SCP_PREFIX . 'setting_vkontakte_show_description' ) === '1' ) : ?>
-			<p><b><?php echo get_option( SCP_PREFIX . 'setting_vkontakte_description' ); ?></b></p>
+			<p class="widget-description"><b><?php echo get_option( SCP_PREFIX . 'setting_vkontakte_description' ); ?></b></p>
 		<?php endif; ?>
 
 		<?php
@@ -206,7 +207,7 @@ function scp_odnoklassniki_container() {
 ?>
 	<div class="box">
 		<?php if ( get_option( SCP_PREFIX . 'setting_odnoklassniki_show_description' ) === '1' ) : ?>
-			<p><b><?php echo get_option( SCP_PREFIX . 'setting_odnoklassniki_description' ); ?></b></p>
+			<p class="widget-description"><b><?php echo get_option( SCP_PREFIX . 'setting_odnoklassniki_description' ); ?></b></p>
 		<?php endif; ?>
 
 		<?php
@@ -226,7 +227,7 @@ function scp_googleplus_container() {
 ?>
 	<div class="box">
 		<?php if ( get_option( SCP_PREFIX . 'setting_googleplus_show_description' ) === '1' ) : ?>
-			<p><b><?php echo get_option( SCP_PREFIX . 'setting_googleplus_description' ); ?></b></p>
+			<p class="widget-description"><b><?php echo get_option( SCP_PREFIX . 'setting_googleplus_description' ); ?></b></p>
 		<?php endif; ?>
 
 		<?php
@@ -248,7 +249,7 @@ function scp_twitter_container() {
 ?>
 	<div class="box">
 		<?php if ( get_option( SCP_PREFIX . 'setting_twitter_show_description' ) === '1' ) : ?>
-			<p><b><?php echo get_option( SCP_PREFIX . 'setting_twitter_description' ); ?></b></p>
+			<p class="widget-description"><b><?php echo get_option( SCP_PREFIX . 'setting_twitter_description' ); ?></b></p>
 		<?php endif; ?>
 
 		<?php

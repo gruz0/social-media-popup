@@ -57,6 +57,7 @@ class Social_Community_Popup {
 			'setting_tabs_order',
 			'setting_container_width',
 			'setting_container_height',
+			'setting_border_radius',
 			'setting_remove_settings_on_uninstall',
 
 			// Facebook
@@ -236,6 +237,12 @@ class Social_Community_Popup {
 
 			update_option( $version, '0.6' );
 		}
+
+		if ( '0.7' > get_option( $version ) ) {
+			update_option( SCP_PREFIX . 'setting_border_radius',                     10 );
+
+			update_option( $version, '0.7' );
+		}
 	}
 
 	/**
@@ -282,12 +289,13 @@ class Social_Community_Popup {
 
 		// Не забывать добавлять новые опции в uninstall()
 		register_setting( $group, SCP_PREFIX . 'setting_debug_mode' );
-		register_setting( $group, SCP_PREFIX . 'setting_display_after_n_days' );
-		register_setting( $group, SCP_PREFIX . 'setting_display_after_visiting_n_pages' );
-		register_setting( $group, SCP_PREFIX . 'setting_display_after_delay_of_n_seconds' );
-		register_setting( $group, SCP_PREFIX . 'setting_tabs_order' );
-		register_setting( $group, SCP_PREFIX . 'setting_container_width' );
-		register_setting( $group, SCP_PREFIX . 'setting_container_height' );
+		register_setting( $group, SCP_PREFIX . 'setting_display_after_n_days', 'absint' );
+		register_setting( $group, SCP_PREFIX . 'setting_display_after_visiting_n_pages', 'absint' );
+		register_setting( $group, SCP_PREFIX . 'setting_display_after_delay_of_n_seconds', 'absint' );
+		register_setting( $group, SCP_PREFIX . 'setting_tabs_order', 'sanitize_text_field' );
+		register_setting( $group, SCP_PREFIX . 'setting_container_width', 'absint' );
+		register_setting( $group, SCP_PREFIX . 'setting_container_height', 'absint' );
+		register_setting( $group, SCP_PREFIX . 'setting_border_radius', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_remove_settings_on_uninstall' );
 
 		add_settings_section(
@@ -378,6 +386,18 @@ class Social_Community_Popup {
 			$section,
 			array(
 				'field' => SCP_PREFIX . 'setting_container_height'
+			)
+		);
+
+		// Радиус скругления границ
+		add_settings_field(
+			$prefix . '-common-border-radius',
+			__( 'Border Radius', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_border_radius'
 			)
 		);
 
@@ -1601,6 +1621,7 @@ class Social_Community_Popup {
 
 		$container_width   = get_option( SCP_PREFIX . 'setting_container_width' );
 		$container_height  = get_option( SCP_PREFIX . 'setting_container_height' ) ;
+		$border_radius     = absint( get_option( SCP_PREFIX . 'setting_border_radius' ) );
 
 		require( sprintf( "%s/templates/popup.php", dirname( __FILE__ ) ) );
 	}
