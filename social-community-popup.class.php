@@ -238,10 +238,10 @@ class Social_Community_Popup {
 			update_option( $version, '0.6' );
 		}
 
-		if ( '0.7' > get_option( $version ) ) {
+		if ( '0.6.1' > get_option( $version ) ) {
 			update_option( SCP_PREFIX . 'setting_border_radius',                     10 );
 
-			update_option( $version, '0.7' );
+			update_option( $version, '0.6.1' );
 		}
 	}
 
