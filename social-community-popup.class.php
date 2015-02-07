@@ -249,6 +249,9 @@ class Social_Community_Popup {
 			// Добавлена настройка закрытия окна при нажатии на любой области экрана
 			update_option( SCP_PREFIX . 'setting_close_popup_by_clicking_anywhere',  0 );
 
+			// Добавлена настройка показывать виджет на мобильных устройствах или нет
+			update_option( SCP_PREFIX . 'setting_show_on_mobile_devices',            0 );
+
 			update_option( $version, '0.6.2' );
 		}
 	}
@@ -305,6 +308,7 @@ class Social_Community_Popup {
 		register_setting( $group, SCP_PREFIX . 'setting_container_height', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_border_radius', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_close_popup_by_clicking_anywhere', 'absint' );
+		register_setting( $group, SCP_PREFIX . 'setting_show_on_mobile_devices', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_remove_settings_on_uninstall' );
 
 		add_settings_section(
@@ -419,6 +423,18 @@ class Social_Community_Popup {
 			$section,
 			array(
 				'field' => SCP_PREFIX . 'setting_close_popup_by_clicking_anywhere'
+			)
+		);
+
+		// Показывать виджет на мобильных устройствах
+		add_settings_field(
+			$prefix . '-common-show-on-mobile-devices',
+			__( 'Show widget on mobile devices', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_show_on_mobile_devices'
 			)
 		);
 
@@ -1611,7 +1627,7 @@ class Social_Community_Popup {
 	 */
 	public function wp_footer() {
 		// Отключаем работу плагина на мобильных устройствах
-		if ( wp_is_mobile() ) return;
+		if ( wp_is_mobile() && get_option( SCP_PREFIX . 'setting_show_on_mobile_devices' ) === '0' ) return;
 
 		$debug_mode = (int) get_option( SCP_PREFIX . 'setting_debug_mode' );
 
