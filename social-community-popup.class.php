@@ -1626,42 +1626,7 @@ class Social_Community_Popup {
 	 * Добавляем всплывающее окно в подвале сайта
 	 */
 	public function wp_footer() {
-		// Отключаем работу плагина на мобильных устройствах
-		if ( wp_is_mobile() && get_option( SCP_PREFIX . 'setting_show_on_mobile_devices' ) === '0' ) return;
-
-		$debug_mode = (int) get_option( SCP_PREFIX . 'setting_debug_mode' );
-
-		if ( $debug_mode && is_user_logged_in() ) {
-			$after_n_days          = 1;
-			$visit_n_pages         = 0;
-			$cookie_popup_views    = 0;
-			$delay_after_n_seconds = 1;
-
-		} else {
-			if ( isset( $_COOKIE[ 'social-community-popup' ] ) ) return;
-
-			$after_n_days          = (int) get_option( SCP_PREFIX . 'setting_display_after_n_days' );
-			$visit_n_pages         = (int) get_option( SCP_PREFIX . 'setting_display_after_visiting_n_pages' );
-			$cookie_popup_views    = isset( $_COOKIE[ 'social-community-popup-views' ] )
-				? (int) $_COOKIE[ 'social-community-popup-views' ]
-				: 0;
-			$delay_after_n_seconds = (int) get_option( SCP_PREFIX . 'setting_display_after_delay_of_n_seconds' );
-		}
-
-		$use_facebook               = get_option( SCP_PREFIX . 'setting_use_facebook' )      === '1';
-		$use_vkontakte              = get_option( SCP_PREFIX . 'setting_use_vkontakte' )     === '1';
-		$use_odnoklassniki          = get_option( SCP_PREFIX . 'setting_use_odnoklassniki' ) === '1';
-		$use_googleplus             = get_option( SCP_PREFIX . 'setting_use_googleplus' )    === '1';
-		$use_twitter                = get_option( SCP_PREFIX . 'setting_use_twitter' )       === '1';
-
-		$tabs_order                 = explode(',', get_option( SCP_PREFIX . 'setting_tabs_order' ) );
-
-		$container_width            = get_option( SCP_PREFIX . 'setting_container_width' );
-		$container_height           = get_option( SCP_PREFIX . 'setting_container_height' ) ;
-		$border_radius              = absint( get_option( SCP_PREFIX . 'setting_border_radius' ) );
-		$close_by_clicking_anywhere = get_option( SCP_PREFIX . 'setting_close_popup_by_clicking_anywhere' ) === '1';
-
-		require( sprintf( "%s/templates/popup.php", dirname( __FILE__ ) ) );
+		echo "<script type='text/javascript' src='" . plugins_url( 'js/scp.php?' . rand(), __FILE__ ) . "'></script>";
 	}
 
 	/**

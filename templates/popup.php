@@ -1,26 +1,25 @@
 <?php defined( 'ABSPATH' ) or exit; ?>
-<script type="text/javascript">
+<script>
 	jQuery(document).ready(function($) {
-
-		scp_setCookie('social-community-popup-views', <?php echo $cookie_popup_views + 1; ?>, { 'path': '/' } );
+		scp_setCookie("social-community-popup-views", <?php echo $cookie_popup_views + 1; ?>, { "path": "/" } );
 
 	<?php if ( $cookie_popup_views === $visit_n_pages ) : ?>
 		<?php if ( $delay_after_n_seconds > 0 ) : ?>
-			setTimeout("jQuery('#social-community-popup').show();", <?php echo $delay_after_n_seconds * 1000; ?>);
+			setTimeout("jQuery(\'#social-community-popup\').show();", <?php echo $delay_after_n_seconds * 1000; ?>);
 		<?php else: ?>
-			$('#social-community-popup').show();
+			$("#social-community-popup").show();
 		<?php endif; ?>
-		scp_deleteCookie('social-community-popup-views');
+		scp_deleteCookie("social-community-popup-views");
 
 		<?php if ( $close_by_clicking_anywhere ) : ?>
-		$('#social-community-popup .parent_popup, #social-community-popup .close').click(function() {
+		$("#social-community-popup .parent_popup, #social-community-popup .close").click(function() {
 		<?php else: ?>
-		$('#social-community-popup .close').click(function() {
-		<?php endif; ?>
+		$("#social-community-popup .close").click(function() {
+		<?php endif;  ?>
 			var date = new Date( new Date().getTime() + <?php echo 1000 * 60 * 60 * 24 * $after_n_days; ?>);
-			scp_setCookie('social-community-popup', 'true', { 'expires': date, 'path': '/' } );
-			scp_deleteCookie('social-community-popup-views');
-			$('#social-community-popup').remove();
+			scp_setCookie("social-community-popup", "true", { "expires": date, "path": "/" } );
+			scp_deleteCookie("social-community-popup-views");
+			$("#social-community-popup").remove();
 		});
 
 		<?php // Facebook
@@ -39,8 +38,8 @@
 				// Переводим код в сущности
 				$prepend_facebook = htmlspecialchars( $prepend_facebook, ENT_QUOTES );
 			?>
-				if ($('#fb-root').length == 0) {
-					$('body').prepend( $("<div/>").html('<?php echo $prepend_facebook; ?>').text());
+				if ($("#fb-root").length == 0) {
+					$("body").prepend( $("<div/>").html("<?php echo $prepend_facebook; ?>").text());
 				}
 			<?php
 			endif; // use_facebook
@@ -59,7 +58,7 @@
 				// Переводим код в сущности
 				$prepend_googleplus = htmlspecialchars( $prepend_googleplus, ENT_QUOTES );
 			?>
-				$('body').prepend( $("<div/>").html('<?php echo $prepend_googleplus; ?>').text());
+				$("body").prepend( $("<div/>").html("<?php echo $prepend_googleplus; ?>").text());
 			<?php
 			endif; // use_googleplus
 
@@ -68,7 +67,7 @@
     });
 </script>
 
-<?php 
+<?php
 	if ( $cookie_popup_views < $visit_n_pages ) {
 		return;
 	}

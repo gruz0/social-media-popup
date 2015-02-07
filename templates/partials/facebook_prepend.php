@@ -5,4 +5,4 @@
 	js = d.createElement(s); js.id = id;
 	js.src = "//connect.facebook.net/%s/all.js#xfbml=1&appId=%s";
 	fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+}(document, "script", "facebook-jssdk"));</script>
