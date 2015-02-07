@@ -12,7 +12,11 @@
 		<?php endif; ?>
 		scp_deleteCookie('social-community-popup-views');
 
+		<?php if ( $close_by_clicking_anywhere ) : ?>
+		$('#social-community-popup .parent_popup, #social-community-popup .close').click(function() {
+		<?php else: ?>
 		$('#social-community-popup .close').click(function() {
+		<?php endif; ?>
 			var date = new Date( new Date().getTime() + <?php echo 1000 * 60 * 60 * 24 * $after_n_days; ?>);
 			scp_setCookie('social-community-popup', 'true', { 'expires': date, 'path': '/' } );
 			scp_deleteCookie('social-community-popup-views');
@@ -246,8 +250,15 @@ function scp_googleplus_container() {
 }
 
 function scp_twitter_container() {
+	// Для нормального отображения/скрытия полос прокрутки нужно задавать свойство overflow
+	$twitter_chrome = get_option( SCP_PREFIX . 'setting_twitter_chrome' );
+	$twitter_chrome = $twitter_chrome == '' ? array() : array_keys( (array) $twitter_chrome );
+	$noscrollbars   = in_array( 'noscrollbars', $twitter_chrome );
+	$overflow_css   = $noscrollbars ? 'hidden' : 'auto';
+
+	$widget_height  = get_option( SCP_PREFIX . 'setting_twitter_height' );
 ?>
-	<div class="box">
+	<div class="box" style="overflow:<?php echo $overflow_css; ?>;height:<?php echo ( $widget_height - 20 ); ?>px;">
 		<?php if ( get_option( SCP_PREFIX . 'setting_twitter_show_description' ) === '1' ) : ?>
 			<p class="widget-description"><b><?php echo get_option( SCP_PREFIX . 'setting_twitter_description' ); ?></b></p>
 		<?php endif; ?>
@@ -259,11 +270,11 @@ function scp_twitter_container() {
 				get_option( SCP_PREFIX . 'setting_twitter_widget_id' ),
 				get_option( SCP_PREFIX . 'setting_twitter_theme' ),
 				get_option( SCP_PREFIX . 'setting_twitter_link_color' ),
-				join( " ", array_keys( (array)get_option( SCP_PREFIX . 'setting_twitter_chrome' ) ) ),
+				join( " ", $twitter_chrome ),
 				get_option( SCP_PREFIX . 'setting_twitter_tweet_limit' ),
 				get_option( SCP_PREFIX . 'setting_twitter_show_replies' ),
 				get_option( SCP_PREFIX . 'setting_twitter_width' ),
-				get_option( SCP_PREFIX . 'setting_twitter_height' ),
+				$widget_height,
 				get_option( SCP_PREFIX . 'setting_twitter_username' )
 			);
 			echo $twitter_container;

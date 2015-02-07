@@ -239,9 +239,17 @@ class Social_Community_Popup {
 		}
 
 		if ( '0.6.1' > get_option( $version ) ) {
+			// Добавлена настройка радиуса угла скругления границ
 			update_option( SCP_PREFIX . 'setting_border_radius',                     10 );
 
 			update_option( $version, '0.6.1' );
+		}
+
+		if ( '0.6.2' > get_option( $version ) ) {
+			// Добавлена настройка закрытия окна при нажатии на любой области экрана
+			update_option( SCP_PREFIX . 'setting_close_popup_by_clicking_anywhere',  0 );
+
+			update_option( $version, '0.6.2' );
 		}
 	}
 
@@ -296,6 +304,7 @@ class Social_Community_Popup {
 		register_setting( $group, SCP_PREFIX . 'setting_container_width', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_container_height', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_border_radius', 'absint' );
+		register_setting( $group, SCP_PREFIX . 'setting_close_popup_by_clicking_anywhere', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_remove_settings_on_uninstall' );
 
 		add_settings_section(
@@ -398,6 +407,18 @@ class Social_Community_Popup {
 			$section,
 			array(
 				'field' => SCP_PREFIX . 'setting_border_radius'
+			)
+		);
+
+		// Скрывать окно при нажатии на любой области экрана
+		add_settings_field(
+			$prefix . '-common-close-popup-by-clicking-anywhere',
+			__( 'Close the popup by clicking anywhere on the screen', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_close_popup_by_clicking_anywhere'
 			)
 		);
 
@@ -1611,17 +1632,18 @@ class Social_Community_Popup {
 			$delay_after_n_seconds = (int) get_option( SCP_PREFIX . 'setting_display_after_delay_of_n_seconds' );
 		}
 
-		$use_facebook      = get_option( SCP_PREFIX . 'setting_use_facebook' )      === '1';
-		$use_vkontakte     = get_option( SCP_PREFIX . 'setting_use_vkontakte' )     === '1';
-		$use_odnoklassniki = get_option( SCP_PREFIX . 'setting_use_odnoklassniki' ) === '1';
-		$use_googleplus    = get_option( SCP_PREFIX . 'setting_use_googleplus' )    === '1';
-		$use_twitter       = get_option( SCP_PREFIX . 'setting_use_twitter' )       === '1';
+		$use_facebook               = get_option( SCP_PREFIX . 'setting_use_facebook' )      === '1';
+		$use_vkontakte              = get_option( SCP_PREFIX . 'setting_use_vkontakte' )     === '1';
+		$use_odnoklassniki          = get_option( SCP_PREFIX . 'setting_use_odnoklassniki' ) === '1';
+		$use_googleplus             = get_option( SCP_PREFIX . 'setting_use_googleplus' )    === '1';
+		$use_twitter                = get_option( SCP_PREFIX . 'setting_use_twitter' )       === '1';
 
-		$tabs_order        = explode(',', get_option( SCP_PREFIX . 'setting_tabs_order' ) );
+		$tabs_order                 = explode(',', get_option( SCP_PREFIX . 'setting_tabs_order' ) );
 
-		$container_width   = get_option( SCP_PREFIX . 'setting_container_width' );
-		$container_height  = get_option( SCP_PREFIX . 'setting_container_height' ) ;
-		$border_radius     = absint( get_option( SCP_PREFIX . 'setting_border_radius' ) );
+		$container_width            = get_option( SCP_PREFIX . 'setting_container_width' );
+		$container_height           = get_option( SCP_PREFIX . 'setting_container_height' ) ;
+		$border_radius              = absint( get_option( SCP_PREFIX . 'setting_border_radius' ) );
+		$close_by_clicking_anywhere = get_option( SCP_PREFIX . 'setting_close_popup_by_clicking_anywhere' ) === '1';
 
 		require( sprintf( "%s/templates/popup.php", dirname( __FILE__ ) ) );
 	}
