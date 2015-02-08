@@ -15,6 +15,7 @@ class Social_Community_Popup {
 		add_action( 'init', array( & $this, 'localization' ) );
 		add_action( 'admin_init', array( & $this, 'admin_init' ) );
 		add_action( 'admin_menu', array( & $this, 'add_menu' ) );
+		add_action( 'admin_head', array( & $this, 'admin_head' ) );
 		add_action( 'admin_head', array( & $this, 'admin_enqueue_scripts' ) );
 
 		add_action( 'wp_footer', array( & $this, 'wp_footer' ) );
@@ -27,6 +28,8 @@ class Social_Community_Popup {
 	 */
 	public static function activate() {
 		if ( ! current_user_can( 'activate_plugins' ) ) return;
+
+		set_transient( '_scp_welcome_screen', true, 30 );
 
 		self::upgrade();
 	}
@@ -268,6 +271,11 @@ class Social_Community_Popup {
 	 */
 	public function admin_init() {
 		$this->init_settings();
+
+		if ( ! get_transient( '_scp_welcome_screen' ) ) return;
+		delete_transient( '_scp_welcome_screen' );
+		if ( is_network_admin() || isset( $_GET['activate-multi'] ) ) return;
+		wp_safe_redirect( add_query_arg( array( 'page' => 'social_community_popup_about' ), admin_url( 'index.php' ) ) );
 	}
 
 	/**
@@ -1482,6 +1490,14 @@ class Social_Community_Popup {
 	 * Добавление пункта меню
 	 */
 	public function add_menu() {
+		add_dashboard_page(
+			__( 'Welcome To Social Community Popup Welcome Screen', L10N_SCP_PREFIX ),
+			__( 'Welcome To Social Community Popup Welcome Screen', L10N_SCP_PREFIX ),
+			'read',
+			'social_community_popup_about',
+			array( & $this, 'plugin_welcome_screen' )
+		);
+
 		add_menu_page(
 			__( 'Social Community Popup Options', L10N_SCP_PREFIX ),
 			__( 'SCP Options', L10N_SCP_PREFIX ),
@@ -1542,6 +1558,10 @@ class Social_Community_Popup {
 		);
 	}
 
+	public function admin_head() {
+		remove_submenu_page( 'index.php', 'social_community_popup_about' );
+	}
+
 	/**
 	 * Добавляем свои скрипты и таблицы CSS на страницу настроек
 	 */
@@ -1554,6 +1574,22 @@ class Social_Community_Popup {
 
 		wp_enqueue_script( 'jquery-ui-draggable', array( 'jquery' ) );
 		wp_enqueue_script( 'jquery-ui-sortable', array( 'jquery' ) );
+
+		wp_register_script( 'social-community-popup-admin-script', plugins_url( 'js/admin.js', __FILE__ ), array( 'jquery' ) );
+		wp_enqueue_script( 'social-community-popup-admin-script' );
+	}
+
+	/**
+	 * Страница приветствия после установки плагина
+	 */
+	public function plugin_welcome_screen() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+		}
+
+		$version = get_option( SCP_PREFIX . 'version'  );
+
+		include( sprintf( "%s/templates/welcome-screen.php", dirname( __FILE__ ) ) );
 	}
 
 	/**
