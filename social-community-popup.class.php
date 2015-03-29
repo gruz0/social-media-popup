@@ -1,8 +1,7 @@
 <?php
 defined( 'ABSPATH' ) or exit;
 
-define( 'SCP_PREFIX', 'social-community-popup-' );
-define( 'L10N_SCP_PREFIX', 'social-community-popup' ); // textdomain
+require_once( dirname( __FILE__ ) . "/functions.php" );
 
 class Social_Community_Popup {
 
@@ -73,10 +72,9 @@ class Social_Community_Popup {
 			'setting_facebook_locale',
 			'setting_facebook_width',
 			'setting_facebook_height',
-			'setting_facebook_show_header',
-			'setting_facebook_show_border',
-			'setting_facebook_show_faces',
-			'setting_facebook_show_stream',
+			'setting_facebook_hide_cover',
+			'setting_facebook_show_facepile',
+			'setting_facebook_show_posts',
 
 			// ВКонтакте
 			'setting_use_vkontakte',
@@ -256,6 +254,36 @@ class Social_Community_Popup {
 			update_option( SCP_PREFIX . 'setting_show_on_mobile_devices',            0 );
 
 			update_option( $version, '0.6.2' );
+		}
+
+		if ( '0.6.3' > get_option( $version ) ) {
+			// У виджета LikeBox в Facebook обновился интерфейс создания, поэтому адаптируем настройки
+			$facebook_show_header = absint( get_option( SCP_PREFIX . 'setting_facebook_show_header' ) );
+			update_option( SCP_PREFIX . 'setting_facebook_hide_cover', ( $facebook_show_header ? "1" : "" ) );
+			unset( $facebook_show_header );
+
+			$facebook_show_faces = get_option( SCP_PREFIX . 'setting_facebook_show_faces' );
+			update_option( SCP_PREFIX . 'setting_facebook_show_facepile', $facebook_show_faces );
+			unset( $facebook_show_faces );
+
+			$facebook_show_stream = get_option( SCP_PREFIX . 'setting_facebook_show_stream' );
+			update_option( SCP_PREFIX . 'setting_facebook_show_posts', $facebook_show_stream );
+			unset( $facebook_show_stream );
+
+			$facebook_remove_options = array(
+				'setting_facebook_show_header',
+				'setting_facebook_show_faces',
+				'setting_facebook_show_stream',
+				'setting_facebook_show_border'
+			);
+
+			for ( $idx = 0; $idx < count( $facebook_remove_options ); $idx++ ) {
+				delete_option( SCP_PREFIX . $facebook_remove_options[ $idx ] );
+			}
+
+			unset( $facebook_remove_options );
+
+			update_option( $version, '0.6.3' );
 		}
 	}
 
@@ -483,10 +511,9 @@ class Social_Community_Popup {
 		register_setting( $group, SCP_PREFIX . 'setting_facebook_locale', 'sanitize_text_field' );
 		register_setting( $group, SCP_PREFIX . 'setting_facebook_width', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_facebook_height', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_facebook_show_header' );
-		register_setting( $group, SCP_PREFIX . 'setting_facebook_show_border' );
-		register_setting( $group, SCP_PREFIX . 'setting_facebook_show_faces' );
-		register_setting( $group, SCP_PREFIX . 'setting_facebook_show_stream' );
+		register_setting( $group, SCP_PREFIX . 'setting_facebook_hide_cover' );
+		register_setting( $group, SCP_PREFIX . 'setting_facebook_show_facepile' );
+		register_setting( $group, SCP_PREFIX . 'setting_facebook_show_posts' );
 
 		add_settings_section(
 			$section,
@@ -603,51 +630,39 @@ class Social_Community_Popup {
 			)
 		);
 
-		// Показывать заголовок?
+		// Скрывать обложку группы в заголовке виджета
 		add_settings_field(
-			$prefix . '-facebook-show-header',
-			__( 'Show Widget Header', L10N_SCP_PREFIX ),
+			$prefix . '-facebook-hide-cover',
+			__( 'Hide cover photo in the header', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_facebook_show_header'
+				'field' => SCP_PREFIX . 'setting_facebook_hide_cover'
 			)
 		);
 
-		// Показывать границу?
+		// Показывать лица друзей когда страница отмечается понравившейся
 		add_settings_field(
-			$prefix . '-facebook-show-border',
-			__( 'Show Border', L10N_SCP_PREFIX ),
+			$prefix . '-facebook-show-facepile',
+			__( 'Show profile photos when friends like this', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_facebook_show_border'
+				'field' => SCP_PREFIX . 'setting_facebook_show_facepile'
 			)
 		);
 
-		// Показывать лица?
+		// Показывать записи со стены
 		add_settings_field(
-			$prefix . '-facebook-show-faces',
-			__( 'Show Faces', L10N_SCP_PREFIX ),
+			$prefix . '-facebook-show-posts',
+			__( 'Show posts from the Page\'s timeline', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_facebook_show_faces'
-			)
-		);
-
-		// Показывать записи со стены?
-		add_settings_field(
-			$prefix . '-facebook-show-stream',
-			__( 'Show Stream', L10N_SCP_PREFIX ),
-			array( & $this, 'settings_field_checkbox' ),
-			$options_page,
-			$section,
-			array(
-				'field' => SCP_PREFIX . 'setting_facebook_show_stream'
+				'field' => SCP_PREFIX . 'setting_facebook_show_posts'
 			)
 		);
 	}

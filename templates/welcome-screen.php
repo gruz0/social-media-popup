@@ -51,6 +51,12 @@
     <div class="box">
         <h2 class="title">История изменений</h2>
 
+		<h3>Версия 0.6.3 от 29.03.2015</h3>
+		<ul>
+			<li>Обновлены настройки виджета Facebook в связи с изменением API до версии 2.3</li>
+			<li>Виджет Like Box помечен как deprecated, вместо него теперь используется <a href="https://developers.facebook.com/docs/plugins/page-plugin" target="_blank" rel="nofollow">Page Plugin</a></li>
+		</ul>
+
 		<h3>Версия 0.6.2 от 09.02.2015</h3>
 		<ul>
 			<li>Добавлена опция отображения плагина на мобильных устройствах (экспериментальная!)</li>
