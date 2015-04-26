@@ -47,86 +47,85 @@
 </script>
 
 <?php
-if ( $cookie_popup_views < $visit_n_pages ) {
-	return;
-}
-
-if ( $use_facebook || $use_vkontakte || $use_odnoklassniki || $use_googleplus || $use_twitter ) :
+if ( $cookie_popup_views == $visit_n_pages ) :
+	if ( $use_facebook || $use_vkontakte || $use_odnoklassniki || $use_googleplus || $use_twitter ) :
 ?>
-<div id="social-community-popup">
-	<div class="parent_popup"></div>
+	<div id="social-community-popup">
+		<div class="parent_popup"></div>
 
-	<?php $border_radius_css = $border_radius > 0 ? "border-radius:{$border_radius}px !important;" : ""; ?>
-	<div id="popup" style="width:<?php echo $container_width + 60; ?>px !important;height:<?php echo $container_height + 10; ?>px !important;<?php echo $border_radius_css; ?>">
-		<div class="section" style="width:<?php echo $container_width; ?>px !important;height:<?php echo $container_height; ?>px !important;">
-			<span class="close"><?php _e( 'Close', L10N_SCP_PREFIX ); ?></span>
-			<ul class="tabs">
+		<?php $border_radius_css = $border_radius > 0 ? "border-radius:{$border_radius}px !important;" : ""; ?>
+		<div id="popup" style="width:<?php echo $container_width + 60; ?>px !important;height:<?php echo $container_height + 10; ?>px !important;<?php echo $border_radius_css; ?>">
+			<div class="section" style="width:<?php echo $container_width; ?>px !important;height:<?php echo $container_height; ?>px !important;">
+				<span class="close"><?php _e( 'Close', L10N_SCP_PREFIX ); ?></span>
+				<ul class="tabs">
 
-			<?php
-				for ( $idx = 0; $idx < count( $tabs_order ); $idx++ ) {
-					switch ( $tabs_order[ $idx ] ) {
-						case 'facebook':
-							if ( $use_facebook )
-								scp_tab_caption( 'setting_facebook_tab_caption' );
-							break;
+				<?php
+					for ( $idx = 0; $idx < count( $tabs_order ); $idx++ ) {
+						switch ( $tabs_order[ $idx ] ) {
+							case 'facebook':
+								if ( $use_facebook )
+									scp_tab_caption( 'setting_facebook_tab_caption' );
+								break;
 
-						case 'vkontakte':
-							if ( $use_vkontakte )
-								scp_tab_caption( 'setting_vkontakte_tab_caption' );
-							break;
+							case 'vkontakte':
+								if ( $use_vkontakte )
+									scp_tab_caption( 'setting_vkontakte_tab_caption' );
+								break;
 
-						case 'odnoklassniki':
-							if ( $use_odnoklassniki )
-								scp_tab_caption( 'setting_odnoklassniki_tab_caption' );
-							break;
+							case 'odnoklassniki':
+								if ( $use_odnoklassniki )
+									scp_tab_caption( 'setting_odnoklassniki_tab_caption' );
+								break;
 
-						case 'googleplus':
-							if ( $use_googleplus )
-								scp_tab_caption( 'setting_googleplus_tab_caption' );
-							break;
+							case 'googleplus':
+								if ( $use_googleplus )
+									scp_tab_caption( 'setting_googleplus_tab_caption' );
+								break;
 
-						case 'twitter':
-							if ( $use_twitter )
-								scp_tab_caption( 'setting_twitter_tab_caption' );
-							break;
+							case 'twitter':
+								if ( $use_twitter )
+									scp_tab_caption( 'setting_twitter_tab_caption' );
+								break;
+						}
 					}
-				}
-			?>
-			</ul>
+				?>
+				</ul>
 
-			<?php
-				for ( $idx = 0; $idx < count( $tabs_order ); $idx++ ) {
-					switch ( $tabs_order[ $idx ] ) {
-						case 'facebook':
-							if ( $use_facebook )
-								scp_facebook_container();
-							break;
+				<?php
+					for ( $idx = 0; $idx < count( $tabs_order ); $idx++ ) {
+						switch ( $tabs_order[ $idx ] ) {
+							case 'facebook':
+								if ( $use_facebook )
+									scp_facebook_container();
+								break;
 
-						case 'vkontakte':
-							if ( $use_vkontakte )
-								scp_vkontakte_container();
-							break;
+							case 'vkontakte':
+								if ( $use_vkontakte )
+									scp_vkontakte_container();
+								break;
 
-						case 'odnoklassniki':
-							if ( $use_odnoklassniki )
-								scp_odnoklassniki_container();
-							break;
+							case 'odnoklassniki':
+								if ( $use_odnoklassniki )
+									scp_odnoklassniki_container();
+								break;
 
-						case 'googleplus':
-							if ( $use_googleplus )
-								scp_googleplus_container();
-							break;
+							case 'googleplus':
+								if ( $use_googleplus )
+									scp_googleplus_container();
+								break;
 
-						case 'twitter':
-							if ( $use_twitter )
-								scp_twitter_container();
-							break;
+							case 'twitter':
+								if ( $use_twitter )
+									scp_twitter_container();
+								break;
+						}
 					}
-				}
-			?>
+				?>
+			</div>
 		</div>
 	</div>
-</div>
+	<?php endif; ?>
+<?php endif; ?>
 
 <?php // Окно SCP выводим только после создания его в DOM-дереве ?>
 <script>
@@ -154,7 +153,6 @@ if ( $use_facebook || $use_vkontakte || $use_odnoklassniki || $use_googleplus ||
 		<?php endif; ?>
     });
 </script>
-<?php endif; ?>
 
 <?php
 function scp_tab_caption( $option ) {
@@ -204,7 +202,8 @@ function scp_vkontakte_container() {
 				get_scp_option( 'setting_vkontakte_color_background' ),
 				get_scp_option( 'setting_vkontakte_color_text' ),
 				get_scp_option( 'setting_vkontakte_color_button' ),
-				get_scp_option( 'setting_vkontakte_page_or_group_id' )
+				get_scp_option( 'setting_vkontakte_page_or_group_id' ),
+				get_scp_option( 'setting_vkontakte_widget_delay_display' )
 			);
 			echo $vkontakte_container;
 		?>

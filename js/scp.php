@@ -3,6 +3,7 @@ $time_start = microtime( true );
 
 header("Content-type: text/javascript; charset=utf-8");
 
+//FIXME: Тут возможна проблема с WP установленным не в корневую директорию сайта. В общем, оставляю на подумать.
 require_once( dirname( __FILE__ ) . '/../../../../wp-load.php' );
 require_once( dirname( __FILE__ ) . "/../functions.php" );
 
