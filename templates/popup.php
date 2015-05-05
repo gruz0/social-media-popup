@@ -158,7 +158,7 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 </script>
 
 <?php
-function scp_tab_caption( $option, $css_class ) {
+function scp_tab_caption( $option, $css_class = '' ) {
 	global $tab_index;
 	printf( '<li data-index="' . $tab_index++ . '"' . ( empty( $css_class ) ? '' : " class='{$css_class}'" ) . '><span>%s</span></li>', get_scp_option( $option ) );
 }
