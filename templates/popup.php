@@ -1,4 +1,5 @@
 <?php defined( 'ABSPATH' ) or exit; ?>
+<?php $tab_index = 1; ?>
 <script>
 	jQuery(document).ready(function($) {
 		<?php 
@@ -158,7 +159,8 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 
 <?php
 function scp_tab_caption( $option, $css_class ) {
-	printf( '<li' . ( empty( $css_class ) ? '' : " class='{$css_class}'" ) . '><span>%s</span></li>', get_scp_option( $option ) );
+	global $tab_index;
+	printf( '<li data-index="' . $tab_index++ . '"' . ( empty( $css_class ) ? '' : " class='{$css_class}'" ) . '><span>%s</span></li>', get_scp_option( $option ) );
 }
 
 function scp_facebook_container() {
