@@ -10,7 +10,7 @@ require_once( dirname( __FILE__ ) . "/../functions.php" );
 // Отключаем работу плагина на мобильных устройствах
 if ( wp_is_mobile() && get_scp_option( 'setting_show_on_mobile_devices' ) === '0' ) return;
 
-$debug_mode = is_user_logged_in() && (int) get_scp_option( 'setting_debug_mode' );
+$debug_mode = is_user_logged_in() && intval( get_scp_option( 'setting_debug_mode' ) ) == 1;
 
 if ( $debug_mode ) {
 	$after_n_days          = 1;

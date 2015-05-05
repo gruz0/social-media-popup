@@ -69,7 +69,7 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 
 							case 'vkontakte':
 								if ( $use_vkontakte )
-									scp_tab_caption( 'setting_vkontakte_tab_caption' );
+									scp_tab_caption( 'setting_vkontakte_tab_caption', 'vk-tab' );
 								break;
 
 							case 'odnoklassniki':
@@ -138,7 +138,7 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 			<?php if ( $delay_after_n_seconds > 0 ) : ?>
 				setTimeout("jQuery('#social-community-popup').show();", <?php echo $delay_after_n_seconds * 1000; ?>);
 			<?php else: ?>
-				setTimeout( '$("#social-community-popup").show();', 1000 );
+				setTimeout( 'jQuery("#social-community-popup").show();', 1000 );
 			<?php endif; ?>
 			scp_deleteCookie("social-community-popup-views");
 
@@ -157,8 +157,8 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 </script>
 
 <?php
-function scp_tab_caption( $option ) {
-	printf( '<li><span>%s</span></li>', get_scp_option( $option ) );
+function scp_tab_caption( $option, $css_class ) {
+	printf( '<li' . ( empty( $css_class ) ? '' : " class='{$css_class}'" ) . '><span>%s</span></li>', get_scp_option( $option ) );
 }
 
 function scp_facebook_container() {
