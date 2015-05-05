@@ -88,7 +88,6 @@ class Social_Community_Popup {
 			'setting_vkontakte_color_background',
 			'setting_vkontakte_color_text',
 			'setting_vkontakte_color_button',
-			'setting_vkontakte_widget_delay_display',
 
 			// Одноклассники
 			'setting_use_odnoklassniki',
@@ -288,10 +287,6 @@ class Social_Community_Popup {
 		}
 
 		if ( '0.6.4' > get_option( $version ) ) {
-			// Пришлось добавить дополнительную опцию для задержки времени отображения виджета ВКонтакте.
-			// Прошлая захардкоденная задержка 500 ms была слишком маленькой для Firefox.
-			update_option( SCP_PREFIX . 'setting_vkontakte_widget_delay_display', 2000 );
-
 			update_option( $version, '0.6.4' );
 		}
 	}
@@ -702,7 +697,6 @@ class Social_Community_Popup {
 		register_setting( $group, SCP_PREFIX . 'setting_vkontakte_color_background', 'sanitize_text_field' );
 		register_setting( $group, SCP_PREFIX . 'setting_vkontakte_color_text', 'sanitize_text_field' );
 		register_setting( $group, SCP_PREFIX . 'setting_vkontakte_color_button', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'setting_vkontakte_widget_delay_display', 'absint' );
 
 		add_settings_section(
 			$section,
@@ -840,18 +834,6 @@ class Social_Community_Popup {
 			$section,
 			array(
 				'field' => SCP_PREFIX . 'setting_vkontakte_color_button'
-			)
-		);
-
-		// Задержка отрисовки виджета (для корректной работы плагина в Firefox)
-		add_settings_field(
-			$prefix . '-vkontakte-widget-delay-display',
-			__( 'Widget Delay Display Time (in ms.)', L10N_SCP_PREFIX ),
-			array( & $this, 'settings_field_input_text' ),
-			$options_page,
-			$section,
-			array(
-				'field' => SCP_PREFIX . 'setting_vkontakte_widget_delay_display'
 			)
 		);
 	}
