@@ -127,7 +127,9 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 	<?php endif; ?>
 <?php endif; ?>
 
-<?php // Окно SCP выводим только после создания его в DOM-дереве ?>
+<?php
+// Окно SCP выводим только после создания его в DOM-дереве
+?>
 <script>
 	jQuery(document).ready(function($) {
 		scp_setCookie("social-community-popup-views", <?php echo $cookie_popup_views + 1; ?>, { "path": "/" } );
