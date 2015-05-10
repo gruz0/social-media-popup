@@ -1533,9 +1533,9 @@ class Social_Community_Popup {
 		$value = get_option( $field );
 		$format = '<input type="radio" id="%s" name="%s" value="%s"%s />';
 		$format .= '<label for="%s">%s</label>';
-		$html = sprintf( $format, $field . '_0', $field, 'person', checked( $value, 'person', false ), $field . '_0', __( 'Google Plus Person', L10N_SCP_PREFIX ) );
+		$html = sprintf( $format, $field . '_0', $field, 'person', checked( $value, 'person', false ), $field . '_0', __( 'Google+ Person', L10N_SCP_PREFIX ) );
 		$html .= '<br />';
-		$html .= sprintf( $format, $field . '_1', $field, 'page', checked( $value, 'page', false ), $field . '_1', __( 'Google Plus Page', L10N_SCP_PREFIX ) );
+		$html .= sprintf( $format, $field . '_1', $field, 'page', checked( $value, 'page', false ), $field . '_1', __( 'Google+ Page', L10N_SCP_PREFIX ) );
 		echo $html;
 	}
 
