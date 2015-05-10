@@ -244,16 +244,29 @@ function scp_googleplus_container() {
 		<?php
 			$googleplus_container = sprintf( 
 				file_get_contents( dirname( __FILE__ ) . '/partials/googleplus_container.php' ),
+				get_scp_option( 'setting_googleplus_page_type' ),
 				get_scp_option( 'setting_googleplus_size' ),
 				get_scp_option( 'setting_googleplus_page_url' ),
 				get_scp_option( 'setting_googleplus_theme' ),
 				get_scp_option( 'setting_googleplus_show_tagline' ),
-				get_scp_option( 'setting_googleplus_show_cover_photo' )
+				get_scp_option( 'setting_googleplus_show_cover_photo' ),
+				google_plus_relation_from_page_type()
 			);
 			echo $googleplus_container;
 		?>
 	</div>
 <?php
+}
+
+function google_plus_relation_from_page_type() {
+	switch ( get_scp_option( 'setting_googleplus_page_type' ) ) {
+		case 'page':
+			return 'publisher';
+		case 'person':
+			return 'person';
+		default:
+			return '';
+	}
 }
 
 function scp_twitter_container() {

@@ -109,6 +109,7 @@ class Social_Community_Popup {
 			'setting_googleplus_theme',
 			'setting_googleplus_show_cover_photo',
 			'setting_googleplus_show_tagline',
+			'setting_googleplus_page_type',
 
 			// Twitter
 			'setting_use_twitter',
@@ -288,6 +289,12 @@ class Social_Community_Popup {
 
 		if ( '0.6.4' > get_option( $version ) ) {
 			update_option( $version, '0.6.4' );
+		}
+
+		if ( '0.6.5' > get_option( $version ) ) {
+			update_option( SCP_PREFIX . 'setting_googleplus_page_type',              'person' );
+
+			update_option( $version, '0.6.5' );
 		}
 	}
 
@@ -978,6 +985,7 @@ class Social_Community_Popup {
 		register_setting( $group, SCP_PREFIX . 'setting_googleplus_theme', 'sanitize_text_field' );
 		register_setting( $group, SCP_PREFIX . 'setting_googleplus_show_cover_photo' );
 		register_setting( $group, SCP_PREFIX . 'setting_googleplus_show_tagline' );
+		register_setting( $group, SCP_PREFIX . 'setting_googleplus_page_type', 'sanitize_text_field' );
 
 		add_settings_section(
 			$section,
@@ -1031,6 +1039,18 @@ class Social_Community_Popup {
 			$section,
 			array(
 				'field' => SCP_PREFIX . 'setting_googleplus_description'
+			)
+		);
+
+		// Тип профиля Google Plus
+		add_settings_field(
+			$prefix . '-googleplus-page-type',
+			__( 'Google+ Page Type', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_googleplus_page_type' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_googleplus_page_type'
 			)
 		);
 
@@ -1502,6 +1522,20 @@ class Social_Community_Popup {
 		$html = sprintf( $format, $field . '_0', $field, 'ru', checked( $value, 'ru', false ), $field . '_0', __( 'Russian', L10N_SCP_PREFIX ) );
 		$html .= '<br />';
 		$html .= sprintf( $format, $field . '_1', $field, 'en', checked( $value, 'en', false ), $field . '_1', __( 'English', L10N_SCP_PREFIX ) );
+		echo $html;
+	}
+
+	/**
+	 * Callback-шаблон для формирования радио-кнопок для выбора типа страницы Google+
+	 */
+	public function settings_field_googleplus_page_type( $args ) {
+		$field = $args[ 'field' ];
+		$value = get_option( $field );
+		$format = '<input type="radio" id="%s" name="%s" value="%s"%s />';
+		$format .= '<label for="%s">%s</label>';
+		$html = sprintf( $format, $field . '_0', $field, 'person', checked( $value, 'person', false ), $field . '_0', __( 'Google Plus Person', L10N_SCP_PREFIX ) );
+		$html .= '<br />';
+		$html .= sprintf( $format, $field . '_1', $field, 'page', checked( $value, 'page', false ), $field . '_1', __( 'Google Plus Page', L10N_SCP_PREFIX ) );
 		echo $html;
 	}
 
