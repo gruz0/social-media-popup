@@ -12,7 +12,7 @@
 		$vk_tab = $('#social-community-popup .vk-tab');
 
 		if ($vk_tab.length && parseInt($vk_tab.data('index')) == 1) {
-			initialize_VK_Widgets();
+			setTimeout("initialize_VK_Widgets();", 300);
 		}
 
 		$vk_tab.on('click', function() {
