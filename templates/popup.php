@@ -21,7 +21,7 @@
 		$("body").prepend( $("<div/>").html("<?php echo $prepend_googleplus; ?>").text());
     });
 </script>
-<?php endif; // use_googleplus ?>
+<?php endif; ?>
 
 <?php
 if ( $cookie_popup_views == $visit_n_pages ) :
@@ -129,7 +129,7 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 			$("body").prepend($("<div/>").html("<?php echo $prepend_facebook; ?>").text());
 		}
 	}
-	<?php endif; // use_facebook ?>
+	<?php endif; ?>
 
 	<?php $calculated_delay = ( $delay_after_n_seconds > 0 ? $delay_after_n_seconds * 1000 : 1000 ); ?>
 
