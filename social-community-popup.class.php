@@ -302,7 +302,7 @@ class Social_Community_Popup {
 			// Скрывать виджет при нажатии на Esc или нет
 			update_option( SCP_PREFIX . 'setting_close_popup_when_esc_pressed',      0 );
 
-			update_option( $version, '0.6.5' );
+			update_option( $version, '0.6.6' );
 		}
 	}
 
