@@ -154,6 +154,14 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 				$("#social-community-popup").remove();
 			});
 		<?php endif; ?>
+
+		<?php if ( $close_when_esc_pressed ) : ?>
+		$(document).keydown(function(e) {
+			if ( e.keyCode == 27 ) {
+				$('#social-community-popup').remove();
+			}
+		});
+		<?php endif; ?>
     });
 </script>
 
