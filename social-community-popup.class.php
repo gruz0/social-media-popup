@@ -61,6 +61,7 @@ class Social_Community_Popup {
 			'setting_container_height',
 			'setting_border_radius',
 			'setting_remove_settings_on_uninstall',
+			'setting_close_popup_when_esc_pressed',
 
 			// Facebook
 			'setting_use_facebook',
@@ -296,6 +297,13 @@ class Social_Community_Popup {
 
 			update_option( $version, '0.6.5' );
 		}
+
+		if ( '0.6.6' > get_option( $version ) ) {
+			// Скрывать виджет при нажатии на Esc или нет
+			update_option( SCP_PREFIX . 'setting_close_popup_when_esc_pressed',      0 );
+
+			update_option( $version, '0.6.5' );
+		}
 	}
 
 	/**
@@ -355,6 +363,7 @@ class Social_Community_Popup {
 		register_setting( $group, SCP_PREFIX . 'setting_container_height', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_border_radius', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_close_popup_by_clicking_anywhere', 'absint' );
+		register_setting( $group, SCP_PREFIX . 'setting_close_popup_when_esc_pressed', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_show_on_mobile_devices', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_remove_settings_on_uninstall' );
 
@@ -470,6 +479,18 @@ class Social_Community_Popup {
 			$section,
 			array(
 				'field' => SCP_PREFIX . 'setting_close_popup_by_clicking_anywhere'
+			)
+		);
+
+		// Скрывать окно при нажатии на Escape
+		add_settings_field(
+			$prefix . '-common-close-popup-when-esc-pressed',
+			__( 'Close the popup when ESC pressed', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_close_popup_when_esc_pressed'
 			)
 		);
 
