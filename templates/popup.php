@@ -1,51 +1,27 @@
 <?php defined( 'ABSPATH' ) or exit; ?>
 <?php $tab_index = 1; ?>
+<?php
+	// Google+
+	if ( $use_googleplus ) :
+?>
 <script>
 	jQuery(document).ready(function($) {
-		<?php 
-			// Facebook
-			if ( $use_facebook ) :
+	<?php
+		$prepend_googleplus = sprintf(
+			file_get_contents( dirname( __FILE__ ) . '/partials/googleplus_prepend.php' ),
+			get_scp_option( 'setting_googleplus_locale' )
+		);
 
-				// Заменяем Application ID на наш из настроек
-				$prepend_facebook = sprintf( 
-					file_get_contents( dirname( __FILE__ ) . '/partials/facebook_prepend.php' ),
-					get_scp_option( 'setting_facebook_locale' ),
-					get_scp_option( 'setting_facebook_application_id' )
-				);
+		// Удаляем переносы строк, иначе jQuery ниже не отработает
+		$prepend_googleplus = str_replace("\n", '', $prepend_googleplus);
 
-				// Удаляем переносы строк, иначе jQuery ниже не отработает
-				$prepend_facebook = str_replace("\n", '', $prepend_facebook);
-
-				// Переводим код в сущности
-				$prepend_facebook = htmlspecialchars( $prepend_facebook, ENT_QUOTES );
-			?>
-
-				if ($("#fb-root").length == 0) {
-					$("body").prepend( $("<div/>").html("<?php echo $prepend_facebook; ?>").text());
-				}
-			<?php
-			endif; // use_facebook
-
-			// Google+
-			if ( $use_googleplus ) :
-
-				$prepend_googleplus = sprintf(
-					file_get_contents( dirname( __FILE__ ) . '/partials/googleplus_prepend.php' ),
-					get_scp_option( 'setting_googleplus_locale' )
-				);
-
-				// Удаляем переносы строк, иначе jQuery ниже не отработает
-				$prepend_googleplus = str_replace("\n", '', $prepend_googleplus);
-
-				// Переводим код в сущности
-				$prepend_googleplus = htmlspecialchars( $prepend_googleplus, ENT_QUOTES );
-			?>
-				$("body").prepend( $("<div/>").html("<?php echo $prepend_googleplus; ?>").text());
-			<?php
-			endif; // use_googleplus
-		?>
+		// Переводим код в сущности
+		$prepend_googleplus = htmlspecialchars( $prepend_googleplus, ENT_QUOTES );
+	?>
+		$("body").prepend( $("<div/>").html("<?php echo $prepend_googleplus; ?>").text());
     });
 </script>
+<?php endif; // use_googleplus ?>
 
 <?php
 if ( $cookie_popup_views == $visit_n_pages ) :
@@ -55,7 +31,7 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 		<div class="parent_popup"></div>
 
 		<?php $border_radius_css = $border_radius > 0 ? "border-radius:{$border_radius}px !important;" : ""; ?>
-		<div id="popup" style="width:<?php echo $container_width + 60; ?>px !important;height:<?php echo $container_height + 10; ?>px !important;<?php echo $border_radius_css; ?>">
+		<div id="popup" style="width:<?php echo $container_width + 40; ?>px !important;height:<?php echo $container_height + 10; ?>px !important;<?php echo $border_radius_css; ?>">
 			<div class="section" style="width:<?php echo $container_width; ?>px !important;height:<?php echo $container_height; ?>px !important;">
 				<span class="close"><?php _e( 'Close', L10N_SCP_PREFIX ); ?></span>
 				<ul class="tabs">
@@ -132,15 +108,39 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 // Окно SCP выводим только после создания его в DOM-дереве
 ?>
 <script>
+	<?php if ( $use_facebook ) : ?>
+	function scp_prependFacebook($) {
+		<?php
+			// Заменяем Application ID на наш из настроек
+			$prepend_facebook = sprintf(
+				file_get_contents( dirname( __FILE__ ) . '/partials/facebook_prepend.php' ),
+				get_scp_option( 'setting_facebook_locale' ),
+				get_scp_option( 'setting_facebook_application_id' )
+			);
+
+			// Удаляем переносы строк, иначе jQuery ниже не отработает
+			$prepend_facebook = str_replace("\n", '', $prepend_facebook);
+
+			// Переводим код в сущности
+			$prepend_facebook = htmlspecialchars( $prepend_facebook, ENT_QUOTES );
+		?>
+
+		if ($("#fb-root").length == 0) {
+			$("body").prepend($("<div/>").html("<?php echo $prepend_facebook; ?>").text());
+		}
+	}
+	<?php endif; // use_facebook ?>
+
+	<?php $calculated_delay = ( $delay_after_n_seconds > 0 ? $delay_after_n_seconds * 1000 : 1000 ); ?>
+
 	jQuery(document).ready(function($) {
 		scp_setCookie("social-community-popup-views", <?php echo $cookie_popup_views + 1; ?>, { "path": "/" } );
 
 		<?php if ( $cookie_popup_views === $visit_n_pages ) : ?>
-			<?php if ( $delay_after_n_seconds > 0 ) : ?>
-				setTimeout("jQuery('#social-community-popup').show();", <?php echo $delay_after_n_seconds * 1000; ?>);
-			<?php else: ?>
-				setTimeout( 'jQuery("#social-community-popup").show();', 1000 );
-			<?php endif; ?>
+			setTimeout(function() {
+				<?php if ( $use_facebook ) echo "scp_prependFacebook(\$);"; ?>
+				jQuery('#social-community-popup').show();
+			}, <?php echo $calculated_delay; ?>);
 			scp_deleteCookie("social-community-popup-views");
 
 			<?php if ( $close_by_clicking_anywhere ) : ?>
