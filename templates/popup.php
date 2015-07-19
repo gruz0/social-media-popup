@@ -214,7 +214,8 @@ function scp_vkontakte_container() {
 				get_scp_option( 'setting_vkontakte_color_background' ),
 				get_scp_option( 'setting_vkontakte_color_text' ),
 				get_scp_option( 'setting_vkontakte_color_button' ),
-				get_scp_option( 'setting_vkontakte_page_or_group_id' )
+				get_scp_option( 'setting_vkontakte_page_or_group_id' ),
+				get_scp_option( 'setting_vkontakte_delay_before_render' )
 			);
 			echo $vkontakte_container;
 		?>
