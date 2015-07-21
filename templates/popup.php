@@ -133,6 +133,13 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 
 	<?php $calculated_delay = ( $delay_after_n_seconds > 0 ? $delay_after_n_seconds * 1000 : 1000 ); ?>
 
+	function scp_destroyPlugin($) {
+		var date = new Date( new Date().getTime() + <?php echo 1000 * 60 * 60 * 24 * $after_n_days; ?>);
+		scp_setCookie("social-community-popup", "true", { "expires": date, "path": "/" } );
+		scp_deleteCookie("social-community-popup-views");
+		$("#social-community-popup").remove();
+	}
+
 	jQuery(document).ready(function($) {
 		scp_setCookie("social-community-popup-views", <?php echo $cookie_popup_views + 1; ?>, { "path": "/" } );
 
@@ -149,17 +156,14 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 			<?php else: ?>
 			$("#social-community-popup .close").click(function() {
 			<?php endif;  ?>
-				var date = new Date( new Date().getTime() + <?php echo 1000 * 60 * 60 * 24 * $after_n_days; ?>);
-				scp_setCookie("social-community-popup", "true", { "expires": date, "path": "/" } );
-				scp_deleteCookie("social-community-popup-views");
-				$("#social-community-popup").remove();
+				scp_destroyPlugin($);
 			});
 		<?php endif; ?>
 
 		<?php if ( $close_when_esc_pressed ) : ?>
 		$(document).keydown(function(e) {
 			if ( e.keyCode == 27 ) {
-				$('#social-community-popup').remove();
+				scp_destroyPlugin($);
 			}
 		});
 		<?php endif; ?>
