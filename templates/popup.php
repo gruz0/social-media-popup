@@ -139,6 +139,7 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 		<?php if ( $cookie_popup_views === $visit_n_pages ) : ?>
 			setTimeout(function() {
 				<?php if ( $use_facebook ) echo "scp_prependFacebook(\$);"; ?>
+				<?php if ( $use_vkontakte ) echo "scp_prependVK(\$);"; ?>
 				jQuery('#social-community-popup').show();
 			}, <?php echo $calculated_delay; ?>);
 			scp_deleteCookie("social-community-popup-views");

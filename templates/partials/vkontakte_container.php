@@ -8,7 +8,7 @@
 		vk_initialized = 1;
 	}
 
-	jQuery(document).ready(function($) {
+	function scp_prependVK($) {
 		$vk_tab = $('#social-community-popup .vk-tab');
 
 		if ($vk_tab.length && parseInt($vk_tab.data('index')) == 1) {
@@ -20,5 +20,5 @@
 				initialize_VK_Widgets();
 			}
 		});
-	});
+	}
 </script>
