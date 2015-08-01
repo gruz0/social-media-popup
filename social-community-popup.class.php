@@ -63,6 +63,7 @@ class Social_Community_Popup {
 			'setting_remove_settings_on_uninstall',
 			'setting_close_popup_when_esc_pressed',
 			'setting_plugin_title',
+			'setting_hide_tabs_if_one_widget_is_active',
 
 			// Facebook
 			'setting_use_facebook',
@@ -314,6 +315,9 @@ class Social_Community_Popup {
 			// Надпись над табами плагина
 			update_option( SCP_PREFIX . 'setting_plugin_title',                       '<div style="text-align: center;font: bold normal 14pt/16pt Arial">Понравилось на нашем сайте?<br />Следуйте за нами в соц. сетях!</div>' );
 
+			// Скрывать панель табов, если выбрана только одна соц. сеть
+			update_option( SCP_PREFIX . 'setting_hide_tabs_if_one_widget_is_active', 1 );
+
 			update_option( $version, '0.6.7' );
 		}
 	}
@@ -498,6 +502,7 @@ class Social_Community_Popup {
 
 		// Не забывать добавлять новые опции в uninstall()
 		register_setting( $group, SCP_PREFIX . 'setting_plugin_title', 'wp_kses_post' );
+		register_setting( $group, SCP_PREFIX . 'setting_hide_tabs_if_one_widget_is_active', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_container_width', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_container_height', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_border_radius', 'absint' );
@@ -518,6 +523,18 @@ class Social_Community_Popup {
 			$section,
 			array(
 				'field' => SCP_PREFIX . 'setting_plugin_title'
+			)
+		);
+
+		// Скрывать панель табов, если активна только одна соц. сеть
+		add_settings_field(
+			$prefix . '-common-hide-tabs-if-one-widget-is-active',
+			__( 'Hide Tabs if One Widget is Active', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_hide_tabs_if_one_widget_is_active'
 			)
 		);
 

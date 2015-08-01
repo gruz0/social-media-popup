@@ -46,6 +46,23 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 				</div>
 			<?php }
 		?>
+
+		<?php
+			$selected_widgets_count = 0;
+			for ( $idx = 0; $idx < count( $tabs_order ); $idx++ ) {
+				switch ( $tabs_order[ $idx ] ) {
+					case 'facebook':      if ( $use_facebook )      $selected_widgets_count++; break;
+					case 'vkontakte':     if ( $use_vkontakte )     $selected_widgets_count++; break;
+					case 'odnoklassniki': if ( $use_odnoklassniki ) $selected_widgets_count++; break;
+					case 'googleplus':    if ( $use_googleplus )    $selected_widgets_count++; break;
+					case 'twitter':       if ( $use_twitter )       $selected_widgets_count++; break;
+				}
+			}
+		?>
+
+			<?php if ( $selected_widgets_count == 1 && get_scp_option( 'setting_hide_tabs_if_one_widget_is_active' ) == 1 ) : ?>
+
+			<?php else: ?>
 				<ul class="tabs">
 
 				<?php
@@ -82,6 +99,7 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 					<li class="last-item"><span class="close" title="<?php _e( 'Close Modal Dialog', L10N_SCP_PREFIX ); ?>">&times;</span></li>
 				<?php endif; ?>
 				</ul>
+			<?php endif; ?>
 
 				<?php
 					for ( $idx = 0; $idx < count( $tabs_order ); $idx++ ) {
