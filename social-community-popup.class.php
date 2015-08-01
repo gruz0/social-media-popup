@@ -62,6 +62,7 @@ class Social_Community_Popup {
 			'setting_border_radius',
 			'setting_remove_settings_on_uninstall',
 			'setting_close_popup_when_esc_pressed',
+			'setting_plugin_title',
 
 			// Facebook
 			'setting_use_facebook',
@@ -310,6 +311,9 @@ class Social_Community_Popup {
 		}
 
 		if ( '0.6.7' > get_option( $version ) ) {
+			// Надпись над табами плагина
+			update_option( SCP_PREFIX . 'setting_plugin_title',                       '<div style="text-align: center;font: bold normal 14pt/16pt Arial">Понравилось на нашем сайте?<br />Следуйте за нами в соц. сетях!</div>' );
+
 			update_option( $version, '0.6.7' );
 		}
 	}
@@ -493,6 +497,7 @@ class Social_Community_Popup {
 		$section = $prefix . '-section-common-view';
 
 		// Не забывать добавлять новые опции в uninstall()
+		register_setting( $group, SCP_PREFIX . 'setting_plugin_title', 'wp_kses_post' );
 		register_setting( $group, SCP_PREFIX . 'setting_container_width', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_container_height', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_border_radius', 'absint' );
@@ -502,6 +507,18 @@ class Social_Community_Popup {
 			__( 'View', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_section_common_view' ),
 			$options_page
+		);
+
+		// Заголовок окна плагина
+		add_settings_field(
+			$prefix . '-common-plugin-title',
+			__( 'Main Window Title', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_wysiwyg' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_plugin_title'
+			)
 		);
 
 		// Ширина основного контейнера
@@ -1506,7 +1523,8 @@ class Social_Community_Popup {
 			'wpautop' => true,
 			'media_buttons' => true,
 			'quicktags' => true,
-			'textarea_rows' => '10',
+			'textarea_rows' => '5',
+			'teeny' => true,
 			'textarea_name' => $field
 		);
 		wp_editor( wp_kses_post( $value , ENT_QUOTES, 'UTF-8' ), $field, $settings );
