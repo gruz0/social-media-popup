@@ -308,6 +308,10 @@ class Social_Community_Popup {
 
 			update_option( $version, '0.6.6' );
 		}
+
+		if ( '0.6.7' > get_option( $version ) ) {
+			update_option( $version, '0.6.7' );
+		}
 	}
 
 	/**
