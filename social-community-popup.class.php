@@ -64,6 +64,9 @@ class Social_Community_Popup {
 			'setting_close_popup_when_esc_pressed',
 			'setting_plugin_title',
 			'setting_hide_tabs_if_one_widget_is_active',
+			'setting_show_button_to_close_widget',
+			'setting_button_to_close_widget_title',
+			'setting_button_to_close_widget_style',
 
 			// Facebook
 			'setting_use_facebook',
@@ -316,7 +319,12 @@ class Social_Community_Popup {
 			update_option( SCP_PREFIX . 'setting_plugin_title',                       '<div style="text-align: center;font: bold normal 14pt/16pt Arial">Понравилось на нашем сайте?<br />Следуйте за нами в соц. сетях!</div>' );
 
 			// Скрывать панель табов, если выбрана только одна соц. сеть
-			update_option( SCP_PREFIX . 'setting_hide_tabs_if_one_widget_is_active', 1 );
+			update_option( SCP_PREFIX . 'setting_hide_tabs_if_one_widget_is_active',  1 );
+
+			// Кнопка "Спасибо, я уже с вами"
+			update_option( SCP_PREFIX . 'setting_show_button_to_close_widget',        1 );
+			update_option( SCP_PREFIX . 'setting_button_to_close_widget_title',       _e( "Thanks! Please don't show me popup.", L10N_SCP_PREFIX ) );
+			update_option( SCP_PREFIX . 'setting_button_to_close_widget_style',       'link' );
 
 			update_option( $version, '0.6.7' );
 		}
@@ -506,6 +514,9 @@ class Social_Community_Popup {
 		register_setting( $group, SCP_PREFIX . 'setting_container_width', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_container_height', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_border_radius', 'absint' );
+		register_setting( $group, SCP_PREFIX . 'setting_show_button_to_close_widget', 'absint' );
+		register_setting( $group, SCP_PREFIX . 'setting_button_to_close_widget_title', 'sanitize_text_field' );
+		register_setting( $group, SCP_PREFIX . 'setting_button_to_close_widget_style', 'sanitize_text_field' );
 
 		add_settings_section(
 			$section,
@@ -535,6 +546,42 @@ class Social_Community_Popup {
 			$section,
 			array(
 				'field' => SCP_PREFIX . 'setting_hide_tabs_if_one_widget_is_active'
+			)
+		);
+
+		// Показывать кнопку "Спасибо, я уже с вами"
+		add_settings_field(
+			$prefix . '-common-show-button-to-close-widget',
+			__( 'Show Button to Close Widget', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_show_button_to_close_widget'
+			)
+		);
+
+		// Надпись на кнопке "Спасибо, я уже с вами"
+		add_settings_field(
+			$prefix . '-common-button-to-close-widget-title',
+			__( 'Button to Close Widget Title', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_button_to_close_widget_title'
+			)
+		);
+
+		// Стиль кнопки "Спасибо, я уже с вами"
+		add_settings_field(
+			$prefix . '-common-button-to-close-widget-style',
+			__( 'Button to Close Widget Style', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_button_to_close_widget_style' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_button_to_close_widget_style'
 			)
 		);
 
@@ -1545,6 +1592,24 @@ class Social_Community_Popup {
 			'textarea_name' => $field
 		);
 		wp_editor( wp_kses_post( $value , ENT_QUOTES, 'UTF-8' ), $field, $settings );
+	}
+
+	/**
+	 * Callback-шаблон для формирования стиля кнопки "Спасибо, я уже с вами"
+	 */
+	public function settings_field_button_to_close_widget_style( $args ) {
+		$field = $args[ 'field' ];
+		$value = get_option( $field );
+		$format = '<input type="radio" id="%s" name="%s" value="%s"%s />';
+		$format .= '<label for="%s">%s</label>';
+		$html = sprintf( $format, $field . '_0', $field, 'link', checked( $value, 'link', false ), $field . '_0', __( 'Link', L10N_SCP_PREFIX ) );
+		$html .= '<br />';
+		$html .= sprintf( $format, $field . '_1', $field, 'green', checked( $value, 'green', false ), $field . '_1', __( 'Green button', L10N_SCP_PREFIX ) );
+		$html .= '<br />';
+		$html .= sprintf( $format, $field . '_2', $field, 'blue', checked( $value, 'blue', false ), $field . '_2', __( 'Blue button', L10N_SCP_PREFIX ) );
+		$html .= '<br />';
+		$html .= sprintf( $format, $field . '_3', $field, 'red', checked( $value, 'red', false ), $field . '_3', __( 'Red button', L10N_SCP_PREFIX ) );
+		echo $html;
 	}
 
 	/**

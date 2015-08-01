@@ -132,6 +132,16 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 					}
 				?>
 			</div>
+
+			<?php
+				if ( get_scp_option( 'setting_show_button_to_close_widget' ) == '1' ):
+					$button_to_close_widget_style = get_scp_option( 'setting_button_to_close_widget_style' );
+					$button_to_close_widget_class = $button_to_close_widget_style == 'link' ? '' : 'scp-' . $button_to_close_widget_style . '-button';
+				?>
+					<div class="dont-show-widget scp-button <?php echo $button_to_close_widget_class; ?>">
+						<a href="#" class="close"><?php echo get_scp_option( 'setting_button_to_close_widget_title' ); ?></a>
+					</div>
+				<?php endif; ?>
 		</div>
 	</div>
 	<?php endif; ?>
