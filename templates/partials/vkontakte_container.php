@@ -11,9 +11,12 @@
 	function scp_prependVK($) {
 		timeout = %s;
 
+		$tabs   = $('#social-community-popup .tabs');
 		$vk_tab = $('#social-community-popup .vk-tab');
 
 		if ($vk_tab.length && parseInt($vk_tab.data('index')) == 1) {
+			setTimeout("initialize_VK_Widgets();", timeout);
+		} else if ($tabs.length == 0) {
 			setTimeout("initialize_VK_Widgets();", timeout);
 		}
 
