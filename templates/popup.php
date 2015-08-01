@@ -1,29 +1,7 @@
 <?php defined( 'ABSPATH' ) or exit; ?>
-<?php $tab_index = 1; ?>
 <?php
-	// Google+
-	if ( $use_googleplus ) :
-?>
-<script>
-	jQuery(document).ready(function($) {
-	<?php
-		$prepend_googleplus = sprintf(
-			file_get_contents( dirname( __FILE__ ) . '/partials/googleplus_prepend.php' ),
-			get_scp_option( 'setting_googleplus_locale' )
-		);
+$tab_index = 1;
 
-		// Удаляем переносы строк, иначе jQuery ниже не отработает
-		$prepend_googleplus = str_replace("\n", '', $prepend_googleplus);
-
-		// Переводим код в сущности
-		$prepend_googleplus = htmlspecialchars( $prepend_googleplus, ENT_QUOTES );
-	?>
-		$("body").prepend( $("<div/>").html("<?php echo $prepend_googleplus; ?>").text());
-    });
-</script>
-<?php endif; ?>
-
-<?php
 if ( $cookie_popup_views == $visit_n_pages ) :
 	if ( $use_facebook || $use_vkontakte || $use_odnoklassniki || $use_googleplus || $use_twitter ) :
 ?>
@@ -85,7 +63,7 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 
 							case 'googleplus':
 								if ( $use_googleplus )
-									scp_tab_caption( 'setting_googleplus_tab_caption' );
+									scp_tab_caption( 'setting_googleplus_tab_caption', 'google-plus-tab' );
 								break;
 
 							case 'twitter':
@@ -188,8 +166,11 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 
 		<?php if ( $cookie_popup_views === $visit_n_pages ) : ?>
 			setTimeout(function() {
+
 				<?php if ( $use_facebook ) echo "scp_prependFacebook(\$);"; ?>
 				<?php if ( $use_vkontakte ) echo "scp_prependVK(\$);"; ?>
+				<?php if ( $use_googleplus ) echo "scp_prependGooglePlus(\$);"; ?>
+
 				jQuery('#social-community-popup').show();
 			}, <?php echo $calculated_delay; ?>);
 			scp_deleteCookie("social-community-popup-views");
