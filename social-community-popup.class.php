@@ -340,6 +340,9 @@ class Social_Community_Popup {
 		$prefix = 'social_community_popup'; // Желательно чтобы совпадал со slug из add_menu
 
 		$this->init_settings_common( $prefix );
+		$this->init_settings_common_view( $prefix );
+		$this->init_settings_common_management( $prefix );
+
 		$this->init_settings_facebook( $prefix );
 		$this->init_settings_vkontakte( $prefix );
 		$this->init_settings_odnoklassniki( $prefix );
@@ -353,10 +356,10 @@ class Social_Community_Popup {
 	public function init_settings_common( $prefix ) {
 
 		// Используется в settings_field и do_settings_field
-		$group = $prefix . '-group';
+		$group = $prefix . '-group-general';
 
 		// Используется в do_settings_section
-		$options_page = $prefix;
+		$options_page = $prefix . '-group-general';
 
 		// ID секции
 		$section = $prefix . '-section-common';
@@ -367,13 +370,9 @@ class Social_Community_Popup {
 		register_setting( $group, SCP_PREFIX . 'setting_display_after_visiting_n_pages', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_display_after_delay_of_n_seconds', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_tabs_order', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'setting_container_width', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_container_height', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_border_radius', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_close_popup_by_clicking_anywhere', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_close_popup_when_esc_pressed', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_show_on_mobile_devices', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_remove_settings_on_uninstall' );
 
 		add_settings_section(
 			$section,
@@ -442,6 +441,69 @@ class Social_Community_Popup {
 			)
 		);
 
+		// Скрывать окно при нажатии на любой области экрана
+		add_settings_field(
+			$prefix . '-common-close-popup-by-clicking-anywhere',
+			__( 'Close the popup by clicking anywhere on the screen', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_close_popup_by_clicking_anywhere'
+			)
+		);
+
+		// Скрывать окно при нажатии на Escape
+		add_settings_field(
+			$prefix . '-common-close-popup-when-esc-pressed',
+			__( 'Close the popup when ESC pressed', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_close_popup_when_esc_pressed'
+			)
+		);
+
+		// Показывать виджет на мобильных устройствах
+		add_settings_field(
+			$prefix . '-common-show-on-mobile-devices',
+			__( 'Show widget on mobile devices', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_show_on_mobile_devices'
+			)
+		);
+	}
+
+	/**
+	 * Общие настройки (вкладка "Внешний вид")
+	 */
+	public function init_settings_common_view( $prefix ) {
+
+		// Используется в settings_field и do_settings_field
+		$group = $prefix . '-group-view';
+
+		// Используется в do_settings_section
+		$options_page = $prefix . '-group-view';
+
+		// ID секции
+		$section = $prefix . '-section-common-view';
+
+		// Не забывать добавлять новые опции в uninstall()
+		register_setting( $group, SCP_PREFIX . 'setting_container_width', 'absint' );
+		register_setting( $group, SCP_PREFIX . 'setting_container_height', 'absint' );
+		register_setting( $group, SCP_PREFIX . 'setting_border_radius', 'absint' );
+
+		add_settings_section(
+			$section,
+			__( 'View', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_section_common_view' ),
+			$options_page
+		);
+
 		// Ширина основного контейнера
 		add_settings_field(
 			$prefix . '-common-container-width',
@@ -477,41 +539,30 @@ class Social_Community_Popup {
 				'field' => SCP_PREFIX . 'setting_border_radius'
 			)
 		);
+	}
 
-		// Скрывать окно при нажатии на любой области экрана
-		add_settings_field(
-			$prefix . '-common-close-popup-by-clicking-anywhere',
-			__( 'Close the popup by clicking anywhere on the screen', L10N_SCP_PREFIX ),
-			array( & $this, 'settings_field_checkbox' ),
-			$options_page,
-			$section,
-			array(
-				'field' => SCP_PREFIX . 'setting_close_popup_by_clicking_anywhere'
-			)
-		);
+	/**
+	 * Общие настройки (вкладка "Социальные сети")
+	 */
+	public function init_settings_common_management( $prefix ) {
 
-		// Скрывать окно при нажатии на Escape
-		add_settings_field(
-			$prefix . '-common-close-popup-when-esc-pressed',
-			__( 'Close the popup when ESC pressed', L10N_SCP_PREFIX ),
-			array( & $this, 'settings_field_checkbox' ),
-			$options_page,
-			$section,
-			array(
-				'field' => SCP_PREFIX . 'setting_close_popup_when_esc_pressed'
-			)
-		);
+		// Используется в settings_field и do_settings_field
+		$group = $prefix . '-group-management';
 
-		// Показывать виджет на мобильных устройствах
-		add_settings_field(
-			$prefix . '-common-show-on-mobile-devices',
-			__( 'Show widget on mobile devices', L10N_SCP_PREFIX ),
-			array( & $this, 'settings_field_checkbox' ),
-			$options_page,
+		// Используется в do_settings_section
+		$options_page = $prefix . '-group-management';
+
+		// ID секции
+		$section = $prefix . '-section-common-management';
+
+		// Не забывать добавлять новые опции в uninstall()
+		register_setting( $group, SCP_PREFIX . 'setting_remove_settings_on_uninstall' );
+
+		add_settings_section(
 			$section,
-			array(
-				'field' => SCP_PREFIX . 'setting_show_on_mobile_devices'
-			)
+			__( 'Management', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_section_common_management' ),
+			$options_page
 		);
 
 		// Удалять все настройки плагина при удалении
@@ -885,7 +936,6 @@ class Social_Community_Popup {
 				'field' => SCP_PREFIX . 'setting_vkontakte_delay_before_render'
 			)
 		);
-
 	}
 
 	/**
@@ -1368,6 +1418,20 @@ class Social_Community_Popup {
 	 */
 	public function settings_section_common() {
 		_e( 'Common settings', L10N_SCP_PREFIX );
+	}
+
+	/**
+	 * Описание общих настроек (таб "Внешний вид")
+	 */
+	public function settings_section_common_view() {
+		_e( 'In this section, you can customize the appearance of the plugin', L10N_SCP_PREFIX );
+	}
+
+	/**
+	 * Описание общих настроек (таб "Управление")
+	 */
+	public function settings_section_common_management() {
+		_e( 'In this section, you can export, import and remove plugin settings', L10N_SCP_PREFIX );
 	}
 
 	/**
