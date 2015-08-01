@@ -576,7 +576,7 @@ class Social_Community_Popup {
 	}
 
 	/**
-	 * Общие настройки (вкладка "Социальные сети")
+	 * Общие настройки (вкладка "Управление")
 	 */
 	public function init_settings_common_management( $prefix ) {
 
@@ -687,7 +687,7 @@ class Social_Community_Popup {
 		add_settings_field(
 			$prefix . '-facebook-description',
 			__( 'Description Above The Widget', L10N_SCP_PREFIX ),
-			array( & $this, 'settings_field_input_text' ),
+			array( & $this, 'settings_field_wysiwyg' ),
 			$options_page,
 			$section,
 			array(
@@ -867,7 +867,7 @@ class Social_Community_Popup {
 		add_settings_field(
 			$prefix . '-vkontakte-description',
 			__( 'Description Above The Widget', L10N_SCP_PREFIX ),
-			array( & $this, 'settings_field_input_text' ),
+			array( & $this, 'settings_field_wysiwyg' ),
 			$options_page,
 			$section,
 			array(
@@ -1042,7 +1042,7 @@ class Social_Community_Popup {
 		add_settings_field(
 			$prefix . '-odnoklassniki-description',
 			__( 'Description Above The Widget', L10N_SCP_PREFIX ),
-			array( & $this, 'settings_field_input_text' ),
+			array( & $this, 'settings_field_wysiwyg' ),
 			$options_page,
 			$section,
 			array(
@@ -1161,7 +1161,7 @@ class Social_Community_Popup {
 		add_settings_field(
 			$prefix . '-googleplus-description',
 			__( 'Description Above The Widget', L10N_SCP_PREFIX ),
-			array( & $this, 'settings_field_input_text' ),
+			array( & $this, 'settings_field_wysiwyg' ),
 			$options_page,
 			$section,
 			array(
@@ -1330,7 +1330,7 @@ class Social_Community_Popup {
 		add_settings_field(
 			$prefix . '-twitter-description',
 			__( 'Description Above The Widget', L10N_SCP_PREFIX ),
-			array( & $this, 'settings_field_input_text' ),
+			array( & $this, 'settings_field_wysiwyg' ),
 			$options_page,
 			$section,
 			array(
