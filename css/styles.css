@@ -36,6 +36,7 @@
 
 		#social-community-popup .plugin-title {
 			display:block;
+			padding-bottom:12px;
 		}
 
 			#social-community-popup .plugin-title .close {
@@ -49,7 +50,7 @@
 
 		#social-community-popup .section .tabs {
 			list-style:none;
-			margin:10px 0 15px 0 !important;
+			margin:0 0 15px 0 !important;
 			padding:0;
 		}
 			#social-community-popup .section .tabs li {
