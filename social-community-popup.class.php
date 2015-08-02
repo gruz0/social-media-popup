@@ -131,7 +131,17 @@ class Social_Community_Popup {
 			'setting_twitter_show_replies',
 			'setting_twitter_width',
 			'setting_twitter_height',
-			'setting_twitter_chrome'
+			'setting_twitter_chrome',
+
+			// Pinterest
+			'setting_use_pinterest',
+			'setting_pinterest_tab_caption',
+			'setting_pinterest_show_description',
+			'setting_pinterest_description',
+			'setting_pinterest_profile_url',
+			'setting_pinterest_image_width',
+			'setting_pinterest_width',
+			'setting_pinterest_height'
 		);
 
 		for ( $idx = 0; $idx < count( $options ); $idx++ ) {
