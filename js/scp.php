@@ -32,6 +32,7 @@ $use_vkontakte              = get_scp_option( 'setting_use_vkontakte' )     === 
 $use_odnoklassniki          = get_scp_option( 'setting_use_odnoklassniki' ) === '1';
 $use_googleplus             = get_scp_option( 'setting_use_googleplus' )    === '1';
 $use_twitter                = get_scp_option( 'setting_use_twitter' )       === '1';
+$use_pinterest              = get_scp_option( 'setting_use_pinterest' )     === '1';
 
 $tabs_order                 = explode(',', get_scp_option( 'setting_tabs_order' ) );
 

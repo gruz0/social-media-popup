@@ -328,6 +328,28 @@ class Social_Community_Popup {
 
 			update_option( $version, '0.6.7' );
 		}
+
+		if ( '0.6.8' > get_option( $version ) ) {
+			// Добавляем Pinterest в таблицу сортировки
+			$tabs_order = get_option( SCP_PREFIX . 'setting_tabs_order' );
+			$tabs_order = ( $tabs_order ) ? explode( ',', $tabs_order ) : array();
+			$tabs_order[] = 'pinterest';
+			$tabs_order = array_unique( $tabs_order );
+
+			update_option( SCP_PREFIX . 'setting_tabs_order', join( ',', $tabs_order ) );
+
+			// Добавляем виджет Pinterest Profile
+			update_option( SCP_PREFIX . 'setting_use_pinterest',                      0 );
+			update_option( SCP_PREFIX . 'setting_pinterest_tab_caption',              'Pinterest' );
+			update_option( SCP_PREFIX . 'setting_pinterest_show_description',         0 );
+			update_option( SCP_PREFIX . 'setting_pinterest_description',              '' );
+			update_option( SCP_PREFIX . 'setting_pinterest_profile_url',              'http://ru.pinterest.com/gruz0/' );
+			update_option( SCP_PREFIX . 'setting_pinterest_image_width',              60 );
+			update_option( SCP_PREFIX . 'setting_pinterest_width',                    400 );
+			update_option( SCP_PREFIX . 'setting_pinterest_height',                   200 );
+
+			update_option( $version, '0.6.8' );
+		}
 	}
 
 	/**
@@ -364,6 +386,7 @@ class Social_Community_Popup {
 		$this->init_settings_odnoklassniki( $prefix );
 		$this->init_settings_googleplus( $prefix );
 		$this->init_settings_twitter( $prefix );
+		$this->init_settings_pinterest( $prefix );
 	}
 
 	/**
@@ -1495,6 +1518,134 @@ class Social_Community_Popup {
 	}
 
 	/**
+	 * Настройки Pinterest
+	 */
+	private function init_settings_pinterest( $prefix ) {
+
+		// Используется в settings_field и do_settings_field
+		$group = $prefix . '-group-pinterest';
+
+		// Используется в do_settings_section
+		$options_page = $prefix . '_pinterest_options';
+
+		// ID секции
+		$section = $prefix . '-section-pinterest';
+
+		// Не забывать добавлять новые опции в uninstall()
+		register_setting( $group, SCP_PREFIX . 'setting_use_pinterest' );
+		register_setting( $group, SCP_PREFIX . 'setting_pinterest_tab_caption', 'sanitize_text_field' );
+		register_setting( $group, SCP_PREFIX . 'setting_pinterest_show_description' );
+		register_setting( $group, SCP_PREFIX . 'setting_pinterest_description', 'wp_kses_post' );
+		register_setting( $group, SCP_PREFIX . 'setting_pinterest_profile_url', 'sanitize_text_field' );
+		register_setting( $group, SCP_PREFIX . 'setting_pinterest_image_width', 'absint' );
+		register_setting( $group, SCP_PREFIX . 'setting_pinterest_width', 'absint' );
+		register_setting( $group, SCP_PREFIX . 'setting_pinterest_height', 'absint' );
+
+		add_settings_section(
+			$section,
+			__( 'Pinterest Profile Widget', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_section_pinterest' ),
+			$options_page
+		);
+
+		// Используем Pinterest или нет
+		add_settings_field(
+			$prefix . '-use-pinterest',
+			__( 'Use Pinterest', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_use_pinterest',
+			)
+		);
+
+		// Название вкладки
+		add_settings_field(
+			$prefix . '-pinterest-tab-caption',
+			__( 'Tab Caption', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_pinterest_tab_caption'
+			)
+		);
+
+		// Показывать надпись над виджетом?
+		add_settings_field(
+			$prefix . '-pinterest-show-description',
+			__( 'Show Description Above The Widget', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_pinterest_show_description'
+			)
+		);
+
+		// Надпись над виджетом
+		add_settings_field(
+			$prefix . '-pinterest-description',
+			__( 'Description Above The Widget', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_wysiwyg' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_pinterest_description'
+			)
+		);
+
+		// Ссылка на профиль пользователя
+		add_settings_field(
+			$prefix . '-pinterest-profile-url',
+			__( 'Profile URL', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_pinterest_profile_url'
+			)
+		);
+
+		// Ширина изображений
+		add_settings_field(
+			$prefix . '-pinterest-image-width',
+			__( 'Image Width', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_pinterest_image_width'
+			)
+		);
+
+		// Ширина виджета
+		add_settings_field(
+			$prefix . '-pinterest-width',
+			__( 'Widget Width', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_pinterest_width'
+			)
+		);
+
+		// Высота виджета
+		add_settings_field(
+			$prefix . '-pinterest-height',
+			__( 'Widget Height', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_pinterest_height'
+			)
+		);
+	}
+
+	/**
 	 * Описание общих настроек
 	 */
 	public function settings_section_common() {
@@ -1548,6 +1699,13 @@ class Social_Community_Popup {
 	 */
 	public function settings_section_twitter() {
 		_e( 'In this section, you must fill out the data to display the Twitter timeline in a popup window', L10N_SCP_PREFIX );
+	}
+
+	/**
+	 * Описание настроек Pinterest
+	 */
+	public function settings_section_pinterest() {
+		_e( 'In this section, you must fill out the data to display the Pinterest Profile Widget in a popup window', L10N_SCP_PREFIX );
 	}
 
 	/**
@@ -1816,6 +1974,16 @@ class Social_Community_Popup {
 			'social_community_popup_twitter_options',
 			array( & $this, 'plugin_settings_page_twitter_options' )
 		);
+
+		// Pinterest
+		add_submenu_page(
+			'social_community_popup', // Родительский пункт меню
+			__( 'Pinterest Options', L10N_SCP_PREFIX ), // Название пункта на его странице
+			__( 'Pinterest', L10N_SCP_PREFIX ), // Пункт меню
+			'administrator',
+			'social_community_popup_pinterest_options',
+			array( & $this, 'plugin_settings_page_pinterest_options' )
+		);
 	}
 
 	public function admin_head() {
@@ -1916,6 +2084,17 @@ class Social_Community_Popup {
 		}
 
 		include( sprintf( "%s/templates/settings/settings-twitter.php", dirname( __FILE__ ) ) );
+	}
+
+	/**
+	 * Страница настроек Pinterest
+	 */
+	public function plugin_settings_page_pinterest_options() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+		}
+
+		include( sprintf( "%s/templates/settings/settings-pinterest.php", dirname( __FILE__ ) ) );
 	}
 
 	/**

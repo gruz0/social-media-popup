@@ -3,7 +3,7 @@
 $tab_index = 1;
 
 if ( $cookie_popup_views == $visit_n_pages ) :
-	if ( $use_facebook || $use_vkontakte || $use_odnoklassniki || $use_googleplus || $use_twitter ) :
+	if ( $use_facebook || $use_vkontakte || $use_odnoklassniki || $use_googleplus || $use_twitter || $use_pinterest ) :
 ?>
 	<div id="social-community-popup">
 		<div class="parent_popup"></div>
@@ -34,6 +34,7 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 					case 'odnoklassniki': if ( $use_odnoklassniki ) $selected_widgets_count++; break;
 					case 'googleplus':    if ( $use_googleplus )    $selected_widgets_count++; break;
 					case 'twitter':       if ( $use_twitter )       $selected_widgets_count++; break;
+					case 'pinterest':     if ( $use_pinterest )     $selected_widgets_count++; break;
 				}
 			}
 		?>
@@ -70,6 +71,11 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 								if ( $use_twitter )
 									scp_tab_caption( 'setting_twitter_tab_caption' );
 								break;
+
+							case 'pinterest':
+								if ( $use_pinterest)
+									scp_tab_caption( 'setting_pinterest_tab_caption', 'pinterest-tab' );
+								break;
 						}
 					}
 				?>
@@ -105,6 +111,11 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 							case 'twitter':
 								if ( $use_twitter )
 									scp_twitter_container();
+								break;
+
+							case 'pinterest':
+								if ( $use_pinterest )
+									scp_pinterest_container();
 								break;
 						}
 					}
@@ -170,6 +181,7 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 				<?php if ( $use_facebook ) echo "scp_prependFacebook(\$);"; ?>
 				<?php if ( $use_vkontakte ) echo "scp_prependVK(\$);"; ?>
 				<?php if ( $use_googleplus ) echo "scp_prependGooglePlus(\$);"; ?>
+				<?php if ( $use_pinterest ) echo "scp_prependPinterest(\$);"; ?>
 
 				jQuery('#social-community-popup').show();
 			}, <?php echo $calculated_delay; ?>);
@@ -336,6 +348,27 @@ function scp_twitter_container() {
 				get_scp_option( 'setting_twitter_username' )
 			);
 			echo $twitter_container;
+		?>
+	</div>
+<?php
+}
+
+function scp_pinterest_container() {
+?>
+	<div class="box">
+		<?php if ( get_scp_option( 'setting_pinterest_show_description' ) === '1' ) : ?>
+			<p class="widget-description"><b><?php echo get_scp_option( 'setting_pinterest_description' ); ?></b></p>
+		<?php endif; ?>
+
+		<?php
+			$pinterest_container = sprintf(
+				file_get_contents( dirname( __FILE__ ) . '/partials/pinterest_container.php' ),
+				get_scp_option( 'setting_pinterest_profile_url' ),
+				get_scp_option( 'setting_pinterest_image_width' ),
+				get_scp_option( 'setting_pinterest_width' ),
+				get_scp_option( 'setting_pinterest_height' )
+			);
+			echo $pinterest_container;
 		?>
 	</div>
 <?php

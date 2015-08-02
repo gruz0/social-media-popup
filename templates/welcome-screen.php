@@ -51,6 +51,11 @@
 	<div class="box">
 		<h2 class="title">История изменений</h2>
 
+		<h3>Версия 0.6.8 от 02.08.2015</h3>
+		<ul>
+			<li>Добавлен виджет <a href="https://business.pinterest.com/ru/widget-builder#do_embed_user" target="_blank" rel="nofollow">Pinterest Profile</a>.</li>
+		</ul>
+
 		<h3>Версия 0.6.7 от 01.08.2015</h3>
 		<ul>
 			<li>Добавлена возможность задания заголовка окна с виджетами.</li>
