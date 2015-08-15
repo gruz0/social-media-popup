@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Social Community Popup\n"
-"POT-Creation-Date: 2015-08-15 14:03+0300\n"
-"PO-Revision-Date: 2015-08-15 14:04+0300\n"
+"POT-Creation-Date: 2015-08-15 14:24+0300\n"
+"PO-Revision-Date: 2015-08-15 14:24+0300\n"
 "Last-Translator: Alexander Gruzov <gruz0.mail@gmail.com>\n"
 "Language-Team: Alexander Gruzov <support@gruz0.ru>\n"
 "Language: ru_RU\n"
@@ -17,508 +17,512 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../social-community-popup.class.php:337
+#: ../social-community-popup.class.php:338
 msgid "Thanks! Please don't show me popup."
 msgstr "Спасибо! Я уже с вами."
 
-#: ../social-community-popup.class.php:436
+#: ../social-community-popup.class.php:440
 msgid "Common Settings"
 msgstr "Общие настройки"
 
-#: ../social-community-popup.class.php:444
+#: ../social-community-popup.class.php:448
 msgid "Debug Mode"
 msgstr "Режим отладки"
 
-#: ../social-community-popup.class.php:456
+#: ../social-community-popup.class.php:460
 msgid "Display After N-days"
 msgstr "Повторный показ окна через N дней после закрытия"
 
-#: ../social-community-popup.class.php:468
+#: ../social-community-popup.class.php:472
 msgid "Display After Visiting N-pages"
 msgstr "Показать окно после просмотра N страниц сайта"
 
-#: ../social-community-popup.class.php:480
+#: ../social-community-popup.class.php:484
 msgid "Display After Delay of N-seconds"
 msgstr "Задержка в секундах перед показом окна"
 
-#: ../social-community-popup.class.php:492
+#: ../social-community-popup.class.php:496
 msgid "Tabs Order"
 msgstr "Порядок отображения табов"
 
-#: ../social-community-popup.class.php:504
+#: ../social-community-popup.class.php:508
 msgid "Close the popup by clicking anywhere on the screen"
 msgstr "Закрывать окно при нажатии на любую область экрана"
 
-#: ../social-community-popup.class.php:516
+#: ../social-community-popup.class.php:520
 msgid "Close the popup when ESC pressed"
 msgstr "Закрывать окно при нажатии на клавишу ESC"
 
-#: ../social-community-popup.class.php:528
+#: ../social-community-popup.class.php:532
 msgid "Show widget on mobile devices"
 msgstr "Отображать виджет для мобильных устройств (не стабильно)"
 
-#: ../social-community-popup.class.php:565 ../templates/settings.php:42
+#: ../social-community-popup.class.php:570 ../templates/settings.php:42
 msgid "View"
 msgstr "Внешний вид"
 
-#: ../social-community-popup.class.php:573
+#: ../social-community-popup.class.php:578
 msgid "Main Window Title"
 msgstr "Заголовок главного окна (если пустой — не отображать)"
 
-#: ../social-community-popup.class.php:585
+#: ../social-community-popup.class.php:590
 msgid "Hide Tabs if One Widget is Active"
 msgstr "Скрывать панель табов, если активна только 1 соц. сеть"
 
-#: ../social-community-popup.class.php:597
+#: ../social-community-popup.class.php:602
 msgid "Show Button to Close Widget"
 msgstr "Показывать кнопку закрытия окна (внизу виджета)"
 
-#: ../social-community-popup.class.php:609
+#: ../social-community-popup.class.php:614
 msgid "Button to Close Widget Title"
 msgstr "Надпись на кнопке закрытия окна"
 
-#: ../social-community-popup.class.php:621
+#: ../social-community-popup.class.php:626
 msgid "Button to Close Widget Style"
 msgstr "Стиль кнопки закрытия окна"
 
-#: ../social-community-popup.class.php:633
+#: ../social-community-popup.class.php:638
 msgid "Container Width"
 msgstr "Ширина родительского контейнера"
 
-#: ../social-community-popup.class.php:645
+#: ../social-community-popup.class.php:650
 msgid "Container Height"
 msgstr "Высота родительского контейнера"
 
-#: ../social-community-popup.class.php:657
+#: ../social-community-popup.class.php:662
 msgid "Border Radius"
 msgstr "Радиус скругления углов виджета"
 
-#: ../social-community-popup.class.php:669
+#: ../social-community-popup.class.php:674
 msgid "Overlay Color"
 msgstr "Цвет фоновой заливки контейнера (#HEX или RGB)"
 
-#: ../social-community-popup.class.php:698 ../templates/settings.php:43
+#: ../social-community-popup.class.php:686
+msgid "Overlay Opacity"
+msgstr "Прозрачность цвета фоновой заливки (в процентах)"
+
+#: ../social-community-popup.class.php:715 ../templates/settings.php:43
 msgid "Management"
 msgstr "Управление настройками"
 
-#: ../social-community-popup.class.php:706
+#: ../social-community-popup.class.php:723
 msgid "Remove Settings On Uninstall Plugin"
 msgstr "Удалить все настройки плагина при его удалении"
 
-#: ../social-community-popup.class.php:746
+#: ../social-community-popup.class.php:763
 msgid "Facebook Community Widget"
 msgstr "Виджет групп Facebook"
 
-#: ../social-community-popup.class.php:754
+#: ../social-community-popup.class.php:771
 msgid "Use Facebook"
 msgstr "Использовать виджет Facebook"
 
-#: ../social-community-popup.class.php:766
-#: ../social-community-popup.class.php:946
-#: ../social-community-popup.class.php:1121
-#: ../social-community-popup.class.php:1240
-#: ../social-community-popup.class.php:1409
-#: ../social-community-popup.class.php:1597
+#: ../social-community-popup.class.php:783
+#: ../social-community-popup.class.php:963
+#: ../social-community-popup.class.php:1138
+#: ../social-community-popup.class.php:1257
+#: ../social-community-popup.class.php:1426
+#: ../social-community-popup.class.php:1614
 msgid "Tab Caption"
 msgstr "Надпись на вкладке"
 
-#: ../social-community-popup.class.php:778
-#: ../social-community-popup.class.php:958
-#: ../social-community-popup.class.php:1133
-#: ../social-community-popup.class.php:1252
-#: ../social-community-popup.class.php:1421
-#: ../social-community-popup.class.php:1609
+#: ../social-community-popup.class.php:795
+#: ../social-community-popup.class.php:975
+#: ../social-community-popup.class.php:1150
+#: ../social-community-popup.class.php:1269
+#: ../social-community-popup.class.php:1438
+#: ../social-community-popup.class.php:1626
 msgid "Show Description Above The Widget"
 msgstr "Показывать текстовое описание над виджетом"
 
-#: ../social-community-popup.class.php:790
-#: ../social-community-popup.class.php:970
-#: ../social-community-popup.class.php:1145
-#: ../social-community-popup.class.php:1264
-#: ../social-community-popup.class.php:1433
-#: ../social-community-popup.class.php:1621
+#: ../social-community-popup.class.php:807
+#: ../social-community-popup.class.php:987
+#: ../social-community-popup.class.php:1162
+#: ../social-community-popup.class.php:1281
+#: ../social-community-popup.class.php:1450
+#: ../social-community-popup.class.php:1638
 msgid "Description Above The Widget"
 msgstr "Текстовое описание над виджетом"
 
-#: ../social-community-popup.class.php:802
+#: ../social-community-popup.class.php:819
 msgid "Application ID"
 msgstr "ID приложения"
 
-#: ../social-community-popup.class.php:814
+#: ../social-community-popup.class.php:831
 msgid "Facebook Page URL"
 msgstr "Адрес страницы Facebook (http://)"
 
-#: ../social-community-popup.class.php:826
+#: ../social-community-popup.class.php:843
 msgid "Facebook Locale"
 msgstr "Языковая версия"
 
-#: ../social-community-popup.class.php:838
-#: ../social-community-popup.class.php:994
-#: ../social-community-popup.class.php:1169
-#: ../social-community-popup.class.php:1517
-#: ../social-community-popup.class.php:1657
+#: ../social-community-popup.class.php:855
+#: ../social-community-popup.class.php:1011
+#: ../social-community-popup.class.php:1186
+#: ../social-community-popup.class.php:1534
+#: ../social-community-popup.class.php:1674
 msgid "Widget Width"
 msgstr "Ширина виджета в пикселях"
 
-#: ../social-community-popup.class.php:850
-#: ../social-community-popup.class.php:1006
-#: ../social-community-popup.class.php:1181
-#: ../social-community-popup.class.php:1529
-#: ../social-community-popup.class.php:1669
+#: ../social-community-popup.class.php:867
+#: ../social-community-popup.class.php:1023
+#: ../social-community-popup.class.php:1198
+#: ../social-community-popup.class.php:1546
+#: ../social-community-popup.class.php:1686
 msgid "Widget Height"
 msgstr "Высота виджета в пикселях"
 
-#: ../social-community-popup.class.php:862
+#: ../social-community-popup.class.php:879
 msgid "Hide cover photo in the header"
 msgstr "Скрывать обложку группы в заголовке виджета"
 
-#: ../social-community-popup.class.php:874
+#: ../social-community-popup.class.php:891
 msgid "Show profile photos when friends like this"
 msgstr "Показывать профили друзей отметивших страницу как понравившуюся"
 
-#: ../social-community-popup.class.php:886
+#: ../social-community-popup.class.php:903
 msgid "Show posts from the Page's timeline"
 msgstr "Показывать публикации со стены страницы"
 
-#: ../social-community-popup.class.php:926
+#: ../social-community-popup.class.php:943
 msgid "VKontakte Community Widget"
 msgstr "Виджет сообществ и групп ВКонтакте"
 
-#: ../social-community-popup.class.php:934
+#: ../social-community-popup.class.php:951
 msgid "Use VKontakte"
 msgstr "Использовать виджет ВКонтакте"
 
-#: ../social-community-popup.class.php:982
+#: ../social-community-popup.class.php:999
 msgid "VKontakte Page or Group ID"
 msgstr "ID страницы или группы"
 
-#: ../social-community-popup.class.php:1018
+#: ../social-community-popup.class.php:1035
 msgid "Layout"
 msgstr "Тип выводимой информации"
 
-#: ../social-community-popup.class.php:1030
+#: ../social-community-popup.class.php:1047
 msgid "Background Color"
 msgstr "Цвет фона"
 
-#: ../social-community-popup.class.php:1042
+#: ../social-community-popup.class.php:1059
 msgid "Text Color"
 msgstr "Цвет текста"
 
-#: ../social-community-popup.class.php:1054
+#: ../social-community-popup.class.php:1071
 msgid "Button Color"
 msgstr "Цвет кнопки"
 
-#: ../social-community-popup.class.php:1066
+#: ../social-community-popup.class.php:1083
 msgid "Delay before render widget (in ms.)"
 msgstr "Задержка перед отображением виджета ВКонтакте (в мс.)"
 
-#: ../social-community-popup.class.php:1101
+#: ../social-community-popup.class.php:1118
 msgid "Odnoklassniki Community Widget"
 msgstr "Виджет групп Одноклассников"
 
-#: ../social-community-popup.class.php:1109
+#: ../social-community-popup.class.php:1126
 msgid "Use Odnoklassniki"
 msgstr "Использовать виджет Одноклассников"
 
-#: ../social-community-popup.class.php:1157
+#: ../social-community-popup.class.php:1174
 msgid "Odnoklassniki Group ID"
 msgstr "ID группы"
 
-#: ../social-community-popup.class.php:1220
+#: ../social-community-popup.class.php:1237
 msgid "Google+ Community Widget"
 msgstr "Виджет профиля Google+"
 
-#: ../social-community-popup.class.php:1228
+#: ../social-community-popup.class.php:1245
 msgid "Use Google+"
 msgstr "Использовать Google+"
 
-#: ../social-community-popup.class.php:1276
+#: ../social-community-popup.class.php:1293
 msgid "Google+ Page Type"
 msgstr "Тип виджета Google+"
 
-#: ../social-community-popup.class.php:1288
+#: ../social-community-popup.class.php:1305
 msgid "Google+ Page URL"
 msgstr "Адрес страницы Google+"
 
-#: ../social-community-popup.class.php:1300
+#: ../social-community-popup.class.php:1317
 msgid "Google+ Locale"
 msgstr "Языковая версия"
 
-#: ../social-community-popup.class.php:1312
+#: ../social-community-popup.class.php:1329
 msgid "Widget Size"
 msgstr "Размер виджета в пикселях"
 
-#: ../social-community-popup.class.php:1324
+#: ../social-community-popup.class.php:1341
 msgid "Google+ Theme"
 msgstr "Цветовая схема"
 
-#: ../social-community-popup.class.php:1336
+#: ../social-community-popup.class.php:1353
 msgid "Show Cover Photo"
 msgstr "Показывать обложку"
 
-#: ../social-community-popup.class.php:1348
+#: ../social-community-popup.class.php:1365
 msgid "Show Tagline"
 msgstr "Показывать краткое описание"
 
-#: ../social-community-popup.class.php:1389
+#: ../social-community-popup.class.php:1406
 msgid "Twitter Timeline Widget"
 msgstr "Виджет Twitter Timeline"
 
-#: ../social-community-popup.class.php:1397
+#: ../social-community-popup.class.php:1414
 msgid "Use Twitter"
 msgstr "Использовать виджет Twitter"
 
-#: ../social-community-popup.class.php:1445
+#: ../social-community-popup.class.php:1462
 msgid "@Username"
 msgstr "@ВашЛогин"
 
-#: ../social-community-popup.class.php:1457
+#: ../social-community-popup.class.php:1474
 msgid "Widget ID"
 msgstr "ID существующего виджета"
 
-#: ../social-community-popup.class.php:1469
+#: ../social-community-popup.class.php:1486
 msgid "Theme"
 msgstr "Тема оформления"
 
-#: ../social-community-popup.class.php:1481
+#: ../social-community-popup.class.php:1498
 msgid "Link Color"
 msgstr "Цвет ссылки"
 
-#: ../social-community-popup.class.php:1493
+#: ../social-community-popup.class.php:1510
 msgid "Tweet Limit"
 msgstr "Выводить последних твитов"
 
-#: ../social-community-popup.class.php:1505
+#: ../social-community-popup.class.php:1522
 msgid "Show Replies"
 msgstr "Показывать ответы на ваши твиты"
 
-#: ../social-community-popup.class.php:1541
+#: ../social-community-popup.class.php:1558
 msgid "Chrome"
 msgstr "Свойства виджета"
 
-#: ../social-community-popup.class.php:1577
+#: ../social-community-popup.class.php:1594
 msgid "Pinterest Profile Widget"
 msgstr "Виджет Pinterest"
 
-#: ../social-community-popup.class.php:1585
+#: ../social-community-popup.class.php:1602
 msgid "Use Pinterest"
 msgstr "Использовать виджет Pinterest"
 
-#: ../social-community-popup.class.php:1633
+#: ../social-community-popup.class.php:1650
 msgid "Profile URL"
 msgstr "Ссылка на профиль"
 
-#: ../social-community-popup.class.php:1645
+#: ../social-community-popup.class.php:1662
 msgid "Image Width"
 msgstr "Ширина изображения в пикселях"
 
-#: ../social-community-popup.class.php:1683
+#: ../social-community-popup.class.php:1700
 msgid "Common settings"
 msgstr "Общие настройки"
 
-#: ../social-community-popup.class.php:1690
+#: ../social-community-popup.class.php:1707
 msgid "In this section, you can customize the appearance of the plugin"
 msgstr ""
 "В этом разделе вы можете настроить внешний вид плагина по своему усмотрению"
 
-#: ../social-community-popup.class.php:1697
+#: ../social-community-popup.class.php:1714
 msgid "In this section, you can export, import and remove plugin settings"
 msgstr ""
 "В этом разделе вы можете экспортировать, импортировать или сбросить все "
 "настройки плагина"
 
-#: ../social-community-popup.class.php:1704
+#: ../social-community-popup.class.php:1721
 msgid ""
 "In this section, you must fill out the data to display the Facebook page in "
 "a popup window"
 msgstr "В этом разделе вам необходимо заполнить параметры виджета Facebook"
 
-#: ../social-community-popup.class.php:1711
+#: ../social-community-popup.class.php:1728
 msgid ""
 "In this section, you must fill out the data to display the VK.com page in a "
 "popup window"
 msgstr "В этом разделе вам необходимо заполнить параметры виджета ВКонтакте"
 
-#: ../social-community-popup.class.php:1718
+#: ../social-community-popup.class.php:1735
 msgid ""
 "In this section, you must fill out the data to display the Odnoklassniki "
 "group in a popup window"
 msgstr ""
 "В этом разделе вам необходимо заполнить параметры виджета Одноклассники"
 
-#: ../social-community-popup.class.php:1725
+#: ../social-community-popup.class.php:1742
 msgid ""
 "In this section, you must fill out the data to display the Google+ page in a "
 "popup window"
 msgstr "В этом разделе вам необходимо заполнить параметры виджета Google+"
 
-#: ../social-community-popup.class.php:1732
+#: ../social-community-popup.class.php:1749
 msgid ""
 "In this section, you must fill out the data to display the Twitter timeline "
 "in a popup window"
 msgstr "В этом разделе вам необходимо заполнить параметры виджета Twitter"
 
-#: ../social-community-popup.class.php:1739
+#: ../social-community-popup.class.php:1756
 msgid ""
 "In this section, you must fill out the data to display the Pinterest Profile "
 "Widget in a popup window"
 msgstr "В этом разделе вам необходимо заполнить параметры виджета Pinterest"
 
-#: ../social-community-popup.class.php:1794
+#: ../social-community-popup.class.php:1811
 msgid "Link"
 msgstr "Обычная ссылка"
 
-#: ../social-community-popup.class.php:1796
+#: ../social-community-popup.class.php:1813
 msgid "Green button"
 msgstr "Зелёная кнопка"
 
-#: ../social-community-popup.class.php:1798
+#: ../social-community-popup.class.php:1815
 msgid "Blue button"
 msgstr "Синяя кнопка"
 
-#: ../social-community-popup.class.php:1800
+#: ../social-community-popup.class.php:1817
 msgid "Red button"
 msgstr "Красная кнопка"
 
-#: ../social-community-popup.class.php:1812
-#: ../social-community-popup.class.php:1918
+#: ../social-community-popup.class.php:1829
+#: ../social-community-popup.class.php:1935
 msgid "Russian"
 msgstr "Русский"
 
-#: ../social-community-popup.class.php:1814
-#: ../social-community-popup.class.php:1920
+#: ../social-community-popup.class.php:1831
+#: ../social-community-popup.class.php:1937
 msgid "English"
 msgstr "Английский"
 
-#: ../social-community-popup.class.php:1826
+#: ../social-community-popup.class.php:1843
 msgid "Members"
 msgstr "Участники"
 
-#: ../social-community-popup.class.php:1828
+#: ../social-community-popup.class.php:1845
 msgid "News"
 msgstr "Новости"
 
-#: ../social-community-popup.class.php:1830
+#: ../social-community-popup.class.php:1847
 msgid "Name"
 msgstr "Только имена"
 
-#: ../social-community-popup.class.php:1849
+#: ../social-community-popup.class.php:1866
 msgid "No Header"
 msgstr "Не выводить заголовок"
 
-#: ../social-community-popup.class.php:1851
+#: ../social-community-popup.class.php:1868
 msgid "No Footer"
 msgstr "Не выводить нижнюю часть виджета"
 
-#: ../social-community-popup.class.php:1853
+#: ../social-community-popup.class.php:1870
 msgid "No Borders"
 msgstr "Не показывать границы виджета"
 
-#: ../social-community-popup.class.php:1855
+#: ../social-community-popup.class.php:1872
 msgid "No Scrollbars"
 msgstr "Не выводить полосы прокрутки"
 
-#: ../social-community-popup.class.php:1857
+#: ../social-community-popup.class.php:1874
 msgid "Transparent (Removes the background color)"
 msgstr "Сделать виджет прозрачным"
 
-#: ../social-community-popup.class.php:1869
-#: ../social-community-popup.class.php:1904
+#: ../social-community-popup.class.php:1886
+#: ../social-community-popup.class.php:1921
 msgid "Light"
 msgstr "Светлая"
 
-#: ../social-community-popup.class.php:1871
-#: ../social-community-popup.class.php:1906
+#: ../social-community-popup.class.php:1888
+#: ../social-community-popup.class.php:1923
 msgid "Dark"
 msgstr "Тёмная"
 
-#: ../social-community-popup.class.php:1892
+#: ../social-community-popup.class.php:1909
 msgid "Closed Social Networks Marked As Red"
 msgstr "Отключенные социальные сети помечены красным цветом"
 
-#: ../social-community-popup.class.php:1932
+#: ../social-community-popup.class.php:1949
 msgid "Google+ Person"
 msgstr "Профиль пользователя"
 
-#: ../social-community-popup.class.php:1934
+#: ../social-community-popup.class.php:1951
 msgid "Google+ Page"
 msgstr "Страница"
 
-#: ../social-community-popup.class.php:1943
-#: ../social-community-popup.class.php:1944
+#: ../social-community-popup.class.php:1960
+#: ../social-community-popup.class.php:1961
 msgid "Welcome To Social Community Popup Welcome Screen"
 msgstr "Плагин социальных сетей — Social Community Popup"
 
-#: ../social-community-popup.class.php:1951 ../templates/settings.php:7
+#: ../social-community-popup.class.php:1968 ../templates/settings.php:7
 msgid "Social Community Popup Options"
 msgstr "Настройки плагина Social Community Popup"
 
-#: ../social-community-popup.class.php:1952
+#: ../social-community-popup.class.php:1969
 msgid "SCP Options"
 msgstr "SCP Настройки"
 
-#: ../social-community-popup.class.php:1962
+#: ../social-community-popup.class.php:1979
 #: ../templates/settings/settings-facebook.php:3
 msgid "Facebook Options"
 msgstr "Настройка виджета Facebook"
 
-#: ../social-community-popup.class.php:1963
+#: ../social-community-popup.class.php:1980
 msgid "Facebook"
 msgstr "Facebook"
 
-#: ../social-community-popup.class.php:1972
+#: ../social-community-popup.class.php:1989
 #: ../templates/settings/settings-vkontakte.php:3
 msgid "VKontakte Options"
 msgstr "Настройка виджета ВКонтакте"
 
-#: ../social-community-popup.class.php:1973
+#: ../social-community-popup.class.php:1990
 msgid "VKontakte"
 msgstr "ВКонтакте"
 
-#: ../social-community-popup.class.php:1982
+#: ../social-community-popup.class.php:1999
 #: ../templates/settings/settings-odnoklassniki.php:3
 msgid "Odnoklassniki Options"
 msgstr "Настройка виджета Одноклассников"
 
-#: ../social-community-popup.class.php:1983
+#: ../social-community-popup.class.php:2000
 msgid "Odnoklassniki"
 msgstr "Одноклассники"
 
-#: ../social-community-popup.class.php:1992
+#: ../social-community-popup.class.php:2009
 #: ../templates/settings/settings-googleplus.php:3
 msgid "Google+ Options"
 msgstr "Настройка виджета Google+"
 
-#: ../social-community-popup.class.php:1993
+#: ../social-community-popup.class.php:2010
 msgid "Google+"
 msgstr "Google+"
 
-#: ../social-community-popup.class.php:2002
+#: ../social-community-popup.class.php:2019
 #: ../templates/settings/settings-twitter.php:3
 msgid "Twitter Options"
 msgstr "Настройка виджета Twitter"
 
-#: ../social-community-popup.class.php:2003
+#: ../social-community-popup.class.php:2020
 msgid "Twitter"
 msgstr "Twitter"
 
-#: ../social-community-popup.class.php:2012
+#: ../social-community-popup.class.php:2029
 #: ../templates/settings/settings-pinterest.php:3
 msgid "Pinterest Options"
 msgstr "Настройка виджета Pinterest"
 
-#: ../social-community-popup.class.php:2013
+#: ../social-community-popup.class.php:2030
 msgid "Pinterest"
 msgstr "Pinterest"
 
-#: ../social-community-popup.class.php:2046
-#: ../social-community-popup.class.php:2059
-#: ../social-community-popup.class.php:2070
-#: ../social-community-popup.class.php:2081
-#: ../social-community-popup.class.php:2092
-#: ../social-community-popup.class.php:2103
-#: ../social-community-popup.class.php:2114
-#: ../social-community-popup.class.php:2125
+#: ../social-community-popup.class.php:2063
+#: ../social-community-popup.class.php:2076
+#: ../social-community-popup.class.php:2087
+#: ../social-community-popup.class.php:2098
+#: ../social-community-popup.class.php:2109
+#: ../social-community-popup.class.php:2120
+#: ../social-community-popup.class.php:2131
+#: ../social-community-popup.class.php:2142
 msgid "You do not have sufficient permissions to access this page."
 msgstr "У вас нет полномочий для доступа к этой странице"
 
@@ -526,7 +530,7 @@ msgstr "У вас нет полномочий для доступа к этой 
 msgid "Settings"
 msgstr "Настройки"
 
-#: ../templates/popup.php:22 ../templates/popup.php:83
+#: ../templates/popup.php:33 ../templates/popup.php:94
 msgid "Close Modal Dialog"
 msgstr "Закрыть окно"
 
