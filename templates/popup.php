@@ -6,7 +6,7 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 	if ( $use_facebook || $use_vkontakte || $use_odnoklassniki || $use_googleplus || $use_twitter || $use_pinterest ) :
 ?>
 	<div id="social-community-popup">
-		<div class="parent_popup"></div>
+		<div class="parent_popup" style="background-color:<?php echo $overlay_color; ?> !important;"></div>
 
 		<?php $border_radius_css = $border_radius > 0 ? "border-radius:{$border_radius}px !important;" : ""; ?>
 		<div id="popup" style="width:<?php echo $container_width + 40; ?>px !important;height:<?php echo $container_height + 10; ?>px !important;<?php echo $border_radius_css; ?>">

@@ -41,6 +41,8 @@ $container_height           = get_scp_option( 'setting_container_height' ) ;
 $border_radius              = absint( get_scp_option( 'setting_border_radius' ) );
 $close_by_clicking_anywhere = get_scp_option( 'setting_close_popup_by_clicking_anywhere' ) === '1';
 $close_when_esc_pressed     = get_scp_option( 'setting_close_popup_when_esc_pressed' ) === '1';
+$overlay_color              = get_scp_option( 'setting_overlay_color' );
+
 
 ob_start();
 require_once( sprintf( "%s/../templates/popup.php", dirname( __FILE__ ) ) );
