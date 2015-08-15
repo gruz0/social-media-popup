@@ -6,7 +6,18 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 	if ( $use_facebook || $use_vkontakte || $use_odnoklassniki || $use_googleplus || $use_twitter || $use_pinterest ) :
 ?>
 	<div id="social-community-popup">
-		<div class="parent_popup" style="background-color:<?php echo $overlay_color; ?> !important;"></div>
+
+	<?php
+		$parent_popup_styles                  = '';
+		$parent_popup_css                     = array();
+		$parent_popup_css['background-color'] = $overlay_color;
+		$parent_popup_css['opacity']          = '0.' . intval( $overlay_opacity ) / 10.0;
+
+		foreach ( $parent_popup_css as $selector => $value ) {
+			$parent_popup_styles .= "${selector}: ${value}; ";
+		}
+	?>
+		<div class="parent_popup" style="<?php echo $parent_popup_styles; ?>"></div>
 
 		<?php $border_radius_css = $border_radius > 0 ? "border-radius:{$border_radius}px !important;" : ""; ?>
 		<div id="popup" style="width:<?php echo $container_width + 40; ?>px !important;height:<?php echo $container_height + 10; ?>px !important;<?php echo $border_radius_css; ?>">

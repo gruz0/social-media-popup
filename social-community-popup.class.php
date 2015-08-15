@@ -68,6 +68,7 @@ class Social_Community_Popup {
 			'setting_button_to_close_widget_title',
 			'setting_button_to_close_widget_style',
 			'setting_overlay_color',
+			'setting_overlay_opacity',
 
 			// Facebook
 			'setting_use_facebook',
@@ -366,6 +367,9 @@ class Social_Community_Popup {
 			// Добавляем цвет фоновой заливки родительского контейнера
 			update_option( SCP_PREFIX . 'setting_overlay_color',                      '#000000' );
 
+			// Добавляем степень прозрачности фоновой заливки родительского контейнера
+			update_option( SCP_PREFIX . 'setting_overlay_opacity',                    80 );
+
 			update_option( $version, '0.6.9' );
 		}
 	}
@@ -559,6 +563,7 @@ class Social_Community_Popup {
 		register_setting( $group, SCP_PREFIX . 'setting_button_to_close_widget_title', 'sanitize_text_field' );
 		register_setting( $group, SCP_PREFIX . 'setting_button_to_close_widget_style', 'sanitize_text_field' );
 		register_setting( $group, SCP_PREFIX . 'setting_overlay_color', 'sanitize_text_field' );
+		register_setting( $group, SCP_PREFIX . 'setting_overlay_opacity', 'absint' );
 
 		add_settings_section(
 			$section,
@@ -672,6 +677,18 @@ class Social_Community_Popup {
 			$section,
 			array(
 				'field' => SCP_PREFIX . 'setting_overlay_color'
+			)
+		);
+
+		// Уровень прозрачности фоновой заливки родительского контейннера
+		add_settings_field(
+			$prefix . '-common-overlay-opacity',
+			__( 'Overlay Opacity', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_overlay_opacity'
 			)
 		);
 	}
