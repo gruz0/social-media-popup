@@ -200,8 +200,16 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 				<?php if ( $use_googleplus ) echo "scp_prependGooglePlus(\$);"; ?>
 				<?php if ( $use_pinterest ) echo "scp_prependPinterest(\$);"; ?>
 
-				jQuery('#social-community-popup').show();
+				$('#social-community-popup').show();
+
+			<?php if ( $delay_before_show_bottom_button > 0 ) { ?>
+				setTimeout(function() { $('.dont-show-widget').show(); }, <?php echo $delay_before_show_bottom_button * 1000; ?>);
+			<?php } else { ?>
+				$('.dont-show-widget').show();
+			<?php } ?>
+
 			}, <?php echo $calculated_delay; ?>);
+
 			scp_deleteCookie("social-community-popup-views");
 
 			<?php if ( $close_by_clicking_anywhere ) : ?>

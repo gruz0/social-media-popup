@@ -108,7 +108,7 @@
 		}
 
 	#social-community-popup .dont-show-widget {
-		display:block;
+		display:none;
 		text-align:center;
 		margin-bottom:3px;
 	}

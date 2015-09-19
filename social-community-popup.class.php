@@ -69,6 +69,7 @@ class Social_Community_Popup {
 			'setting_show_close_button_in',
 			'setting_button_to_close_widget_title',
 			'setting_button_to_close_widget_style',
+			'setting_delay_before_show_bottom_button',
 			'setting_overlay_color',
 			'setting_overlay_opacity',
 
@@ -378,6 +379,9 @@ class Social_Community_Popup {
 			// Добавляем опцию выравнивания табов по центру (было только слева)
 			update_option( SCP_PREFIX . 'setting_align_tabs_to_center',               0 );
 
+			// Добавляем опцию задержки перед показом кнопки закрытия виджета в подвале
+			update_option( SCP_PREFIX . 'setting_delay_before_show_bottom_button',    0 );
+
 			update_option( $version, '0.6.9' );
 		}
 	}
@@ -571,6 +575,7 @@ class Social_Community_Popup {
 		register_setting( $group, SCP_PREFIX . 'setting_show_button_to_close_widget', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_button_to_close_widget_title', 'sanitize_text_field' );
 		register_setting( $group, SCP_PREFIX . 'setting_button_to_close_widget_style', 'sanitize_text_field' );
+		register_setting( $group, SCP_PREFIX . 'setting_delay_before_show_bottom_button', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_overlay_color', 'sanitize_text_field' );
 		register_setting( $group, SCP_PREFIX . 'setting_overlay_opacity', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_align_tabs_to_center', 'absint' );
@@ -664,6 +669,18 @@ class Social_Community_Popup {
 			$section,
 			array(
 				'field' => SCP_PREFIX . 'setting_button_to_close_widget_style'
+			)
+		);
+
+		// Задержка перед отображением кнопки "Спасибо, я уже с вами"
+		add_settings_field(
+			$prefix . '-common-delay-before-show-button-to-close-widget',
+			__( 'Delay Before Show Button to Close Widget (sec.)', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_delay_before_show_bottom_button'
 			)
 		);
 
