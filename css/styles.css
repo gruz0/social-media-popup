@@ -120,6 +120,7 @@
 			float:none !important;
 			text-shadow:none;
 			opacity:1;
+			text-decoration:none;
 		}
 
 		#social-community-popup .dont-show-widget.scp-button a {
