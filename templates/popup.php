@@ -241,7 +241,7 @@ function scp_facebook_container() {
 ?>
 	<div class="box">
 		<?php if ( get_scp_option( 'setting_facebook_show_description' ) === '1' ) : ?>
-			<p class="widget-description"><b><?php echo get_scp_option( 'setting_facebook_description' ); ?></b></p>
+			<p class="widget-description"><?php echo get_scp_option( 'setting_facebook_description' ); ?></p>
 		<?php endif; ?>
 
 		<?php
