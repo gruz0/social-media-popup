@@ -64,6 +64,7 @@ class Social_Community_Popup {
 			'setting_close_popup_when_esc_pressed',
 			'setting_plugin_title',
 			'setting_hide_tabs_if_one_widget_is_active',
+			'setting_align_tabs_to_center',
 			'setting_show_button_to_close_widget',
 			'setting_show_close_button_in',
 			'setting_button_to_close_widget_title',
@@ -374,6 +375,9 @@ class Social_Community_Popup {
 			// Добавляем опцию выбора местоположения верхней кнопки закрытия окна: внутри или вне контейнера
 			update_option( SCP_PREFIX . 'setting_show_close_button_in',               'inside' );
 
+			// Добавляем опцию выравнивания табов по центру (было только слева)
+			update_option( SCP_PREFIX . 'setting_align_tabs_to_center',               0 );
+
 			update_option( $version, '0.6.9' );
 		}
 	}
@@ -569,6 +573,7 @@ class Social_Community_Popup {
 		register_setting( $group, SCP_PREFIX . 'setting_button_to_close_widget_style', 'sanitize_text_field' );
 		register_setting( $group, SCP_PREFIX . 'setting_overlay_color', 'sanitize_text_field' );
 		register_setting( $group, SCP_PREFIX . 'setting_overlay_opacity', 'absint' );
+		register_setting( $group, SCP_PREFIX . 'setting_align_tabs_to_center', 'absint' );
 
 		add_settings_section(
 			$section,
@@ -600,6 +605,19 @@ class Social_Community_Popup {
 				'field' => SCP_PREFIX . 'setting_hide_tabs_if_one_widget_is_active'
 			)
 		);
+
+		// Отцентрировать табы
+		add_settings_field(
+			$prefix . '-common-align-tabs-to-center',
+			__( 'Align Tabs to Center', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_align_tabs_to_center'
+			)
+		);
+
 
 		// Показывать кнопку закрытия окна в заголовке в контейнере или вне его
 		add_settings_field(

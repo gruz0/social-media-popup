@@ -59,7 +59,7 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 			<?php if ( $selected_widgets_count == 1 && get_scp_option( 'setting_hide_tabs_if_one_widget_is_active' ) == 1 ) : ?>
 
 			<?php else: ?>
-				<ul class="tabs">
+				<ul class="tabs"<?php if ( $align_tabs_to_center ) echo 'style="text-align:center;"'; ?>>
 
 				<?php
 					for ( $idx = 0; $idx < count( $tabs_order ); $idx++ ) {

@@ -44,6 +44,7 @@ $close_when_esc_pressed     = get_scp_option( 'setting_close_popup_when_esc_pres
 $show_close_button_in       = get_scp_option( 'setting_show_close_button_in' );
 $overlay_color              = get_scp_option( 'setting_overlay_color' );
 $overlay_opacity            = get_scp_option( 'setting_overlay_opacity' );
+$align_tabs_to_center       = get_scp_option( 'setting_align_tabs_to_center' );
 
 ob_start();
 require_once( sprintf( "%s/../templates/popup.php", dirname( __FILE__ ) ) );
