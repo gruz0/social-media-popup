@@ -22,6 +22,10 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 		<?php $border_radius_css = $border_radius > 0 ? "border-radius:{$border_radius}px !important;" : ""; ?>
 		<div id="popup" style="width:<?php echo $container_width + 40; ?>px !important;height:<?php echo $container_height + 10; ?>px !important;<?php echo $border_radius_css; ?>">
 
+			<?php if ( $show_close_button_in === 'outside' ) { ?>
+			<a href="#" class="close close-outside" title="<?php _e( 'Close Modal Dialog', L10N_SCP_PREFIX ); ?>">&times;</a>
+			<?php } ?>
+
 			<div class="section" style="width:<?php echo $container_width; ?>px !important;height:<?php echo $container_height; ?>px !important;">
 		<?php
 			$scp_plugin_title     = trim( get_scp_option( 'setting_plugin_title' ) );
@@ -30,7 +34,9 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 
 			if ( $show_plugin_title ) { ?>
 				<div class="plugin-title">
+					<?php if ( $show_close_button_in === 'inside' ) { ?>
 					<span class="close" title="<?php _e( 'Close Modal Dialog', L10N_SCP_PREFIX ); ?>">&times;</span>
+					<?php } ?>
 					<?php echo $scp_plugin_title; ?>
 				</div>
 			<?php }
@@ -90,7 +96,7 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 						}
 					}
 				?>
-				<?php if ( ! $show_plugin_title ) : ?>
+				<?php if ( ! $show_plugin_title && $show_close_button_in === 'inside' ) : ?>
 					<li class="last-item"><span class="close" title="<?php _e( 'Close Modal Dialog', L10N_SCP_PREFIX ); ?>">&times;</span></li>
 				<?php endif; ?>
 				</ul>

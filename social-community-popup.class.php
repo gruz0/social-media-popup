@@ -65,6 +65,7 @@ class Social_Community_Popup {
 			'setting_plugin_title',
 			'setting_hide_tabs_if_one_widget_is_active',
 			'setting_show_button_to_close_widget',
+			'setting_show_close_button_in',
 			'setting_button_to_close_widget_title',
 			'setting_button_to_close_widget_style',
 			'setting_overlay_color',
@@ -370,6 +371,9 @@ class Social_Community_Popup {
 			// Добавляем степень прозрачности фоновой заливки родительского контейнера
 			update_option( SCP_PREFIX . 'setting_overlay_opacity',                    80 );
 
+			// Добавляем опцию выбора местоположения верхней кнопки закрытия окна: внутри или вне контейнера
+			update_option( SCP_PREFIX . 'setting_show_close_button_in',               'inside' );
+
 			update_option( $version, '0.6.9' );
 		}
 	}
@@ -559,6 +563,7 @@ class Social_Community_Popup {
 		register_setting( $group, SCP_PREFIX . 'setting_container_width', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_container_height', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_border_radius', 'absint' );
+		register_setting( $group, SCP_PREFIX . 'setting_show_close_button_in', 'sanitize_text_field' );
 		register_setting( $group, SCP_PREFIX . 'setting_show_button_to_close_widget', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_button_to_close_widget_title', 'sanitize_text_field' );
 		register_setting( $group, SCP_PREFIX . 'setting_button_to_close_widget_style', 'sanitize_text_field' );
@@ -593,6 +598,18 @@ class Social_Community_Popup {
 			$section,
 			array(
 				'field' => SCP_PREFIX . 'setting_hide_tabs_if_one_widget_is_active'
+			)
+		);
+
+		// Показывать кнопку закрытия окна в заголовке в контейнере или вне его
+		add_settings_field(
+			$prefix . '-common-show-close-button-in',
+			__( 'Show Close Button in Title', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_show_close_button_in' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_show_close_button_in'
 			)
 		);
 
@@ -1798,6 +1815,22 @@ class Social_Community_Popup {
 			'textarea_name' => $field
 		);
 		wp_editor( wp_kses_post( $value , ENT_QUOTES, 'UTF-8' ), $field, $settings );
+	}
+
+	/**
+	 * Callback-шаблон для формирования радио-кнопок для выбора местоположения кнопки закрытия окна в заголовке
+	 */
+	public function settings_field_show_close_button_in( $args ) {
+		$field = $args[ 'field' ];
+		$value = get_option( $field );
+		$format = '<input type="radio" id="%s" name="%s" value="%s"%s />';
+		$format .= '<label for="%s">%s</label>';
+		$html = sprintf( $format, $field . '_0', $field, 'inside', checked( $value, 'inside', false ), $field . '_0', __( 'Inside Container', L10N_SCP_PREFIX ) );
+		$html .= '<br />';
+		$html .= sprintf( $format, $field . '_1', $field, 'outside', checked( $value, 'outside', false ), $field . '_1', __( 'Outside Container', L10N_SCP_PREFIX ) );
+		$html .= '<br />';
+		$html .= sprintf( $format, $field . '_2', $field, 'none', checked( $value, 'none', false ), $field . '_2', __( 'Don\'t show', L10N_SCP_PREFIX ) );
+		echo $html;
 	}
 
 	/**
