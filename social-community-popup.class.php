@@ -72,6 +72,7 @@ class Social_Community_Popup {
 			'setting_delay_before_show_bottom_button',
 			'setting_overlay_color',
 			'setting_overlay_opacity',
+			'setting_background_image',
 
 			// Facebook
 			'setting_use_facebook',
@@ -382,6 +383,9 @@ class Social_Community_Popup {
 			// Добавляем опцию задержки перед показом кнопки закрытия виджета в подвале
 			update_option( SCP_PREFIX . 'setting_delay_before_show_bottom_button',    0 );
 
+			// Добавляем возможность загрузки фонового изображения для виджета
+			update_option( SCP_PREFIX . 'setting_background_image',                   '' );
+
 			update_option( $version, '0.6.9' );
 		}
 	}
@@ -579,6 +583,7 @@ class Social_Community_Popup {
 		register_setting( $group, SCP_PREFIX . 'setting_overlay_color', 'sanitize_text_field' );
 		register_setting( $group, SCP_PREFIX . 'setting_overlay_opacity', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_align_tabs_to_center', 'absint' );
+		register_setting( $group, SCP_PREFIX . 'setting_background_image', 'sanitize_text_field' );
 
 		add_settings_section(
 			$section,
@@ -741,6 +746,18 @@ class Social_Community_Popup {
 			$section,
 			array(
 				'field' => SCP_PREFIX . 'setting_overlay_opacity'
+			)
+		);
+
+		// Загрузка фонового изображения виджета
+		add_settings_field(
+			$prefix . '-common-background-image',
+			__( 'Widget Background Image', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_background_image' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_background_image'
 			)
 		);
 	}
@@ -1887,6 +1904,18 @@ class Social_Community_Popup {
 	}
 
 	/**
+	 * Callback-шаблон для формирования поля и кнопки для загрузки фонового изображения виджета
+	 */
+	public function settings_field_background_image( $args ) {
+		$field = $args[ 'field' ];
+		$value = get_option( $field );
+		$html = '<input type="text" id="scp_background_image" name="' . $field . '" value="' . $value . '" />';
+		$html .= '<input id="scp_upload_background_image" type="button" class="button" value="' . __( 'Upload Image', L10N_SCP_PREFIX ) . '" /><br />';
+		$html .= '<div class="scp-background-image">' . ( empty( $value ) ? '' : '<img src="' . $value . '" />' ) . '</div>';
+		echo $html;
+	}
+
+	/**
 	 * Callback-шаблон для формирования радио-кнопок для выбора локали Facebook
 	 */
 	public function settings_field_facebook_locale( $args ) {
@@ -2121,6 +2150,13 @@ class Social_Community_Popup {
 
 		wp_register_script( 'social-community-popup-admin-script', plugins_url( 'js/admin.js', __FILE__ ), array( 'jquery' ) );
 		wp_enqueue_script( 'social-community-popup-admin-script' );
+
+		if ( 'social_community_popup' == get_current_screen()->id ) {
+			wp_enqueue_script('thickbox');
+			wp_enqueue_style('thickbox');
+
+			wp_enqueue_script('media-upload');
+		}
 	}
 
 	/**

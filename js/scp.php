@@ -46,6 +46,7 @@ $overlay_color              = get_scp_option( 'setting_overlay_color' );
 $overlay_opacity            = get_scp_option( 'setting_overlay_opacity' );
 $align_tabs_to_center       = absint( get_scp_option( 'setting_align_tabs_to_center' ) );
 $delay_before_show_bottom_button = absint( get_scp_option( 'setting_delay_before_show_bottom_button' ) );
+$background_image           = get_scp_option( 'setting_background_image' );
 
 ob_start();
 require_once( sprintf( "%s/../templates/popup.php", dirname( __FILE__ ) ) );

@@ -19,8 +19,16 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 	?>
 		<div class="parent_popup" style="<?php echo $parent_popup_styles; ?>"></div>
 
-		<?php $border_radius_css = $border_radius > 0 ? "border-radius:{$border_radius}px !important;" : ""; ?>
-		<div id="popup" style="width:<?php echo $container_width + 40; ?>px !important;height:<?php echo $container_height + 10; ?>px !important;<?php echo $border_radius_css; ?>">
+		<?php
+			$border_radius_css    = $border_radius > 0 ? "border-radius:{$border_radius}px !important;" : "";
+			$background_image_css = empty( $background_image ) ? '' : "background:#fff url('{$background_image}') center center no-repeat;";
+
+			$popup_css = '';
+			$popup_css .= 'width:' . ( $container_width + 40 ) . 'px !important;height:' . ( $container_height + 10 ) . 'px !important;';
+			$popup_css .= $border_radius_css;
+			$popup_css .= $background_image_css;
+		?>
+		<div id="popup" style="<?php echo $popup_css; ?>">
 
 			<?php if ( $show_close_button_in === 'outside' ) { ?>
 			<a href="#" class="close close-outside" title="<?php _e( 'Close Modal Dialog', L10N_SCP_PREFIX ); ?>">&times;</a>
