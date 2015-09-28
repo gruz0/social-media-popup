@@ -10,13 +10,17 @@ $j(document).ready(function() {
 
 	$j('#scp_upload_background_image').click(function() {
 		tb_show('Upload a background image', 'media-upload.php?referer=social_community_popup&type=image&TB_iframe=true&post_id=0', false);
+
+		window.scp_restore_send_to_editor = window.send_to_editor;
+		window.send_to_editor = function(html) {
+			$j('.scp-background-image').html(html);
+			var image_src = $j('.scp-background-image img').attr('src');
+			$j('#scp_background_image').val(image_src);
+			tb_remove();
+
+			window.send_to_editor = window.scp_restore_send_to_editor;
+		}
+
 		return false;
 	});
-
-	window.send_to_editor = function(html) {
-		$j('.scp-background-image').html(html);
-		var image_src = $j('.scp-background-image img').attr('src');
-		$j('#scp_background_image').val(image_src);
-		tb_remove();
-	}
 });
