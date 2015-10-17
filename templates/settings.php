@@ -40,6 +40,7 @@ function scp_settings_tabs() {
 	$tabs               = array();
 	$tabs['general']    = __( 'General', L10N_SCP_PREFIX );
 	$tabs['view']       = __( 'View', L10N_SCP_PREFIX );
+	$tabs['events']     = __( 'Events', L10N_SCP_PREFIX );
 	$tabs['management'] = __( 'Management', L10N_SCP_PREFIX );
 
 	echo '<h2 class="nav-tab-wrapper">';

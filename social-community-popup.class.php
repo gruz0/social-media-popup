@@ -417,6 +417,7 @@ class Social_Community_Popup {
 
 		$this->init_settings_common( $prefix );
 		$this->init_settings_common_view( $prefix );
+		$this->init_settings_common_events( $prefix );
 		$this->init_settings_common_management( $prefix );
 
 		$this->init_settings_facebook( $prefix );
@@ -443,9 +444,6 @@ class Social_Community_Popup {
 
 		// Не забывать добавлять новые опции в uninstall()
 		register_setting( $group, SCP_PREFIX . 'setting_debug_mode' );
-		register_setting( $group, SCP_PREFIX . 'setting_display_after_n_days', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_display_after_visiting_n_pages', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_display_after_delay_of_n_seconds', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_tabs_order', 'sanitize_text_field' );
 		register_setting( $group, SCP_PREFIX . 'setting_close_popup_by_clicking_anywhere', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_close_popup_when_esc_pressed', 'absint' );
@@ -467,42 +465,6 @@ class Social_Community_Popup {
 			$section,
 			array(
 				'field' => SCP_PREFIX . 'setting_debug_mode'
-			)
-		);
-
-		// Повторный показ окна через N дней
-		add_settings_field(
-			$prefix . '-common-display-after-n-days',
-			__( 'Display After N-days', L10N_SCP_PREFIX ),
-			array( & $this, 'settings_field_input_text' ),
-			$options_page,
-			$section,
-			array(
-				'field' => SCP_PREFIX . 'setting_display_after_n_days'
-			)
-		);
-
-		// Отображение окна после просмотра N страниц на сайте
-		add_settings_field(
-			$prefix . '-common-display-after-visiting-n-pages',
-			__( 'Display After Visiting N-pages', L10N_SCP_PREFIX ),
-			array( & $this, 'settings_field_input_text' ),
-			$options_page,
-			$section,
-			array(
-				'field' => SCP_PREFIX . 'setting_display_after_visiting_n_pages'
-			)
-		);
-
-		// Отображение окна после задержки N секунд
-		add_settings_field(
-			$prefix . '-common-display-after-delay-of-n-seconds',
-			__( 'Display After Delay of N-seconds', L10N_SCP_PREFIX ),
-			array( & $this, 'settings_field_input_text' ),
-			$options_page,
-			$section,
-			array(
-				'field' => SCP_PREFIX . 'setting_display_after_delay_of_n_seconds'
 			)
 		);
 
@@ -758,6 +720,69 @@ class Social_Community_Popup {
 			$section,
 			array(
 				'field' => SCP_PREFIX . 'setting_background_image'
+			)
+		);
+	}
+
+	/**
+	 * Общие настройки (вкладка "События")
+	 */
+	public function init_settings_common_events( $prefix ) {
+
+		// Используется в settings_field и do_settings_field
+		$group = $prefix . '-group-events';
+
+		// Используется в do_settings_section
+		$options_page = $prefix . '-group-events';
+
+		// ID секции
+		$section = $prefix . '-section-common-events';
+
+		// Не забывать добавлять новые опции в uninstall()
+		register_setting( $group, SCP_PREFIX . 'setting_display_after_n_days', 'absint' );
+		register_setting( $group, SCP_PREFIX . 'setting_display_after_visiting_n_pages', 'absint' );
+		register_setting( $group, SCP_PREFIX . 'setting_display_after_delay_of_n_seconds', 'absint' );
+
+		add_settings_section(
+			$section,
+			__( 'Events', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_section_common_events' ),
+			$options_page
+		);
+
+		// Повторный показ окна через N дней
+		add_settings_field(
+			$prefix . '-common-display-after-n-days',
+			__( 'Display After N-days', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_display_after_n_days'
+			)
+		);
+
+		// Отображение окна после просмотра N страниц на сайте
+		add_settings_field(
+			$prefix . '-common-display-after-visiting-n-pages',
+			__( 'Display After Visiting N-pages', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_display_after_visiting_n_pages'
+			)
+		);
+
+		// Отображение окна после задержки N секунд
+		add_settings_field(
+			$prefix . '-common-display-after-delay-of-n-seconds',
+			__( 'Display After Delay of N-seconds', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_display_after_delay_of_n_seconds'
 			)
 		);
 	}
@@ -1774,6 +1799,13 @@ class Social_Community_Popup {
 	 */
 	public function settings_section_common_view() {
 		_e( 'In this section, you can customize the appearance of the plugin', L10N_SCP_PREFIX );
+	}
+
+	/**
+	 * Описание общих настроек (таб "События")
+	 */
+	public function settings_section_common_events() {
+		_e( 'In this section, you can customize the events when the plugin will shown', L10N_SCP_PREFIX );
 	}
 
 	/**
