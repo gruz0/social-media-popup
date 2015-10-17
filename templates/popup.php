@@ -17,7 +17,7 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 			$parent_popup_styles .= "${selector}: ${value}; ";
 		}
 	?>
-		<div class="parent_popup" style="<?php echo $parent_popup_styles; ?>"></div>
+		<div class="parent_popup" style="<?php echo esc_attr( $parent_popup_styles ); ?>"></div>
 
 		<?php
 			$border_radius_css    = $border_radius > 0 ? "border-radius:{$border_radius}px !important;" : "";
@@ -28,13 +28,13 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 			$popup_css .= $border_radius_css;
 			$popup_css .= $background_image_css;
 		?>
-		<div id="popup" style="<?php echo $popup_css; ?>">
+		<div id="popup" style="<?php echo esc_attr( $popup_css ); ?>">
 
 			<?php if ( $show_close_button_in === 'outside' ) { ?>
 			<a href="#" class="close close-outside" title="<?php _e( 'Close Modal Dialog', L10N_SCP_PREFIX ); ?>">&times;</a>
 			<?php } ?>
 
-			<div class="section" style="width:<?php echo $container_width; ?>px !important;height:<?php echo $container_height; ?>px !important;">
+			<div class="section" style="width:<?php echo esc_attr( $container_width ); ?>px !important;height:<?php echo esc_attr( $container_height ); ?>px !important;">
 		<?php
 			$scp_plugin_title     = trim( get_scp_option( 'setting_plugin_title' ) );
 			$scp_plugin_title_css = preg_replace( "/\r|\n/", "", trim(get_scp_option( 'setting_plugin_title_css' ) ) );
@@ -45,7 +45,7 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 					<?php if ( $show_close_button_in === 'inside' ) { ?>
 					<span class="close" title="<?php _e( 'Close Modal Dialog', L10N_SCP_PREFIX ); ?>">&times;</span>
 					<?php } ?>
-					<?php echo $scp_plugin_title; ?>
+					<?php echo esc_attr( $scp_plugin_title ); ?>
 				</div>
 			<?php }
 		?>
@@ -152,8 +152,8 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 					$button_to_close_widget_style = get_scp_option( 'setting_button_to_close_widget_style' );
 					$button_to_close_widget_class = $button_to_close_widget_style == 'link' ? '' : 'scp-' . $button_to_close_widget_style . '-button';
 				?>
-					<div class="dont-show-widget scp-button <?php echo $button_to_close_widget_class; ?>">
-						<a href="#" class="close"><?php echo get_scp_option( 'setting_button_to_close_widget_title' ); ?></a>
+					<div class="dont-show-widget scp-button <?php echo esc_attr( $button_to_close_widget_class ); ?>">
+						<a href="#" class="close"><?php echo esc_attr( get_scp_option( 'setting_button_to_close_widget_title' ) ); ?></a>
 					</div>
 				<?php endif; ?>
 		</div>
@@ -183,7 +183,7 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 		?>
 
 		if ($("#fb-root").length == 0) {
-			$("body").prepend($("<div/>").html("<?php echo $prepend_facebook; ?>").text());
+			$("body").prepend($("<div/>").html("<?php echo esc_attr( $prepend_facebook ); ?>").text());
 		}
 	}
 	<?php endif; ?>
@@ -191,14 +191,14 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 	<?php $calculated_delay = ( $delay_after_n_seconds > 0 ? $delay_after_n_seconds * 1000 : 1000 ); ?>
 
 	function scp_destroyPlugin($) {
-		var date = new Date( new Date().getTime() + <?php echo 1000 * 60 * 60 * 24 * $after_n_days; ?>);
+		var date = new Date( new Date().getTime() + <?php echo 1000 * 60 * 60 * 24 * esc_attr( $after_n_days ); ?>);
 		scp_setCookie("social-community-popup", "true", { "expires": date, "path": "/" } );
 		scp_deleteCookie("social-community-popup-views");
 		$("#social-community-popup").remove();
 	}
 
 	jQuery(document).ready(function($) {
-		scp_setCookie("social-community-popup-views", <?php echo $cookie_popup_views + 1; ?>, { "path": "/" } );
+		scp_setCookie("social-community-popup-views", <?php echo esc_attr( $cookie_popup_views ) + 1; ?>, { "path": "/" } );
 
 		<?php if ( $cookie_popup_views === $visit_n_pages ) : ?>
 			setTimeout(function() {
@@ -211,12 +211,12 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 				$('#social-community-popup').show();
 
 			<?php if ( $delay_before_show_bottom_button > 0 ) { ?>
-				setTimeout(function() { $('.dont-show-widget').show(); }, <?php echo $delay_before_show_bottom_button * 1000; ?>);
+				setTimeout(function() { $('.dont-show-widget').show(); }, <?php echo esc_attr( $delay_before_show_bottom_button ) * 1000; ?>);
 			<?php } else { ?>
 				$('.dont-show-widget').show();
 			<?php } ?>
 
-			}, <?php echo $calculated_delay; ?>);
+			}, <?php echo esc_attr( $calculated_delay ); ?>);
 
 			scp_deleteCookie("social-community-popup-views");
 
@@ -242,7 +242,8 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 <?php
 function scp_tab_caption( $option, $css_class = '' ) {
 	global $tab_index;
-	printf( '<li data-index="' . $tab_index++ . '"' . ( empty( $css_class ) ? '' : " class='{$css_class}'" ) . '><span>%s</span></li>', get_scp_option( $option ) );
+	$css_class = esc_attr( $css_class );
+	printf( '<li data-index="' . $tab_index++ . '"' . ( empty( $css_class ) ? '' : " class='{$css_class}'" ) . '><span>%s</span></li>', esc_attr( get_scp_option( $option ) ) );
 }
 
 function scp_facebook_container() {
@@ -256,14 +257,14 @@ function scp_facebook_container() {
 			// Заменяем Application ID на наш из настроек
 			$facebook_container = sprintf( 
 				file_get_contents( dirname( __FILE__ ) . '/partials/facebook_container.php' ),
-				get_scp_option( 'setting_facebook_page_url' ),
-				get_scp_option( 'setting_facebook_width' ),
-				get_scp_option( 'setting_facebook_width' ),
-				get_scp_option( 'setting_facebook_height' ),
-				get_scp_option( 'setting_facebook_height' ),
-				scp_to_bool( get_scp_option( 'setting_facebook_hide_cover' ) ),
-				scp_to_bool( get_scp_option( 'setting_facebook_show_facepile' ) ),
-				scp_to_bool( get_scp_option( 'setting_facebook_show_posts' ) )
+				esc_attr( get_scp_option( 'setting_facebook_page_url' ) ),
+				esc_attr( get_scp_option( 'setting_facebook_width' ) ),
+				esc_attr( get_scp_option( 'setting_facebook_width' ) ),
+				esc_attr( get_scp_option( 'setting_facebook_height' ) ),
+				esc_attr( get_scp_option( 'setting_facebook_height' ) ),
+				esc_attr( scp_to_bool( get_scp_option( 'setting_facebook_hide_cover' ) ) ),
+				esc_attr( scp_to_bool( get_scp_option( 'setting_facebook_show_facepile' ) ) ),
+				esc_attr( scp_to_bool( get_scp_option( 'setting_facebook_show_posts' ) ) )
 			);
 			echo $facebook_container;
 		?>
@@ -282,14 +283,14 @@ function scp_vkontakte_container() {
 			// Заменяем Application ID на наш из настроек
 			$vkontakte_container = sprintf( 
 				file_get_contents( dirname( __FILE__ ) . '/partials/vkontakte_container.php' ),
-				get_scp_option( 'setting_vkontakte_layout' ),
-				get_scp_option( 'setting_vkontakte_width' ),
-				get_scp_option( 'setting_vkontakte_height' ),
-				get_scp_option( 'setting_vkontakte_color_background' ),
-				get_scp_option( 'setting_vkontakte_color_text' ),
-				get_scp_option( 'setting_vkontakte_color_button' ),
-				get_scp_option( 'setting_vkontakte_page_or_group_id' ),
-				get_scp_option( 'setting_vkontakte_delay_before_render' )
+				esc_attr( get_scp_option( 'setting_vkontakte_layout' ) ),
+				esc_attr( get_scp_option( 'setting_vkontakte_width' ) ),
+				esc_attr( get_scp_option( 'setting_vkontakte_height' ) ),
+				esc_attr( get_scp_option( 'setting_vkontakte_color_background' ) ),
+				esc_attr( get_scp_option( 'setting_vkontakte_color_text' ) ),
+				esc_attr( get_scp_option( 'setting_vkontakte_color_button' ) ),
+				esc_attr( get_scp_option( 'setting_vkontakte_page_or_group_id' ) ),
+				esc_attr( get_scp_option( 'setting_vkontakte_delay_before_render' ) )
 			);
 			echo $vkontakte_container;
 		?>
@@ -307,9 +308,9 @@ function scp_odnoklassniki_container() {
 		<?php
 			$odnoklassniki_container = sprintf( 
 				file_get_contents( dirname( __FILE__ ) . '/partials/odnoklassniki_container.php' ),
-				get_scp_option( 'setting_odnoklassniki_group_id' ),
-				get_scp_option( 'setting_odnoklassniki_width' ),
-				get_scp_option( 'setting_odnoklassniki_height' )
+				esc_attr( get_scp_option( 'setting_odnoklassniki_group_id' ) ),
+				esc_attr( get_scp_option( 'setting_odnoklassniki_width' ) ),
+				esc_attr( get_scp_option( 'setting_odnoklassniki_height' ) )
 			);
 			echo $odnoklassniki_container;
 		?>
@@ -327,13 +328,13 @@ function scp_googleplus_container() {
 		<?php
 			$googleplus_container = sprintf( 
 				file_get_contents( dirname( __FILE__ ) . '/partials/googleplus_container.php' ),
-				get_scp_option( 'setting_googleplus_page_type' ),
-				get_scp_option( 'setting_googleplus_size' ),
-				get_scp_option( 'setting_googleplus_page_url' ),
-				get_scp_option( 'setting_googleplus_theme' ),
-				get_scp_option( 'setting_googleplus_show_tagline' ),
-				get_scp_option( 'setting_googleplus_show_cover_photo' ),
-				google_plus_relation_from_page_type()
+				esc_attr( get_scp_option( 'setting_googleplus_page_type' ) ),
+				esc_attr( get_scp_option( 'setting_googleplus_size' ) ),
+				esc_attr( get_scp_option( 'setting_googleplus_page_url' ) ),
+				esc_attr( get_scp_option( 'setting_googleplus_theme' ) ),
+				esc_attr( get_scp_option( 'setting_googleplus_show_tagline' ) ),
+				esc_attr( get_scp_option( 'setting_googleplus_show_cover_photo' ) ),
+				esc_attr( google_plus_relation_from_page_type() )
 			);
 			echo $googleplus_container;
 		?>
@@ -361,7 +362,7 @@ function scp_twitter_container() {
 
 	$widget_height  = get_scp_option( 'setting_twitter_height' );
 ?>
-	<div class="box" style="overflow:<?php echo $overflow_css; ?>;height:<?php echo ( $widget_height - 20 ); ?>px;">
+	<div class="box" style="overflow:<?php echo esc_attr( $overflow_css ); ?>;height:<?php echo esc_attr( ( $widget_height - 20 ) ); ?>px;">
 		<?php if ( get_scp_option( 'setting_twitter_show_description' ) === '1' ) : ?>
 			<p class="widget-description"><b><?php echo get_scp_option( 'setting_twitter_description' ); ?></b></p>
 		<?php endif; ?>
@@ -369,16 +370,16 @@ function scp_twitter_container() {
 		<?php
 			$twitter_container = sprintf( 
 				file_get_contents( dirname( __FILE__ ) . '/partials/twitter_container.php' ),
-				get_scp_option( 'setting_twitter_username' ),
-				get_scp_option( 'setting_twitter_widget_id' ),
-				get_scp_option( 'setting_twitter_theme' ),
-				get_scp_option( 'setting_twitter_link_color' ),
-				join( " ", $twitter_chrome ),
-				get_scp_option( 'setting_twitter_tweet_limit' ),
-				get_scp_option( 'setting_twitter_show_replies' ),
-				get_scp_option( 'setting_twitter_width' ),
-				$widget_height,
-				get_scp_option( 'setting_twitter_username' )
+				esc_attr( get_scp_option( 'setting_twitter_username' ) ),
+				esc_attr( get_scp_option( 'setting_twitter_widget_id' ) ),
+				esc_attr( get_scp_option( 'setting_twitter_theme' ) ),
+				esc_attr( get_scp_option( 'setting_twitter_link_color' ) ),
+				esc_attr( join( " ", $twitter_chrome ) ),
+				esc_attr( get_scp_option( 'setting_twitter_tweet_limit' ) ),
+				esc_attr( get_scp_option( 'setting_twitter_show_replies' ) ),
+				esc_attr( get_scp_option( 'setting_twitter_width' ) ),
+				esc_attr( $widget_height ),
+				esc_attr( get_scp_option( 'setting_twitter_username' ) )
 			);
 			echo $twitter_container;
 		?>
@@ -396,10 +397,10 @@ function scp_pinterest_container() {
 		<?php
 			$pinterest_container = sprintf(
 				file_get_contents( dirname( __FILE__ ) . '/partials/pinterest_container.php' ),
-				get_scp_option( 'setting_pinterest_profile_url' ),
-				get_scp_option( 'setting_pinterest_image_width' ),
-				get_scp_option( 'setting_pinterest_width' ),
-				get_scp_option( 'setting_pinterest_height' )
+				esc_attr( get_scp_option( 'setting_pinterest_profile_url' ) ),
+				esc_attr( get_scp_option( 'setting_pinterest_image_width' ) ),
+				esc_attr( get_scp_option( 'setting_pinterest_width' ) ),
+				esc_attr( get_scp_option( 'setting_pinterest_height' ) )
 			);
 			echo $pinterest_container;
 		?>
