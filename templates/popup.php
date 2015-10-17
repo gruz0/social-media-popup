@@ -273,6 +273,7 @@ function scp_facebook_container() {
 }
 
 function scp_vkontakte_container() {
+	$default_vk_group_id = 1;
 ?>
 	<div class="box">
 		<?php if ( get_scp_option( 'setting_vkontakte_show_description' ) === '1' ) : ?>
@@ -280,6 +281,12 @@ function scp_vkontakte_container() {
 		<?php endif; ?>
 
 		<?php
+			$page_or_group_id = esc_attr( get_scp_option( 'setting_vkontakte_page_or_group_id' ) );
+			if ( empty( $page_or_group_id ) ) $page_or_group_id = $default_vk_group_id;
+
+			$delay_before_render = esc_attr( get_scp_option( 'setting_vkontakte_delay_before_render' ) );
+			if ( empty( $delay_before_render ) ) $delay_before_render = 0;
+
 			// Заменяем Application ID на наш из настроек
 			$vkontakte_container = sprintf( 
 				file_get_contents( dirname( __FILE__ ) . '/partials/vkontakte_container.php' ),
@@ -289,8 +296,8 @@ function scp_vkontakte_container() {
 				esc_attr( get_scp_option( 'setting_vkontakte_color_background' ) ),
 				esc_attr( get_scp_option( 'setting_vkontakte_color_text' ) ),
 				esc_attr( get_scp_option( 'setting_vkontakte_color_button' ) ),
-				esc_attr( get_scp_option( 'setting_vkontakte_page_or_group_id' ) ),
-				esc_attr( get_scp_option( 'setting_vkontakte_delay_before_render' ) )
+				$page_or_group_id,
+				$delay_before_render
 			);
 			echo $vkontakte_container;
 		?>
