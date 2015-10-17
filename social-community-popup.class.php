@@ -2285,7 +2285,8 @@ class Social_Community_Popup {
 	 * Добавляем всплывающее окно в подвале сайта
 	 */
 	public function wp_footer() {
-		echo "<script type='text/javascript' src='" . plugins_url( 'js/scp.php?' . rand(), __FILE__ ) . "'></script>";
+		$version = get_option( SCP_PREFIX . 'version' );
+		echo "<script type='text/javascript' src='" . plugins_url( 'js/scp.php?' . $version, __FILE__ ) . "'></script>";
 	}
 
 	/**
