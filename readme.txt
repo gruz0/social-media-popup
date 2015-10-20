@@ -3,7 +3,7 @@ Contributors: gruz0
 Tags: social plugins, socials, facebook, widget, vk, vkontakte, odnoklassniki, twitter, google plus
 Donate link: http://gruz0.ru/social-community-popup/
 Requires at least: 3.9
-Tested up to: 4.2.2
+Tested up to: 4.3.1
 Stable tag: trunk
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
