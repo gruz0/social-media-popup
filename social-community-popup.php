@@ -42,5 +42,27 @@ if ( ! class_exists( 'Social_Community_Popup' ) ) {
 	function scp_to_bool( $variable ) {
 		return ( $variable === '1' ? 'true' : 'false' );
 	}
+
+	function scp_updater() {
+		require_once( dirname( __FILE__ ) . "/includes/updater/updater.php" );
+		if ( is_admin() ) {
+			$config = array(
+				'slug' => plugin_basename(__FILE__),
+				'proper_folder_name' => 'social-community-popup',
+				'api_url' => 'https://api.github.com/repos/gruz0/social-community-popup',
+				'raw_url' => 'https://raw.github.com/gruz0/social-community-popup/master',
+				'github_url' => 'https://github.com/gruz0/social-community-popup',
+				'zip_url' => 'https://github.com/gruz0/social-community-popup/zipball/master',
+				'sslverify' => true,
+				'requires' => '3.9',
+				'tested' => '4.3.1',
+				'readme' => 'readme.txt',
+				'access_token' => '',
+			);
+			new WP_GitHub_Updater( $config );
+		}
+	}
+
+	scp_updater();
 }
 
