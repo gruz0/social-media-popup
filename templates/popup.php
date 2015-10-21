@@ -45,7 +45,7 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 					<?php if ( $show_close_button_in === 'inside' ) { ?>
 					<span class="close" title="<?php _e( 'Close Modal Dialog', L10N_SCP_PREFIX ); ?>">&times;</span>
 					<?php } ?>
-					<?php echo esc_attr( $scp_plugin_title ); ?>
+					<?php echo $scp_plugin_title; ?>
 				</div>
 			<?php }
 		?>
