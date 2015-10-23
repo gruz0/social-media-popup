@@ -1,6 +1,7 @@
 $j = jQuery.noConflict();
 
 $j(document).ready(function() {
+	var SCP_PREFIX = 'social-community-popup-';
 
 	// Клик по табу и открытие соответствующей вкладки
 	$j('#scp_welcome_screen ul.tabs').on('click', 'li:not(.current)', function() {
@@ -22,5 +23,19 @@ $j(document).ready(function() {
 		}
 
 		return false;
+	});
+
+	$j('.' + SCP_PREFIX + 'when_should_the_popup_appear').on('click', function() {
+		var $result      = $j('#' + SCP_PREFIX + 'when_should_the_popup_appear');
+		var resultString = '';
+		var className    = '.' + $j(this).attr('class');
+
+		$j(className).each(function() {
+			if ($j(this).is(':checked')) {
+				resultString += $j(this).val() + ',';
+			}
+		});
+
+		$result.val(resultString);
 	});
 });

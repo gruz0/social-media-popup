@@ -74,6 +74,9 @@ class Social_Community_Popup {
 			'setting_overlay_opacity',
 			'setting_background_image',
 
+			// События
+			'when_should_the_popup_appear',
+
 			// Facebook
 			'setting_use_facebook',
 			'setting_facebook_tab_caption',
@@ -390,6 +393,8 @@ class Social_Community_Popup {
 		}
 
 		if ( '0.7.0' > get_option( $version ) ) {
+			// При наступлении каких событий показывать всплывающее окно
+			update_option( SCP_PREFIX . 'when_should_the_popup_appear',               '' );
 
 			update_option( $version, '0.7.0' );
 		}
@@ -744,6 +749,7 @@ class Social_Community_Popup {
 		$section = $prefix . '-section-common-events';
 
 		// Не забывать добавлять новые опции в uninstall()
+		register_setting( $group, SCP_PREFIX . 'when_should_the_popup_appear', 'sanitize_text_field' );
 		register_setting( $group, SCP_PREFIX . 'setting_display_after_n_days', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_display_after_visiting_n_pages', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_display_after_delay_of_n_seconds', 'absint' );
@@ -753,6 +759,18 @@ class Social_Community_Popup {
 			__( 'Events', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_section_common_events' ),
 			$options_page
+		);
+
+		// При наступлении каких событий показывать окно
+		add_settings_field(
+			$prefix . '-common-when-should-the-popup-appear',
+			__( 'When Should the Popup Appear?', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_when_should_the_popup_appear' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'when_should_the_popup_appear'
+			)
 		);
 
 		// Повторный показ окна через N дней
@@ -1949,6 +1967,37 @@ class Social_Community_Popup {
 		$html = '<input type="text" id="scp_background_image" name="' . $field . '" value="' . $value . '" />';
 		$html .= '<input id="scp_upload_background_image" type="button" class="button" value="' . __( 'Upload Image', L10N_SCP_PREFIX ) . '" /><br />';
 		$html .= '<div class="scp-background-image">' . ( empty( $value ) ? '' : '<img src="' . $value . '" />' ) . '</div>';
+		echo $html;
+	}
+
+	/**
+	 * Callback-шаблон для выбора событий, при которых показывается окно
+	 */
+	public function settings_field_when_should_the_popup_appear( $args ) {
+		$field = $args[ 'field' ];
+		$value = get_option( $field );
+
+		$options = array();
+		$options['after_n_seconds'] = __( 'Popup will appear after N second(s)', L10N_SCP_PREFIX );
+
+		$chains = preg_split( "/,/", $value );
+
+		$format = '<input type="checkbox" id="%s" class="%s" value="%s"%s />';
+		$format .= '<label for="%s">%s</label>';
+
+		$html = '';
+		foreach ( $options as $option_name => $label ) {
+			$checked = '';
+			for ( $idx = 0; $idx < count( $chains ); $idx++ ) {
+				$checked = checked( $chains[$idx], $option_name, false );
+				if ( strlen( $checked ) ) break;
+			}
+
+			$html .= sprintf( $format, $option_name, $field, $option_name, $checked, $option_name, $label );
+			$html .= '<br />';
+		}
+
+		$html .= '<input type="hidden" id="' . $field . '" name="' . $field . '" value="' . esc_attr( $value ) . '" />';
 		echo $html;
 	}
 
