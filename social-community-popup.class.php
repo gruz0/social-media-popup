@@ -55,7 +55,6 @@ class Social_Community_Popup {
 			'setting_debug_mode',
 			'setting_display_after_n_days',
 			'setting_display_after_visiting_n_pages',
-			'setting_display_after_delay_of_n_seconds',
 			'setting_tabs_order',
 			'setting_container_width',
 			'setting_container_height',
@@ -395,6 +394,11 @@ class Social_Community_Popup {
 		if ( '0.7.0' > get_option( $version ) ) {
 			// При наступлении каких событий показывать всплывающее окно
 			update_option( SCP_PREFIX . 'when_should_the_popup_appear',               '' );
+
+			// Сохраним старое значение и переименуем опцию в более читаемый вариант
+			$old_value = get_scp_option( 'setting_display_after_delay_of_n_seconds' );
+			delete_option( SCP_PREFIX . 'setting_display_after_delay_of_n_seconds' );
+			update_option( SCP_PREFIX . 'popup_will_appear_after_n_seconds',          $old_value );
 
 			update_option( $version, '0.7.0' );
 		}
@@ -750,9 +754,9 @@ class Social_Community_Popup {
 
 		// Не забывать добавлять новые опции в uninstall()
 		register_setting( $group, SCP_PREFIX . 'when_should_the_popup_appear', 'sanitize_text_field' );
+		register_setting( $group, SCP_PREFIX . 'popup_will_appear_after_n_seconds', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_display_after_n_days', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_display_after_visiting_n_pages', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_display_after_delay_of_n_seconds', 'absint' );
 
 		add_settings_section(
 			$section,
@@ -799,13 +803,13 @@ class Social_Community_Popup {
 
 		// Отображение окна после задержки N секунд
 		add_settings_field(
-			$prefix . '-common-display-after-delay-of-n-seconds',
-			__( 'Display After Delay of N-seconds', L10N_SCP_PREFIX ),
+			$prefix . '-popup-will-appear-after-n-seconds',
+			__( 'Popup Will Appear After N Second(s)', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_display_after_delay_of_n_seconds'
+				'field' => SCP_PREFIX . 'popup_will_appear_after_n_seconds'
 			)
 		);
 	}

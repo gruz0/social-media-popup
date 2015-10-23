@@ -24,7 +24,7 @@ if ( $debug_mode ) {
 	$after_n_days          = (int) get_scp_option( 'setting_display_after_n_days' );
 	$visit_n_pages         = (int) get_scp_option( 'setting_display_after_visiting_n_pages' );
 	$cookie_popup_views    = isset( $_COOKIE[ 'social-community-popup-views' ] ) ? (int) $_COOKIE[ 'social-community-popup-views' ] : 0;
-	$delay_after_n_seconds = (int) get_scp_option( 'setting_display_after_delay_of_n_seconds' );
+	$delay_after_n_seconds = (int) get_scp_option( 'popup_will_appear_after_n_seconds' );
 }
 
 $use_facebook               = get_scp_option( 'setting_use_facebook' )      === '1';
