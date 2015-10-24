@@ -188,8 +188,6 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 	}
 	<?php endif; ?>
 
-	<?php $calculated_delay = ( $popup_will_appear_after_n_seconds > 0 ? $popup_will_appear_after_n_seconds * 1000 : 1000 ); ?>
-
 	function scp_destroyPlugin($) {
 		var date = new Date( new Date().getTime() + <?php echo 1000 * 60 * 60 * 24 * esc_attr( $after_n_days ); ?>);
 		scp_setCookie("social-community-popup", "true", { "expires": date, "path": "/" } );
@@ -198,44 +196,64 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 	}
 
 	jQuery(document).ready(function($) {
+
+		<?php
+			// Отображение плагина после просмотра страницы N секунд
+			if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'popup_will_appear_after_n_seconds' ) ) {
+				$calculated_delay = ( $popup_will_appear_after_n_seconds > 0 ? $popup_will_appear_after_n_seconds * 1000 : 1000 );
+		?>
+				setTimeout(function() {
+					<?php require_once( dirname( __FILE__ ) . '/events/show-window.php' ); ?>
+					<?php require_once( dirname( __FILE__ ) . '/events/show-bottom-button.php' ); ?>
+				}, <?php echo esc_attr( $calculated_delay ); ?>);
+		<?php } ?>
+
+		<?php
+/*
 		scp_setCookie("social-community-popup-views", <?php echo esc_attr( $cookie_popup_views ) + 1; ?>, { "path": "/" } );
+*/
+		?>
 
-		<?php if ( $cookie_popup_views === $visit_n_pages ) : ?>
-			setTimeout(function() {
+		<?php /* if ( $cookie_popup_views === $visit_n_pages ) : ?>
 
-				<?php if ( $use_facebook ) echo "scp_prependFacebook(\$);"; ?>
-				<?php if ( $use_vkontakte ) echo "scp_prependVK(\$);"; ?>
-				<?php if ( $use_googleplus ) echo "scp_prependGooglePlus(\$);"; ?>
-				<?php if ( $use_pinterest ) echo "scp_prependPinterest(\$);"; ?>
 
-				$('#social-community-popup').show();
+				setTimeout(function() {
 
-			<?php if ( $delay_before_show_bottom_button > 0 ) { ?>
-				setTimeout(function() { $('.dont-show-widget').show(); }, <?php echo esc_attr( $delay_before_show_bottom_button ) * 1000; ?>);
-			<?php } else { ?>
-				$('.dont-show-widget').show();
-			<?php } ?>
+					<?php if ( $use_facebook ) echo "scp_prependFacebook(\$);"; ?>
+					<?php if ( $use_vkontakte ) echo "scp_prependVK(\$);"; ?>
+					<?php if ( $use_googleplus ) echo "scp_prependGooglePlus(\$);"; ?>
+					<?php if ( $use_pinterest ) echo "scp_prependPinterest(\$);"; ?>
 
-			}, <?php echo esc_attr( $calculated_delay ); ?>);
+					$('#social-community-popup').show();
 
-			scp_deleteCookie("social-community-popup-views");
+				<?php if ( $delay_before_show_bottom_button > 0 ) { ?>
+					setTimeout(function() { $('.dont-show-widget').show(); }, <?php echo esc_attr( $delay_before_show_bottom_button ) * 1000; ?>);
+				<?php } else { ?>
+					$('.dont-show-widget').show();
+				<?php } ?>
 
-			<?php if ( $close_by_clicking_anywhere ) : ?>
-			$("#social-community-popup .parent_popup, #social-community-popup .close").click(function() {
-			<?php else: ?>
-			$("#social-community-popup .close").click(function() {
-			<?php endif;  ?>
-				scp_destroyPlugin($);
-			});
-		<?php endif; ?>
+				}, <?php echo esc_attr( $calculated_delay ); ?>);
 
-		<?php if ( $close_when_esc_pressed ) : ?>
+				scp_deleteCookie("social-community-popup-views");
+		*/ ?>
+
+		<?php
+			//TODO: Можно вынести эти события в директорию events и подключать как файлы
+		?>
+
+		<?php /*if ( $close_by_clicking_anywhere ) { ?>
+			$("#social-community-popup .parent_popup, #social-community-popup .close").click(function() { scp_destroyPlugin($); });
+		<?php } else { ?>
+			$("#social-community-popup .close").click(function() { scp_destroyPlugin($); });
+		<?php }*/ ?>
+
+		<?php /*if ( $close_when_esc_pressed ) : ?>
 		$(document).keydown(function(e) {
 			if ( e.keyCode == 27 ) {
 				scp_destroyPlugin($);
 			}
 		});
-		<?php endif; ?>
+		<?php endif;*/ ?>
     });
 </script>
 
