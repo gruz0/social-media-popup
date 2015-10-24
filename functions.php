@@ -33,6 +33,5 @@ function extract_field_when_should_the_popup_appear( $value ) {
 
 // Проверяем наличие нужного нам события в массиве активных событий появления окна
 function when_should_the_popup_appear_has_event( $haystack, $needle ) {
-	return isset( $haystack[$needle] );
+	return ( array_search( $needle, $haystack ) !== false );
 }
-
