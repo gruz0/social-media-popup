@@ -250,19 +250,8 @@ $tab_index = 1;
 				scp_deleteCookie("social-community-popup-views");
 		*/ ?>
 
-		<?php
-			//TODO: Можно вынести эти события в директорию events и подключать как файлы
-		?>
-
 		<?php require_once( dirname( __FILE__ ) . '/events/close-widget.php' ); ?>
-
-		<?php /*if ( $close_when_esc_pressed ) : ?>
-		$(document).keydown(function(e) {
-			if ( e.keyCode == 27 ) {
-				scp_destroyPlugin($);
-			}
-		});
-		<?php endif;*/ ?>
+		<?php require_once( dirname( __FILE__ ) . '/events/close-widget-by-pressing-esc.php' ); ?>
     });
 </script>
 
