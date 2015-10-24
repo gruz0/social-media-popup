@@ -17,12 +17,15 @@ if ( $debug_mode ) {
 	$visit_n_pages         = 0;
 	$cookie_popup_views    = 0;
 
-	$when_should_the_popup_appear                = 'popup_will_appear_after_n_seconds,popup_will_appear_after_clicking_on_element';
+	$when_should_the_popup_appear = array(
+		'after_n_seconds',
+		'after_clicking_on_element'
+	);
 	$popup_will_appear_after_n_seconds           = 5;
 	$popup_will_appear_after_clicking_on_element = '#scp_button';
 
 } else {
-	if ( isset( $_COOKIE[ 'social-community-popup' ] ) ) return;
+	// if ( isset( $_COOKIE[ 'social-community-popup' ] ) ) return;
 
 	$after_n_days          = (int) get_scp_option( 'setting_display_after_n_days' );
 	$visit_n_pages         = (int) get_scp_option( 'setting_display_after_visiting_n_pages' );

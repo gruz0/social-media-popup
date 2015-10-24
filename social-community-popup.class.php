@@ -2025,8 +2025,8 @@ class Social_Community_Popup {
 		$value = get_option( $field );
 
 		$options = array();
-		$options['after_n_seconds']                = __( 'Popup will appear after N second(s)', L10N_SCP_PREFIX );
-		$options['after_clicking_on_css_selector'] = __( 'Popup will appear after clicking on the given CSS selector', L10N_SCP_PREFIX );
+		$options['after_n_seconds']           = __( 'Popup will appear after N second(s)', L10N_SCP_PREFIX );
+		$options['after_clicking_on_element'] = __( 'Popup will appear after clicking on the given CSS selector', L10N_SCP_PREFIX );
 
 		$chains = preg_split( "/,/", $value );
 

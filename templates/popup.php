@@ -2,7 +2,7 @@
 <?php
 $tab_index = 1;
 
-if ( $cookie_popup_views == $visit_n_pages ) :
+// if ( $cookie_popup_views == $visit_n_pages ) :
 	if ( $use_facebook || $use_vkontakte || $use_odnoklassniki || $use_googleplus || $use_twitter || $use_pinterest ) :
 ?>
 	<div id="social-community-popup">
@@ -159,7 +159,7 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 		</div>
 	</div>
 	<?php endif; ?>
-<?php endif; ?>
+<?php //endif; ?>
 
 <?php
 // Окно SCP выводим только после создания его в DOM-дереве
@@ -192,20 +192,33 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 		var date = new Date( new Date().getTime() + <?php echo 1000 * 60 * 60 * 24 * esc_attr( $after_n_days ); ?>);
 		scp_setCookie("social-community-popup", "true", { "expires": date, "path": "/" } );
 		scp_deleteCookie("social-community-popup-views");
-		$("#social-community-popup").remove();
+		$("#social-community-popup").hide();
 	}
 
 	jQuery(document).ready(function($) {
 
 		<?php
 			// Отображение плагина после просмотра страницы N секунд
-			if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'popup_will_appear_after_n_seconds' ) ) {
+			if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'after_n_seconds' ) ) {
 				$calculated_delay = ( $popup_will_appear_after_n_seconds > 0 ? $popup_will_appear_after_n_seconds * 1000 : 1000 );
 		?>
 				setTimeout(function() {
 					<?php require_once( dirname( __FILE__ ) . '/events/show-window.php' ); ?>
 					<?php require_once( dirname( __FILE__ ) . '/events/show-bottom-button.php' ); ?>
 				}, <?php echo esc_attr( $calculated_delay ); ?>);
+		<?php } ?>
+
+		<?php
+			// Отображение плагина после клика по указанному селектору
+			if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'after_clicking_on_element' ) ) {
+				if ( ! empty( $popup_will_appear_after_clicking_on_element ) ) { ?>
+					$('<?php echo $popup_will_appear_after_clicking_on_element; ?>').on('click', function() {
+						<?php require_once( dirname( __FILE__ ) . '/events/show-window.php' ); ?>
+						<?php require_once( dirname( __FILE__ ) . '/events/show-bottom-button.php' ); ?>
+					});
+				<?php } else { ?>
+					alert("<?php _e( "You must add a selector element for the plugin Social Community Popup. Otherwise it won't be work.", L10N_SCP_PREFIX ); ?>");
+				<?php } ?>
 		<?php } ?>
 
 		<?php
