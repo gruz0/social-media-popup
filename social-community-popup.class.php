@@ -777,6 +777,18 @@ class Social_Community_Popup {
 			)
 		);
 
+		// Отображение окна после задержки N секунд
+		add_settings_field(
+			$prefix . '-popup-will-appear-after-n-seconds',
+			__( 'Popup Will Appear After N Second(s)', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'popup_will_appear_after_n_seconds'
+			)
+		);
+
 		// Повторный показ окна через N дней
 		add_settings_field(
 			$prefix . '-common-display-after-n-days',
@@ -798,18 +810,6 @@ class Social_Community_Popup {
 			$section,
 			array(
 				'field' => SCP_PREFIX . 'setting_display_after_visiting_n_pages'
-			)
-		);
-
-		// Отображение окна после задержки N секунд
-		add_settings_field(
-			$prefix . '-popup-will-appear-after-n-seconds',
-			__( 'Popup Will Appear After N Second(s)', L10N_SCP_PREFIX ),
-			array( & $this, 'settings_field_input_text' ),
-			$options_page,
-			$section,
-			array(
-				'field' => SCP_PREFIX . 'popup_will_appear_after_n_seconds'
 			)
 		);
 	}
