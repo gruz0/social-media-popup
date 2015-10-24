@@ -254,11 +254,7 @@ $tab_index = 1;
 			//TODO: Можно вынести эти события в директорию events и подключать как файлы
 		?>
 
-		<?php /*if ( $close_by_clicking_anywhere ) { ?>
-			$("#social-community-popup .parent_popup, #social-community-popup .close").click(function() { scp_destroyPlugin($); });
-		<?php } else { ?>
-			$("#social-community-popup .close").click(function() { scp_destroyPlugin($); });
-		<?php }*/ ?>
+		<?php require_once( dirname( __FILE__ ) . '/events/close-widget.php' ); ?>
 
 		<?php /*if ( $close_when_esc_pressed ) : ?>
 		$(document).keydown(function(e) {
