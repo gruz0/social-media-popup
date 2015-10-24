@@ -424,6 +424,12 @@ class Social_Community_Popup {
 			// Удаляем старую настройку с версией плагина
 			delete_option( $version );
 
+			// Переименуем опцию в правильное название, т.к. из-за длинного прошлого SCP_PREFIX были ошибки
+			$old_value = get_option( $new_scp_prefix . 'popup_will_appear_after_clicking_on_eleme' );
+			delete_option( SCP_PREFIX . 'popup_will_appear_after_clicking_on_eleme' );
+			delete_option( $new_scp_prefix . 'popup_will_appear_after_clicking_on_eleme' );
+			update_option( $new_scp_prefix . 'popup_will_appear_after_clicking_on_element', $old_value );
+
 			update_option( $new_scp_prefix . 'version', '0.7.1' );
 		}
 	}
