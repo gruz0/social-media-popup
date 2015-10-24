@@ -75,6 +75,7 @@ class Social_Community_Popup {
 
 			// События
 			'when_should_the_popup_appear',
+			'popup_will_appear_after_n_seconds',
 
 			// Facebook
 			'setting_use_facebook',
