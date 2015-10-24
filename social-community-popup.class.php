@@ -407,6 +407,25 @@ class Social_Community_Popup {
 
 			update_option( $version, '0.7.0' );
 		}
+
+		if ( '0.7.1' > get_option( $version ) ) {
+			global $scp_options;
+			$new_scp_prefix  = 'scp-';
+
+			// Укоротим SCP_PREFIX до четырёх символов, иначе длинные названия опций не вмещаются в таблицу
+			foreach ( $scp_options as $option_name => $value ) {
+				$new_option_name = str_replace( SCP_PREFIX, '', $option_name );
+				$previous_value  = get_scp_option( $new_option_name );
+
+				update_option( $new_scp_prefix . $new_option_name, sanitize_text_field( $previous_value ) );
+				delete_option( $option_name );
+			}
+
+			// Удаляем старую настройку с версией плагина
+			delete_option( $version );
+
+			update_option( $new_scp_prefix . 'version', '0.7.1' );
+		}
 	}
 
 	/**
@@ -2106,7 +2125,7 @@ class Social_Community_Popup {
 
 		echo '<ul id="scp-sortable">';
 		foreach ( $values as $key ) {
-			$setting_value = get_option( SCP_PREFIX . 'setting_use_' . $key );
+			$setting_value = get_scp_option( 'setting_use_' . $key );
 			$class = $setting_value ? '' : ' disabled';
 			echo '<li class="ui-state-default' . $class . '">' . $key . '</li>';
 		}

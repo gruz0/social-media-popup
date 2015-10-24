@@ -1,7 +1,7 @@
 $j = jQuery.noConflict();
 
 $j(document).ready(function() {
-	var SCP_PREFIX = 'social-community-popup-';
+	var SCP_PREFIX = 'scp-';
 
 	// Клик по табу и открытие соответствующей вкладки
 	$j('#scp_welcome_screen ul.tabs').on('click', 'li:not(.current)', function() {

@@ -1,11 +1,19 @@
 <?php
 defined( 'ABSPATH' ) or exit;
 
-define( 'SCP_PREFIX', 'social-community-popup-' );
+$scp_new_version = get_option( 'scp-version' );
+
+if ( $scp_new_version && '0.7.1' <= $scp_new_version ) {
+	define( 'SCP_PREFIX', 'scp-' );
+} else {
+	define( 'SCP_PREFIX', 'social-community-popup-' );
+}
+
 define( 'L10N_SCP_PREFIX', 'social-community-popup' ); // textdomain
 
 // Одним запросом загружаем все настройки плагина
 $all_options = wp_load_alloptions();
+global $scp_options;
 $scp_options = array();
 foreach( $all_options as $name => $value ) {
 	if ( stristr( $name, SCP_PREFIX ) ) $scp_options[$name] = $value;
