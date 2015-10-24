@@ -222,6 +222,22 @@ $tab_index = 1;
 		<?php } ?>
 
 		<?php
+			// Отображение плагина после прокрутки страницы на N процентов
+			if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'after_scrolling_down_n_percent' ) ) {
+		?>
+			var showWindowAgain = true;
+			$(window).scroll(function() {
+				value = parseInt(Math.abs(document.body.scrollTop / (document.body.clientHeight - window.innerHeight) * 100));
+				if (showWindowAgain && value >= <?php echo $popup_will_appear_after_scrolling_down_n_percent; ?>) {
+					<?php require_once( dirname( __FILE__ ) . '/events/show-window.php' ); ?>
+					<?php require_once( dirname( __FILE__ ) . '/events/show-bottom-button.php' ); ?>
+
+					showWindowAgain = false;
+				}
+			});
+		<?php } ?>
+
+		<?php
 /*
 		scp_setCookie("social-community-popup-views", <?php echo esc_attr( $cookie_popup_views ) + 1; ?>, { "path": "/" } );
 */

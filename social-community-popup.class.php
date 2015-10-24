@@ -77,6 +77,7 @@ class Social_Community_Popup {
 			'when_should_the_popup_appear',
 			'popup_will_appear_after_n_seconds',
 			'popup_will_appear_after_clicking_on_element',
+			'popup_will_appear_after_scrolling_down_n_percent',
 
 			// Facebook
 			'setting_use_facebook',
@@ -429,6 +430,9 @@ class Social_Community_Popup {
 			delete_option( SCP_PREFIX . 'popup_will_appear_after_clicking_on_eleme' );
 			delete_option( $new_scp_prefix . 'popup_will_appear_after_clicking_on_eleme' );
 			update_option( $new_scp_prefix . 'popup_will_appear_after_clicking_on_element', $old_value );
+
+			// Отображение окна при прокрутке документа на N процентов
+			update_option( SCP_PREFIX . 'popup_will_appear_after_scrolling_down_n_percent', '70' );
 
 			update_option( $new_scp_prefix . 'version', '0.7.1' );
 		}
@@ -786,6 +790,7 @@ class Social_Community_Popup {
 		register_setting( $group, SCP_PREFIX . 'when_should_the_popup_appear', 'sanitize_text_field' );
 		register_setting( $group, SCP_PREFIX . 'popup_will_appear_after_n_seconds', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'popup_will_appear_after_clicking_on_element', 'sanitize_text_field' );
+		register_setting( $group, SCP_PREFIX . 'popup_will_appear_after_scrolling_down_n_percent', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_display_after_n_days', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_display_after_visiting_n_pages', 'absint' );
 
@@ -829,6 +834,18 @@ class Social_Community_Popup {
 			$section,
 			array(
 				'field' => SCP_PREFIX . 'popup_will_appear_after_clicking_on_element'
+			)
+		);
+
+		// Отображение окна при прокрутке страницы на N процентов
+		add_settings_field(
+			$prefix . '-popup-will-appear-after-scrolling-down-n-percent',
+			__( 'Popup Will Appear After Scrolling Down at Least N Percent', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'popup_will_appear_after_scrolling_down_n_percent'
 			)
 		);
 
@@ -2027,6 +2044,7 @@ class Social_Community_Popup {
 		$options = array();
 		$options['after_n_seconds']           = __( 'Popup will appear after N second(s)', L10N_SCP_PREFIX );
 		$options['after_clicking_on_element'] = __( 'Popup will appear after clicking on the given CSS selector', L10N_SCP_PREFIX );
+		$options['after_scrolling_down_n_percent'] = __( 'Popup will appear after a visitor has scrolled on your page at least N percent', L10N_SCP_PREFIX );
 
 		$chains = preg_split( "/,/", $value );
 
