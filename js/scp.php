@@ -16,7 +16,8 @@ if ( $debug_mode ) {
 	$after_n_days          = 1;
 	$visit_n_pages         = 0;
 	$cookie_popup_views    = 0;
-	$delay_after_n_seconds = 1;
+
+	$popup_will_appear_after_n_seconds = 1;
 
 } else {
 	if ( isset( $_COOKIE[ 'social-community-popup' ] ) ) return;
@@ -24,7 +25,8 @@ if ( $debug_mode ) {
 	$after_n_days          = (int) get_scp_option( 'setting_display_after_n_days' );
 	$visit_n_pages         = (int) get_scp_option( 'setting_display_after_visiting_n_pages' );
 	$cookie_popup_views    = isset( $_COOKIE[ 'social-community-popup-views' ] ) ? (int) $_COOKIE[ 'social-community-popup-views' ] : 0;
-	$delay_after_n_seconds = (int) get_scp_option( 'popup_will_appear_after_n_seconds' );
+
+	$popup_will_appear_after_n_seconds = (int) get_scp_option( 'popup_will_appear_after_n_seconds' );
 }
 
 $use_facebook               = get_scp_option( 'setting_use_facebook' )      === '1';

@@ -188,7 +188,7 @@ if ( $cookie_popup_views == $visit_n_pages ) :
 	}
 	<?php endif; ?>
 
-	<?php $calculated_delay = ( $delay_after_n_seconds > 0 ? $delay_after_n_seconds * 1000 : 1000 ); ?>
+	<?php $calculated_delay = ( $popup_will_appear_after_n_seconds > 0 ? $popup_will_appear_after_n_seconds * 1000 : 1000 ); ?>
 
 	function scp_destroyPlugin($) {
 		var date = new Date( new Date().getTime() + <?php echo 1000 * 60 * 60 * 24 * esc_attr( $after_n_days ); ?>);
