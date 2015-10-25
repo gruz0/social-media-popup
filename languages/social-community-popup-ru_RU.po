@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Social Community Popup\n"
-"POT-Creation-Date: 2015-10-25 13:47+0300\n"
-"PO-Revision-Date: 2015-10-25 13:52+0300\n"
+"POT-Creation-Date: 2015-10-25 14:41+0300\n"
+"PO-Revision-Date: 2015-10-25 14:42+0300\n"
 "Last-Translator: Alexander Gruzov <gruz0.mail@gmail.com>\n"
 "Language-Team: Alexander Gruzov <support@gruz0.ru>\n"
 "Language: ru_RU\n"
@@ -155,19 +155,15 @@ msgstr "Показать окно после просмотра сайта N с�
 
 #: ../social-community-popup.class.php:836
 msgid "Popup Will Appear After Clicking on the Given CSS Selector"
-msgstr ""
-"Показать окно при клике на указанный CSS селектор (.class-name, #id, "
-"например)"
+msgstr "Показать окно при клике на указанный CSS селектор"
 
 #: ../social-community-popup.class.php:848
 msgid "Popup Will Appear After Scrolling Down at Least N Percent"
-msgstr "Показать окно при прокрутке страницы больше чем N процентов"
+msgstr "Показать окно при прокрутке страницы больше чем N %"
 
 #: ../social-community-popup.class.php:860
 msgid "Popup Will Appear On Exit-Intent"
-msgstr ""
-"Показать окно при перемещении мыши за пределы страницы (другая вкладка, "
-"например)"
+msgstr "Показать окно при перемещении мыши за пределы страницы"
 
 #: ../social-community-popup.class.php:872
 msgid "Display After N-days"
@@ -499,8 +495,8 @@ msgstr "Прокрутка страницы больше N процентов"
 msgid ""
 "Popup will appear on exit-intent (when mouse has moved out from the page)"
 msgstr ""
-"При попытке уйти со страницы (переход на другую вкладку, либо перемещение "
-"мыши за границы окна)"
+"При попытке уйти со страницы (переход на другую вкладку, перемещение мыши за "
+"границы окна)"
 
 #: ../social-community-popup.class.php:2096
 #: ../social-community-popup.class.php:2202
