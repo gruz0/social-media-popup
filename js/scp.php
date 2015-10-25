@@ -20,11 +20,13 @@ if ( $debug_mode ) {
 	$when_should_the_popup_appear = array(
 		'after_n_seconds',
 		'after_clicking_on_element',
-		'after_scrolling_down_n_percent'
+		'after_scrolling_down_n_percent',
+		'on_exit_intent'
 	);
 	$popup_will_appear_after_n_seconds           = 5;
 	$popup_will_appear_after_clicking_on_element = '#scp_button';
 	$popup_will_appear_after_scrolling_down_n_percent = 70;
+	$popup_will_appear_on_exit_intent                 = true;
 
 } else {
 	// if ( isset( $_COOKIE[ 'social-community-popup' ] ) ) return;
@@ -37,6 +39,7 @@ if ( $debug_mode ) {
 	$popup_will_appear_after_n_seconds           = (int) get_scp_option( 'popup_will_appear_after_n_seconds' );
 	$popup_will_appear_after_clicking_on_element = get_scp_option( 'popup_will_appear_after_clicking_on_element' );
 	$popup_will_appear_after_scrolling_down_n_percent = (int) get_scp_option( 'popup_will_appear_after_scrolling_down_n_percent' );
+	$popup_will_appear_on_exit_intent                 = get_scp_option( 'popup_will_appear_on_exit_intent' ) === '1';
 }
 
 $use_facebook               = get_scp_option( 'setting_use_facebook' )      === '1';

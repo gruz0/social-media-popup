@@ -238,6 +238,19 @@ $tab_index = 1;
 		<?php } ?>
 
 		<?php
+			// Отображение плагина при попытке увести мышь за пределы окна
+			if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'on_exit_intent' ) && $popup_will_appear_on_exit_intent ) {
+		?>
+			$(document).on('mouseleave', function(e) {
+				var scroll = window.pageYOffset || document.documentElement.scrollTop;
+				if((e.pageY - scroll) < 7) {
+					<?php require_once( dirname( __FILE__ ) . '/events/show-window.php' ); ?>
+					<?php require_once( dirname( __FILE__ ) . '/events/show-bottom-button.php' ); ?>
+				}
+			});
+		<?php } ?>
+
+		<?php
 /*
 		scp_setCookie("social-community-popup-views", <?php echo esc_attr( $cookie_popup_views ) + 1; ?>, { "path": "/" } );
 */

@@ -78,6 +78,7 @@ class Social_Community_Popup {
 			'popup_will_appear_after_n_seconds',
 			'popup_will_appear_after_clicking_on_element',
 			'popup_will_appear_after_scrolling_down_n_percent',
+			'popup_will_appear_on_exit_intent',
 
 			// Facebook
 			'setting_use_facebook',
@@ -433,6 +434,9 @@ class Social_Community_Popup {
 
 			// Отображение окна при прокрутке документа на N процентов
 			update_option( SCP_PREFIX . 'popup_will_appear_after_scrolling_down_n_percent', '70' );
+
+			// Отображение окна при перемещении мыши за пределы окна
+			update_option( SCP_PREFIX . 'popup_will_appear_on_exit_intent',                  0 );
 
 			update_option( $new_scp_prefix . 'version', '0.7.1' );
 		}
@@ -791,6 +795,7 @@ class Social_Community_Popup {
 		register_setting( $group, SCP_PREFIX . 'popup_will_appear_after_n_seconds', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'popup_will_appear_after_clicking_on_element', 'sanitize_text_field' );
 		register_setting( $group, SCP_PREFIX . 'popup_will_appear_after_scrolling_down_n_percent', 'absint' );
+		register_setting( $group, SCP_PREFIX . 'popup_will_appear_on_exit_intent', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_display_after_n_days', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_display_after_visiting_n_pages', 'absint' );
 
@@ -846,6 +851,18 @@ class Social_Community_Popup {
 			$section,
 			array(
 				'field' => SCP_PREFIX . 'popup_will_appear_after_scrolling_down_n_percent'
+			)
+		);
+
+		// Отображение окна при перемещении мыши за границы окна
+		add_settings_field(
+			$prefix . '-popup-will-appear-on-exit-intent',
+			__( 'Popup Will Appear On Exit-Intent', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'popup_will_appear_on_exit_intent'
 			)
 		);
 
@@ -2045,6 +2062,7 @@ class Social_Community_Popup {
 		$options['after_n_seconds']           = __( 'Popup will appear after N second(s)', L10N_SCP_PREFIX );
 		$options['after_clicking_on_element'] = __( 'Popup will appear after clicking on the given CSS selector', L10N_SCP_PREFIX );
 		$options['after_scrolling_down_n_percent'] = __( 'Popup will appear after a visitor has scrolled on your page at least N percent', L10N_SCP_PREFIX );
+		$options['on_exit_intent']                 = __( 'Popup will appear on exit-intent (when mouse has moved out from the page)', L10N_SCP_PREFIX );
 
 		$chains = preg_split( "/,/", $value );
 
