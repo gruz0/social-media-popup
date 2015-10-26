@@ -35,7 +35,7 @@ if ( $debug_mode ) {
 	$visit_n_pages         = (int) get_scp_option( 'setting_display_after_visiting_n_pages' );
 	$cookie_popup_views    = isset( $_COOKIE[ 'social-community-popup-views' ] ) ? (int) $_COOKIE[ 'social-community-popup-views' ] : 0;
 
-	$when_should_the_popup_appear                = extract_field_when_should_the_popup_appear( get_scp_option( 'when_should_the_popup_appear' ) );
+	$when_should_the_popup_appear                = split_string_by_comma( get_scp_option( 'when_should_the_popup_appear' ) );
 	$popup_will_appear_after_n_seconds           = (int) get_scp_option( 'popup_will_appear_after_n_seconds' );
 	$popup_will_appear_after_clicking_on_element = get_scp_option( 'popup_will_appear_after_clicking_on_element' );
 	$popup_will_appear_after_scrolling_down_n_percent = (int) get_scp_option( 'popup_will_appear_after_scrolling_down_n_percent' );

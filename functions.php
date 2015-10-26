@@ -27,7 +27,7 @@ function get_scp_option( $name ) {
 }
 
 // Преобразуем строку в массив для событий при наступлении которых появится окно
-function extract_field_when_should_the_popup_appear( $value ) {
+function split_string_by_comma( $value ) {
 	return preg_split( '/,/', $value );
 }
 
