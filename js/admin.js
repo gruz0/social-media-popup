@@ -38,4 +38,18 @@ $j(document).ready(function() {
 
 		$result.val(resultString);
 	});
+
+	$j('.' + SCP_PREFIX + 'who_should_see_the_popup').on('click', function() {
+		var $result      = $j('#' + SCP_PREFIX + 'who_should_see_the_popup');
+		var resultString = '';
+		var className    = '.' + $j(this).attr('class');
+
+		$j(className).each(function() {
+			if ($j(this).is(':checked')) {
+				resultString += $j(this).val() + ',';
+			}
+		});
+
+		$result.val(resultString);
+	});
 });

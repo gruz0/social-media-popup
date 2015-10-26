@@ -438,6 +438,9 @@ class Social_Community_Popup {
 			// Отображение окна при перемещении мыши за пределы окна
 			update_option( SCP_PREFIX . 'popup_will_appear_on_exit_intent',                  0 );
 
+			// Кому показывать окно плагина
+			update_option( SCP_PREFIX . 'who_should_see_the_popup',                          '' );
+
 			update_option( $new_scp_prefix . 'version', '0.7.1' );
 		}
 	}
@@ -796,6 +799,7 @@ class Social_Community_Popup {
 		register_setting( $group, SCP_PREFIX . 'popup_will_appear_after_clicking_on_element', 'sanitize_text_field' );
 		register_setting( $group, SCP_PREFIX . 'popup_will_appear_after_scrolling_down_n_percent', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'popup_will_appear_on_exit_intent', 'absint' );
+		register_setting( $group, SCP_PREFIX . 'who_should_see_the_popup', 'sanitize_text_field' );
 		register_setting( $group, SCP_PREFIX . 'setting_display_after_n_days', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_display_after_visiting_n_pages', 'absint' );
 
@@ -863,6 +867,18 @@ class Social_Community_Popup {
 			$section,
 			array(
 				'field' => SCP_PREFIX . 'popup_will_appear_on_exit_intent'
+			)
+		);
+
+		// Кому показывать окно плагина
+		add_settings_field(
+			$prefix . '-who-should-see-the-popup',
+			__( 'Who Should See the Popup', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_who_should_see_the_popup' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'who_should_see_the_popup'
 			)
 		);
 
@@ -2063,6 +2079,37 @@ class Social_Community_Popup {
 		$options['after_clicking_on_element'] = __( 'Popup will appear after clicking on the given CSS selector', L10N_SCP_PREFIX );
 		$options['after_scrolling_down_n_percent'] = __( 'Popup will appear after a visitor has scrolled on your page at least N percent', L10N_SCP_PREFIX );
 		$options['on_exit_intent']                 = __( 'Popup will appear on exit-intent (when mouse has moved out from the page)', L10N_SCP_PREFIX );
+
+		$chains = preg_split( "/,/", $value );
+
+		$format = '<input type="checkbox" id="%s" class="%s" value="%s"%s />';
+		$format .= '<label for="%s">%s</label>';
+
+		$html = '';
+		foreach ( $options as $option_name => $label ) {
+			$checked = '';
+			for ( $idx = 0; $idx < count( $chains ); $idx++ ) {
+				$checked = checked( $chains[$idx], $option_name, false );
+				if ( strlen( $checked ) ) break;
+			}
+
+			$html .= sprintf( $format, $option_name, $field, $option_name, $checked, $option_name, $label );
+			$html .= '<br />';
+		}
+
+		$html .= '<input type="hidden" id="' . $field . '" name="' . $field . '" value="' . esc_attr( $value ) . '" />';
+		echo $html;
+	}
+
+	/**
+	 * Callback-шаблон для выбора кому показывать окно плагина
+	 */
+	public function settings_field_who_should_see_the_popup( $args ) {
+		$field = $args[ 'field' ];
+		$value = get_option( $field );
+
+		$options = array();
+		$options['visitor_opened_at_least_n_number_of_pages'] = __( 'Visitor opened at least N number of page(s)', L10N_SCP_PREFIX );
 
 		$chains = preg_split( "/,/", $value );
 
