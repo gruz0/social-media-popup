@@ -14,7 +14,6 @@ $debug_mode = is_user_logged_in() && intval( get_scp_option( 'setting_debug_mode
 
 if ( $debug_mode ) {
 	$after_n_days          = 1;
-	$visit_n_pages         = 0;
 	$cookie_popup_views    = 0;
 
 	$when_should_the_popup_appear = array(
@@ -31,12 +30,12 @@ if ( $debug_mode ) {
 	$who_should_see_the_popup = array(
 		'visitor_opened_at_least_n_number_of_pages'
 	);
+	$visitor_opened_at_least_n_number_of_pages = 0;
 
 } else {
 	// if ( isset( $_COOKIE[ 'social-community-popup' ] ) ) return;
 
 	$after_n_days          = (int) get_scp_option( 'setting_display_after_n_days' );
-	$visit_n_pages         = (int) get_scp_option( 'setting_display_after_visiting_n_pages' );
 	$cookie_popup_views    = isset( $_COOKIE[ 'social-community-popup-views' ] ) ? (int) $_COOKIE[ 'social-community-popup-views' ] : 0;
 
 	$when_should_the_popup_appear                = split_string_by_comma( get_scp_option( 'when_should_the_popup_appear' ) );
@@ -46,6 +45,7 @@ if ( $debug_mode ) {
 	$popup_will_appear_on_exit_intent                 = get_scp_option( 'popup_will_appear_on_exit_intent' ) === '1';
 
 	$who_should_see_the_popup                    = extract_field_when_should_the_popup_appear( get_scp_option( 'who_should_see_the_popup' ) );
+	$visitor_opened_at_least_n_number_of_pages = (int) get_scp_option( 'visitor_opened_at_least_n_number_of_pages' );
 }
 
 $use_facebook               = get_scp_option( 'setting_use_facebook' )      === '1';

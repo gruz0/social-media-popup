@@ -2,7 +2,7 @@
 <?php
 $tab_index = 1;
 
-// if ( $cookie_popup_views == $visit_n_pages ) :
+// if ( $cookie_popup_views == $visitor_opened_at_least_n_number_of_pages ) :
 	if ( $use_facebook || $use_vkontakte || $use_odnoklassniki || $use_googleplus || $use_twitter || $use_pinterest ) :
 ?>
 	<div id="social-community-popup">
@@ -256,7 +256,7 @@ $tab_index = 1;
 */
 		?>
 
-		<?php /* if ( $cookie_popup_views === $visit_n_pages ) : ?>
+		<?php /* if ( $cookie_popup_views === $visitor_opened_at_least_n_number_of_pages ) : ?>
 
 
 				setTimeout(function() {

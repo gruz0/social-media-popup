@@ -54,7 +54,6 @@ class Social_Community_Popup {
 			// Общие настройки
 			'setting_debug_mode',
 			'setting_display_after_n_days',
-			'setting_display_after_visiting_n_pages',
 			'setting_tabs_order',
 			'setting_container_width',
 			'setting_container_height',
@@ -79,6 +78,10 @@ class Social_Community_Popup {
 			'popup_will_appear_after_clicking_on_element',
 			'popup_will_appear_after_scrolling_down_n_percent',
 			'popup_will_appear_on_exit_intent',
+
+			// Кому показывать окно
+			'who_should_see_the_popup',
+			'visitor_opened_at_least_n_number_of_pages',
 
 			// Facebook
 			'setting_use_facebook',
@@ -441,6 +444,11 @@ class Social_Community_Popup {
 			// Кому показывать окно плагина
 			update_option( SCP_PREFIX . 'who_should_see_the_popup',                          '' );
 
+			// Сохраним старое значение и переименуем опцию в более читаемый вариант
+			$old_value = get_scp_option( 'setting_display_after_visiting_n_pages' );
+			delete_option( SCP_PREFIX . 'setting_display_after_visiting_n_pages' );
+			update_option( SCP_PREFIX . 'visitor_opened_at_least_n_number_of_pages',          $old_value );
+
 			update_option( $new_scp_prefix . 'version', '0.7.1' );
 		}
 	}
@@ -800,8 +808,8 @@ class Social_Community_Popup {
 		register_setting( $group, SCP_PREFIX . 'popup_will_appear_after_scrolling_down_n_percent', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'popup_will_appear_on_exit_intent', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'who_should_see_the_popup', 'sanitize_text_field' );
+		register_setting( $group, SCP_PREFIX . 'visitor_opened_at_least_n_number_of_pages', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_display_after_n_days', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_display_after_visiting_n_pages', 'absint' );
 
 		add_settings_section(
 			$section,
@@ -882,6 +890,18 @@ class Social_Community_Popup {
 			)
 		);
 
+		// Отображение окна после просмотра N страниц на сайте
+		add_settings_field(
+			$prefix . '-visitor-opened-at-least-n-number-of-pages',
+			__( 'Visitor Opened at Least N Number of Pages', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'visitor_opened_at_least_n_number_of_pages'
+			)
+		);
+
 		// Повторный показ окна через N дней
 		add_settings_field(
 			$prefix . '-common-display-after-n-days',
@@ -891,18 +911,6 @@ class Social_Community_Popup {
 			$section,
 			array(
 				'field' => SCP_PREFIX . 'setting_display_after_n_days'
-			)
-		);
-
-		// Отображение окна после просмотра N страниц на сайте
-		add_settings_field(
-			$prefix . '-common-display-after-visiting-n-pages',
-			__( 'Display After Visiting N-pages', L10N_SCP_PREFIX ),
-			array( & $this, 'settings_field_input_text' ),
-			$options_page,
-			$section,
-			array(
-				'field' => SCP_PREFIX . 'setting_display_after_visiting_n_pages'
 			)
 		);
 	}
