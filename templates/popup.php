@@ -196,6 +196,10 @@ $tab_index = 1;
 	}
 
 	jQuery(document).ready(function($) {
+		<?php
+			// Добавляем общий для всех prepend-блок
+			require_once( dirname( __FILE__ ) . '/events/prepend-scripts.php' );
+		?>
 
 		<?php
 			// Отображение плагина после просмотра страницы N секунд
@@ -203,8 +207,8 @@ $tab_index = 1;
 				$calculated_delay = ( $popup_will_appear_after_n_seconds > 0 ? $popup_will_appear_after_n_seconds * 1000 : 1000 );
 		?>
 				setTimeout(function() {
-					<?php require_once( dirname( __FILE__ ) . '/events/show-window.php' ); ?>
-					<?php require_once( dirname( __FILE__ ) . '/events/show-bottom-button.php' ); ?>
+					<?php require( dirname( __FILE__ ) . '/events/show-window.php' ); ?>
+					<?php require( dirname( __FILE__ ) . '/events/show-bottom-button.php' ); ?>
 				}, <?php echo esc_attr( $calculated_delay ); ?>);
 		<?php } ?>
 
@@ -212,9 +216,9 @@ $tab_index = 1;
 			// Отображение плагина после клика по указанному селектору
 			if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'after_clicking_on_element' ) ) {
 				if ( ! empty( $popup_will_appear_after_clicking_on_element ) ) { ?>
-					$('<?php echo $popup_will_appear_after_clicking_on_element; ?>').on('click', function() {
-						<?php require_once( dirname( __FILE__ ) . '/events/show-window.php' ); ?>
-						<?php require_once( dirname( __FILE__ ) . '/events/show-bottom-button.php' ); ?>
+					$('<?php echo $popup_will_appear_after_clicking_on_element; ?>').on('click', function($) {
+						<?php require( dirname( __FILE__ ) . '/events/show-window.php' ); ?>
+						<?php require( dirname( __FILE__ ) . '/events/show-bottom-button.php' ); ?>
 					});
 				<?php } else { ?>
 					alert("<?php _e( "You must add a selector element for the plugin Social Community Popup. Otherwise it won't be work.", L10N_SCP_PREFIX ); ?>");
@@ -229,8 +233,8 @@ $tab_index = 1;
 			$(window).scroll(function() {
 				value = parseInt(Math.abs(document.body.scrollTop / (document.body.clientHeight - window.innerHeight) * 100));
 				if (showWindowAgain && value >= <?php echo $popup_will_appear_after_scrolling_down_n_percent; ?>) {
-					<?php require_once( dirname( __FILE__ ) . '/events/show-window.php' ); ?>
-					<?php require_once( dirname( __FILE__ ) . '/events/show-bottom-button.php' ); ?>
+					<?php require( dirname( __FILE__ ) . '/events/show-window.php' ); ?>
+					<?php require( dirname( __FILE__ ) . '/events/show-bottom-button.php' ); ?>
 
 					showWindowAgain = false;
 				}
@@ -244,8 +248,8 @@ $tab_index = 1;
 			$(document).on('mouseleave', function(e) {
 				var scroll = window.pageYOffset || document.documentElement.scrollTop;
 				if((e.pageY - scroll) < 7) {
-					<?php require_once( dirname( __FILE__ ) . '/events/show-window.php' ); ?>
-					<?php require_once( dirname( __FILE__ ) . '/events/show-bottom-button.php' ); ?>
+					<?php require( dirname( __FILE__ ) . '/events/show-window.php' ); ?>
+					<?php require( dirname( __FILE__ ) . '/events/show-bottom-button.php' ); ?>
 				}
 			});
 		<?php } ?>
