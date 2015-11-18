@@ -798,8 +798,9 @@ class Social_Community_Popup {
 		// Используется в do_settings_section
 		$options_page = $prefix . '-group-events';
 
-		// ID секции
-		$section = $prefix . '-section-common-events';
+		// ID секций настроек
+		$section_when_should_the_popup_appear = $prefix . '-section-when-should-the-popup-appear';
+		$section_who_should_see_the_popup     = $prefix . '-section-who-should-see-the-popup';
 
 		// Не забывать добавлять новые опции в uninstall()
 		register_setting( $group, SCP_PREFIX . 'when_should_the_popup_appear', 'sanitize_text_field' );
@@ -812,19 +813,19 @@ class Social_Community_Popup {
 		register_setting( $group, SCP_PREFIX . 'setting_display_after_n_days', 'absint' );
 
 		add_settings_section(
-			$section,
-			__( 'Events', L10N_SCP_PREFIX ),
-			array( & $this, 'settings_section_common_events' ),
+			$section_when_should_the_popup_appear,
+			__( 'When Should the Popup Appear?', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_section_when_should_the_popup_appear' ),
 			$options_page
 		);
 
 		// При наступлении каких событий показывать окно
 		add_settings_field(
 			$prefix . '-common-when-should-the-popup-appear',
-			__( 'When Should the Popup Appear?', L10N_SCP_PREFIX ),
+			__( 'Select Events for Customizing', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_when_should_the_popup_appear' ),
 			$options_page,
-			$section,
+			$section_when_should_the_popup_appear,
 			array(
 				'field' => SCP_PREFIX . 'when_should_the_popup_appear'
 			)
@@ -836,7 +837,7 @@ class Social_Community_Popup {
 			__( 'Popup Will Appear After N Second(s)', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
-			$section,
+			$section_when_should_the_popup_appear,
 			array(
 				'field' => SCP_PREFIX . 'popup_will_appear_after_n_seconds'
 			)
@@ -848,7 +849,7 @@ class Social_Community_Popup {
 			__( 'Popup Will Appear After Clicking on the Given CSS Selector', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
-			$section,
+			$section_when_should_the_popup_appear,
 			array(
 				'field' => SCP_PREFIX . 'popup_will_appear_after_clicking_on_element'
 			)
@@ -860,7 +861,7 @@ class Social_Community_Popup {
 			__( 'Popup Will Appear After Scrolling Down at Least N Percent', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
-			$section,
+			$section_when_should_the_popup_appear,
 			array(
 				'field' => SCP_PREFIX . 'popup_will_appear_after_scrolling_down_n_percent'
 			)
@@ -872,19 +873,26 @@ class Social_Community_Popup {
 			__( 'Popup Will Appear On Exit-Intent', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
-			$section,
+			$section_when_should_the_popup_appear,
 			array(
 				'field' => SCP_PREFIX . 'popup_will_appear_on_exit_intent'
 			)
 		);
 
+		add_settings_section(
+			$section_who_should_see_the_popup,
+			__( 'Who Should See the Popup?', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_section_who_should_see_the_popup' ),
+			$options_page
+		);
+
 		// Кому показывать окно плагина
 		add_settings_field(
 			$prefix . '-who-should-see-the-popup',
-			__( 'Who Should See the Popup', L10N_SCP_PREFIX ),
+			__( 'Select Events for Customizing', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_who_should_see_the_popup' ),
 			$options_page,
-			$section,
+			$section_who_should_see_the_popup,
 			array(
 				'field' => SCP_PREFIX . 'who_should_see_the_popup'
 			)
@@ -896,7 +904,7 @@ class Social_Community_Popup {
 			__( 'Visitor Opened at Least N Number of Pages', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
-			$section,
+			$section_who_should_see_the_popup,
 			array(
 				'field' => SCP_PREFIX . 'visitor_opened_at_least_n_number_of_pages'
 			)
@@ -908,7 +916,7 @@ class Social_Community_Popup {
 			__( 'Display After N-days', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
-			$section,
+			$section_who_should_see_the_popup,
 			array(
 				'field' => SCP_PREFIX . 'setting_display_after_n_days'
 			)
@@ -1930,10 +1938,17 @@ class Social_Community_Popup {
 	}
 
 	/**
-	 * Описание общих настроек (таб "События")
+	 * Описание общих настроек (таб "События" — "Когда показывать окно")
 	 */
-	public function settings_section_common_events() {
+	public function settings_section_when_should_the_popup_appear() {
 		_e( 'In this section, you can customize the events when the plugin will shown', L10N_SCP_PREFIX );
+	}
+
+	/**
+	 * Описание общих настроек (таб "События" – "Кому показывать окно")
+	 */
+	public function settings_section_who_should_see_the_popup() {
+		_e( 'In this section, you can customize the events who should see the popup', L10N_SCP_PREFIX );
 	}
 
 	/**
