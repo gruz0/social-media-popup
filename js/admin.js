@@ -25,6 +25,26 @@ $j(document).ready(function() {
 		return false;
 	});
 
+	/**
+	 * Блокируем или разблокируем поля для ввода значений в зависимости от состояния чекбоксов
+	 * "При наступлении каких событий показывать окно плагина".
+	 */
+	function setStateForRelatedObjectsForWhenShouldThePopupAppear() {
+		$j('.' + SCP_PREFIX + 'when_should_the_popup_appear').each(function() {
+			var $relatedObject = $j('#' + SCP_PREFIX + 'popup_will_appear_' + $j(this).val());
+
+			if ($j(this).is(':checked')) {
+				$relatedObject.removeAttr('disabled');
+			} else {
+				$relatedObject.attr('disabled', 'disabled');
+			}
+		});
+	}
+
+	/**
+	 * Формирование строки со значениями выбранных опций событий отображения окна.
+	 * Конечное значение формируется из value-атрибута каждого выбранного чекбокса.
+	 */
 	$j('.' + SCP_PREFIX + 'when_should_the_popup_appear').on('click', function() {
 		var $result      = $j('#' + SCP_PREFIX + 'when_should_the_popup_appear');
 		var resultString = '';
@@ -37,19 +57,9 @@ $j(document).ready(function() {
 		});
 
 		$result.val(resultString);
+
+		setStateForRelatedObjectsForWhenShouldThePopupAppear();
 	});
 
-	$j('.' + SCP_PREFIX + 'who_should_see_the_popup').on('click', function() {
-		var $result      = $j('#' + SCP_PREFIX + 'who_should_see_the_popup');
-		var resultString = '';
-		var className    = '.' + $j(this).attr('class');
-
-		$j(className).each(function() {
-			if ($j(this).is(':checked')) {
-				resultString += $j(this).val() + ',';
-			}
-		});
-
-		$result.val(resultString);
-	});
+	setStateForRelatedObjectsForWhenShouldThePopupAppear();
 });
