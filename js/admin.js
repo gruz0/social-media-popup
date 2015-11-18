@@ -34,7 +34,11 @@ $j(document).ready(function() {
 			relatedObjectPrefix = '';
 		}
 
-		$j('.' + SCP_PREFIX + checkboxSuffix).each(function() {
+		var $checkboxes = $j('.' + SCP_PREFIX + checkboxSuffix);
+
+		if ($checkboxes.length == 0) return;
+
+		$checkboxes.each(function() {
 			var $relatedObject = $j('#' + SCP_PREFIX + relatedObjectPrefix + $j(this).val());
 
 			if ($j(this).is(':checked')) {
@@ -46,45 +50,40 @@ $j(document).ready(function() {
 	}
 
 	/**
-	 * Формирование строки со значениями выбранных опций событий отображения окна.
+	 * Формирует строку со значениями выбранных опций событий отображения окна.
 	 * Конечное значение формируется из value-атрибута каждого выбранного чекбокса.
+	 *
+	 * @param {string} checkboxClassName
+	 * @param {string} targetObjectSuffix
+	 * @param {string} relatedObjectPrefix
 	 */
+	function prepareResultStringForEvents(checkboxClassName, targetObjectSuffix, relatedObjectPrefix) {
+		var $result      = $j('#' + SCP_PREFIX + targetObjectSuffix);
+		var resultString = '';
+		var className    = checkboxClassName;
+
+		$j(className).each(function() {
+			if ($j(this).is(':checked')) {
+				resultString += $j(this).val() + ',';
+			}
+		});
+
+		$result.val(resultString);
+
+		setRelatedObjectStateDependsOnCheckbox(targetObjectSuffix, relatedObjectPrefix);
+	}
+
 	$j('.' + SCP_PREFIX + 'when_should_the_popup_appear').on('click', function() {
-		var $result      = $j('#' + SCP_PREFIX + 'when_should_the_popup_appear');
-		var resultString = '';
-		var className    = '.' + $j(this).attr('class');
-
-		$j(className).each(function() {
-			if ($j(this).is(':checked')) {
-				resultString += $j(this).val() + ',';
-			}
-		});
-
-		$result.val(resultString);
-
-		setRelatedObjectStateDependsOnCheckbox('when_should_the_popup_appear', 'popup_will_appear_');
+		var className = '.' + $j(this).attr('class');
+		prepareResultStringForEvents(className, 'when_should_the_popup_appear', 'popup_will_appear_');
 	});
 
-	/**
-	 * Формирование строки со значениями выбранных опций событий отображения окна.
-	 * Конечное значение формируется из value-атрибута каждого выбранного чекбокса.
-	 */
 	$j('.' + SCP_PREFIX + 'who_should_see_the_popup').on('click', function() {
-		var $result      = $j('#' + SCP_PREFIX + 'who_should_see_the_popup');
-		var resultString = '';
-		var className    = '.' + $j(this).attr('class');
-
-		$j(className).each(function() {
-			if ($j(this).is(':checked')) {
-				resultString += $j(this).val() + ',';
-			}
-		});
-
-		$result.val(resultString);
-
-		setRelatedObjectStateDependsOnCheckbox('who_should_see_the_popup');
+		var className = '.' + $j(this).attr('class');
+		prepareResultStringForEvents(className, 'who_should_see_the_popup');
 	});
 
+	// Установим состояние текстовых полей и других объектов в зависимости от выбранных чекбоксов
 	setRelatedObjectStateDependsOnCheckbox('when_should_the_popup_appear', 'popup_will_appear_');
 	setRelatedObjectStateDependsOnCheckbox('who_should_see_the_popup');
 });
