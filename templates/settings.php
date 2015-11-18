@@ -16,23 +16,6 @@ $tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'general';
 	<?php require( sprintf( "%s/copyright.php", dirname( __FILE__ ) ) ); ?>
 </div>
 
-<script>
-	jQuery(document).ready(function($) {
-		// Сортировка табов соц. сетей
-		$( "#scp-sortable" ).sortable({
-			revert: true,
-			update: function( event, ui ) {
-				var networks = [];
-				$('#scp-sortable li').each(function() {
-					networks.push($(this).text());
-				});
-				$('#social-community-popup-setting_tabs_order').val(networks.join(','));
-			}
-		});
-		$( "ul, li" ).disableSelection();
-	});
-</script>
-
 <?php
 function scp_settings_tabs() {
 	$current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'general';

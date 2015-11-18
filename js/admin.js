@@ -25,6 +25,21 @@ $j(document).ready(function() {
 		return false;
 	});
 
+	// Сортировка табов соц. сетей
+	if ($j('#scp-sortable').length) {
+		$j('#scp-sortable').sortable({
+			revert: true,
+			update: function(event, ui) {
+				var networks = [];
+				$j('#scp-sortable li').each(function() {
+					networks.push($j(this).text());
+				});
+				$j('#scp-setting_tabs_order').val(networks.join(','));
+			}
+		});
+		$j('ul, li').disableSelection();
+	}
+
 	/**
 	 * Блокируем или разблокируем поля для ввода значений в зависимости от состояния чекбоксов
 	 * "При наступлении каких событий показывать окно плагина".
