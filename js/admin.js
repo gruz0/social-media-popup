@@ -29,9 +29,13 @@ $j(document).ready(function() {
 	 * Блокируем или разблокируем поля для ввода значений в зависимости от состояния чекбоксов
 	 * "При наступлении каких событий показывать окно плагина".
 	 */
-	function setStateForRelatedObjectsForWhenShouldThePopupAppear() {
-		$j('.' + SCP_PREFIX + 'when_should_the_popup_appear').each(function() {
-			var $relatedObject = $j('#' + SCP_PREFIX + 'popup_will_appear_' + $j(this).val());
+	function setRelatedObjectStateDependsOnCheckbox(checkboxSuffix, relatedObjectPrefix) {
+		if (typeof(relatedObjectPrefix) == 'undefined') {
+			relatedObjectPrefix = '';
+		}
+
+		$j('.' + SCP_PREFIX + checkboxSuffix).each(function() {
+			var $relatedObject = $j('#' + SCP_PREFIX + relatedObjectPrefix + $j(this).val());
 
 			if ($j(this).is(':checked')) {
 				$relatedObject.removeAttr('disabled');
@@ -58,26 +62,8 @@ $j(document).ready(function() {
 
 		$result.val(resultString);
 
-		setStateForRelatedObjectsForWhenShouldThePopupAppear();
+		setRelatedObjectStateDependsOnCheckbox('when_should_the_popup_appear', 'popup_will_appear_');
 	});
-
-	setStateForRelatedObjectsForWhenShouldThePopupAppear();
-
-	/**
-	 * Блокируем или разблокируем поля для ввода значений в зависимости от состояния чекбоксов
-	 * "Кому показывать всплывающее окно"
-	 */
-	function setStateForRelatedObjectsForWhoShouldSeeThePopup() {
-		$j('.' + SCP_PREFIX + 'who_should_see_the_popup').each(function() {
-			var $relatedObject = $j('#' + SCP_PREFIX + $j(this).val());
-
-			if ($j(this).is(':checked')) {
-				$relatedObject.removeAttr('disabled');
-			} else {
-				$relatedObject.attr('disabled', 'disabled');
-			}
-		});
-	}
 
 	/**
 	 * Формирование строки со значениями выбранных опций событий отображения окна.
@@ -96,8 +82,9 @@ $j(document).ready(function() {
 
 		$result.val(resultString);
 
-		setStateForRelatedObjectsForWhoShouldSeeThePopup();
+		setRelatedObjectStateDependsOnCheckbox('who_should_see_the_popup');
 	});
 
-	setStateForRelatedObjectsForWhoShouldSeeThePopup();
+	setRelatedObjectStateDependsOnCheckbox('when_should_the_popup_appear', 'popup_will_appear_');
+	setRelatedObjectStateDependsOnCheckbox('who_should_see_the_popup');
 });
