@@ -46,18 +46,26 @@ $cookie_lifetime = 31536000;
 // Пользователь просмотрел больше N страниц сайта
 if ( who_should_see_the_popup_has_event( $who_should_see_the_popup, 'visitor_opened_at_least_n_number_of_pages' ) ) {
 
-	// Если существует кука просмотренных страниц — обновляем её
-	if ( isset( $_COOKIE['scp-page-views'] ) ) {
-		$page_views = intval( $_COOKIE['scp-page-views'] ) + 1;
-		setcookie( 'scp-page-views', $page_views );
+	// Если окно не было закрыто другими событиями — начинаем проверку условий
+	if ( ! is_scp_cookie_present() ) {
 
-		if ( $page_views > $visitor_opened_at_least_n_number_of_pages ) {
-			$show_popup = true;
+		// Если существует кука просмотренных страниц — обновляем её
+		if ( isset( $_COOKIE['scp-page-views'] ) ) {
+			$page_views = intval( $_COOKIE['scp-page-views'] ) + 1;
+			setcookie( 'scp-page-views', $page_views );
+
+			if ( $page_views > $visitor_opened_at_least_n_number_of_pages ) {
+				$show_popup = true;
+			}
+
+		// Иначе создаём новую
+		} else {
+			setcookie( 'scp-page-views', 1, time() + $cookie_lifetime );
 		}
 
-	// Иначе создаём новую
+	// Иначе удалим куку
 	} else {
-		setcookie( 'scp-page-views', 1, time() + $cookie_lifetime );
+		setcookie( 'scp-page-views', 0, time() - 1 );
 	}
 }
 
