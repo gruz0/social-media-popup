@@ -35,3 +35,7 @@ function split_string_by_comma( $value ) {
 function when_should_the_popup_appear_has_event( $haystack, $needle ) {
 	return ( array_search( $needle, $haystack ) !== false );
 }
+
+function is_scp_cookie_present() {
+	return ( !empty( $_COOKIE['social-community-popup'] ) && $_COOKIE['social-community-popup'] == 'true' );
+}

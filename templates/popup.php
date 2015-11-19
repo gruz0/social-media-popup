@@ -196,6 +196,8 @@ $tab_index = 1;
 	}
 
 	jQuery(document).ready(function($) {
+		if (is_scp_cookie_present()) return;
+
 		<?php
 			// Добавляем общий для всех prepend-блок
 			require_once( dirname( __FILE__ ) . '/events/prepend-scripts.php' );
@@ -207,8 +209,10 @@ $tab_index = 1;
 				$calculated_delay = ( $popup_will_appear_after_n_seconds > 0 ? $popup_will_appear_after_n_seconds * 1000 : 1000 );
 		?>
 				setTimeout(function() {
-					<?php require( dirname( __FILE__ ) . '/events/show-window.php' ); ?>
-					<?php require( dirname( __FILE__ ) . '/events/show-bottom-button.php' ); ?>
+					if (!is_scp_cookie_present()) {
+						<?php require( dirname( __FILE__ ) . '/events/show-window.php' ); ?>
+						<?php require( dirname( __FILE__ ) . '/events/show-bottom-button.php' ); ?>
+					}
 				}, <?php echo esc_attr( $calculated_delay ); ?>);
 		<?php } ?>
 
@@ -217,8 +221,10 @@ $tab_index = 1;
 			if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'after_clicking_on_element' ) ) {
 				if ( ! empty( $popup_will_appear_after_clicking_on_element ) ) { ?>
 					$('<?php echo $popup_will_appear_after_clicking_on_element; ?>').on('click', function($) {
-						<?php require( dirname( __FILE__ ) . '/events/show-window.php' ); ?>
-						<?php require( dirname( __FILE__ ) . '/events/show-bottom-button.php' ); ?>
+						if (!is_scp_cookie_present()) {
+							<?php require( dirname( __FILE__ ) . '/events/show-window.php' ); ?>
+							<?php require( dirname( __FILE__ ) . '/events/show-bottom-button.php' ); ?>
+						}
 					});
 				<?php } else { ?>
 					alert("<?php _e( "You must add a selector element for the plugin Social Community Popup. Otherwise it won't be work.", L10N_SCP_PREFIX ); ?>");
@@ -231,12 +237,14 @@ $tab_index = 1;
 		?>
 			var showWindowAgain = true;
 			$(window).scroll(function() {
-				value = parseInt(Math.abs(document.body.scrollTop / (document.body.clientHeight - window.innerHeight) * 100));
-				if (showWindowAgain && value >= <?php echo $popup_will_appear_after_scrolling_down_n_percent; ?>) {
-					<?php require( dirname( __FILE__ ) . '/events/show-window.php' ); ?>
-					<?php require( dirname( __FILE__ ) . '/events/show-bottom-button.php' ); ?>
+				if (!is_scp_cookie_present()) {
+					value = parseInt(Math.abs(document.body.scrollTop / (document.body.clientHeight - window.innerHeight) * 100));
+					if (showWindowAgain && value >= <?php echo $popup_will_appear_after_scrolling_down_n_percent; ?>) {
+						<?php require( dirname( __FILE__ ) . '/events/show-window.php' ); ?>
+						<?php require( dirname( __FILE__ ) . '/events/show-bottom-button.php' ); ?>
 
-					showWindowAgain = false;
+						showWindowAgain = false;
+					}
 				}
 			});
 		<?php } ?>
@@ -246,6 +254,8 @@ $tab_index = 1;
 			if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'on_exit_intent' ) && $popup_will_appear_on_exit_intent ) {
 		?>
 			$(document).on('mouseleave', function(e) {
+				if (is_scp_cookie_present()) return;
+
 				var scroll = window.pageYOffset || document.documentElement.scrollTop;
 				if((e.pageY - scroll) < 7) {
 					<?php require( dirname( __FILE__ ) . '/events/show-window.php' ); ?>

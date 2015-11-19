@@ -33,7 +33,7 @@ if ( $debug_mode ) {
 	$visitor_opened_at_least_n_number_of_pages = 0;
 
 } else {
-	// if ( isset( $_COOKIE[ 'social-community-popup' ] ) ) return;
+	if ( is_scp_cookie_present() ) return;
 
 	$after_n_days          = (int) get_scp_option( 'setting_display_after_n_days' );
 	$cookie_popup_views    = isset( $_COOKIE[ 'social-community-popup-views' ] ) ? (int) $_COOKIE[ 'social-community-popup-views' ] : 0;
