@@ -201,11 +201,15 @@ $tab_index = 1;
 		<?php
 			// Добавляем общий для всех prepend-блок
 			require_once( dirname( __FILE__ ) . '/events/prepend-scripts.php' );
+
+			$any_event_active = false;
 		?>
 
 		<?php
 			// Отображение плагина после просмотра страницы N секунд
 			if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'after_n_seconds' ) ) {
+				$any_event_active = true;
+
 				$calculated_delay = ( $popup_will_appear_after_n_seconds > 0 ? $popup_will_appear_after_n_seconds * 1000 : 1000 );
 		?>
 				setTimeout(function() {
@@ -219,6 +223,8 @@ $tab_index = 1;
 		<?php
 			// Отображение плагина после клика по указанному селектору
 			if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'after_clicking_on_element' ) ) {
+				$any_event_active = true;
+
 				if ( ! empty( $popup_will_appear_after_clicking_on_element ) ) { ?>
 					$('<?php echo $popup_will_appear_after_clicking_on_element; ?>').on('click', function($) {
 						if (!is_scp_cookie_present()) {
@@ -234,6 +240,7 @@ $tab_index = 1;
 		<?php
 			// Отображение плагина после прокрутки страницы на N процентов
 			if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'after_scrolling_down_n_percent' ) ) {
+				$any_event_active = true;
 		?>
 			var showWindowAgain = true;
 			$(window).scroll(function() {
@@ -252,6 +259,7 @@ $tab_index = 1;
 		<?php
 			// Отображение плагина при попытке увести мышь за пределы окна
 			if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'on_exit_intent' ) && $popup_will_appear_on_exit_intent ) {
+				$any_event_active = true;
 		?>
 			$(document).on('mouseleave', function(e) {
 				if (is_scp_cookie_present()) return;
@@ -263,6 +271,14 @@ $tab_index = 1;
 				}
 			});
 		<?php } ?>
+
+		<?php
+			// Если ни одно из событий когда показывать окно не выбрано — показываем окно сразу и без задержки
+			if ( ! $any_event_active && ! is_scp_cookie_present() ) {
+				require( dirname( __FILE__ ) . '/events/show-window.php' );
+				require( dirname( __FILE__ ) . '/events/show-bottom-button.php' );
+			}
+		?>
 
 		<?php
 /*
