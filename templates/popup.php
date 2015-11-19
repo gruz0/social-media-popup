@@ -2,8 +2,7 @@
 <?php
 $tab_index = 1;
 
-// if ( $cookie_popup_views == $visitor_opened_at_least_n_number_of_pages ) :
-	if ( $use_facebook || $use_vkontakte || $use_odnoklassniki || $use_googleplus || $use_twitter || $use_pinterest ) :
+if ( $use_facebook || $use_vkontakte || $use_odnoklassniki || $use_googleplus || $use_twitter || $use_pinterest ) :
 ?>
 	<div id="social-community-popup">
 
@@ -158,8 +157,7 @@ $tab_index = 1;
 				<?php endif; ?>
 		</div>
 	</div>
-	<?php endif; ?>
-<?php //endif; ?>
+<?php endif; ?>
 
 <?php
 // Окно SCP выводим только после создания его в DOM-дереве
@@ -187,13 +185,6 @@ $tab_index = 1;
 		}
 	}
 	<?php endif; ?>
-
-	function scp_destroyPlugin($) {
-		var date = new Date( new Date().getTime() + <?php echo 1000 * 60 * 60 * 24 * esc_attr( $after_n_days ); ?>);
-		scp_setCookie("social-community-popup", "true", { "expires": date, "path": "/" } );
-		scp_deleteCookie("social-community-popup-views");
-		$("#social-community-popup").hide();
-	}
 
 	jQuery(document).ready(function($) {
 		if (is_scp_cookie_present()) return;
