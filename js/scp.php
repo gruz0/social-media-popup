@@ -37,6 +37,37 @@ if ( $debug_mode ) {
 	}
 }
 
+// Обработка событий кому показывать окно плагина
+$show_popup = false;
+
+// Время жизни куки — 1 год
+$cookie_lifetime = 31536000;
+
+// Пользователь просмотрел больше N страниц сайта
+if ( who_should_see_the_popup_has_event( $who_should_see_the_popup, 'visitor_opened_at_least_n_number_of_pages' ) ) {
+
+	// Если существует кука просмотренных страниц — обновляем её
+	if ( isset( $_COOKIE['scp-page-views'] ) ) {
+		$page_views = intval( $_COOKIE['scp-page-views'] ) + 1;
+		setcookie( 'scp-page-views', $page_views );
+
+		if ( $page_views > $visitor_opened_at_least_n_number_of_pages ) {
+			$show_popup = true;
+		}
+
+	// Иначе создаём новую
+	} else {
+		setcookie( 'scp-page-views', 1, time() + $cookie_lifetime );
+	}
+}
+
+// Если ни одно событие кому показывать окно не сработало — выходим
+if ( ! $show_popup ) {
+	return;
+}
+
+// Настройка плагина
+
 $use_facebook               = get_scp_option( 'setting_use_facebook' )      === '1';
 $use_vkontakte              = get_scp_option( 'setting_use_vkontakte' )     === '1';
 $use_odnoklassniki          = get_scp_option( 'setting_use_odnoklassniki' ) === '1';

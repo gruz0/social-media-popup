@@ -36,6 +36,11 @@ function when_should_the_popup_appear_has_event( $haystack, $needle ) {
 	return ( array_search( $needle, $haystack ) !== false );
 }
 
+// Проверяем наличие нужного нам события в массиве активных событий кому показывать окно
+function who_should_see_the_popup_has_event( $haystack, $needle ) {
+	return ( array_search( $needle, $haystack ) !== false );
+}
+
 function is_scp_cookie_present() {
 	return ( !empty( $_COOKIE['social-community-popup'] ) && $_COOKIE['social-community-popup'] == 'true' );
 }
