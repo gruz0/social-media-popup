@@ -6,5 +6,5 @@ if ( $close_by_clicking_anywhere ) {
 }
 ?>
 
-$('<?php echo $selector_to_close_widget; ?>').click(function() { scp_destroyPlugin($); });
+$('<?php echo $selector_to_close_widget; ?>').click(function() { scp_destroyPlugin($, <?php echo esc_attr( $after_n_days ); ?>); });
 
