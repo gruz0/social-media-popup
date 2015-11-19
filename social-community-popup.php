@@ -45,6 +45,8 @@ if ( ! class_exists( 'Social_Community_Popup' ) ) {
 
 	function scp_updater() {
 		require_once( dirname( __FILE__ ) . "/includes/updater/updater.php" );
+
+		// TODO: Возможно придётся это переписать на current_user_can( 'manage_options' )
 		if ( is_admin() ) {
 			$config = array(
 				'slug' => plugin_basename(__FILE__),
