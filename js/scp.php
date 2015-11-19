@@ -10,42 +10,31 @@ require_once( dirname( __FILE__ ) . "/../functions.php" );
 // Отключаем работу плагина на мобильных устройствах
 if ( wp_is_mobile() && get_scp_option( 'setting_show_on_mobile_devices' ) === '0' ) return;
 
-$debug_mode = is_user_logged_in() && intval( get_scp_option( 'setting_debug_mode' ) ) == 1;
+$debug_mode                                       = intval( get_scp_option( 'setting_debug_mode' ) ) == 1;
 
+$after_n_days                                     = (int) get_scp_option( 'setting_display_after_n_days' );
+$cookie_popup_views                               = isset( $_COOKIE[ 'social-community-popup-views' ] ) ? (int) $_COOKIE[ 'social-community-popup-views' ] : 0;
+
+$when_should_the_popup_appear                     = split_string_by_comma( get_scp_option( 'when_should_the_popup_appear' ) );
+$popup_will_appear_after_n_seconds                = (int) get_scp_option( 'popup_will_appear_after_n_seconds' );
+$popup_will_appear_after_clicking_on_element      = get_scp_option( 'popup_will_appear_after_clicking_on_element' );
+$popup_will_appear_after_scrolling_down_n_percent = (int) get_scp_option( 'popup_will_appear_after_scrolling_down_n_percent' );
+$popup_will_appear_on_exit_intent                 = get_scp_option( 'popup_will_appear_on_exit_intent' ) === '1';
+
+$who_should_see_the_popup                         = split_string_by_comma( get_scp_option( 'who_should_see_the_popup' ) );
+$visitor_opened_at_least_n_number_of_pages        = (int) get_scp_option( 'visitor_opened_at_least_n_number_of_pages' );
+
+// При включённом режиме отладки плагин работает только для администратора сайта
 if ( $debug_mode ) {
-	$after_n_days          = 1;
-	$cookie_popup_views    = 0;
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
 
-	$when_should_the_popup_appear = array(
-		'after_n_seconds',
-		'after_clicking_on_element',
-		'after_scrolling_down_n_percent',
-		'on_exit_intent'
-	);
-	$popup_will_appear_after_n_seconds           = 5;
-	$popup_will_appear_after_clicking_on_element = '#scp_button';
-	$popup_will_appear_after_scrolling_down_n_percent = 70;
-	$popup_will_appear_on_exit_intent                 = true;
-
-	$who_should_see_the_popup = array(
-		'visitor_opened_at_least_n_number_of_pages'
-	);
-	$visitor_opened_at_least_n_number_of_pages = 0;
-
+// Если режим отладки выключен и есть кука закрытия окна или пользователь администратор — не показываем окно
 } else {
-	if ( is_scp_cookie_present() ) return;
-
-	$after_n_days          = (int) get_scp_option( 'setting_display_after_n_days' );
-	$cookie_popup_views    = isset( $_COOKIE[ 'social-community-popup-views' ] ) ? (int) $_COOKIE[ 'social-community-popup-views' ] : 0;
-
-	$when_should_the_popup_appear                = split_string_by_comma( get_scp_option( 'when_should_the_popup_appear' ) );
-	$popup_will_appear_after_n_seconds           = (int) get_scp_option( 'popup_will_appear_after_n_seconds' );
-	$popup_will_appear_after_clicking_on_element = get_scp_option( 'popup_will_appear_after_clicking_on_element' );
-	$popup_will_appear_after_scrolling_down_n_percent = (int) get_scp_option( 'popup_will_appear_after_scrolling_down_n_percent' );
-	$popup_will_appear_on_exit_intent                 = get_scp_option( 'popup_will_appear_on_exit_intent' ) === '1';
-
-	$who_should_see_the_popup                    = extract_field_when_should_the_popup_appear( get_scp_option( 'who_should_see_the_popup' ) );
-	$visitor_opened_at_least_n_number_of_pages = (int) get_scp_option( 'visitor_opened_at_least_n_number_of_pages' );
+	if ( is_scp_cookie_present() || current_user_can( 'manage_options' ) ) {
+		return;
+	}
 }
 
 $use_facebook               = get_scp_option( 'setting_use_facebook' )      === '1';
