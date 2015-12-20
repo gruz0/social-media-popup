@@ -97,6 +97,7 @@ class Social_Community_Popup {
 			'setting_facebook_show_facepile',
 			'setting_facebook_show_posts',
 			'setting_facebook_adapt_container_width',
+			'setting_facebook_use_small_header',
 
 			// ВКонтакте
 			'setting_use_vkontakte',
@@ -456,6 +457,9 @@ class Social_Community_Popup {
 		if ( '0.7.2' > get_option( $version ) ) {
 			// Добавляем новое свойство "Adapt to plugin container width" в виджет Facebook
 			update_option( SCP_PREFIX . 'setting_facebook_adapt_container_width',            1 );
+
+			// Добавляем новое свойство "Use small header" в виджет Facebook
+			update_option( SCP_PREFIX . 'setting_facebook_use_small_header',                 0 );
 
 			update_option( $version, '0.7.2' );
 		}
@@ -992,6 +996,7 @@ class Social_Community_Popup {
 		register_setting( $group, SCP_PREFIX . 'setting_facebook_locale', 'sanitize_text_field' );
 		register_setting( $group, SCP_PREFIX . 'setting_facebook_width', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_facebook_height', 'absint' );
+		register_setting( $group, SCP_PREFIX . 'setting_facebook_use_small_header', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_facebook_hide_cover' );
 		register_setting( $group, SCP_PREFIX . 'setting_facebook_show_facepile' );
 		register_setting( $group, SCP_PREFIX . 'setting_facebook_show_posts' );
@@ -1121,6 +1126,18 @@ class Social_Community_Popup {
 			$section,
 			array(
 				'field' => SCP_PREFIX . 'setting_facebook_adapt_container_width'
+			)
+		);
+
+		// Выводить уменьшенный заголовок виджета
+		add_settings_field(
+			$prefix . '-facebook-use-small-header',
+			__( 'Use Small Header', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_facebook_use_small_header'
 			)
 		);
 

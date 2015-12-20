@@ -302,7 +302,8 @@ function scp_facebook_container() {
 				esc_attr( scp_to_bool( get_scp_option( 'setting_facebook_hide_cover' ) ) ),
 				esc_attr( scp_to_bool( get_scp_option( 'setting_facebook_show_facepile' ) ) ),
 				esc_attr( scp_to_bool( get_scp_option( 'setting_facebook_show_posts' ) ) ),
-				esc_attr( scp_to_bool( get_scp_option( 'setting_facebook_adapt_container_width' ) ) )
+				esc_attr( scp_to_bool( get_scp_option( 'setting_facebook_adapt_container_width' ) ) ),
+				esc_attr( scp_to_bool( get_scp_option( 'setting_facebook_use_small_header' ) ) )
 			);
 			echo $facebook_container;
 		?>
