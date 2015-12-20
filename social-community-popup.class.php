@@ -455,6 +455,8 @@ class Social_Community_Popup {
 			update_option( $new_scp_prefix . 'version', '0.7.1' );
 		}
 
+		$version = SCP_PREFIX . 'version';
+
 		if ( '0.7.2' > get_option( $version ) ) {
 			// Добавляем новое свойство "Adapt to plugin container width" в виджет Facebook
 			update_option( SCP_PREFIX . 'setting_facebook_adapt_container_width',            1 );
