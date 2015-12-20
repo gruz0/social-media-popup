@@ -7,7 +7,7 @@ Description: Плагин всплывающего окна с виджетам�
 Author: Alexander Gruzov
 Author URI: http://gruz0.ru/
 Text Domain: social-community-popup
-Version: 0.7.1
+Version: 0.7.2
 License: GPL2
 */
 
