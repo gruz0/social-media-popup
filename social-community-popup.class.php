@@ -98,6 +98,7 @@ class Social_Community_Popup {
 			'setting_facebook_show_posts',
 			'setting_facebook_adapt_container_width',
 			'setting_facebook_use_small_header',
+			'setting_facebook_tabs',
 
 			// ВКонтакте
 			'setting_use_vkontakte',
@@ -460,6 +461,13 @@ class Social_Community_Popup {
 
 			// Добавляем новое свойство "Use small header" в виджет Facebook
 			update_option( SCP_PREFIX . 'setting_facebook_use_small_header',                 0 );
+
+			// Сохраним старое значение "Show Posts" и используем его в новой опции "Tabs"
+			$old_value = get_scp_option( 'setting_facebook_show_posts' );
+			$new_value = $old_value === '1' ? 'timeline' : '';
+
+			delete_option( SCP_PREFIX . 'setting_facebook_show_posts' );
+			update_option( SCP_PREFIX . 'setting_facebook_tabs',                             $new_value );
 
 			update_option( $version, '0.7.2' );
 		}
@@ -999,7 +1007,7 @@ class Social_Community_Popup {
 		register_setting( $group, SCP_PREFIX . 'setting_facebook_use_small_header', 'absint' );
 		register_setting( $group, SCP_PREFIX . 'setting_facebook_hide_cover' );
 		register_setting( $group, SCP_PREFIX . 'setting_facebook_show_facepile' );
-		register_setting( $group, SCP_PREFIX . 'setting_facebook_show_posts' );
+		register_setting( $group, SCP_PREFIX . 'setting_facebook_tabs', 'sanitize_text_field' );
 		register_setting( $group, SCP_PREFIX . 'setting_facebook_adapt_container_width', 'absint' );
 
 		add_settings_section(
@@ -1165,15 +1173,15 @@ class Social_Community_Popup {
 			)
 		);
 
-		// Показывать записи со стены
+		// Типы записей (Timeline, Messages, Events)
 		add_settings_field(
-			$prefix . '-facebook-show-posts',
-			__( 'Show posts from the Page\'s timeline', L10N_SCP_PREFIX ),
-			array( & $this, 'settings_field_checkbox' ),
+			$prefix . '-facebook-tabs',
+			__( 'Show Content from Tabs', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_facebook_tabs' ),
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_facebook_show_posts'
+				'field' => SCP_PREFIX . 'setting_facebook_tabs'
 			)
 		);
 	}
@@ -2204,6 +2212,39 @@ class Social_Community_Popup {
 		$html = sprintf( $format, $field . '_0', $field, 'ru_RU', checked( $value, 'ru_RU', false ), $field . '_0', __( 'Russian', L10N_SCP_PREFIX ) );
 		$html .= '<br />';
 		$html .= sprintf( $format, $field . '_1', $field, 'en_US', checked( $value, 'en_US', false ), $field . '_1', __( 'English', L10N_SCP_PREFIX ) );
+		echo $html;
+	}
+
+	/**
+	 * Callback-шаблон для формирования табов с выбором типа загружаемого контента для Facebook
+	 */
+	public function settings_field_facebook_tabs( $args ) {
+		$field = $args[ 'field' ];
+		$value = get_option( $field );
+
+		$options = array();
+		$options['timeline'] = __( 'Timelime', L10N_SCP_PREFIX );
+		$options['messages'] = __( 'Messages', L10N_SCP_PREFIX );
+		$options['events']   = __( 'Events', L10N_SCP_PREFIX );
+
+		$chains = preg_split( "/,/", $value );
+
+		$format = '<input type="checkbox" id="%s" class="%s" value="%s"%s />';
+		$format .= '<label for="%s">%s</label>';
+
+		$html = '';
+		foreach ( $options as $option_name => $label ) {
+			$checked = '';
+			for ( $idx = 0; $idx < count( $chains ); $idx++ ) {
+				$checked = checked( $chains[$idx], $option_name, false );
+				if ( strlen( $checked ) ) break;
+			}
+
+			$html .= sprintf( $format, $option_name, $field, $option_name, $checked, $option_name, $label );
+			$html .= '<br />';
+		}
+
+		$html .= '<input type="hidden" id="' . $field . '" name="' . $field . '" value="' . esc_attr( $value ) . '" />';
 		echo $html;
 	}
 
