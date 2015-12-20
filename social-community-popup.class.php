@@ -96,6 +96,7 @@ class Social_Community_Popup {
 			'setting_facebook_hide_cover',
 			'setting_facebook_show_facepile',
 			'setting_facebook_show_posts',
+			'setting_facebook_adapt_container_width',
 
 			// ВКонтакте
 			'setting_use_vkontakte',
@@ -450,6 +451,13 @@ class Social_Community_Popup {
 			update_option( SCP_PREFIX . 'visitor_opened_at_least_n_number_of_pages',          $old_value );
 
 			update_option( $new_scp_prefix . 'version', '0.7.1' );
+		}
+
+		if ( '0.7.2' > get_option( $version ) ) {
+			// Добавляем новое свойство "Adapt to plugin container width" в виджет Facebook
+			update_option( SCP_PREFIX . 'setting_facebook_adapt_container_width',            1 );
+
+			update_option( $version, '0.7.2' );
 		}
 	}
 
@@ -987,6 +995,7 @@ class Social_Community_Popup {
 		register_setting( $group, SCP_PREFIX . 'setting_facebook_hide_cover' );
 		register_setting( $group, SCP_PREFIX . 'setting_facebook_show_facepile' );
 		register_setting( $group, SCP_PREFIX . 'setting_facebook_show_posts' );
+		register_setting( $group, SCP_PREFIX . 'setting_facebook_adapt_container_width', 'absint' );
 
 		add_settings_section(
 			$section,
@@ -1100,6 +1109,18 @@ class Social_Community_Popup {
 			$section,
 			array(
 				'field' => SCP_PREFIX . 'setting_facebook_height'
+			)
+		);
+
+		// Адаптировать виджет под ширину контейнера
+		add_settings_field(
+			$prefix . '-facebook-adapt-container-width',
+			__( 'Adapt to Plugin Container Width', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => SCP_PREFIX . 'setting_facebook_adapt_container_width'
 			)
 		);
 
