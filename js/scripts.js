@@ -60,6 +60,6 @@ function is_scp_cookie_present() {
 function scp_destroyPlugin($, after_n_days) {
 	var date = new Date( new Date().getTime() + (1000 * 60 * 60 * 24 * after_n_days) );
 	scp_setCookie("social-community-popup", "true", { "expires": date, "path": "/" } );
-	scp_deleteCookie("social-community-popup-views");
+	scp_deleteCookie('scp-page-views');
 	$("#social-community-popup").hide();
 }

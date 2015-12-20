@@ -13,7 +13,6 @@ if ( wp_is_mobile() && get_scp_option( 'setting_show_on_mobile_devices' ) === '0
 $debug_mode                                       = intval( get_scp_option( 'setting_debug_mode' ) ) == 1;
 
 $after_n_days                                     = (int) get_scp_option( 'setting_display_after_n_days' );
-$cookie_popup_views                               = isset( $_COOKIE[ 'social-community-popup-views' ] ) ? (int) $_COOKIE[ 'social-community-popup-views' ] : 0;
 
 $when_should_the_popup_appear                     = split_string_by_comma( get_scp_option( 'when_should_the_popup_appear' ) );
 $popup_will_appear_after_n_seconds                = (int) get_scp_option( 'popup_will_appear_after_n_seconds' );
@@ -45,14 +44,15 @@ $cookie_lifetime = 31536000;
 
 // Пользователь просмотрел больше N страниц сайта
 if ( who_should_see_the_popup_has_event( $who_should_see_the_popup, 'visitor_opened_at_least_n_number_of_pages' ) ) {
+	$page_views_cookie = 'scp-page-views';
 
 	// Если окно не было закрыто другими событиями — начинаем проверку условий
 	if ( ! is_scp_cookie_present() ) {
 
 		// Если существует кука просмотренных страниц — обновляем её
-		if ( isset( $_COOKIE['scp-page-views'] ) ) {
-			$page_views = intval( $_COOKIE['scp-page-views'] ) + 1;
-			setcookie( 'scp-page-views', $page_views );
+		if ( isset( $_COOKIE[$page_views_cookie] ) ) {
+			$page_views = intval( $_COOKIE[$page_views_cookie] ) + 1;
+			setcookie( $page_views_cookie, $page_views );
 
 			if ( $page_views > $visitor_opened_at_least_n_number_of_pages ) {
 				$show_popup = true;
@@ -60,12 +60,13 @@ if ( who_should_see_the_popup_has_event( $who_should_see_the_popup, 'visitor_ope
 
 		// Иначе создаём новую
 		} else {
-			setcookie( 'scp-page-views', 1, time() + $cookie_lifetime );
+			setcookie( $page_views_cookie, 1, time() + $cookie_lifetime );
 		}
 
 	// Иначе удалим куку
 	} else {
-		setcookie( 'scp-page-views', 0, time() - 1 );
+		setcookie( $page_views_cookie, 0, time() - 1 );
+		unset( $_COOKIE[$page_views_cookie] );
 	}
 }
 

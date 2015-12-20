@@ -271,35 +271,6 @@ if ( $use_facebook || $use_vkontakte || $use_odnoklassniki || $use_googleplus ||
 			}
 		?>
 
-		<?php
-/*
-		scp_setCookie("social-community-popup-views", <?php echo esc_attr( $cookie_popup_views ) + 1; ?>, { "path": "/" } );
-*/
-		?>
-
-		<?php /* if ( $cookie_popup_views === $visitor_opened_at_least_n_number_of_pages ) : ?>
-
-
-				setTimeout(function() {
-
-					<?php if ( $use_facebook ) echo "scp_prependFacebook(\$);"; ?>
-					<?php if ( $use_vkontakte ) echo "scp_prependVK(\$);"; ?>
-					<?php if ( $use_googleplus ) echo "scp_prependGooglePlus(\$);"; ?>
-					<?php if ( $use_pinterest ) echo "scp_prependPinterest(\$);"; ?>
-
-					$('#social-community-popup').show();
-
-				<?php if ( $delay_before_show_bottom_button > 0 ) { ?>
-					setTimeout(function() { $('.dont-show-widget').show(); }, <?php echo esc_attr( $delay_before_show_bottom_button ) * 1000; ?>);
-				<?php } else { ?>
-					$('.dont-show-widget').show();
-				<?php } ?>
-
-				}, <?php echo esc_attr( $calculated_delay ); ?>);
-
-				scp_deleteCookie("social-community-popup-views");
-		*/ ?>
-
 		<?php require_once( dirname( __FILE__ ) . '/events/close-widget.php' ); ?>
 		<?php require_once( dirname( __FILE__ ) . '/events/close-widget-by-pressing-esc.php' ); ?>
     });
