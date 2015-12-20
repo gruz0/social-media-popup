@@ -15,6 +15,13 @@ $debug_mode                                       = intval( get_scp_option( 'set
 $after_n_days                                     = (int) get_scp_option( 'setting_display_after_n_days' );
 
 $when_should_the_popup_appear                     = split_string_by_comma( get_scp_option( 'when_should_the_popup_appear' ) );
+$when_should_the_popup_appear_events              = array(
+	'after_n_seconds',
+	'after_clicking_on_element',
+	'after_scrolling_down_n_percent',
+	'on_exit_intent'
+);
+
 $popup_will_appear_after_n_seconds                = (int) get_scp_option( 'popup_will_appear_after_n_seconds' );
 $popup_will_appear_after_clicking_on_element      = get_scp_option( 'popup_will_appear_after_clicking_on_element' );
 $popup_will_appear_after_scrolling_down_n_percent = (int) get_scp_option( 'popup_will_appear_after_scrolling_down_n_percent' );
@@ -67,6 +74,14 @@ if ( who_should_see_the_popup_has_event( $who_should_see_the_popup, 'visitor_ope
 	} else {
 		setcookie( $page_views_cookie, 0, time() - 1 );
 		unset( $_COOKIE[$page_views_cookie] );
+	}
+}
+
+// Активна любая опция когда показывать окно
+foreach ( $when_should_the_popup_appear_events as $event ) {
+	if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, $event ) ) {
+		$show_popup = true;
+		break;
 	}
 }
 
