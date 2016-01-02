@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) or exit;
 require_once( dirname( __FILE__ ) . "/functions.php" );
 
 class Social_Community_Popup {
+	protected static $scp_version;
 
 	/**
 	 * Конструктор
@@ -44,8 +45,10 @@ class Social_Community_Popup {
 	 * Деинсталляция плагина
 	 */
 	public static function uninstall() {
+		$scp_prefix = self::get_scp_prefix();
+
 		if ( ! current_user_can( 'activate_plugins' ) ) return;
-		if ( ! get_option( SCP_PREFIX . 'setting_remove_settings_on_uninstall' ) ) return;
+		if ( ! get_option( $scp_prefix . 'setting_remove_settings_on_uninstall' ) ) return;
 
 		$options = array(
 			// Очищаем версию плагина
@@ -54,12 +57,15 @@ class Social_Community_Popup {
 			// Общие настройки
 			'setting_debug_mode',
 			'setting_display_after_n_days',
+			'setting_display_after_visiting_n_pages',
 			'setting_tabs_order',
 			'setting_container_width',
 			'setting_container_height',
 			'setting_border_radius',
 			'setting_remove_settings_on_uninstall',
 			'setting_close_popup_when_esc_pressed',
+			'setting_close_popup_by_clicking_anywhere',
+			'setting_show_on_mobile_devices',
 			'setting_plugin_title',
 			'setting_hide_tabs_if_one_widget_is_active',
 			'setting_align_tabs_to_center',
@@ -163,7 +169,33 @@ class Social_Community_Popup {
 		);
 
 		for ( $idx = 0; $idx < count( $options ); $idx++ ) {
-			delete_option( SCP_PREFIX . $options[ $idx ] );
+			delete_option( $scp_prefix . $options[ $idx ] );
+		}
+	}
+
+	public static function set_scp_version( $version ) {
+		self::$scp_version = $version;
+	}
+
+	public static function get_scp_prefix() {
+		if ( empty( self::$scp_version ) ) {
+			$version = get_option( 'scp-version' );
+			if ( empty( $version ) ) {
+				$version = get_option( 'social-community-popup-version' );
+				if ( empty( $version ) ) {
+					self::set_scp_version( '0.1' );
+				} else {
+					self::set_scp_version( $version );
+				}
+			} else {
+				self::set_scp_version( $version );
+			}
+		}
+
+		if ( version_compare( self::$scp_version, '0.7.1', '>=' ) ) {
+			return 'scp-';
+		} else {
+			return 'social-community-popup-';
 		}
 	}
 
@@ -171,139 +203,213 @@ class Social_Community_Popup {
 	 * Обновление плагина
 	 */
 	public static function upgrade() {
-		$version = SCP_PREFIX . 'version';
+		self::upgrade_to_0_1();
+		self::upgrade_to_0_2();
+		self::upgrade_to_0_3();
+		self::upgrade_to_0_4();
+		self::upgrade_to_0_5();
+		self::upgrade_to_0_6();
+		self::upgrade_to_0_6_1();
+		self::upgrade_to_0_6_2();
+		self::upgrade_to_0_6_3();
+		self::upgrade_to_0_6_4();
+		self::upgrade_to_0_6_5();
+		self::upgrade_to_0_6_6();
+		self::upgrade_to_0_6_7();
+		self::upgrade_to_0_6_8();
+		self::upgrade_to_0_6_9();
+		self::upgrade_to_0_7_0();
+		self::upgrade_to_0_7_1();
+		self::upgrade_to_0_7_2();
+	}
+
+	public static function upgrade_to_0_1() {
+		$scp_prefix = self::get_scp_prefix();
+		$version    = $scp_prefix . 'version';
 
 		// Срабатывает только при инсталляции плагина
-		if ( ! get_option( $version ) ) update_option( $version, '0.1' );
+		if ( ! get_option( $version ) ) {
+			update_option( $version, '0.1' );
+			self::set_scp_version( '0.1' );
+		}
+	}
+
+	public static function upgrade_to_0_2() {
+		$scp_prefix = self::get_scp_prefix();
+		$version    = $scp_prefix . 'version';
 
 		if ( '0.2' > get_option( $version ) ) {
-			update_option( SCP_PREFIX . 'setting_display_after_n_days',             30 );
-			update_option( SCP_PREFIX . 'setting_display_after_visiting_n_pages',   0 );
-			update_option( SCP_PREFIX . 'setting_display_after_delay_of_n_seconds', 3 );
+			update_option( $scp_prefix . 'setting_display_after_n_days',             30 );
+			update_option( $scp_prefix . 'setting_display_after_visiting_n_pages',   0 );
+			update_option( $scp_prefix . 'setting_display_after_delay_of_n_seconds', 3 );
 
-			update_option( SCP_PREFIX . 'setting_facebook_tab_caption',             'Facebook' );
-			update_option( SCP_PREFIX . 'setting_facebook_application_id',          '277165072394537' );
-			update_option( SCP_PREFIX . 'setting_facebook_page_url',                'https://www.facebook.com/AlexanderGruzov' );
-			update_option( SCP_PREFIX . 'setting_facebook_locale',                  'ru_RU' );
-			update_option( SCP_PREFIX . 'setting_facebook_width',                   400 );
-			update_option( SCP_PREFIX . 'setting_facebook_height',                  300 );
-			update_option( SCP_PREFIX . 'setting_facebook_show_faces',              1 );
+			update_option( $scp_prefix . 'setting_facebook_tab_caption',             __( 'Facebook', L10N_SCP_PREFIX ) );
+			update_option( $scp_prefix . 'setting_facebook_application_id',          '277165072394537' );
+			update_option( $scp_prefix . 'setting_facebook_page_url',                'https://www.facebook.com/AlexanderGruzov' );
+			update_option( $scp_prefix . 'setting_facebook_locale',                  'ru_RU' );
+			update_option( $scp_prefix . 'setting_facebook_width',                   400 );
+			update_option( $scp_prefix . 'setting_facebook_height',                  300 );
+			update_option( $scp_prefix . 'setting_facebook_show_header',             1 );
+			update_option( $scp_prefix . 'setting_facebook_show_faces',              1 );
+			update_option( $scp_prefix . 'setting_facebook_show_stream',             0 );
 
-			update_option( SCP_PREFIX . 'setting_vkontakte_tab_caption',            'ВКонтакте' );
-			update_option( SCP_PREFIX . 'setting_vkontakte_page_or_group_id',       '64088617' );
-			update_option( SCP_PREFIX . 'setting_vkontakte_width',                  400 );
-			update_option( SCP_PREFIX . 'setting_vkontakte_height',                 260 );
-			update_option( SCP_PREFIX . 'setting_vkontakte_color_background',       '#FFFFFF' );
-			update_option( SCP_PREFIX . 'setting_vkontakte_color_text',             '#2B587A' );
-			update_option( SCP_PREFIX . 'setting_vkontakte_color_button',           '#5B7FA6' );
+			update_option( $scp_prefix . 'setting_vkontakte_tab_caption',            __( 'VK', L10N_SCP_PREFIX ) );
+			update_option( $scp_prefix . 'setting_vkontakte_page_or_group_id',       '64088617' );
+			update_option( $scp_prefix . 'setting_vkontakte_width',                  400 );
+			update_option( $scp_prefix . 'setting_vkontakte_height',                 260 );
+			update_option( $scp_prefix . 'setting_vkontakte_color_background',       '#FFFFFF' );
+			update_option( $scp_prefix . 'setting_vkontakte_color_text',             '#2B587A' );
+			update_option( $scp_prefix . 'setting_vkontakte_color_button',           '#5B7FA6' );
 
-			update_option( SCP_PREFIX . 'setting_odnoklassniki_tab_caption',        'Одноклассники' );
-			update_option( SCP_PREFIX . 'setting_odnoklassniki_group_id',           '57122812461115' );
-			update_option( SCP_PREFIX . 'setting_odnoklassniki_width',              400 );
-			update_option( SCP_PREFIX . 'setting_odnoklassniki_height',             260 );
+			update_option( $scp_prefix . 'setting_odnoklassniki_tab_caption',        __( 'Odnoklassniki', L10N_SCP_PREFIX ) );
+			update_option( $scp_prefix . 'setting_odnoklassniki_group_id',           '57122812461115' );
+			update_option( $scp_prefix . 'setting_odnoklassniki_width',              400 );
+			update_option( $scp_prefix . 'setting_odnoklassniki_height',             260 );
 
 			update_option( $version, '0.2' );
+			self::set_scp_version( '0.2' );
 		}
+	}
+
+	public static function upgrade_to_0_3() {
+		$scp_prefix = self::get_scp_prefix();
+		$version    = $scp_prefix . 'version';
 
 		if ( '0.3' > get_option( $version ) ) {
-			update_option( SCP_PREFIX . 'setting_tabs_order', 'vkontakte,facebook,odnoklassniki' );
+			update_option( $scp_prefix . 'setting_tabs_order', 'vkontakte,facebook,odnoklassniki' );
 			update_option( $version, '0.3' );
+			self::set_scp_version( '0.3' );
 		}
+	}
+
+	public static function upgrade_to_0_4() {
+		$scp_prefix = self::get_scp_prefix();
+		$version    = $scp_prefix . 'version';
 
 		if ( '0.4' > get_option( $version ) ) {
 			update_option( $version, '0.4' );
+			self::set_scp_version( '0.4' );
 		}
+	}
+
+	public static function upgrade_to_0_5() {
+		$scp_prefix = self::get_scp_prefix();
+		$version    = $scp_prefix . 'version';
 
 		if ( '0.5' > get_option( $version ) ) {
 			// Добавляем Google+ в таблицу сортировки
-			$tabs_order = get_option( SCP_PREFIX . 'setting_tabs_order' );
+			$tabs_order = get_option( $scp_prefix . 'setting_tabs_order' );
 			$tabs_order = ( $tabs_order ) ? explode( ',', $tabs_order ) : array();
 			$tabs_order[] = 'googleplus';
 			$tabs_order = array_unique( $tabs_order );
 
-			update_option( SCP_PREFIX . 'setting_tabs_order', join( ',', $tabs_order ) );
+			update_option( $scp_prefix . 'setting_tabs_order', join( ',', $tabs_order ) );
 
 			// Добавляем новые системные опции
-			update_option( SCP_PREFIX . 'setting_debug_mode',                       1 );
-			update_option( SCP_PREFIX . 'setting_container_width',                  400 );
-			update_option( SCP_PREFIX . 'setting_container_height',                 476 );
+			update_option( $scp_prefix . 'setting_debug_mode',                       1 );
+			update_option( $scp_prefix . 'setting_container_width',                  400 );
+			update_option( $scp_prefix . 'setting_container_height',                 476 );
 
 			// Добавляем настройки Google+
-			update_option( SCP_PREFIX . 'setting_use_googleplus',                   0 );
-			update_option( SCP_PREFIX . 'setting_googleplus_tab_caption',           'Google+' );
-			update_option( SCP_PREFIX . 'setting_googleplus_show_description',      0 );
-			update_option( SCP_PREFIX . 'setting_googleplus_description',           '' );
-			update_option( SCP_PREFIX . 'setting_googleplus_page_url',              '//plus.google.com/u/0/117676776729232885815' );
-			update_option( SCP_PREFIX . 'setting_googleplus_locale',                'ru' );
-			update_option( SCP_PREFIX . 'setting_googleplus_size',                  400 );
-			update_option( SCP_PREFIX . 'setting_googleplus_theme',                 'light' );
-			update_option( SCP_PREFIX . 'setting_googleplus_show_cover_photo',      1 );
-			update_option( SCP_PREFIX . 'setting_googleplus_show_tagline',          1 );
+			update_option( $scp_prefix . 'setting_use_googleplus',                   0 );
+			update_option( $scp_prefix . 'setting_googleplus_tab_caption',           __( 'Google+', L10N_SCP_PREFIX ) );
+			update_option( $scp_prefix . 'setting_googleplus_show_description',      0 );
+			update_option( $scp_prefix . 'setting_googleplus_description',           '' );
+			update_option( $scp_prefix . 'setting_googleplus_page_url',              '//plus.google.com/u/0/117676776729232885815' );
+			update_option( $scp_prefix . 'setting_googleplus_locale',                'ru' );
+			update_option( $scp_prefix . 'setting_googleplus_size',                  400 );
+			update_option( $scp_prefix . 'setting_googleplus_theme',                 'light' );
+			update_option( $scp_prefix . 'setting_googleplus_show_cover_photo',      1 );
+			update_option( $scp_prefix . 'setting_googleplus_show_tagline',          1 );
 
 			// Обновим высоту контейнеров других социальных сетей
-			update_option( SCP_PREFIX . 'setting_facebook_height',                  400 );
-			update_option( SCP_PREFIX . 'setting_vkontakte_height',                 400 );
-			update_option( SCP_PREFIX . 'setting_odnoklassniki_height',             400 );
+			update_option( $scp_prefix . 'setting_facebook_height',                  400 );
+			update_option( $scp_prefix . 'setting_vkontakte_height',                 400 );
+			update_option( $scp_prefix . 'setting_odnoklassniki_height',             400 );
 
 			update_option( $version, '0.5' );
+			self::set_scp_version( '0.5' );
 		}
+	}
+
+	public static function upgrade_to_0_6() {
+		$scp_prefix = self::get_scp_prefix();
+		$version    = $scp_prefix . 'version';
 
 		if ( '0.6' > get_option( $version ) ) {
 			// Добавляем Twitter в таблицу сортировки
-			$tabs_order = get_option( SCP_PREFIX . 'setting_tabs_order' );
+			$tabs_order = get_option( $scp_prefix . 'setting_tabs_order' );
 			$tabs_order = ( $tabs_order ) ? explode( ',', $tabs_order ) : array();
 			$tabs_order[] = 'twitter';
 			$tabs_order = array_unique( $tabs_order );
 
-			update_option( SCP_PREFIX . 'setting_tabs_order', join( ',', $tabs_order ) );
+			update_option( $scp_prefix . 'setting_tabs_order', join( ',', $tabs_order ) );
 
 			// Добавляем настройки Twitter
-			update_option( SCP_PREFIX . 'setting_use_twitter',                       0 );
-			update_option( SCP_PREFIX . 'setting_twitter_tab_caption',               'Twitter' );
-			update_option( SCP_PREFIX . 'setting_twitter_show_description',          0 );
-			update_option( SCP_PREFIX . 'setting_twitter_description',               '' );
-			update_option( SCP_PREFIX . 'setting_twitter_username',                  '' );
-			update_option( SCP_PREFIX . 'setting_twitter_widget_id',                 '' );
-			update_option( SCP_PREFIX . 'setting_twitter_theme',                     'light' );
-			update_option( SCP_PREFIX . 'setting_twitter_link_color',                '#CC0000' );
-			update_option( SCP_PREFIX . 'setting_twitter_tweet_limit',               5 );
-			update_option( SCP_PREFIX . 'setting_twitter_show_replies',              0 );
-			update_option( SCP_PREFIX . 'setting_twitter_width',                     400 );
-			update_option( SCP_PREFIX . 'setting_twitter_height',                    400 );
-			update_option( SCP_PREFIX . 'setting_twitter_chrome',                    '' );
+			update_option( $scp_prefix . 'setting_use_twitter',                       0 );
+			update_option( $scp_prefix . 'setting_twitter_tab_caption',               __( 'Twitter', L10N_SCP_PREFIX ) );
+			update_option( $scp_prefix . 'setting_twitter_show_description',          0 );
+			update_option( $scp_prefix . 'setting_twitter_description',               '' );
+			update_option( $scp_prefix . 'setting_twitter_username',                  '' );
+			update_option( $scp_prefix . 'setting_twitter_widget_id',                 '' );
+			update_option( $scp_prefix . 'setting_twitter_theme',                     'light' );
+			update_option( $scp_prefix . 'setting_twitter_link_color',                '#CC0000' );
+			update_option( $scp_prefix . 'setting_twitter_tweet_limit',               5 );
+			update_option( $scp_prefix . 'setting_twitter_show_replies',              0 );
+			update_option( $scp_prefix . 'setting_twitter_width',                     400 );
+			update_option( $scp_prefix . 'setting_twitter_height',                    400 );
+			update_option( $scp_prefix . 'setting_twitter_chrome',                    '' );
 
 			update_option( $version, '0.6' );
+			self::set_scp_version( '0.6' );
 		}
+	}
+
+	public static function upgrade_to_0_6_1() {
+		$scp_prefix = self::get_scp_prefix();
+		$version    = $scp_prefix . 'version';
 
 		if ( '0.6.1' > get_option( $version ) ) {
 			// Добавлена настройка радиуса угла скругления границ
-			update_option( SCP_PREFIX . 'setting_border_radius',                     10 );
+			update_option( $scp_prefix . 'setting_border_radius',                     10 );
 
 			update_option( $version, '0.6.1' );
+			self::set_scp_version( '0.6.1' );
 		}
+	}
+
+	public static function upgrade_to_0_6_2() {
+		$scp_prefix = self::get_scp_prefix();
+		$version    = $scp_prefix . 'version';
 
 		if ( '0.6.2' > get_option( $version ) ) {
 			// Добавлена настройка закрытия окна при нажатии на любой области экрана
-			update_option( SCP_PREFIX . 'setting_close_popup_by_clicking_anywhere',  0 );
+			update_option( $scp_prefix . 'setting_close_popup_by_clicking_anywhere',  0 );
 
 			// Добавлена настройка показывать виджет на мобильных устройствах или нет
-			update_option( SCP_PREFIX . 'setting_show_on_mobile_devices',            0 );
+			update_option( $scp_prefix . 'setting_show_on_mobile_devices',            0 );
 
 			update_option( $version, '0.6.2' );
+			self::set_scp_version( '0.6.2' );
 		}
+	}
+
+	public static function upgrade_to_0_6_3() {
+		$scp_prefix = self::get_scp_prefix();
+		$version    = $scp_prefix . 'version';
 
 		if ( '0.6.3' > get_option( $version ) ) {
 			// У виджета LikeBox в Facebook обновился интерфейс создания, поэтому адаптируем настройки
-			$facebook_show_header = absint( get_option( SCP_PREFIX . 'setting_facebook_show_header' ) );
-			update_option( SCP_PREFIX . 'setting_facebook_hide_cover', ( $facebook_show_header ? "1" : "" ) );
+			$facebook_show_header = absint( get_option( $scp_prefix . 'setting_facebook_show_header' ) );
+			update_option( $scp_prefix . 'setting_facebook_hide_cover', ( $facebook_show_header ? "1" : "" ) );
 			unset( $facebook_show_header );
 
-			$facebook_show_faces = get_option( SCP_PREFIX . 'setting_facebook_show_faces' );
-			update_option( SCP_PREFIX . 'setting_facebook_show_facepile', $facebook_show_faces );
+			$facebook_show_faces = get_option( $scp_prefix . 'setting_facebook_show_faces' );
+			update_option( $scp_prefix . 'setting_facebook_show_facepile', $facebook_show_faces );
 			unset( $facebook_show_faces );
 
-			$facebook_show_stream = get_option( SCP_PREFIX . 'setting_facebook_show_stream' );
-			update_option( SCP_PREFIX . 'setting_facebook_show_posts', $facebook_show_stream );
+			$facebook_show_stream = get_option( $scp_prefix . 'setting_facebook_show_stream' );
+			update_option( $scp_prefix . 'setting_facebook_show_posts', $facebook_show_stream );
 			unset( $facebook_show_stream );
 
 			$facebook_remove_options = array(
@@ -314,164 +420,221 @@ class Social_Community_Popup {
 			);
 
 			for ( $idx = 0; $idx < count( $facebook_remove_options ); $idx++ ) {
-				delete_option( SCP_PREFIX . $facebook_remove_options[ $idx ] );
+				delete_option( $scp_prefix . $facebook_remove_options[ $idx ] );
 			}
 
 			unset( $facebook_remove_options );
 
 			update_option( $version, '0.6.3' );
+			self::set_scp_version( '0.6.3' );
 		}
+	}
+
+	public static function upgrade_to_0_6_4() {
+		$scp_prefix = self::get_scp_prefix();
+		$version    = $scp_prefix . 'version';
 
 		if ( '0.6.4' > get_option( $version ) ) {
 			update_option( $version, '0.6.4' );
+			self::set_scp_version( '0.6.4' );
 		}
+	}
+
+	public static function upgrade_to_0_6_5() {
+		$scp_prefix = self::get_scp_prefix();
+		$version    = $scp_prefix . 'version';
 
 		if ( '0.6.5' > get_option( $version ) ) {
-			update_option( SCP_PREFIX . 'setting_googleplus_page_type',              'person' );
+			update_option( $scp_prefix . 'setting_googleplus_page_type',              'person' );
 
 			update_option( $version, '0.6.5' );
+			self::set_scp_version( '0.6.5' );
 		}
+	}
+
+	public static function upgrade_to_0_6_6() {
+		$scp_prefix = self::get_scp_prefix();
+		$version    = $scp_prefix . 'version';
 
 		if ( '0.6.6' > get_option( $version ) ) {
 			// Скрывать виджет при нажатии на Esc или нет
-			update_option( SCP_PREFIX . 'setting_close_popup_when_esc_pressed',      0 );
+			update_option( $scp_prefix . 'setting_close_popup_when_esc_pressed',      0 );
 
 			// Добавляем кастомную задержку перед отрисовкой виджета ВКонтакте
-			update_option( SCP_PREFIX . 'setting_vkontakte_delay_before_render',     500 );
+			update_option( $scp_prefix . 'setting_vkontakte_delay_before_render',     500 );
 
 			update_option( $version, '0.6.6' );
+			self::set_scp_version( '0.6.6' );
 		}
+	}
+
+	public static function upgrade_to_0_6_7() {
+		$scp_prefix = self::get_scp_prefix();
+		$version    = $scp_prefix . 'version';
 
 		if ( '0.6.7' > get_option( $version ) ) {
 			// Надпись над табами плагина
-			update_option( SCP_PREFIX . 'setting_plugin_title',                       '<div style="text-align: center;font: bold normal 14pt/16pt Arial">Понравилось на нашем сайте?<br />Следуйте за нами в соц. сетях!</div>' );
+			update_option( $scp_prefix . 'setting_plugin_title',
+				'<div style="text-align: center;font: bold normal 14pt/16pt Arial">'
+				. __( '<p>Do You Like Our Site?</p><p>Follow Us on Social Networks!</p>', L10N_SCP_PREFIX )
+				. '</div>'
+			);
 
 			// Скрывать панель табов, если выбрана только одна соц. сеть
-			update_option( SCP_PREFIX . 'setting_hide_tabs_if_one_widget_is_active',  1 );
+			update_option( $scp_prefix . 'setting_hide_tabs_if_one_widget_is_active',  1 );
 
 			// Кнопка "Спасибо, я уже с вами"
-			update_option( SCP_PREFIX . 'setting_show_button_to_close_widget',        1 );
-			update_option( SCP_PREFIX . 'setting_button_to_close_widget_title',       _e( "Thanks! Please don't show me popup.", L10N_SCP_PREFIX ) );
-			update_option( SCP_PREFIX . 'setting_button_to_close_widget_style',       'link' );
+			update_option( $scp_prefix . 'setting_show_button_to_close_widget',        1 );
+			update_option( $scp_prefix . 'setting_button_to_close_widget_title',       __( "Thanks! Please don't show me popup.", L10N_SCP_PREFIX ) );
+			update_option( $scp_prefix . 'setting_button_to_close_widget_style',       'link' );
 
 			update_option( $version, '0.6.7' );
+			self::set_scp_version( '0.6.7' );
 		}
+	}
+
+	public static function upgrade_to_0_6_8() {
+		$scp_prefix = self::get_scp_prefix();
+		$version    = $scp_prefix . 'version';
 
 		if ( '0.6.8' > get_option( $version ) ) {
 			// Добавляем Pinterest в таблицу сортировки
-			$tabs_order = get_option( SCP_PREFIX . 'setting_tabs_order' );
+			$tabs_order = get_option( $scp_prefix . 'setting_tabs_order' );
 			$tabs_order = ( $tabs_order ) ? explode( ',', $tabs_order ) : array();
 			$tabs_order[] = 'pinterest';
 			$tabs_order = array_unique( $tabs_order );
 
-			update_option( SCP_PREFIX . 'setting_tabs_order', join( ',', $tabs_order ) );
+			update_option( $scp_prefix . 'setting_tabs_order', join( ',', $tabs_order ) );
 
 			// Добавляем виджет Pinterest Profile
-			update_option( SCP_PREFIX . 'setting_use_pinterest',                      0 );
-			update_option( SCP_PREFIX . 'setting_pinterest_tab_caption',              'Pinterest' );
-			update_option( SCP_PREFIX . 'setting_pinterest_show_description',         0 );
-			update_option( SCP_PREFIX . 'setting_pinterest_description',              '' );
-			update_option( SCP_PREFIX . 'setting_pinterest_profile_url',              'http://ru.pinterest.com/gruz0/' );
-			update_option( SCP_PREFIX . 'setting_pinterest_image_width',              60 );
-			update_option( SCP_PREFIX . 'setting_pinterest_width',                    400 );
-			update_option( SCP_PREFIX . 'setting_pinterest_height',                   200 );
+			update_option( $scp_prefix . 'setting_use_pinterest',                      0 );
+			update_option( $scp_prefix . 'setting_pinterest_tab_caption',              __( 'Pinterest', L10N_SCP_PREFIX ) );
+			update_option( $scp_prefix . 'setting_pinterest_show_description',         0 );
+			update_option( $scp_prefix . 'setting_pinterest_description',              '' );
+			update_option( $scp_prefix . 'setting_pinterest_profile_url',              'http://ru.pinterest.com/gruz0/' );
+			update_option( $scp_prefix . 'setting_pinterest_image_width',              60 );
+			update_option( $scp_prefix . 'setting_pinterest_width',                    400 );
+			update_option( $scp_prefix . 'setting_pinterest_height',                   200 );
 
 			update_option( $version, '0.6.8' );
+			self::set_scp_version( '0.6.8' );
 		}
+	}
+
+	public static function upgrade_to_0_6_9() {
+		$scp_prefix = self::get_scp_prefix();
+		$version    = $scp_prefix . 'version';
 
 		if ( '0.6.9' > get_option( $version ) ) {
 			// Добавляем цвет фоновой заливки родительского контейнера
-			update_option( SCP_PREFIX . 'setting_overlay_color',                      '#000000' );
+			update_option( $scp_prefix . 'setting_overlay_color',                      '#000000' );
 
 			// Добавляем степень прозрачности фоновой заливки родительского контейнера
-			update_option( SCP_PREFIX . 'setting_overlay_opacity',                    80 );
+			update_option( $scp_prefix . 'setting_overlay_opacity',                    80 );
 
 			// Добавляем опцию выбора местоположения верхней кнопки закрытия окна: внутри или вне контейнера
-			update_option( SCP_PREFIX . 'setting_show_close_button_in',               'inside' );
+			update_option( $scp_prefix . 'setting_show_close_button_in',               'inside' );
 
 			// Добавляем опцию выравнивания табов по центру (было только слева)
-			update_option( SCP_PREFIX . 'setting_align_tabs_to_center',               0 );
+			update_option( $scp_prefix . 'setting_align_tabs_to_center',               0 );
 
 			// Добавляем опцию задержки перед показом кнопки закрытия виджета в подвале
-			update_option( SCP_PREFIX . 'setting_delay_before_show_bottom_button',    0 );
+			update_option( $scp_prefix . 'setting_delay_before_show_bottom_button',    0 );
 
 			// Добавляем возможность загрузки фонового изображения для виджета
-			update_option( SCP_PREFIX . 'setting_background_image',                   '' );
+			update_option( $scp_prefix . 'setting_background_image',                   '' );
 
 			update_option( $version, '0.6.9' );
+			self::set_scp_version( '0.6.9' );
 		}
+	}
+
+	public static function upgrade_to_0_7_0() {
+		$scp_prefix = self::get_scp_prefix();
+		$version    = $scp_prefix . 'version';
 
 		if ( '0.7.0' > get_option( $version ) ) {
 			// При наступлении каких событий показывать всплывающее окно
-			update_option( SCP_PREFIX . 'when_should_the_popup_appear',               '' );
+			update_option( $scp_prefix . 'when_should_the_popup_appear',               '' );
 
 			// Сохраним старое значение и переименуем опцию в более читаемый вариант
-			$old_value = get_scp_option( 'setting_display_after_delay_of_n_seconds' );
-			delete_option( SCP_PREFIX . 'setting_display_after_delay_of_n_seconds' );
-			update_option( SCP_PREFIX . 'popup_will_appear_after_n_seconds',          $old_value );
+			$old_value = get_option( $scp_prefix . 'setting_display_after_delay_of_n_seconds' );
+			delete_option( $scp_prefix . 'setting_display_after_delay_of_n_seconds' );
+			update_option( $scp_prefix . 'popup_will_appear_after_n_seconds',          $old_value );
 
 			// Отображение окна при клике на CSS-селектор
-			update_option( SCP_PREFIX . 'popup_will_appear_after_clicking_on_element', '' );
+			update_option( $scp_prefix . 'popup_will_appear_after_clicking_on_element', '' );
 
 			update_option( $version, '0.7.0' );
+			self::set_scp_version( '0.7.0' );
 		}
+	}
 
-		if ( '0.7.1' > get_option( $version ) ) {
-			global $scp_options;
-			$new_scp_prefix  = 'scp-';
+	public static function upgrade_to_0_7_1() {
+		$old_scp_prefix = self::get_scp_prefix();
+		$old_version    = $old_scp_prefix . 'version';
+		$new_scp_prefix = 'scp-';
 
-			// Укоротим SCP_PREFIX до четырёх символов, иначе длинные названия опций не вмещаются в таблицу
+		if ( '0.7.1' > get_option( $old_version ) ) {
+			$scp_options = array();
+
+			$all_options = wp_load_alloptions();
+			foreach( $all_options as $name => $value ) {
+				if ( preg_match( "/^" . $old_scp_prefix . "/", $name ) ) $scp_options[$name] = $value;
+			}
+
+			// Укоротим префикс опций до четырёх символов, иначе длинные названия опций не вмещаются в таблицу
 			foreach ( $scp_options as $option_name => $value ) {
-				$new_option_name = str_replace( SCP_PREFIX, '', $option_name );
-				$previous_value  = get_scp_option( $new_option_name );
+				$new_option_name = preg_replace( "/^" . $old_scp_prefix . "/", '', $option_name );
 
-				update_option( $new_scp_prefix . $new_option_name, sanitize_text_field( $previous_value ) );
+				update_option( $new_scp_prefix . $new_option_name, sanitize_text_field( $value ) );
 				delete_option( $option_name );
 			}
 
-			// Удаляем старую настройку с версией плагина
-			delete_option( $version );
-
-			// Переименуем опцию в правильное название, т.к. из-за длинного прошлого SCP_PREFIX были ошибки
-			$old_value = get_option( $new_scp_prefix . 'popup_will_appear_after_clicking_on_eleme' );
-			delete_option( SCP_PREFIX . 'popup_will_appear_after_clicking_on_eleme' );
+			// Переименуем опцию в правильное название, т.к. из-за длинного прошлого префикса были ошибки
+			$old_value = get_option( $new_scp_prefix . 'popup_will_appear_after_clicking_on_element' );
 			delete_option( $new_scp_prefix . 'popup_will_appear_after_clicking_on_eleme' );
 			update_option( $new_scp_prefix . 'popup_will_appear_after_clicking_on_element', $old_value );
 
 			// Отображение окна при прокрутке документа на N процентов
-			update_option( SCP_PREFIX . 'popup_will_appear_after_scrolling_down_n_percent', '70' );
+			update_option( $new_scp_prefix . 'popup_will_appear_after_scrolling_down_n_percent', '70' );
 
 			// Отображение окна при перемещении мыши за пределы окна
-			update_option( SCP_PREFIX . 'popup_will_appear_on_exit_intent',                  0 );
+			update_option( $new_scp_prefix . 'popup_will_appear_on_exit_intent',                  0 );
 
 			// Кому показывать окно плагина
-			update_option( SCP_PREFIX . 'who_should_see_the_popup',                          '' );
+			update_option( $new_scp_prefix . 'who_should_see_the_popup',                          '' );
 
 			// Сохраним старое значение и переименуем опцию в более читаемый вариант
-			$old_value = get_scp_option( 'setting_display_after_visiting_n_pages' );
-			delete_option( SCP_PREFIX . 'setting_display_after_visiting_n_pages' );
-			update_option( SCP_PREFIX . 'visitor_opened_at_least_n_number_of_pages',          $old_value );
+			$old_value = get_option( $new_scp_prefix . 'setting_display_after_visiting_n_pages' );
+			delete_option( $new_scp_prefix . 'setting_display_after_visiting_n_pages' );
+			update_option( $new_scp_prefix . 'visitor_opened_at_least_n_number_of_pages',          $old_value );
 
 			update_option( $new_scp_prefix . 'version', '0.7.1' );
+			self::set_scp_version( '0.7.1' );
 		}
+	}
 
-		$version = SCP_PREFIX . 'version';
+	public static function upgrade_to_0_7_2() {
+		$scp_prefix = self::get_scp_prefix();
+		$version    = $scp_prefix . 'version';
 
 		if ( '0.7.2' > get_option( $version ) ) {
 			// Добавляем новое свойство "Adapt to plugin container width" в виджет Facebook
-			update_option( SCP_PREFIX . 'setting_facebook_adapt_container_width',            1 );
+			update_option( $scp_prefix . 'setting_facebook_adapt_container_width',            1 );
 
 			// Добавляем новое свойство "Use small header" в виджет Facebook
-			update_option( SCP_PREFIX . 'setting_facebook_use_small_header',                 0 );
+			update_option( $scp_prefix . 'setting_facebook_use_small_header',                 0 );
 
 			// Сохраним старое значение "Show Posts" и используем его в новой опции "Tabs"
-			$old_value = get_scp_option( 'setting_facebook_show_posts' );
+			$old_value = get_option( $scp_prefix . 'setting_facebook_show_posts' );
 			$new_value = $old_value === '1' ? 'timeline' : '';
 
-			delete_option( SCP_PREFIX . 'setting_facebook_show_posts' );
-			update_option( SCP_PREFIX . 'setting_facebook_tabs',                             $new_value );
+			delete_option( $scp_prefix . 'setting_facebook_show_posts' );
+			update_option( $scp_prefix . 'setting_facebook_tabs',                             $new_value );
 
 			update_option( $version, '0.7.2' );
+			self::set_scp_version( '0.7.2' );
 		}
 	}
 
@@ -517,6 +680,7 @@ class Social_Community_Popup {
 	 * Общие настройки
 	 */
 	public function init_settings_common( $prefix ) {
+		$scp_prefix = self::get_scp_prefix();
 
 		// Используется в settings_field и do_settings_field
 		$group = $prefix . '-group-general';
@@ -528,11 +692,11 @@ class Social_Community_Popup {
 		$section = $prefix . '-section-common';
 
 		// Не забывать добавлять новые опции в uninstall()
-		register_setting( $group, SCP_PREFIX . 'setting_debug_mode' );
-		register_setting( $group, SCP_PREFIX . 'setting_tabs_order', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'setting_close_popup_by_clicking_anywhere', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_close_popup_when_esc_pressed', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_show_on_mobile_devices', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_debug_mode' );
+		register_setting( $group, $scp_prefix . 'setting_tabs_order', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_close_popup_by_clicking_anywhere', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_close_popup_when_esc_pressed', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_show_on_mobile_devices', 'absint' );
 
 		add_settings_section(
 			$section,
@@ -549,7 +713,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_debug_mode'
+				'field' => $scp_prefix . 'setting_debug_mode'
 			)
 		);
 
@@ -561,7 +725,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_tabs_order'
+				'field' => $scp_prefix . 'setting_tabs_order'
 			)
 		);
 
@@ -573,7 +737,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_close_popup_by_clicking_anywhere'
+				'field' => $scp_prefix . 'setting_close_popup_by_clicking_anywhere'
 			)
 		);
 
@@ -585,7 +749,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_close_popup_when_esc_pressed'
+				'field' => $scp_prefix . 'setting_close_popup_when_esc_pressed'
 			)
 		);
 
@@ -597,7 +761,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_show_on_mobile_devices'
+				'field' => $scp_prefix . 'setting_show_on_mobile_devices'
 			)
 		);
 	}
@@ -606,6 +770,7 @@ class Social_Community_Popup {
 	 * Общие настройки (вкладка "Внешний вид")
 	 */
 	public function init_settings_common_view( $prefix ) {
+		$scp_prefix = self::get_scp_prefix();
 
 		// Используется в settings_field и do_settings_field
 		$group = $prefix . '-group-view';
@@ -617,20 +782,20 @@ class Social_Community_Popup {
 		$section = $prefix . '-section-common-view';
 
 		// Не забывать добавлять новые опции в uninstall()
-		register_setting( $group, SCP_PREFIX . 'setting_plugin_title', 'wp_kses_post' );
-		register_setting( $group, SCP_PREFIX . 'setting_hide_tabs_if_one_widget_is_active', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_container_width', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_container_height', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_border_radius', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_show_close_button_in', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'setting_show_button_to_close_widget', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_button_to_close_widget_title', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'setting_button_to_close_widget_style', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'setting_delay_before_show_bottom_button', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_overlay_color', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'setting_overlay_opacity', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_align_tabs_to_center', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_background_image', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_plugin_title', 'wp_kses_post' );
+		register_setting( $group, $scp_prefix . 'setting_hide_tabs_if_one_widget_is_active', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_container_width', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_container_height', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_border_radius', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_show_close_button_in', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_show_button_to_close_widget', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_button_to_close_widget_title', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_button_to_close_widget_style', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_delay_before_show_bottom_button', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_overlay_color', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_overlay_opacity', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_align_tabs_to_center', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_background_image', 'sanitize_text_field' );
 
 		add_settings_section(
 			$section,
@@ -647,7 +812,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_plugin_title'
+				'field' => $scp_prefix . 'setting_plugin_title'
 			)
 		);
 
@@ -659,7 +824,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_hide_tabs_if_one_widget_is_active'
+				'field' => $scp_prefix . 'setting_hide_tabs_if_one_widget_is_active'
 			)
 		);
 
@@ -671,7 +836,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_align_tabs_to_center'
+				'field' => $scp_prefix . 'setting_align_tabs_to_center'
 			)
 		);
 
@@ -684,7 +849,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_show_close_button_in'
+				'field' => $scp_prefix . 'setting_show_close_button_in'
 			)
 		);
 
@@ -696,7 +861,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_show_button_to_close_widget'
+				'field' => $scp_prefix . 'setting_show_button_to_close_widget'
 			)
 		);
 
@@ -708,7 +873,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_button_to_close_widget_title'
+				'field' => $scp_prefix . 'setting_button_to_close_widget_title'
 			)
 		);
 
@@ -720,7 +885,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_button_to_close_widget_style'
+				'field' => $scp_prefix . 'setting_button_to_close_widget_style'
 			)
 		);
 
@@ -732,7 +897,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_delay_before_show_bottom_button'
+				'field' => $scp_prefix . 'setting_delay_before_show_bottom_button'
 			)
 		);
 
@@ -744,7 +909,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_container_width'
+				'field' => $scp_prefix . 'setting_container_width'
 			)
 		);
 
@@ -756,7 +921,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_container_height'
+				'field' => $scp_prefix . 'setting_container_height'
 			)
 		);
 
@@ -768,7 +933,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_border_radius'
+				'field' => $scp_prefix . 'setting_border_radius'
 			)
 		);
 
@@ -780,7 +945,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_overlay_color'
+				'field' => $scp_prefix . 'setting_overlay_color'
 			)
 		);
 
@@ -792,7 +957,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_overlay_opacity'
+				'field' => $scp_prefix . 'setting_overlay_opacity'
 			)
 		);
 
@@ -804,7 +969,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_background_image'
+				'field' => $scp_prefix . 'setting_background_image'
 			)
 		);
 	}
@@ -813,6 +978,7 @@ class Social_Community_Popup {
 	 * Общие настройки (вкладка "События")
 	 */
 	public function init_settings_common_events( $prefix ) {
+		$scp_prefix = self::get_scp_prefix();
 
 		// Используется в settings_field и do_settings_field
 		$group = $prefix . '-group-events';
@@ -825,14 +991,14 @@ class Social_Community_Popup {
 		$section_who_should_see_the_popup     = $prefix . '-section-who-should-see-the-popup';
 
 		// Не забывать добавлять новые опции в uninstall()
-		register_setting( $group, SCP_PREFIX . 'when_should_the_popup_appear', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'popup_will_appear_after_n_seconds', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'popup_will_appear_after_clicking_on_element', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'popup_will_appear_after_scrolling_down_n_percent', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'popup_will_appear_on_exit_intent', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'who_should_see_the_popup', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'visitor_opened_at_least_n_number_of_pages', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_display_after_n_days', 'absint' );
+		register_setting( $group, $scp_prefix . 'when_should_the_popup_appear', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'popup_will_appear_after_n_seconds', 'absint' );
+		register_setting( $group, $scp_prefix . 'popup_will_appear_after_clicking_on_element', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'popup_will_appear_after_scrolling_down_n_percent', 'absint' );
+		register_setting( $group, $scp_prefix . 'popup_will_appear_on_exit_intent', 'absint' );
+		register_setting( $group, $scp_prefix . 'who_should_see_the_popup', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'visitor_opened_at_least_n_number_of_pages', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_display_after_n_days', 'absint' );
 
 		add_settings_section(
 			$section_when_should_the_popup_appear,
@@ -849,7 +1015,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section_when_should_the_popup_appear,
 			array(
-				'field' => SCP_PREFIX . 'when_should_the_popup_appear'
+				'field' => $scp_prefix . 'when_should_the_popup_appear'
 			)
 		);
 
@@ -861,7 +1027,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section_when_should_the_popup_appear,
 			array(
-				'field' => SCP_PREFIX . 'popup_will_appear_after_n_seconds'
+				'field' => $scp_prefix . 'popup_will_appear_after_n_seconds'
 			)
 		);
 
@@ -873,7 +1039,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section_when_should_the_popup_appear,
 			array(
-				'field' => SCP_PREFIX . 'popup_will_appear_after_clicking_on_element'
+				'field' => $scp_prefix . 'popup_will_appear_after_clicking_on_element'
 			)
 		);
 
@@ -885,7 +1051,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section_when_should_the_popup_appear,
 			array(
-				'field' => SCP_PREFIX . 'popup_will_appear_after_scrolling_down_n_percent'
+				'field' => $scp_prefix . 'popup_will_appear_after_scrolling_down_n_percent'
 			)
 		);
 
@@ -897,7 +1063,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section_when_should_the_popup_appear,
 			array(
-				'field' => SCP_PREFIX . 'popup_will_appear_on_exit_intent'
+				'field' => $scp_prefix . 'popup_will_appear_on_exit_intent'
 			)
 		);
 
@@ -916,7 +1082,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section_who_should_see_the_popup,
 			array(
-				'field' => SCP_PREFIX . 'who_should_see_the_popup'
+				'field' => $scp_prefix . 'who_should_see_the_popup'
 			)
 		);
 
@@ -928,7 +1094,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section_who_should_see_the_popup,
 			array(
-				'field' => SCP_PREFIX . 'visitor_opened_at_least_n_number_of_pages'
+				'field' => $scp_prefix . 'visitor_opened_at_least_n_number_of_pages'
 			)
 		);
 
@@ -940,7 +1106,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section_who_should_see_the_popup,
 			array(
-				'field' => SCP_PREFIX . 'setting_display_after_n_days'
+				'field' => $scp_prefix . 'setting_display_after_n_days'
 			)
 		);
 	}
@@ -949,6 +1115,7 @@ class Social_Community_Popup {
 	 * Общие настройки (вкладка "Управление")
 	 */
 	public function init_settings_common_management( $prefix ) {
+		$scp_prefix = self::get_scp_prefix();
 
 		// Используется в settings_field и do_settings_field
 		$group = $prefix . '-group-management';
@@ -960,7 +1127,7 @@ class Social_Community_Popup {
 		$section = $prefix . '-section-common-management';
 
 		// Не забывать добавлять новые опции в uninstall()
-		register_setting( $group, SCP_PREFIX . 'setting_remove_settings_on_uninstall' );
+		register_setting( $group, $scp_prefix . 'setting_remove_settings_on_uninstall' );
 
 		add_settings_section(
 			$section,
@@ -977,7 +1144,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_remove_settings_on_uninstall'
+				'field' => $scp_prefix . 'setting_remove_settings_on_uninstall'
 			)
 		);
 	}
@@ -986,6 +1153,7 @@ class Social_Community_Popup {
 	 * Настройки Facebook
 	 */
 	private function init_settings_facebook( $prefix ) {
+		$scp_prefix = self::get_scp_prefix();
 
 		// Используется в settings_field и do_settings_field
 		$group = $prefix . '-group-facebook';
@@ -997,20 +1165,20 @@ class Social_Community_Popup {
 		$section = $prefix . '-section-facebook';
 
 		// Не забывать добавлять новые опции в uninstall()
-		register_setting( $group, SCP_PREFIX . 'setting_use_facebook' );
-		register_setting( $group, SCP_PREFIX . 'setting_facebook_tab_caption', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'setting_facebook_show_description' );
-		register_setting( $group, SCP_PREFIX . 'setting_facebook_description', 'wp_kses_post' );
-		register_setting( $group, SCP_PREFIX . 'setting_facebook_application_id', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'setting_facebook_page_url', 'esc_url' );
-		register_setting( $group, SCP_PREFIX . 'setting_facebook_locale', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'setting_facebook_width', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_facebook_height', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_facebook_use_small_header', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_facebook_hide_cover' );
-		register_setting( $group, SCP_PREFIX . 'setting_facebook_show_facepile' );
-		register_setting( $group, SCP_PREFIX . 'setting_facebook_tabs', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'setting_facebook_adapt_container_width', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_use_facebook' );
+		register_setting( $group, $scp_prefix . 'setting_facebook_tab_caption', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_facebook_show_description' );
+		register_setting( $group, $scp_prefix . 'setting_facebook_description', 'wp_kses_post' );
+		register_setting( $group, $scp_prefix . 'setting_facebook_application_id', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_facebook_page_url', 'esc_url' );
+		register_setting( $group, $scp_prefix . 'setting_facebook_locale', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_facebook_width', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_facebook_height', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_facebook_use_small_header', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_facebook_hide_cover' );
+		register_setting( $group, $scp_prefix . 'setting_facebook_show_facepile' );
+		register_setting( $group, $scp_prefix . 'setting_facebook_tabs', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_facebook_adapt_container_width', 'absint' );
 
 		add_settings_section(
 			$section,
@@ -1027,7 +1195,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_use_facebook',
+				'field' => $scp_prefix . 'setting_use_facebook',
 			)
 		);
 
@@ -1039,7 +1207,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_facebook_tab_caption'
+				'field' => $scp_prefix . 'setting_facebook_tab_caption'
 			)
 		);
 
@@ -1051,7 +1219,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_facebook_show_description'
+				'field' => $scp_prefix . 'setting_facebook_show_description'
 			)
 		);
 
@@ -1063,7 +1231,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_facebook_description'
+				'field' => $scp_prefix . 'setting_facebook_description'
 			)
 		);
 
@@ -1075,7 +1243,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_facebook_application_id'
+				'field' => $scp_prefix . 'setting_facebook_application_id'
 			)
 		);
 
@@ -1087,7 +1255,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_facebook_page_url'
+				'field' => $scp_prefix . 'setting_facebook_page_url'
 			)
 		);
 
@@ -1099,7 +1267,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_facebook_locale'
+				'field' => $scp_prefix . 'setting_facebook_locale'
 			)
 		);
 
@@ -1111,7 +1279,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_facebook_width'
+				'field' => $scp_prefix . 'setting_facebook_width'
 			)
 		);
 
@@ -1123,7 +1291,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_facebook_height'
+				'field' => $scp_prefix . 'setting_facebook_height'
 			)
 		);
 
@@ -1135,7 +1303,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_facebook_adapt_container_width'
+				'field' => $scp_prefix . 'setting_facebook_adapt_container_width'
 			)
 		);
 
@@ -1147,7 +1315,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_facebook_use_small_header'
+				'field' => $scp_prefix . 'setting_facebook_use_small_header'
 			)
 		);
 
@@ -1159,7 +1327,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_facebook_hide_cover'
+				'field' => $scp_prefix . 'setting_facebook_hide_cover'
 			)
 		);
 
@@ -1171,7 +1339,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_facebook_show_facepile'
+				'field' => $scp_prefix . 'setting_facebook_show_facepile'
 			)
 		);
 
@@ -1183,7 +1351,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_facebook_tabs'
+				'field' => $scp_prefix . 'setting_facebook_tabs'
 			)
 		);
 	}
@@ -1192,6 +1360,7 @@ class Social_Community_Popup {
 	 * Настройки ВКонтакте
 	 */
 	private function init_settings_vkontakte( $prefix ) {
+		$scp_prefix = self::get_scp_prefix();
 
 		// Используется в settings_field и do_settings_field
 		$group = $prefix . '-group-vkontakte';
@@ -1203,18 +1372,18 @@ class Social_Community_Popup {
 		$section = $prefix . '-section-vkontakte';
 
 		// Не забывать добавлять новые опции в uninstall()
-		register_setting( $group, SCP_PREFIX . 'setting_use_vkontakte' );
-		register_setting( $group, SCP_PREFIX . 'setting_vkontakte_tab_caption', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'setting_vkontakte_show_description' );
-		register_setting( $group, SCP_PREFIX . 'setting_vkontakte_description', 'wp_kses_post' );
-		register_setting( $group, SCP_PREFIX . 'setting_vkontakte_page_or_group_id', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'setting_vkontakte_width', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_vkontakte_height', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_vkontakte_layout', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_vkontakte_color_background', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'setting_vkontakte_color_text', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'setting_vkontakte_color_button', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'setting_vkontakte_delay_before_render', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_use_vkontakte' );
+		register_setting( $group, $scp_prefix . 'setting_vkontakte_tab_caption', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_vkontakte_show_description' );
+		register_setting( $group, $scp_prefix . 'setting_vkontakte_description', 'wp_kses_post' );
+		register_setting( $group, $scp_prefix . 'setting_vkontakte_page_or_group_id', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_vkontakte_width', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_vkontakte_height', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_vkontakte_layout', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_vkontakte_color_background', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_vkontakte_color_text', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_vkontakte_color_button', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_vkontakte_delay_before_render', 'absint' );
 
 		add_settings_section(
 			$section,
@@ -1231,7 +1400,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_use_vkontakte',
+				'field' => $scp_prefix . 'setting_use_vkontakte',
 			)
 		);
 
@@ -1243,7 +1412,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_vkontakte_tab_caption'
+				'field' => $scp_prefix . 'setting_vkontakte_tab_caption'
 			)
 		);
 
@@ -1255,7 +1424,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_vkontakte_show_description'
+				'field' => $scp_prefix . 'setting_vkontakte_show_description'
 			)
 		);
 
@@ -1267,7 +1436,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_vkontakte_description'
+				'field' => $scp_prefix . 'setting_vkontakte_description'
 			)
 		);
 
@@ -1279,7 +1448,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_vkontakte_page_or_group_id'
+				'field' => $scp_prefix . 'setting_vkontakte_page_or_group_id'
 			)
 		);
 
@@ -1291,7 +1460,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_vkontakte_width'
+				'field' => $scp_prefix . 'setting_vkontakte_width'
 			)
 		);
 
@@ -1303,7 +1472,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_vkontakte_height'
+				'field' => $scp_prefix . 'setting_vkontakte_height'
 			)
 		);
 
@@ -1315,7 +1484,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_vkontakte_layout'
+				'field' => $scp_prefix . 'setting_vkontakte_layout'
 			)
 		);
 
@@ -1327,7 +1496,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_vkontakte_color_background'
+				'field' => $scp_prefix . 'setting_vkontakte_color_background'
 			)
 		);
 
@@ -1339,7 +1508,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_vkontakte_color_text'
+				'field' => $scp_prefix . 'setting_vkontakte_color_text'
 			)
 		);
 
@@ -1351,7 +1520,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_vkontakte_color_button'
+				'field' => $scp_prefix . 'setting_vkontakte_color_button'
 			)
 		);
 
@@ -1363,7 +1532,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_vkontakte_delay_before_render'
+				'field' => $scp_prefix . 'setting_vkontakte_delay_before_render'
 			)
 		);
 	}
@@ -1372,6 +1541,7 @@ class Social_Community_Popup {
 	 * Настройки Одноклассников
 	 */
 	private function init_settings_odnoklassniki( $prefix ) {
+		$scp_prefix = self::get_scp_prefix();
 
 		// Используется в settings_field и do_settings_field
 		$group = $prefix . '-group-odnoklassniki';
@@ -1383,13 +1553,13 @@ class Social_Community_Popup {
 		$section = $prefix . '-section-odnoklassniki';
 
 		// Не забывать добавлять новые опции в uninstall()
-		register_setting( $group, SCP_PREFIX . 'setting_use_odnoklassniki' );
-		register_setting( $group, SCP_PREFIX . 'setting_odnoklassniki_tab_caption', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'setting_odnoklassniki_show_description' );
-		register_setting( $group, SCP_PREFIX . 'setting_odnoklassniki_description', 'wp_kses_post' );
-		register_setting( $group, SCP_PREFIX . 'setting_odnoklassniki_group_id', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'setting_odnoklassniki_width', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_odnoklassniki_height', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_use_odnoklassniki' );
+		register_setting( $group, $scp_prefix . 'setting_odnoklassniki_tab_caption', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_odnoklassniki_show_description' );
+		register_setting( $group, $scp_prefix . 'setting_odnoklassniki_description', 'wp_kses_post' );
+		register_setting( $group, $scp_prefix . 'setting_odnoklassniki_group_id', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_odnoklassniki_width', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_odnoklassniki_height', 'absint' );
 
 		add_settings_section(
 			$section,
@@ -1406,7 +1576,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_use_odnoklassniki',
+				'field' => $scp_prefix . 'setting_use_odnoklassniki',
 			)
 		);
 
@@ -1418,7 +1588,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_odnoklassniki_tab_caption'
+				'field' => $scp_prefix . 'setting_odnoklassniki_tab_caption'
 			)
 		);
 
@@ -1430,7 +1600,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_odnoklassniki_show_description'
+				'field' => $scp_prefix . 'setting_odnoklassniki_show_description'
 			)
 		);
 
@@ -1442,7 +1612,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_odnoklassniki_description'
+				'field' => $scp_prefix . 'setting_odnoklassniki_description'
 			)
 		);
 
@@ -1454,7 +1624,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_odnoklassniki_group_id'
+				'field' => $scp_prefix . 'setting_odnoklassniki_group_id'
 			)
 		);
 
@@ -1466,7 +1636,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_odnoklassniki_width'
+				'field' => $scp_prefix . 'setting_odnoklassniki_width'
 			)
 		);
 
@@ -1478,7 +1648,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_odnoklassniki_height'
+				'field' => $scp_prefix . 'setting_odnoklassniki_height'
 			)
 		);
 	}
@@ -1487,6 +1657,7 @@ class Social_Community_Popup {
 	 * Настройки Google+
 	 */
 	private function init_settings_googleplus( $prefix ) {
+		$scp_prefix = self::get_scp_prefix();
 
 		// Используется в settings_field и do_settings_field
 		$group = $prefix . '-group-googleplus';
@@ -1498,17 +1669,17 @@ class Social_Community_Popup {
 		$section = $prefix . '-section-googleplus';
 
 		// Не забывать добавлять новые опции в uninstall()
-		register_setting( $group, SCP_PREFIX . 'setting_use_googleplus' );
-		register_setting( $group, SCP_PREFIX . 'setting_googleplus_tab_caption', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'setting_googleplus_show_description' );
-		register_setting( $group, SCP_PREFIX . 'setting_googleplus_description', 'wp_kses_post' );
-		register_setting( $group, SCP_PREFIX . 'setting_googleplus_page_url', 'esc_url' );
-		register_setting( $group, SCP_PREFIX . 'setting_googleplus_locale', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'setting_googleplus_size', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_googleplus_theme', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'setting_googleplus_show_cover_photo' );
-		register_setting( $group, SCP_PREFIX . 'setting_googleplus_show_tagline' );
-		register_setting( $group, SCP_PREFIX . 'setting_googleplus_page_type', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_use_googleplus' );
+		register_setting( $group, $scp_prefix . 'setting_googleplus_tab_caption', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_googleplus_show_description' );
+		register_setting( $group, $scp_prefix . 'setting_googleplus_description', 'wp_kses_post' );
+		register_setting( $group, $scp_prefix . 'setting_googleplus_page_url', 'esc_url' );
+		register_setting( $group, $scp_prefix . 'setting_googleplus_locale', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_googleplus_size', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_googleplus_theme', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_googleplus_show_cover_photo' );
+		register_setting( $group, $scp_prefix . 'setting_googleplus_show_tagline' );
+		register_setting( $group, $scp_prefix . 'setting_googleplus_page_type', 'sanitize_text_field' );
 
 		add_settings_section(
 			$section,
@@ -1525,7 +1696,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_use_googleplus',
+				'field' => $scp_prefix . 'setting_use_googleplus',
 			)
 		);
 
@@ -1537,7 +1708,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_googleplus_tab_caption'
+				'field' => $scp_prefix . 'setting_googleplus_tab_caption'
 			)
 		);
 
@@ -1549,7 +1720,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_googleplus_show_description'
+				'field' => $scp_prefix . 'setting_googleplus_show_description'
 			)
 		);
 
@@ -1561,7 +1732,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_googleplus_description'
+				'field' => $scp_prefix . 'setting_googleplus_description'
 			)
 		);
 
@@ -1573,7 +1744,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_googleplus_page_type'
+				'field' => $scp_prefix . 'setting_googleplus_page_type'
 			)
 		);
 
@@ -1585,7 +1756,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_googleplus_page_url'
+				'field' => $scp_prefix . 'setting_googleplus_page_url'
 			)
 		);
 
@@ -1597,7 +1768,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_googleplus_locale'
+				'field' => $scp_prefix . 'setting_googleplus_locale'
 			)
 		);
 
@@ -1609,7 +1780,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_googleplus_size'
+				'field' => $scp_prefix . 'setting_googleplus_size'
 			)
 		);
 
@@ -1621,7 +1792,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_googleplus_theme'
+				'field' => $scp_prefix . 'setting_googleplus_theme'
 			)
 		);
 
@@ -1633,7 +1804,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_googleplus_show_cover_photo'
+				'field' => $scp_prefix . 'setting_googleplus_show_cover_photo'
 			)
 		);
 
@@ -1645,7 +1816,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_googleplus_show_tagline'
+				'field' => $scp_prefix . 'setting_googleplus_show_tagline'
 			)
 		);
 	}
@@ -1654,6 +1825,7 @@ class Social_Community_Popup {
 	 * Настройки Twitter
 	 */
 	private function init_settings_twitter( $prefix ) {
+		$scp_prefix = self::get_scp_prefix();
 
 		// Используется в settings_field и do_settings_field
 		$group = $prefix . '-group-twitter';
@@ -1665,19 +1837,19 @@ class Social_Community_Popup {
 		$section = $prefix . '-section-twitter';
 
 		// Не забывать добавлять новые опции в uninstall()
-		register_setting( $group, SCP_PREFIX . 'setting_use_twitter' );
-		register_setting( $group, SCP_PREFIX . 'setting_twitter_tab_caption', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'setting_twitter_show_description' );
-		register_setting( $group, SCP_PREFIX . 'setting_twitter_description', 'wp_kses_post' );
-		register_setting( $group, SCP_PREFIX . 'setting_twitter_username', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'setting_twitter_widget_id', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'setting_twitter_theme', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'setting_twitter_link_color', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'setting_twitter_tweet_limit', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_twitter_show_replies', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_twitter_width', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_twitter_height', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_twitter_chrome' );
+		register_setting( $group, $scp_prefix . 'setting_use_twitter' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_tab_caption', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_show_description' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_description', 'wp_kses_post' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_username', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_widget_id', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_theme', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_link_color', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_tweet_limit', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_show_replies', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_width', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_height', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_chrome' );
 
 		add_settings_section(
 			$section,
@@ -1694,7 +1866,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_use_twitter',
+				'field' => $scp_prefix . 'setting_use_twitter',
 			)
 		);
 
@@ -1706,7 +1878,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_twitter_tab_caption'
+				'field' => $scp_prefix . 'setting_twitter_tab_caption'
 			)
 		);
 
@@ -1718,7 +1890,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_twitter_show_description'
+				'field' => $scp_prefix . 'setting_twitter_show_description'
 			)
 		);
 
@@ -1730,7 +1902,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_twitter_description'
+				'field' => $scp_prefix . 'setting_twitter_description'
 			)
 		);
 
@@ -1742,7 +1914,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_twitter_username'
+				'field' => $scp_prefix . 'setting_twitter_username'
 			)
 		);
 
@@ -1754,7 +1926,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_twitter_widget_id'
+				'field' => $scp_prefix . 'setting_twitter_widget_id'
 			)
 		);
 
@@ -1766,7 +1938,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_twitter_theme'
+				'field' => $scp_prefix . 'setting_twitter_theme'
 			)
 		);
 
@@ -1778,7 +1950,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_twitter_link_color'
+				'field' => $scp_prefix . 'setting_twitter_link_color'
 			)
 		);
 
@@ -1790,7 +1962,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_twitter_tweet_limit'
+				'field' => $scp_prefix . 'setting_twitter_tweet_limit'
 			)
 		);
 
@@ -1802,7 +1974,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_twitter_show_replies'
+				'field' => $scp_prefix . 'setting_twitter_show_replies'
 			)
 		);
 
@@ -1814,7 +1986,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_twitter_width'
+				'field' => $scp_prefix . 'setting_twitter_width'
 			)
 		);
 
@@ -1826,7 +1998,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_twitter_height'
+				'field' => $scp_prefix . 'setting_twitter_height'
 			)
 		);
 
@@ -1838,7 +2010,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_twitter_chrome'
+				'field' => $scp_prefix . 'setting_twitter_chrome'
 			)
 		);
 	}
@@ -1847,6 +2019,7 @@ class Social_Community_Popup {
 	 * Настройки Pinterest
 	 */
 	private function init_settings_pinterest( $prefix ) {
+		$scp_prefix = self::get_scp_prefix();
 
 		// Используется в settings_field и do_settings_field
 		$group = $prefix . '-group-pinterest';
@@ -1858,14 +2031,14 @@ class Social_Community_Popup {
 		$section = $prefix . '-section-pinterest';
 
 		// Не забывать добавлять новые опции в uninstall()
-		register_setting( $group, SCP_PREFIX . 'setting_use_pinterest' );
-		register_setting( $group, SCP_PREFIX . 'setting_pinterest_tab_caption', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'setting_pinterest_show_description' );
-		register_setting( $group, SCP_PREFIX . 'setting_pinterest_description', 'wp_kses_post' );
-		register_setting( $group, SCP_PREFIX . 'setting_pinterest_profile_url', 'sanitize_text_field' );
-		register_setting( $group, SCP_PREFIX . 'setting_pinterest_image_width', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_pinterest_width', 'absint' );
-		register_setting( $group, SCP_PREFIX . 'setting_pinterest_height', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_use_pinterest' );
+		register_setting( $group, $scp_prefix . 'setting_pinterest_tab_caption', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_pinterest_show_description' );
+		register_setting( $group, $scp_prefix . 'setting_pinterest_description', 'wp_kses_post' );
+		register_setting( $group, $scp_prefix . 'setting_pinterest_profile_url', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_pinterest_image_width', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_pinterest_width', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_pinterest_height', 'absint' );
 
 		add_settings_section(
 			$section,
@@ -1882,7 +2055,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_use_pinterest',
+				'field' => $scp_prefix . 'setting_use_pinterest',
 			)
 		);
 
@@ -1894,7 +2067,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_pinterest_tab_caption'
+				'field' => $scp_prefix . 'setting_pinterest_tab_caption'
 			)
 		);
 
@@ -1906,7 +2079,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_pinterest_show_description'
+				'field' => $scp_prefix . 'setting_pinterest_show_description'
 			)
 		);
 
@@ -1918,7 +2091,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_pinterest_description'
+				'field' => $scp_prefix . 'setting_pinterest_description'
 			)
 		);
 
@@ -1930,7 +2103,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_pinterest_profile_url'
+				'field' => $scp_prefix . 'setting_pinterest_profile_url'
 			)
 		);
 
@@ -1942,7 +2115,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_pinterest_image_width'
+				'field' => $scp_prefix . 'setting_pinterest_image_width'
 			)
 		);
 
@@ -1954,7 +2127,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_pinterest_width'
+				'field' => $scp_prefix . 'setting_pinterest_width'
 			)
 		);
 
@@ -1966,7 +2139,7 @@ class Social_Community_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => SCP_PREFIX . 'setting_pinterest_height'
+				'field' => $scp_prefix . 'setting_pinterest_height'
 			)
 		);
 	}
@@ -2316,9 +2489,11 @@ class Social_Community_Popup {
 
 		$values = ( $value ) ? explode( ',', $value ) : array();
 
+		$scp_prefix = self::get_scp_prefix();
+
 		echo '<ul id="scp-sortable">';
 		foreach ( $values as $key ) {
-			$setting_value = get_scp_option( 'setting_use_' . $key );
+			$setting_value = get_option( $scp_prefix . 'setting_use_' . $key );
 			$class = $setting_value ? '' : ' disabled';
 			echo '<li class="ui-state-default' . $class . '">' . $key . '</li>';
 		}
@@ -2488,7 +2663,8 @@ class Social_Community_Popup {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 		}
 
-		$version = get_option( SCP_PREFIX . 'version'  );
+		$scp_prefix = self::get_scp_prefix();
+		$version = get_option( $scp_prefix . 'version'  );
 
 		include( sprintf( "%s/templates/welcome-screen.php", dirname( __FILE__ ) ) );
 	}
@@ -2574,7 +2750,8 @@ class Social_Community_Popup {
 	 * Добавляем всплывающее окно в подвале сайта
 	 */
 	public function wp_footer() {
-		$version = get_option( SCP_PREFIX . 'version' );
+		$scp_prefix = self::get_scp_prefix();
+		$version = get_option( $scp_prefix . 'version' );
 		echo "<script type='text/javascript' src='" . plugins_url( 'js/scp.php?' . $version, __FILE__ ) . "'></script>";
 	}
 

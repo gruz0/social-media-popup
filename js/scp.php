@@ -5,7 +5,27 @@ header("Content-type: text/javascript; charset=utf-8");
 
 //FIXME: Тут возможна проблема с WP установленным не в корневую директорию сайта. В общем, оставляю на подумать.
 require_once( dirname( __FILE__ ) . '/../../../../wp-load.php' );
-require_once( dirname( __FILE__ ) . "/../functions.php" );
+require_once( dirname( __FILE__ ) . "/../social-community-popup.class.php" );
+
+// Подключаем наш класс и выбираем префикс для нужной версии
+$scp = new Social_Community_Popup();
+$scp->set_scp_version( '0.7.2' );
+$scp_prefix = $scp->get_scp_prefix();
+
+// Загружаем все опции и формируем массив только тех, что подходят по префиксу
+$all_options = wp_load_alloptions();
+global $scp_options;
+$scp_options = array();
+foreach( $all_options as $name => $value ) {
+	if ( stristr( $name, $scp_prefix ) ) $scp_options[$name] = $value;
+}
+
+// Сделаем wrapper для get_option, чтобы каждый раз не ходить в базу за настройками
+function get_scp_option( $name ) {
+	global $scp_prefix, $scp_options;
+	$option_name = $scp_prefix . $name;
+	return isset( $scp_options[$option_name] ) ? $scp_options[$option_name] : null;
+}
 
 // Отключаем работу плагина на мобильных устройствах
 if ( wp_is_mobile() && get_scp_option( 'setting_show_on_mobile_devices' ) === '0' ) return;
