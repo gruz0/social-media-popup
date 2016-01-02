@@ -215,7 +215,7 @@ class Social_Community_Popup_Tests extends PHPUnit_Framework_TestCase {
 		// Facebook
 		$this->assertTrue( null == get_option( $scp_prefix . 'setting_facebook_show_header' ) );
 		$this->assertTrue( ( $facebook_show_header ? '1' : '' ) === get_option( $scp_prefix . 'setting_facebook_hide_cover' ) );
-		
+
 		$this->assertTrue( null == get_option( $scp_prefix . 'setting_facebook_show_faces' ) );
 		$this->assertTrue( $facebook_show_faces == get_option( $scp_prefix . 'setting_facebook_show_facepile' ) );
 
@@ -259,7 +259,7 @@ class Social_Community_Popup_Tests extends PHPUnit_Framework_TestCase {
 
 		$this->assertTrue(
 			'<div style="text-align: center;font: bold normal 14pt/16pt Arial">'
-			. __( '<p>Do You Like Our Site?</p><p>Follow Us On Social Networks!</p>', L10N_SCP_PREFIX )
+			. __( '<p>Do You Like Our Site?</p><p>Follow Us on Social Networks!</p>', L10N_SCP_PREFIX )
 			. '</div>' == get_option( $scp_prefix . 'setting_plugin_title' )
 		);
 
