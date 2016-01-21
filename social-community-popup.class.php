@@ -2647,7 +2647,10 @@ class Social_Community_Popup {
 	 * Добавляем свои скрипты и таблицы CSS на страницу настроек
 	 */
 	public function admin_enqueue_scripts() {
-		wp_register_style( 'social-community-popup-admin-style', plugins_url( 'css/admin.css', __FILE__ ) );
+		$scp_prefix = self::get_scp_prefix();
+		$version = get_option( $scp_prefix . 'version' );
+
+		wp_register_style( 'social-community-popup-admin-style', plugins_url( 'css/admin.css?' . $version, __FILE__ ) );
 		wp_enqueue_style( 'social-community-popup-admin-style' );
 
 		wp_register_style( 'jquery-ui-css', '//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css' );
@@ -2656,7 +2659,7 @@ class Social_Community_Popup {
 		wp_enqueue_script( 'jquery-ui-draggable', array( 'jquery' ) );
 		wp_enqueue_script( 'jquery-ui-sortable', array( 'jquery' ) );
 
-		wp_register_script( 'social-community-popup-admin-script', plugins_url( 'js/admin.js', __FILE__ ), array( 'jquery' ) );
+		wp_register_script( 'social-community-popup-admin-script', plugins_url( 'js/admin.js?' . $version, __FILE__ ), array( 'jquery' ) );
 		wp_enqueue_script( 'social-community-popup-admin-script' );
 
 		if ( 'social_community_popup' == get_current_screen()->id ) {
@@ -2764,6 +2767,7 @@ class Social_Community_Popup {
 	public function wp_footer() {
 		$scp_prefix = self::get_scp_prefix();
 		$version = get_option( $scp_prefix . 'version' );
+
 		echo "<script type='text/javascript' src='" . plugins_url( 'js/scp.php?' . $version, __FILE__ ) . "'></script>";
 	}
 
@@ -2771,10 +2775,13 @@ class Social_Community_Popup {
 	 * Добавляем свои скрипты и таблицы CSS
 	 */
 	public function enqueue_scripts() {
-		wp_register_script( 'social-community-popup-script', plugins_url( 'js/scripts.js', __FILE__ ), array( 'jquery' ) );
+		$scp_prefix = self::get_scp_prefix();
+		$version = get_option( $scp_prefix . 'version' );
+
+		wp_register_script( 'social-community-popup-script', plugins_url( 'js/scripts.js?' . $version, __FILE__ ), array( 'jquery' ) );
 		wp_enqueue_script( 'social-community-popup-script' );
 
-		wp_register_style( 'social-community-popup-style', plugins_url( 'css/styles.css', __FILE__ ) );
+		wp_register_style( 'social-community-popup-style', plugins_url( 'css/styles.css?' . $version, __FILE__ ) );
 		wp_enqueue_style( 'social-community-popup-style' );
 	}
 }
