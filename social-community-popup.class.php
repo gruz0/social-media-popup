@@ -555,15 +555,15 @@ class Social_Community_Popup {
 
 		if ( '0.7.0' > get_option( $version ) ) {
 			// При наступлении каких событий показывать всплывающее окно
-			update_option( $scp_prefix . 'when_should_the_popup_appear',               '' );
+			add_option( $scp_prefix . 'when_should_the_popup_appear',               '' );
 
 			// Сохраним старое значение и переименуем опцию в более читаемый вариант
 			$old_value = get_option( $scp_prefix . 'setting_display_after_delay_of_n_seconds' );
 			delete_option( $scp_prefix . 'setting_display_after_delay_of_n_seconds' );
-			update_option( $scp_prefix . 'popup_will_appear_after_n_seconds',          $old_value );
+			add_option( $scp_prefix . 'popup_will_appear_after_n_seconds',          $old_value );
 
 			// Отображение окна при клике на CSS-селектор
-			update_option( $scp_prefix . 'popup_will_appear_after_clicking_on_element', '' );
+			add_option( $scp_prefix . 'popup_will_appear_after_clicking_on_element', '' );
 
 			update_option( $version, '0.7.0' );
 			self::set_scp_version( '0.7.0' );
@@ -587,28 +587,43 @@ class Social_Community_Popup {
 			foreach ( $scp_options as $option_name => $value ) {
 				$new_option_name = preg_replace( "/^" . $old_scp_prefix . "/", '', $option_name );
 
-				update_option( $new_scp_prefix . $new_option_name, sanitize_text_field( $value ) );
+				$status = add_option( $new_scp_prefix . $new_option_name, sanitize_text_field( $value ) );
+				if ( is_wp_error( $status ) ) {
+					var_dump( $status->get_error_message() );
+					var_dump( $new_scp_prefix . $new_option_name );
+					var_dump( sanitize_text_field( $value ) );
+					die();
+				}
+
 				delete_option( $option_name );
 			}
 
 			// Переименуем опцию в правильное название, т.к. из-за длинного прошлого префикса были ошибки
-			$old_value = get_option( $new_scp_prefix . 'popup_will_appear_after_clicking_on_element' );
+			$old_value = get_option( $new_scp_prefix . 'popup_will_appear_after_clicking_on_eleme' );
 			delete_option( $new_scp_prefix . 'popup_will_appear_after_clicking_on_eleme' );
-			update_option( $new_scp_prefix . 'popup_will_appear_after_clicking_on_element', $old_value );
+
+			$status = add_option( $new_scp_prefix . 'popup_will_appear_after_clicking_on_element', $old_value );
+			if ( is_wp_error( $status ) ) {
+				var_dump( $status->get_error_message() );
+				var_dump( $new_scp_prefix );
+				var_dump( 'popup_will_appear_after_clicking_on_eleme' );
+				var_dump( sanitize_text_field( $value ) );
+				die();
+			}
 
 			// Отображение окна при прокрутке документа на N процентов
-			update_option( $new_scp_prefix . 'popup_will_appear_after_scrolling_down_n_percent', '70' );
+			add_option( $new_scp_prefix . 'popup_will_appear_after_scrolling_down_n_percent', '70' );
 
 			// Отображение окна при перемещении мыши за пределы окна
-			update_option( $new_scp_prefix . 'popup_will_appear_on_exit_intent',                  0 );
+			add_option( $new_scp_prefix . 'popup_will_appear_on_exit_intent',                  0 );
 
 			// Кому показывать окно плагина
-			update_option( $new_scp_prefix . 'who_should_see_the_popup',                          '' );
+			add_option( $new_scp_prefix . 'who_should_see_the_popup',                          '' );
 
 			// Сохраним старое значение и переименуем опцию в более читаемый вариант
 			$old_value = get_option( $new_scp_prefix . 'setting_display_after_visiting_n_pages' );
 			delete_option( $new_scp_prefix . 'setting_display_after_visiting_n_pages' );
-			update_option( $new_scp_prefix . 'visitor_opened_at_least_n_number_of_pages',          $old_value );
+			add_option( $new_scp_prefix . 'visitor_opened_at_least_n_number_of_pages',          $old_value );
 
 			update_option( $new_scp_prefix . 'version', '0.7.1' );
 			self::set_scp_version( '0.7.1' );
@@ -621,17 +636,17 @@ class Social_Community_Popup {
 
 		if ( '0.7.2' > get_option( $version ) ) {
 			// Добавляем новое свойство "Adapt to plugin container width" в виджет Facebook
-			update_option( $scp_prefix . 'setting_facebook_adapt_container_width',            1 );
+			add_option( $scp_prefix . 'setting_facebook_adapt_container_width',            1 );
 
 			// Добавляем новое свойство "Use small header" в виджет Facebook
-			update_option( $scp_prefix . 'setting_facebook_use_small_header',                 0 );
+			add_option( $scp_prefix . 'setting_facebook_use_small_header',                 0 );
 
 			// Сохраним старое значение "Show Posts" и используем его в новой опции "Tabs"
 			$old_value = get_option( $scp_prefix . 'setting_facebook_show_posts' );
 			$new_value = $old_value === '1' ? 'timeline' : '';
 
 			delete_option( $scp_prefix . 'setting_facebook_show_posts' );
-			update_option( $scp_prefix . 'setting_facebook_tabs',                             $new_value );
+			add_option( $scp_prefix . 'setting_facebook_tabs',                             $new_value );
 
 			update_option( $version, '0.7.2' );
 			self::set_scp_version( '0.7.2' );
