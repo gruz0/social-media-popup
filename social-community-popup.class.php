@@ -587,27 +587,23 @@ class Social_Community_Popup {
 			foreach ( $scp_options as $option_name => $value ) {
 				$new_option_name = preg_replace( "/^" . $old_scp_prefix . "/", '', $option_name );
 
-				$status = add_option( $new_scp_prefix . $new_option_name, sanitize_text_field( $value ) );
-				if ( is_wp_error( $status ) ) {
-					var_dump( $status->get_error_message() );
+				delete_option( $option_name );
+				delete_option( $new_scp_prefix . $new_option_name );
+
+				if ( ! add_option( $new_scp_prefix . $new_option_name, $value ) ) {
 					var_dump( $new_scp_prefix . $new_option_name );
-					var_dump( sanitize_text_field( $value ) );
+					var_dump( $value );
 					die();
 				}
-
-				delete_option( $option_name );
 			}
 
 			// Переименуем опцию в правильное название, т.к. из-за длинного прошлого префикса были ошибки
 			$old_value = get_option( $new_scp_prefix . 'popup_will_appear_after_clicking_on_eleme' );
 			delete_option( $new_scp_prefix . 'popup_will_appear_after_clicking_on_eleme' );
 
-			$status = add_option( $new_scp_prefix . 'popup_will_appear_after_clicking_on_element', $old_value );
-			if ( is_wp_error( $status ) ) {
-				var_dump( $status->get_error_message() );
-				var_dump( $new_scp_prefix );
-				var_dump( 'popup_will_appear_after_clicking_on_eleme' );
-				var_dump( sanitize_text_field( $value ) );
+			if ( ! add_option( $new_scp_prefix . 'popup_will_appear_after_clicking_on_element', $old_value ) ) {
+				var_dump( $new_scp_prefix . 'popup_will_appear_after_clicking_on_eleme' );
+				var_dump( $value );
 				die();
 			}
 
