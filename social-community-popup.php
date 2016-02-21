@@ -7,7 +7,7 @@ Description: The plugin creates a popup window with most popular social networks
 Author: Alexander Gruzov
 Author URI: http://gruz0.ru/
 Text Domain: social-community-popup
-Version: 0.7.2
+Version: 0.7.3
 License: GPL2
 */
 
