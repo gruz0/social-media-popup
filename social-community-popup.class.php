@@ -15,6 +15,7 @@ class Social_Community_Popup {
 		add_action( 'init', array( & $this, 'localization' ) );
 		add_action( 'admin_init', array( & $this, 'admin_init' ) );
 		add_action( 'admin_menu', array( & $this, 'add_menu' ) );
+		add_action( 'admin_bar_menu', array( & $this, 'admin_bar_menu' ), 999 );
 		add_action( 'admin_head', array( & $this, 'admin_head' ) );
 		add_action( 'admin_head', array( & $this, 'admin_enqueue_scripts' ) );
 
@@ -2637,6 +2638,28 @@ class Social_Community_Popup {
 			'social_community_popup_pinterest_options',
 			array( & $this, 'plugin_settings_page_pinterest_options' )
 		);
+	}
+
+	/**
+	 * Adds menu with submenus to WordPress Admin Bar
+	 *
+	 * @param WP_Admin_Bar $wp_admin_bar
+	 * @since 0.7.3
+	 */
+	public function admin_bar_menu( $wp_admin_bar ) {
+		$args = array(
+			'id'     => 'scp-admin-bar',
+			'title'  => 'Social Community Popup',
+		);
+		$wp_admin_bar->add_node( $args );
+
+		$menu_scp_settings = array(
+			'parent' => 'scp-admin-bar',
+			'id'     => 'scp-settings',
+			'title'  => __( 'Settings', L10N_SCP_PREFIX ),
+			'href'   => admin_url( 'admin.php?page=social_community_popup' )
+		);
+		$wp_admin_bar->add_node( $menu_scp_settings );
 	}
 
 	public function admin_head() {
