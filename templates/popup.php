@@ -26,8 +26,16 @@ if ( $use_facebook || $use_vkontakte || $use_odnoklassniki || $use_googleplus ||
 			$popup_css .= 'width:' . ( $container_width + 40 ) . 'px !important;height:' . ( $container_height + 10 ) . 'px !important;';
 			$popup_css .= $border_radius_css;
 			$popup_css .= $background_image_css;
+
+			$scp_plugin_title  = trim( get_scp_option( 'setting_plugin_title' ) );
+			$show_plugin_title = mb_strlen( $scp_plugin_title ) > 0;
 		?>
 		<div id="popup" style="<?php echo esc_attr( $popup_css ); ?>">
+			<?php if ( $show_plugin_title && $show_close_button_in === 'inside' ) : ?>
+				<div class="top-close">
+					<span class="close" title="<?php _e( 'Close Modal Dialog', L10N_SCP_PREFIX ); ?>">&times;</span>
+				</div>
+			<?php endif; ?>
 
 			<?php if ( $show_close_button_in === 'outside' ) { ?>
 			<a href="#" class="close close-outside" title="<?php _e( 'Close Modal Dialog', L10N_SCP_PREFIX ); ?>">&times;</a>
@@ -35,15 +43,8 @@ if ( $use_facebook || $use_vkontakte || $use_odnoklassniki || $use_googleplus ||
 
 			<div class="section" style="width:<?php echo esc_attr( $container_width ); ?>px !important;height:<?php echo esc_attr( $container_height ); ?>px !important;">
 		<?php
-			$scp_plugin_title     = trim( get_scp_option( 'setting_plugin_title' ) );
-			$scp_plugin_title_css = preg_replace( "/\r|\n/", "", trim(get_scp_option( 'setting_plugin_title_css' ) ) );
-			$show_plugin_title    = mb_strlen( $scp_plugin_title ) > 0;
-
 			if ( $show_plugin_title ) { ?>
 				<div class="plugin-title">
-					<?php if ( $show_close_button_in === 'inside' ) { ?>
-					<span class="close" title="<?php _e( 'Close Modal Dialog', L10N_SCP_PREFIX ); ?>">&times;</span>
-					<?php } ?>
 					<?php echo $scp_plugin_title; ?>
 				</div>
 			<?php }

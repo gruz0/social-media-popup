@@ -41,26 +41,33 @@
 		}
 
 	#social-community-popup .section {
-		position:relative;
 		overflow:hidden;
 		display:block;
 		margin:10px auto;
 		padding:0 !important;
 	}
 
+		/* Кнопка закрытия окна в заголовке окна */
+		#social-community-popup .top-close .close {
+			position:absolute;
+			top:10px;
+			right:0;
+			width:30px;
+			height:23px;
+			vertical-align:top;
+			text-align:center;
+			cursor:pointer;
+			font:normal normal 14pt/16pt Arial !important;
+			text-shadow:none;
+			color:#333;
+		}
+
 		#social-community-popup .plugin-title {
 			display:block;
 			padding-bottom:12px;
+			width:98%;
+			margin:0 auto;
 		}
-
-			#social-community-popup .plugin-title .close {
-				float:right;
-				width:25px;
-				height:23px;
-				vertical-align:top;
-				text-align:center;
-				cursor:pointer;
-			}
 
 			#social-community-popup .plugin-title p {
 				margin:0;
