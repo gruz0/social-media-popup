@@ -87,12 +87,12 @@ if ( who_should_see_the_popup_has_event( $who_should_see_the_popup, 'visitor_ope
 
 		// Иначе создаём новую
 		} else {
-			setcookie( $page_views_cookie, 1, time() + $cookie_lifetime );
+			setcookie( $page_views_cookie, 1, time() + $cookie_lifetime, '/' );
 		}
 
 	// Иначе удалим куку
 	} else {
-		setcookie( $page_views_cookie, 0, time() - 1 );
+		setcookie( $page_views_cookie, 0, time() - 3600, '/' );
 		unset( $_COOKIE[$page_views_cookie] );
 	}
 }
