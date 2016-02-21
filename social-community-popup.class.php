@@ -2647,6 +2647,8 @@ class Social_Community_Popup {
 	 * @since 0.7.3
 	 */
 	public function admin_bar_menu( $wp_admin_bar ) {
+		if ( ! current_user_can( 'activate_plugins' ) ) return;
+
 		$args = array(
 			'id'     => 'scp-admin-bar',
 			'title'  => 'Social Community Popup',
@@ -2660,6 +2662,17 @@ class Social_Community_Popup {
 			'href'   => admin_url( 'admin.php?page=social_community_popup' )
 		);
 		$wp_admin_bar->add_node( $menu_scp_settings );
+
+		$menu_clear_cookies = array(
+			'parent' => 'scp-admin-bar',
+			'id'     => 'scp-clear-cookies',
+			'title'  => __( 'Clear Cookies', L10N_SCP_PREFIX ),
+			'href'   => '#',
+			'meta'   => array(
+				'onclick' => 'scp_clearAllPluginCookies();return false;'
+			)
+		);
+		$wp_admin_bar->add_node( $menu_clear_cookies );
 	}
 
 	public function admin_head() {
@@ -2681,6 +2694,8 @@ class Social_Community_Popup {
 
 		wp_enqueue_script( 'jquery-ui-draggable', array( 'jquery' ) );
 		wp_enqueue_script( 'jquery-ui-sortable', array( 'jquery' ) );
+
+		$this->add_cookies_script( $version );
 
 		wp_register_script( 'social-community-popup-admin-script', plugins_url( 'js/admin.js?' . $version, __FILE__ ), array( 'jquery' ) );
 		wp_enqueue_script( 'social-community-popup-admin-script' );
@@ -2801,11 +2816,21 @@ class Social_Community_Popup {
 		$scp_prefix = self::get_scp_prefix();
 		$version = get_option( $scp_prefix . 'version' );
 
+		$this->add_cookies_script( $version );
+
 		wp_register_script( 'social-community-popup-script', plugins_url( 'js/scripts.js?' . $version, __FILE__ ), array( 'jquery' ) );
 		wp_enqueue_script( 'social-community-popup-script' );
 
 		wp_register_style( 'social-community-popup-style', plugins_url( 'css/styles.css?' . $version, __FILE__ ) );
 		wp_enqueue_style( 'social-community-popup-style' );
+	}
+
+	private function add_cookies_script( $version ) {
+		wp_register_script( 'social-community-popup-cookies-script', plugins_url( 'js/cookies.js?' . $version, __FILE__ ), array( 'jquery' ) );
+		wp_localize_script( 'social-community-popup-cookies-script', 'scp', array(
+		   'clearCookiesMessage' => __( 'Page will be reload after clear cookies. Continue?', L10N_SCP_PREFIX )
+		));
+		wp_enqueue_script( 'social-community-popup-cookies-script' );
 	}
 }
 
