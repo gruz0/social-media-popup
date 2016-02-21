@@ -2643,8 +2643,10 @@ class Social_Community_Popup {
 	/**
 	 * Adds menu with submenus to WordPress Admin Bar
 	 *
-	 * @param WP_Admin_Bar $wp_admin_bar
 	 * @since 0.7.3
+	 *
+	 * @param WP_Admin_Bar $wp_admin_bar
+	 * @return void
 	 */
 	public function admin_bar_menu( $wp_admin_bar ) {
 		if ( ! current_user_can( 'activate_plugins' ) ) return;
@@ -2681,6 +2683,13 @@ class Social_Community_Popup {
 
 	/**
 	 * Добавляем свои скрипты и таблицы CSS на страницу настроек
+	 *
+	 * @since 0.7.3 Added add_cookies_script()
+	 *
+	 * @uses Social_Community_Popup::get_scp_prefix()
+	 * @uses $this->add_cookies_script()
+	 *
+	 * @return void
 	 */
 	public function admin_enqueue_scripts() {
 		$scp_prefix = self::get_scp_prefix();
@@ -2811,6 +2820,13 @@ class Social_Community_Popup {
 
 	/**
 	 * Добавляем свои скрипты и таблицы CSS
+	 *
+	 * @since 0.7.3 Added add_cookies_script()
+	 *
+	 * @uses Social_Community_Popup::get_scp_prefix()
+	 * @uses $this->add_cookies_script()
+	 *
+	 * @return void
 	 */
 	public function enqueue_scripts() {
 		$scp_prefix = self::get_scp_prefix();
@@ -2825,6 +2841,14 @@ class Social_Community_Popup {
 		wp_enqueue_style( 'social-community-popup-style' );
 	}
 
+	/**
+	 * Adds cookies script
+	 *
+	 * @since 0.7.3
+	 *
+	 * @param string $version Plugin version
+	 * @return void
+	 */
 	private function add_cookies_script( $version ) {
 		wp_register_script( 'social-community-popup-cookies-script', plugins_url( 'js/cookies.js?' . $version, __FILE__ ), array( 'jquery' ) );
 		wp_localize_script( 'social-community-popup-cookies-script', 'scp', array(
