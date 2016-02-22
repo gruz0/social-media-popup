@@ -9,6 +9,16 @@ $j(document).ready(function() {
 		.parents('#scp_welcome_screen').find('div.box').eq($j(this).index()).fadeIn(150).siblings('div.box').hide();
 	});
 
+	// Add Color Picker
+	colorFields = new Array();
+	colorFields.push('#scp-setting_overlay_color');
+	colorFields.push('#scp-setting_vkontakte_color_background');
+	colorFields.push('#scp-setting_vkontakte_color_text');
+	colorFields.push('#scp-setting_vkontakte_color_button');
+	colorFields.push('#scp-setting_twitter_link_color');
+
+	$j(colorFields.join(',')).wpColorPicker();
+
 	$j('#scp_upload_background_image').click(function() {
 		tb_show('Upload a background image', 'media-upload.php?referer=social_community_popup&type=image&TB_iframe=true&post_id=0', false);
 
