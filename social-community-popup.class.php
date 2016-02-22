@@ -123,6 +123,7 @@ class Social_Community_Popup {
 			'setting_vkontakte_color_text',
 			'setting_vkontakte_color_button',
 			'setting_vkontakte_delay_before_render',
+			'setting_vkontakte_close_window_after_join',
 
 			// Одноклассники
 			'setting_use_odnoklassniki',
@@ -265,6 +266,7 @@ class Social_Community_Popup {
 			update_option( $scp_prefix . 'setting_vkontakte_color_background',       '#FFFFFF' );
 			update_option( $scp_prefix . 'setting_vkontakte_color_text',             '#2B587A' );
 			update_option( $scp_prefix . 'setting_vkontakte_color_button',           '#5B7FA6' );
+			update_option( $scp_prefix . 'setting_vkontakte_close_window_after_join', 0 );
 
 			update_option( $scp_prefix . 'setting_odnoklassniki_tab_caption',        __( 'Odnoklassniki', L10N_SCP_PREFIX ) );
 			update_option( $scp_prefix . 'setting_odnoklassniki_group_id',           '57122812461115' );
@@ -668,6 +670,9 @@ class Social_Community_Popup {
 		if ( '0.7.3' > get_option( $version ) ) {
 			// Добавляем новое свойство "ВКонтакте ID приложения" в виджет ВКонтакте
 			add_option( $scp_prefix . 'setting_vkontakte_application_id',                  '' );
+
+			// Добавляем новое свойство "Закрывать окно после вступления в группу" в виджет ВКонтакте
+			add_option( $scp_prefix . 'setting_vkontakte_close_window_after_join',         0 );
 
 			update_option( $version, '0.7.3' );
 			self::set_scp_version( '0.7.3' );
@@ -1424,6 +1429,7 @@ class Social_Community_Popup {
 		register_setting( $group, $scp_prefix . 'setting_vkontakte_color_background', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'setting_vkontakte_color_text', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'setting_vkontakte_color_button', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_vkontakte_close_window_after_join', 'absint' );
 		register_setting( $group, $scp_prefix . 'setting_vkontakte_delay_before_render', 'absint' );
 
 		add_settings_section(
@@ -1574,6 +1580,18 @@ class Social_Community_Popup {
 			$section,
 			array(
 				'field' => $scp_prefix . 'setting_vkontakte_color_button'
+			)
+		);
+
+		// Закрывать окно виджета после вступления в группу
+		add_settings_field(
+			$prefix . '-vkontakte-close-window-after-join',
+			__( 'Close Plugin Window After Joining the Group', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'setting_vkontakte_close_window_after_join'
 			)
 		);
 
@@ -2747,7 +2765,7 @@ class Social_Community_Popup {
 		wp_enqueue_script( 'jquery-ui-draggable', array( 'jquery' ) );
 		wp_enqueue_script( 'jquery-ui-sortable', array( 'jquery' ) );
 
-		$this->add_cookies_script( $version );
+		$this->add_cookies_script( $version, $scp_prefix );
 
 		if ( 'social_community_popup' == get_current_screen()->id ) {
 			wp_enqueue_script('thickbox');
@@ -2878,7 +2896,7 @@ class Social_Community_Popup {
 		$scp_prefix = self::get_scp_prefix();
 		$version = get_option( $scp_prefix . 'version' );
 
-		$this->add_cookies_script( $version );
+		$this->add_cookies_script( $version, $scp_prefix );
 
 		wp_register_script( 'social-community-popup-script', plugins_url( 'js/scripts.js?' . $version, __FILE__ ), array( 'jquery' ) );
 		wp_enqueue_script( 'social-community-popup-script' );
@@ -2895,10 +2913,11 @@ class Social_Community_Popup {
 	 * @param string $version Plugin version
 	 * @return void
 	 */
-	private function add_cookies_script( $version ) {
+	private function add_cookies_script( $version, $scp_prefix ) {
 		wp_register_script( 'social-community-popup-cookies-script', plugins_url( 'js/cookies.js?' . $version, __FILE__ ), array( 'jquery' ) );
 		wp_localize_script( 'social-community-popup-cookies-script', 'scp', array(
-		   'clearCookiesMessage' => __( 'Page will be reload after clear cookies. Continue?', L10N_SCP_PREFIX )
+			'clearCookiesMessage'           => __( 'Page will be reload after clear cookies. Continue?', L10N_SCP_PREFIX ),
+			'showWindowAfterReturningNDays' => intval( get_option( $scp_prefix . 'setting_display_after_n_days' ) ),
 		));
 		wp_enqueue_script( 'social-community-popup-cookies-script' );
 	}

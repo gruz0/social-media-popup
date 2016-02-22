@@ -333,6 +333,7 @@ function scp_vkontakte_container() {
 			// Заменяем Application ID на наш из настроек
 			$vkontakte_container = sprintf( 
 				file_get_contents( dirname( __FILE__ ) . '/partials/vkontakte_container.php' ),
+				intval( get_scp_option( 'setting_vkontakte_close_window_after_join' ) ),
 				$application_id,
 				esc_attr( get_scp_option( 'setting_vkontakte_layout' ) ),
 				esc_attr( get_scp_option( 'setting_vkontakte_width' ) ),

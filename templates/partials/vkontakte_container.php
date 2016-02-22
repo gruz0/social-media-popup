@@ -2,11 +2,20 @@
 <div id="scp_vk_groups" style="height:250px !important;"></div>
 <script>
 	var vk_initialized = 0;
+	var scp_VK_closeWindowAfterJoiningGroup = %s;
 
 	function initialize_VK_Widgets() {
 		VK.init({
 			apiId: %s
 		});
+
+		VK.Observer.subscribe('widgets.groups.joined', function f() {
+			if ( scp_VK_closeWindowAfterJoiningGroup ) {
+				scp_destroyPlugin(jQuery, scp.showWindowAfterReturningNDays);
+			}
+		});
+
+		VK.Observer.subscribe('widgets.groups.leaved', function f() {});
 
 		VK.Widgets.Group('scp_vk_groups', {mode: %s, width: '%s', height: '%s', color1: '%s', color2: '%s', color3: '%s'}, %s);
 		vk_initialized = 1;
