@@ -4,6 +4,18 @@
 	var vk_initialized = 0;
 
 	function initialize_VK_Widgets() {
+		VK.init({
+			apiId: 0 // Insert API ID
+		});
+
+		VK.Observer.subscribe('widgets.groups.joined', function f() {
+			// Insert code here
+		});
+
+		VK.Observer.subscribe('widgets.groups.leaved', function f() {
+			// Insert code here
+		});
+
 		VK.Widgets.Group('scp_vk_groups', {mode: %s, width: '%s', height: '%s', color1: '%s', color2: '%s', color3: '%s'}, %s);
 		vk_initialized = 1;
 	}
