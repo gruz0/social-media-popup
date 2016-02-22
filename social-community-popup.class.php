@@ -17,10 +17,10 @@ class Social_Community_Popup {
 		add_action( 'admin_menu', array( & $this, 'add_menu' ) );
 		add_action( 'admin_bar_menu', array( & $this, 'admin_bar_menu' ), 999 );
 		add_action( 'admin_head', array( & $this, 'admin_head' ) );
-		add_action( 'admin_head', array( & $this, 'admin_enqueue_scripts' ) );
 
 		add_action( 'wp_footer', array( & $this, 'wp_footer' ) );
 
+		add_action( 'admin_enqueue_scripts', array( & $this, 'admin_enqueue_scripts' ) );
 		add_action( 'wp_enqueue_scripts', array( & $this, 'enqueue_scripts' ) );
 	}
 
@@ -2692,6 +2692,8 @@ class Social_Community_Popup {
 	 * @return void
 	 */
 	public function admin_enqueue_scripts() {
+		if ( ! is_admin() ) return;
+
 		$scp_prefix = self::get_scp_prefix();
 		$version = get_option( $scp_prefix . 'version' );
 
@@ -2706,15 +2708,18 @@ class Social_Community_Popup {
 
 		$this->add_cookies_script( $version );
 
-		wp_register_script( 'social-community-popup-admin-script', plugins_url( 'js/admin.js?' . $version, __FILE__ ), array( 'jquery' ) );
-		wp_enqueue_script( 'social-community-popup-admin-script' );
-
 		if ( 'social_community_popup' == get_current_screen()->id ) {
 			wp_enqueue_script('thickbox');
 			wp_enqueue_style('thickbox');
 
 			wp_enqueue_script('media-upload');
 		}
+
+		wp_enqueue_style( 'wp-color-picker' );
+		wp_register_script( 'social-community-popup-admin-script', plugins_url( 'js/admin.js?' . $version, __FILE__ ),
+			array( 'jquery', 'wp-color-picker' )
+		);
+		wp_enqueue_script( 'social-community-popup-admin-script' );
 	}
 
 	/**
