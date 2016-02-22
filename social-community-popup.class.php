@@ -8,6 +8,8 @@ class Social_Community_Popup {
 
 	/**
 	 * Конструктор
+	 *
+	 * @since 0.7.3 Changed action to wp_enqueue_scripts to add admin scripts
 	 */
 	public function __construct() {
 
@@ -2685,6 +2687,7 @@ class Social_Community_Popup {
 	 * Добавляем свои скрипты и таблицы CSS на страницу настроек
 	 *
 	 * @since 0.7.3 Added add_cookies_script()
+	 * @since 0.7.3 Added WP Color Picker script
 	 *
 	 * @uses Social_Community_Popup::get_scp_prefix()
 	 * @uses $this->add_cookies_script()
