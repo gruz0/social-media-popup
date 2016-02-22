@@ -4,6 +4,10 @@
 	var vk_initialized = 0;
 
 	function initialize_VK_Widgets() {
+		VK.init({
+			apiId: %s
+		});
+
 		VK.Widgets.Group('scp_vk_groups', {mode: %s, width: '%s', height: '%s', color1: '%s', color2: '%s', color3: '%s'}, %s);
 		vk_initialized = 1;
 	}

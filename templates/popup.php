@@ -321,6 +321,9 @@ function scp_vkontakte_container() {
 		<?php endif; ?>
 
 		<?php
+			$application_id = esc_attr( get_scp_option( 'setting_vkontakte_application_id' ) );
+			if ( empty( $application_id ) ) $application_id = 1;
+
 			$page_or_group_id = esc_attr( get_scp_option( 'setting_vkontakte_page_or_group_id' ) );
 			if ( empty( $page_or_group_id ) ) $page_or_group_id = $default_vk_group_id;
 
@@ -330,6 +333,7 @@ function scp_vkontakte_container() {
 			// Заменяем Application ID на наш из настроек
 			$vkontakte_container = sprintf( 
 				file_get_contents( dirname( __FILE__ ) . '/partials/vkontakte_container.php' ),
+				$application_id,
 				esc_attr( get_scp_option( 'setting_vkontakte_layout' ) ),
 				esc_attr( get_scp_option( 'setting_vkontakte_width' ) ),
 				esc_attr( get_scp_option( 'setting_vkontakte_height' ) ),

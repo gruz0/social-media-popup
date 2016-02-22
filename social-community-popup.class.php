@@ -114,6 +114,7 @@ class Social_Community_Popup {
 			'setting_vkontakte_tab_caption',
 			'setting_vkontakte_show_description',
 			'setting_vkontakte_description',
+			'setting_vkontakte_application_id',
 			'setting_vkontakte_page_or_group_id',
 			'setting_vkontakte_width',
 			'setting_vkontakte_height',
@@ -224,6 +225,7 @@ class Social_Community_Popup {
 		self::upgrade_to_0_7_0();
 		self::upgrade_to_0_7_1();
 		self::upgrade_to_0_7_2();
+		self::upgrade_to_0_7_3();
 	}
 
 	public static function upgrade_to_0_1() {
@@ -652,6 +654,26 @@ class Social_Community_Popup {
 			self::set_scp_version( '0.7.2' );
 		}
 	}
+
+	/**
+	 * Upgrade to 0.7.3
+	 *
+	 * @since 0.7.3
+	 * @return void
+	 */
+	public static function upgrade_to_0_7_3() {
+		$scp_prefix = self::get_scp_prefix();
+		$version    = $scp_prefix . 'version';
+
+		if ( '0.7.3' > get_option( $version ) ) {
+			// Добавляем новое свойство "ВКонтакте ID приложения" в виджет ВКонтакте
+			add_option( $scp_prefix . 'setting_vkontakte_application_id',                  '' );
+
+			update_option( $version, '0.7.3' );
+			self::set_scp_version( '0.7.3' );
+		}
+	}
+
 
 	/**
 	 * Подключаем локализацию к плагину
@@ -1372,7 +1394,10 @@ class Social_Community_Popup {
 	}
 
 	/**
-	 * Настройки ВКонтакте
+	 * VK.com widget settings
+	 *
+	 * @param string $prefix settings_field prefix
+	 * @return void
 	 */
 	private function init_settings_vkontakte( $prefix ) {
 		$scp_prefix = self::get_scp_prefix();
@@ -1391,6 +1416,7 @@ class Social_Community_Popup {
 		register_setting( $group, $scp_prefix . 'setting_vkontakte_tab_caption', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'setting_vkontakte_show_description' );
 		register_setting( $group, $scp_prefix . 'setting_vkontakte_description', 'wp_kses_post' );
+		register_setting( $group, $scp_prefix . 'setting_vkontakte_application_id', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'setting_vkontakte_page_or_group_id', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'setting_vkontakte_width', 'absint' );
 		register_setting( $group, $scp_prefix . 'setting_vkontakte_height', 'absint' );
@@ -1452,6 +1478,18 @@ class Social_Community_Popup {
 			$section,
 			array(
 				'field' => $scp_prefix . 'setting_vkontakte_description'
+			)
+		);
+
+		// ID приложения ВКонтакте
+		add_settings_field(
+			$prefix . '-vkontakte-application-id',
+			__( 'VKontakte Application ID', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'setting_vkontakte_application_id'
 			)
 		);
 
