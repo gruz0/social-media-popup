@@ -1,3 +1,0 @@
-[submodule "includes/updater"]
-	path = includes/updater
-	url = https://github.com/radishconcepts/WordPress-GitHub-Plugin-Updater.git
