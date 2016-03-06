@@ -2707,6 +2707,9 @@ class Social_Community_Popup {
 	 * @return void
 	 */
 	public function admin_bar_menu( $wp_admin_bar ) {
+		$user = wp_get_current_user();
+
+		if ( ! ( $user instanceOf WP_User ) ) return;
 		if ( ! current_user_can( 'activate_plugins' ) ) return;
 
 		$args = array(
