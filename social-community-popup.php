@@ -7,7 +7,7 @@ Description: The plugin creates a popup window with most popular social networks
 Author: Alexander Gruzov
 Author URI: http://gruz0.ru/
 Text Domain: social-community-popup
-Version: 0.7.3
+Version: 0.7.2
 License: GPL2
 */
 
@@ -46,23 +46,10 @@ if ( ! array_key_exists( 'social-community-popup', $GLOBALS ) ) {
 		}
 
 		function scp_updater() {
-			require_once( dirname( __FILE__ ) . "/includes/updater/updater.php" );
+			require_once( dirname( __FILE__ ) . '/updater.php' );
 
 			if ( is_admin() ) {
-				$config = array(
-					'slug'               => plugin_basename(__FILE__),
-					'proper_folder_name' => 'social-community-popup',
-					'api_url'            => 'https://api.github.com/repos/gruz0/social-community-popup',
-					'raw_url'            => 'https://raw.github.com/gruz0/social-community-popup/master',
-					'github_url'         => 'https://github.com/gruz0/social-community-popup',
-					'zip_url'            => 'https://github.com/gruz0/social-community-popup/zipball/master',
-					'sslverify'          => true,
-					'requires'           => '3.9',
-					'tested'             => '4.4',
-					'readme'             => 'readme.txt',
-					'access_token'       => '',
-				);
-				new WP_GitHub_Updater( $config );
+				new GitHub_Updater( __FILE__, 'gruz0', 'social-community-popup' );
 			}
 		}
 
