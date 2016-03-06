@@ -27,8 +27,7 @@ class GitHub_Updater {
      * @param  string $accessToken
      * @return null
      */
-    function __construct( $pluginFile, $gitHubUsername, $gitHubProjectName, $accessToken = '' )
-    {
+    function __construct( $pluginFile, $gitHubUsername, $gitHubProjectName, $accessToken = '' ) {
         add_filter( "pre_set_site_transient_update_plugins", array( $this, "setTransient" ) );
         add_filter( "plugins_api", array( $this, "setPluginInfo" ), 10, 3 );
         add_filter( "upgrader_pre_install", array( $this, "preInstall" ), 10, 3 );
@@ -45,8 +44,7 @@ class GitHub_Updater {
      *
      * @return null
      */
-    private function initPluginData()
-    {
+    private function initPluginData() {
 		$this->slug = plugin_basename( $this->pluginFile );
 
 		$this->pluginData = get_plugin_data( $this->pluginFile );
@@ -57,32 +55,31 @@ class GitHub_Updater {
      *
      * @return null
      */
-    private function getRepoReleaseInfo()
-    {
-        if ( ! empty( $this->githubAPIResult ) )
-        {
+    private function getRepoReleaseInfo() {
+        if ( ! empty( $this->githubAPIResult ) ) {
     		return;
 		}
 
 		// Query the GitHub API
 		$url = "https://api.github.com/repos/{$this->username}/{$this->repo}/releases";
 
-		if ( ! empty( $this->accessToken ) )
-		{
+		if ( ! empty( $this->accessToken ) ) {
 		    $url = add_query_arg( array( "access_token" => $this->accessToken ), $url );
 		}
 
 		// Get the results
 		$this->githubAPIResult = wp_remote_retrieve_body( wp_remote_get( $url ) );
 
-		if ( ! empty( $this->githubAPIResult ) )
-		{
+		if ( empty( $this->githubAPIResult ) ) {
+			return;
+		}
+
+		if ( ! empty( $this->githubAPIResult ) ) {
 		    $this->githubAPIResult = @json_decode( $this->githubAPIResult );
 		}
 
 		// Use only the latest release
-		if ( is_array( $this->githubAPIResult ) )
-		{
+		if ( is_array( $this->githubAPIResult ) && count( $this->githubAPIResult ) ) {
 		    $this->githubAPIResult = $this->githubAPIResult[0];
 		}
     }
@@ -93,10 +90,8 @@ class GitHub_Updater {
      * @param  object $transient
      * @return object
      */
-    public function setTransient( $transient )
-    {
-        if ( empty( $transient->checked ) )
-        {
+    public function setTransient( $transient ) {
+        if ( empty( $transient->checked ) ) {
     		return $transient;
 		}
 
@@ -104,14 +99,16 @@ class GitHub_Updater {
 		$this->initPluginData();
 		$this->getRepoReleaseInfo();
 
+		if ( empty( $this->githubAPIResult->tag_name ) ) {
+			return $transient;
+		}
+
 		$doUpdate = version_compare( $this->githubAPIResult->tag_name, $transient->checked[$this->slug] );
 
-		if ( $doUpdate )
-		{
+		if ( $doUpdate ) {
 			$package = $this->githubAPIResult->zipball_url;
 
-			if ( ! empty( $this->accessToken ) )
-			{
+			if ( ! empty( $this->accessToken ) ) {
 			    $package = add_query_arg( array( "access_token" => $this->accessToken ), $package );
 			}
 
@@ -136,8 +133,7 @@ class GitHub_Updater {
      * @param  object $response
      * @return object
      */
-    public function setPluginInfo( $false, $action, $response )
-    {
+    public function setPluginInfo( $false, $action, $response ) {
 		$this->initPluginData();
 		$this->getRepoReleaseInfo();
 
@@ -145,19 +141,23 @@ class GitHub_Updater {
 		    return $false;
 		}
 
+		if ( empty( $this->githubAPIResult->tag_name ) ) {
+			return $false;
+		}
+
 		// Add our plugin information
 		$response->last_updated = $this->githubAPIResult->published_at;
-		$response->slug = $this->slug;
+		$response->slug         = $this->slug;
+		$response->name         = $this->githubAPIResult->name;
 		$response->plugin_name  = $this->pluginData["Name"];
-		$response->version = $this->githubAPIResult->tag_name;
-		$response->author = $this->pluginData["AuthorName"];
-		$response->homepage = $this->pluginData["PluginURI"];
+		$response->version      = $this->githubAPIResult->tag_name;
+		$response->author       = $this->pluginData["AuthorName"];
+		$response->homepage     = $this->pluginData["PluginURI"];
 
 		// This is our release download zip file
 		$downloadLink = $this->githubAPIResult->zipball_url;
 
-		if ( !empty( $this->accessToken ) )
-		{
+		if ( !empty( $this->accessToken ) ) {
 		    $downloadLink = add_query_arg(
 		        array( "access_token" => $this->accessToken ),
 		        $downloadLink
@@ -209,8 +209,7 @@ class GitHub_Updater {
      * @param  array   $args
      * @return null
      */
-    public function preInstall( $true, $args )
-    {
+    public function preInstall( $true, $args ) {
         // Get plugin information
 		$this->initPluginData();
 
@@ -226,8 +225,7 @@ class GitHub_Updater {
      * @param  object $result
      * @return object
      */
-    public function postInstall( $true, $hook_extra, $result )
-    {
+    public function postInstall( $true, $hook_extra, $result ) {
 		global $wp_filesystem;
 
 		// Since we are hosted in GitHub, our plugin folder would have a dirname of
@@ -237,8 +235,7 @@ class GitHub_Updater {
 		$result['destination'] = $pluginFolder;
 
 		// Re-activate plugin if needed
-		if ( $this->pluginActivated )
-		{
+		if ( $this->pluginActivated ) {
 		    $activate = activate_plugin( $this->slug );
 		}
 
