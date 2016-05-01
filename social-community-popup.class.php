@@ -2,6 +2,7 @@
 defined( 'ABSPATH' ) or exit;
 
 require_once( dirname( __FILE__ ) . "/functions.php" );
+require_once( dirname( __FILE__ ) . "/lib/providers/providers.php" );
 
 class Social_Community_Popup {
 	protected static $scp_version;
@@ -19,8 +20,6 @@ class Social_Community_Popup {
 		add_action( 'admin_menu', array( & $this, 'add_menu' ) );
 		add_action( 'admin_bar_menu', array( & $this, 'admin_bar_menu' ), 999 );
 		add_action( 'admin_head', array( & $this, 'admin_head' ) );
-
-		add_action( 'wp_footer', array( & $this, 'wp_footer' ) );
 
 		add_action( 'admin_enqueue_scripts', array( & $this, 'admin_enqueue_scripts' ) );
 		add_action( 'wp_enqueue_scripts', array( & $this, 'enqueue_scripts' ) );
@@ -2876,16 +2875,6 @@ class Social_Community_Popup {
 	}
 
 	/**
-	 * Добавляем всплывающее окно в подвале сайта
-	 */
-	public function wp_footer() {
-		$scp_prefix = self::get_scp_prefix();
-		$version = get_option( $scp_prefix . 'version' );
-
-		echo "<script type='text/javascript' src='" . plugins_url( 'js/scp.php?' . $version, __FILE__ ) . "'></script>";
-	}
-
-	/**
 	 * Добавляем свои скрипты и таблицы CSS
 	 *
 	 * @since 0.7.3 Added add_cookies_script()
@@ -2900,13 +2889,502 @@ class Social_Community_Popup {
 		$version = get_option( $scp_prefix . 'version' );
 
 		$this->add_cookies_script( $version, $scp_prefix );
-
-		wp_register_script( 'social-community-popup-script', plugins_url( 'js/scripts.js?' . $version, __FILE__ ), array( 'jquery' ) );
-		wp_enqueue_script( 'social-community-popup-script' );
+		$this->render_popup_window( $version, $scp_prefix );
 
 		wp_register_style( 'social-community-popup-style', plugins_url( 'css/styles.css?' . $version, __FILE__ ) );
 		wp_enqueue_style( 'social-community-popup-style' );
 	}
+
+	private function render_popup_window( $version, $scp_prefix ) {
+		$content = $this->scp_php( $scp_prefix );
+
+		$encoded_content = preg_replace("~[\n\t]~", "", $content);
+		$encoded_content = base64_encode($encoded_content);
+
+		wp_register_script( 'social-community-popup-script', plugins_url( 'js/scripts.js?' . $version . rand(), __FILE__ ), array( 'jquery' ) );
+		wp_localize_script( 'social-community-popup-script', 'scp', array(
+			'encodedContent' => htmlspecialchars( $encoded_content ),
+		));
+		wp_enqueue_script( 'social-community-popup-script' );
+	}
+
+	private function scp_php( $scp_prefix ) {
+		$scp_prefix = self::get_scp_prefix();
+
+		$scp_options = array();
+		$all_options = wp_load_alloptions();
+		foreach( $all_options as $name => $value ) {
+			if ( stristr( $name, $scp_prefix ) ) $scp_options[$name] = $value;
+		}
+
+		// Отключаем работу плагина на мобильных устройствах
+		// if ( wp_is_mobile() && get_scp_option( 'setting_show_on_mobile_devices' ) === '0' ) return;
+
+		$debug_mode                                       = intval( get_option( $scp_prefix . 'setting_debug_mode' ) ) == 1;
+
+		$after_n_days                                     = (int) get_option( $scp_prefix . 'setting_display_after_n_days' );
+
+		$when_should_the_popup_appear                     = split_string_by_comma( get_option( $scp_prefix . 'when_should_the_popup_appear' ) );
+		$when_should_the_popup_appear_events              = array(
+			'after_n_seconds',
+			'after_clicking_on_element',
+			'after_scrolling_down_n_percent',
+			'on_exit_intent'
+		);
+
+		$popup_will_appear_after_n_seconds                = (int) get_option( $scp_prefix . 'popup_will_appear_after_n_seconds' );
+		$popup_will_appear_after_clicking_on_element      = get_option( $scp_prefix . 'popup_will_appear_after_clicking_on_element' );
+		$popup_will_appear_after_scrolling_down_n_percent = (int) get_option( $scp_prefix . 'popup_will_appear_after_scrolling_down_n_percent' );
+		$popup_will_appear_on_exit_intent                 = get_option( $scp_prefix . 'popup_will_appear_on_exit_intent' ) === '1';
+
+		$who_should_see_the_popup                         = split_string_by_comma( get_option( $scp_prefix . 'who_should_see_the_popup' ) );
+		$visitor_opened_at_least_n_number_of_pages        = (int) get_option( $scp_prefix . 'visitor_opened_at_least_n_number_of_pages' );
+
+		// При включённом режиме отладки плагин работает только для администратора сайта
+		if ( $debug_mode ) {
+			if ( ! current_user_can( 'manage_options' ) ) {
+				return;
+			}
+
+		// Если режим отладки выключен и есть кука закрытия окна или пользователь администратор — не показываем окно
+		} else {
+			if ( is_scp_cookie_present() || current_user_can( 'manage_options' ) ) {
+				return;
+			}
+		}
+
+		// Обработка событий кому показывать окно плагина
+		$show_popup = false;
+
+		// Время жизни куки — 1 год
+		$cookie_lifetime = 31536000;
+
+		// Пользователь просмотрел больше N страниц сайта
+		if ( who_should_see_the_popup_has_event( $who_should_see_the_popup, 'visitor_opened_at_least_n_number_of_pages' ) ) {
+			$page_views_cookie = 'scp-page-views';
+
+			// Если окно не было закрыто другими событиями — начинаем проверку условий
+			if ( ! is_scp_cookie_present() ) {
+
+				// Если существует кука просмотренных страниц — обновляем её
+				if ( isset( $_COOKIE[$page_views_cookie] ) ) {
+					$page_views = intval( $_COOKIE[$page_views_cookie] ) + 1;
+					setcookie( $page_views_cookie, $page_views );
+
+					if ( $page_views > $visitor_opened_at_least_n_number_of_pages ) {
+						$show_popup = true;
+					}
+
+				// Иначе создаём новую
+				} else {
+					setcookie( $page_views_cookie, 1, time() + $cookie_lifetime, '/' );
+				}
+
+			// Иначе удалим куку
+			} else {
+				setcookie( $page_views_cookie, 0, time() - 3600, '/' );
+				unset( $_COOKIE[$page_views_cookie] );
+			}
+		}
+
+		// Активна любая опция когда показывать окно
+		foreach ( $when_should_the_popup_appear_events as $event ) {
+			if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, $event ) ) {
+				$show_popup = true;
+				break;
+			}
+		}
+
+		// Если ни одно событие кому показывать окно не сработало — выходим
+		if ( ! $show_popup ) {
+			return;
+		}
+
+		// Настройка плагина
+
+		$use_facebook               = get_option( $scp_prefix . 'setting_use_facebook' )      === '1';
+		$use_vkontakte              = get_option( $scp_prefix . 'setting_use_vkontakte' )     === '1';
+		$use_odnoklassniki          = get_option( $scp_prefix . 'setting_use_odnoklassniki' ) === '1';
+		$use_googleplus             = get_option( $scp_prefix . 'setting_use_googleplus' )    === '1';
+		$use_twitter                = get_option( $scp_prefix . 'setting_use_twitter' )       === '1';
+		$use_pinterest              = get_option( $scp_prefix . 'setting_use_pinterest' )     === '1';
+
+		$tabs_order                 = explode(',', get_option( $scp_prefix . 'setting_tabs_order' ) );
+
+		$container_width            = get_option( $scp_prefix . 'setting_container_width' );
+		$container_height           = get_option( $scp_prefix . 'setting_container_height' ) ;
+		$border_radius              = absint( get_option( $scp_prefix . 'setting_border_radius' ) );
+		$close_by_clicking_anywhere = get_option( $scp_prefix . 'setting_close_popup_by_clicking_anywhere' ) === '1';
+		$close_when_esc_pressed     = get_option( $scp_prefix . 'setting_close_popup_when_esc_pressed' ) === '1';
+		$show_close_button_in       = get_option( $scp_prefix . 'setting_show_close_button_in' );
+		$overlay_color              = get_option( $scp_prefix . 'setting_overlay_color' );
+		$overlay_opacity            = get_option( $scp_prefix . 'setting_overlay_opacity' );
+		$align_tabs_to_center       = absint( get_option( $scp_prefix . 'setting_align_tabs_to_center' ) );
+		$delay_before_show_bottom_button = absint( get_option( $scp_prefix . 'setting_delay_before_show_bottom_button' ) );
+		$background_image           = get_option( $scp_prefix . 'setting_background_image' );
+
+
+		////////////////////////////////////////
+		// START RENDER
+		////////////////////////////////////////
+
+		$content = '';
+
+		$tab_index = 1;
+
+		if ( $use_facebook || $use_vkontakte || $use_odnoklassniki || $use_googleplus || $use_twitter || $use_pinterest ) {
+			$content .= '<div id="social-community-popup">';
+
+			$parent_popup_styles                  = '';
+			$parent_popup_css                     = array();
+			$parent_popup_css['background-color'] = $overlay_color;
+			$parent_popup_css['opacity']          = '0.' . intval( $overlay_opacity ) / 10.0;
+
+			foreach ( $parent_popup_css as $selector => $value ) {
+				$parent_popup_styles .= "${selector}: ${value}; ";
+			}
+			$content .= '<div class="parent_popup" style="' . esc_attr( $parent_popup_styles ) . '"></div>';
+
+			$border_radius_css    = $border_radius > 0 ? "border-radius:{$border_radius}px !important;" : "";
+			$background_image_css = empty( $background_image ) ? '' : "background:#fff url('{$background_image}') center center no-repeat;";
+
+			$popup_css = '';
+			$popup_css .= 'width:' . ( $container_width + 40 ) . 'px !important;height:' . ( $container_height + 10 ) . 'px !important;';
+			$popup_css .= $border_radius_css;
+			$popup_css .= $background_image_css;
+
+			$scp_plugin_title  = trim( get_option( $scp_prefix . 'setting_plugin_title' ) );
+			$show_plugin_title = mb_strlen( $scp_plugin_title ) > 0;
+
+			$content .= '<div id="popup" style="' . esc_attr( $popup_css ) . '">';
+
+			if ( $show_plugin_title && $show_close_button_in === 'inside' ) {
+				$content .= '<div class="top-close">';
+					$content .= '<span class="close" title="' . __( 'Close Modal Dialog', L10N_SCP_PREFIX ) . '">&times;</span>';
+				$content .= '</div>';
+			}
+
+			if ( $show_close_button_in === 'outside' ) {
+				$content .= '<a href="#" class="close close-outside" title="' . __( 'Close Modal Dialog', L10N_SCP_PREFIX ) . '">&times;</a>';
+			}
+
+				$content .= '<div class="section" style="width:' . esc_attr( $container_width ) . 'px !important;height:' . esc_attr( $container_height ) . 'px !important;">';
+
+				if ( $show_plugin_title ) {
+					$content .= '<div class="plugin-title">' . $scp_plugin_title . '</div>';
+				}
+
+			$selected_widgets_count = 0;
+			for ( $idx = 0; $idx < count( $tabs_order ); $idx++ ) {
+				switch ( $tabs_order[ $idx ] ) {
+					case 'facebook':      if ( $use_facebook )      $selected_widgets_count++; break;
+					case 'vkontakte':     if ( $use_vkontakte )     $selected_widgets_count++; break;
+					case 'odnoklassniki': if ( $use_odnoklassniki ) $selected_widgets_count++; break;
+					case 'googleplus':    if ( $use_googleplus )    $selected_widgets_count++; break;
+					case 'twitter':       if ( $use_twitter )       $selected_widgets_count++; break;
+					case 'pinterest':     if ( $use_pinterest )     $selected_widgets_count++; break;
+				}
+			}
+
+			$providers = array();
+
+			if ( $selected_widgets_count == 1 && get_option( $scp_prefix . 'setting_hide_tabs_if_one_widget_is_active' ) == 1 ) {
+
+			} else {
+				$content .= '<ul class="tabs"' . ( $align_tabs_to_center ? 'style="text-align:center;"' : '' ) . '>';
+
+				for ( $idx = 0; $idx < count( $tabs_order ); $idx++ ) {
+					$provider_name = $tabs_order[$idx];
+
+					if ( ! isset( $providers[$provider_name] ) ) {
+						$provider = SCP_Provider::create($provider_name, $scp_prefix, $scp_options);
+					} else {
+						$provider = $providers[$provider_name];
+					}
+
+					$providers[$provider_name] = $provider;
+					$args = array();
+
+					switch ( $provider_name ) {
+						case 'facebook':
+							if ( $use_facebook ) {
+								$args = array(
+									'index' => $tab_index++,
+									'value' => esc_attr( $scp_options[ $scp_prefix . 'setting_facebook_tab_caption'] ),
+									'css_class' => ''
+								);
+
+								$content .= $provider->tab_caption( $args );
+							}
+							break;
+
+						case 'vkontakte':
+							if ( $use_vkontakte ) {
+								$args = array(
+									'index' => $tab_index++,
+									'value' => esc_attr( $scp_options[ $scp_prefix . 'setting_vkontakte_tab_caption'] ),
+									'css_class' => 'vk-tab'
+								);
+
+								$content .= $provider->tab_caption( $args );
+							}
+							break;
+
+						case 'odnoklassniki':
+							if ( $use_odnoklassniki ) {
+								$args = array(
+									'index' => $tab_index++,
+									'value' => esc_attr( $scp_options[ $scp_prefix . 'setting_odnoklassniki_tab_caption'] ),
+									'css_class' => ''
+								);
+
+								$content .= $provider->tab_caption( $args );
+							}
+							break;
+
+						case 'googleplus':
+							if ( $use_googleplus ) {
+								$args = array(
+									'index' => $tab_index++,
+									'value' => esc_attr( $scp_options[ $scp_prefix . 'setting_googleplus_tab_caption'] ),
+									'css_class' => 'google-plus-tab'
+								);
+
+								$content .= $provider->tab_caption( $args );
+							}
+							break;
+
+						case 'twitter':
+							if ( $use_twitter ) {
+								$args = array(
+									'index' => $tab_index++,
+									'value' => esc_attr( $scp_options[ $scp_prefix . 'setting_twitter_tab_caption'] ),
+									'css_class' => ''
+								);
+
+								$content .= $provider->tab_caption( $args );
+							}
+							break;
+
+						case 'pinterest':
+							if ( $use_pinterest) {
+								$args = array(
+									'index' => $tab_index++,
+									'value' => esc_attr( $scp_options[ $scp_prefix . 'setting_pinterest_tab_caption'] ),
+									'css_class' => 'pinterest-tab'
+								);
+
+								$content .= $provider->tab_caption( $args );
+							}
+							break;
+					}
+				}
+
+				if ( ! $show_plugin_title && $show_close_button_in === 'inside' ) {
+					$content .= '<li class="last-item"><span class="close" title="' . __( 'Close Modal Dialog', L10N_SCP_PREFIX ) . '">&times;</span></li>';
+				}
+
+				$content .= '</ul>';
+			}
+
+			// FIXME: Вынести функции $this->scp_* в Фабрику Provider::create($provider)
+			for ( $idx = 0; $idx < count( $tabs_order ); $idx++ ) {
+				$provider_name = $tabs_order[ $idx ];
+
+				switch ( $provider_name ) {
+					case 'facebook':
+						// if ( $use_facebook ) {
+						// 	$content .= $this->scp_facebook_container( $scp_prefix );
+						// }
+						break;
+
+					case 'vkontakte':
+						if ( $use_vkontakte ) {
+							$content .= $providers[$provider_name]->container();
+						}
+						break;
+
+					case 'odnoklassniki':
+						// if ( $use_odnoklassniki ) {
+						// 	$content .= $this->scp_odnoklassniki_container( $scp_prefix );
+						// }
+						break;
+
+					case 'googleplus':
+						// if ( $use_googleplus ) {
+						// 	scp_googleplus_container( $scp_prefix );
+						// }
+						break;
+
+					case 'twitter':
+						// if ( $use_twitter ) {
+						// 	scp_twitter_container( $scp_prefix );
+						// }
+						break;
+
+					case 'pinterest':
+						// if ( $use_pinterest ) {
+						// 	scp_pinterest_container( $scp_prefix );
+						// }
+						break;
+				}
+			}
+
+			$content .= '</div>';
+
+			if ( get_option( $scp_prefix . 'setting_show_button_to_close_widget' ) == '1' ) {
+				$button_to_close_widget_style = get_option( $scp_prefix . 'setting_button_to_close_widget_style' );
+				$button_to_close_widget_class = $button_to_close_widget_style == 'link' ? '' : 'scp-' . $button_to_close_widget_style . '-button';
+				$content .= '<div class="dont-show-widget scp-button ' . esc_attr( $button_to_close_widget_class ) . '">';
+					$content .= '<a href="#" class="close">' . esc_attr( get_option( $scp_prefix . 'setting_button_to_close_widget_title' ) ) . '</a>';
+				$content .= '</div>';
+			}
+
+			$content .= '</div>';
+		}
+
+		// Окно SCP выводим только после создания его в DOM-дереве
+
+		$content .= '<script>
+			jQuery(document).ready(function($) {
+				if (is_scp_cookie_present()) return;';
+
+				if ( $use_facebook ) {
+					$content .= "scp_prependFacebook(\$);";
+				}
+
+				if ( $use_vkontakte ) {
+					$content .= "scp_prependVK(\$);";
+				}
+
+				if ( $use_googleplus ) {
+					$content .= "scp_prependGooglePlus(\$);";
+				}
+
+				if ( $use_pinterest ) {
+					$content .= "scp_prependPinterest(\$);";
+				}
+
+				$any_event_active = false;
+
+				// Отображение плагина после просмотра страницы N секунд
+				if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'after_n_seconds' ) ) {
+					$any_event_active = true;
+
+					$calculated_delay = ( $popup_will_appear_after_n_seconds > 0 ? $popup_will_appear_after_n_seconds * 1000 : 1000 );
+
+					$content .= 'setTimeout(function() {
+						if (!is_scp_cookie_present()) {';
+							$content .= $this->template_show_window();
+							$content .= $this->template_show_bottom_button( $delay_before_show_bottom_button );
+						$content .= '}
+					}, ' . esc_attr( $calculated_delay ) . ');';
+				}
+
+				// Отображение плагина после клика по указанному селектору
+				if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'after_clicking_on_element' ) ) {
+					$any_event_active = true;
+
+					if ( ! empty( $popup_will_appear_after_clicking_on_element ) ) {
+						$content .= '$("' . $popup_will_appear_after_clicking_on_element . '").on("click", function($) {
+							if (!is_scp_cookie_present()) {';
+								$content .= $this->template_show_window();
+								$content .= $this->template_show_bottom_button( $delay_before_show_bottom_button );
+							$content .= '}
+						});';
+					} else {
+						$content .= 'alert("' . __( "You must add a selector element for the plugin Social Community Popup. Otherwise it won't be work.", L10N_SCP_PREFIX ) . '");';
+					}
+				}
+
+				// Отображение плагина после прокрутки страницы на N процентов
+				if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'after_scrolling_down_n_percent' ) ) {
+					$any_event_active = true;
+
+					$content .= 'var showWindowAgain = true;
+					$(window).scroll(function() {
+						if (!is_scp_cookie_present()) {
+							value = parseInt(Math.abs(document.body.scrollTop / (document.body.clientHeight - window.innerHeight) * 100));
+							if (showWindowAgain && value >= <?php echo $popup_will_appear_after_scrolling_down_n_percent; ?>) {';
+								$content .= $this->template_show_window();
+								$content .= $this->template_show_bottom_button( $delay_before_show_bottom_button );
+
+								$content .= 'showWindowAgain = false;
+							}
+						}
+					});';
+				}
+
+				// Отображение плагина при попытке увести мышь за пределы окна
+				if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'on_exit_intent' ) && $popup_will_appear_on_exit_intent ) {
+					$any_event_active = true;
+
+					$content .= '$(document).on("mouseleave", function(e) {
+						if (is_scp_cookie_present()) return;
+
+						var scroll = window.pageYOffset || document.documentElement.scrollTop;
+						if((e.pageY - scroll) < 7) {';
+							$content .= $this->template_show_window();
+							$content .= $this->template_show_bottom_button( $delay_before_show_bottom_button );
+						$content .= '}
+					});';
+				}
+
+				// Если ни одно из событий когда показывать окно не выбрано — показываем окно сразу и без задержки
+				if ( ! $any_event_active && ! is_scp_cookie_present() ) {
+					$content .= $this->template_show_window();
+					$content .= $this->template_show_bottom_button( $delay_before_show_bottom_button );
+				}
+
+				$content .= $this->template_close_widget( $close_by_clicking_anywhere, $after_n_days );
+				$content .= $this->template_close_widget_when_esc_pressed( $close_when_esc_pressed, $after_n_days );
+			$content .= '});
+		</script>';
+
+		$content = "$('body').prepend('" . $content . "');";
+		$content .= 'alert("done");';
+
+		return $content;
+	}
+
+	private function template_show_window() {
+		return 'jQuery("#social-community-popup").show();';
+	}
+
+	private function template_show_bottom_button( $delay_before_show_bottom_button ) {
+		$content = '';
+		if ( $delay_before_show_bottom_button > 0 ) {
+			$content = 'setTimeout(function() { jQuery(".dont-show-widget").show(); }, ' . esc_attr( $delay_before_show_bottom_button ) * 1000 . ');';
+		} else {
+			$content = 'jQuery(".dont-show-widget").show();';
+		}
+
+		return $content;
+	}
+
+	private function template_close_widget( $close_by_clicking_anywhere, $after_n_days ) {
+		if ( $close_by_clicking_anywhere ) {
+			$selector_to_close_widget = '#social-community-popup .parent_popup, #social-community-popup .close';
+		} else {
+			$selector_to_close_widget = '#social-community-popup .close';
+		}
+
+		return '$("' . $selector_to_close_widget . '").click(function() { scp_destroyPlugin($, ' . esc_attr( $after_n_days ) . '); });';
+	}
+
+	private function template_close_widget_when_esc_pressed( $close_when_esc_pressed, $after_n_days ) {
+		$content = '';
+		if ( $close_when_esc_pressed ) {
+			$content .= '$(document).keydown(function(e) {
+				if ( e.keyCode == 27 ) {
+					scp_destroyPlugin($, ' . esc_attr( $after_n_days ) . ');
+				}
+			});';
+		}
+
+		return $content;
+	}
+
 
 	/**
 	 * Adds cookies script
