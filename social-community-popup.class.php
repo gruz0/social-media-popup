@@ -3190,47 +3190,14 @@ class Social_Community_Popup {
 				$content .= '</ul>';
 			}
 
-			// FIXME: Вынести функции $this->scp_* в Фабрику Provider::create($provider)
 			for ( $idx = 0; $idx < count( $tabs_order ); $idx++ ) {
-				$provider_name = $tabs_order[ $idx ];
+				$provider_name = $tabs_order[$idx];
 
-				switch ( $provider_name ) {
-					case 'facebook':
-						if ( $use_facebook ) {
-							$content .= $providers[$provider_name]->container();
-						}
-						break;
+				// Выходим, если текущий провайдер из списка не выбран используемым
+				if ( ! isset( $active_providers[$provider_name] ) ) continue;
 
-					case 'vkontakte':
-						if ( $use_vkontakte ) {
-							$content .= $providers[$provider_name]->container();
-						}
-						break;
-
-					case 'odnoklassniki':
-						// if ( $use_odnoklassniki ) {
-						// 	$content .= $this->scp_odnoklassniki_container( $scp_prefix );
-						// }
-						break;
-
-					case 'googleplus':
-						// if ( $use_googleplus ) {
-						// 	scp_googleplus_container( $scp_prefix );
-						// }
-						break;
-
-					case 'twitter':
-						// if ( $use_twitter ) {
-						// 	scp_twitter_container( $scp_prefix );
-						// }
-						break;
-
-					case 'pinterest':
-						// if ( $use_pinterest ) {
-						// 	scp_pinterest_container( $scp_prefix );
-						// }
-						break;
-				}
+				$provider = $active_providers[$provider_name];
+				$content .= $provider->container();
 			}
 
 			$content .= '</div>';
