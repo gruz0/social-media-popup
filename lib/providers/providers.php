@@ -10,8 +10,8 @@ class SCP_Provider {
 
 		switch( $provider ) {
 			case 'facebook': {
-				require_once( dirname( __FILE__ ) . '/vkontakte.php' );
-				return new SCP_VK_Provider();
+				require_once( dirname( __FILE__ ) . '/facebook.php' );
+				return new SCP_Facebook_Provider();
 			}
 			break;
 
