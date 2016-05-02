@@ -8,7 +8,7 @@ class SCP_Template {
 	 *
 	 * @return string
 	 */
-	function template_show_window() {
+	function render_show_window() {
 		return 'jQuery("#social-community-popup").show();';
 	}
 
@@ -20,7 +20,7 @@ class SCP_Template {
 	 * @param string $delay_before_show_bottom_button Delay before show bottom button in sec.
 	 * @return string
 	 */
-	function template_show_bottom_button( $delay_before_show_bottom_button ) {
+	function render_show_bottom_button( $delay_before_show_bottom_button ) {
 		$content = '';
 		$delay_before_show_bottom_button = absint( esc_attr( $delay_before_show_bottom_button ) );
 		if ( $delay_before_show_bottom_button > 0 ) {
@@ -41,7 +41,7 @@ class SCP_Template {
 	 * @param string $after_n_days Timeout to show SCP window again
 	 * @return string
 	 */
-	function template_close_widget( $close_by_clicking_anywhere, $after_n_days ) {
+	function render_close_widget( $close_by_clicking_anywhere, $after_n_days ) {
 		if ( $close_by_clicking_anywhere ) {
 			$selector_to_close_widget = '#social-community-popup .parent_popup, #social-community-popup .close';
 		} else {
@@ -61,7 +61,7 @@ class SCP_Template {
 	 * @param string $after_n_days Timeout to show SCP window again
 	 * @return string
 	 */
-	function template_close_widget_when_esc_pressed( $close_when_esc_pressed, $after_n_days ) {
+	function render_close_widget_when_esc_pressed( $close_when_esc_pressed, $after_n_days ) {
 		$content = '';
 
 		if ( $close_when_esc_pressed ) {

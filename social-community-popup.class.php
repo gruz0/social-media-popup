@@ -3171,8 +3171,8 @@ class Social_Community_Popup {
 
 					$content .= 'setTimeout(function() {
 						if (!is_scp_cookie_present()) {';
-							$content .= $template->template_show_window();
-							$content .= $template->template_show_bottom_button( $delay_before_show_bottom_button );
+							$content .= $template->render_show_window();
+							$content .= $template->render_show_bottom_button( $delay_before_show_bottom_button );
 						$content .= '}
 					}, ' . esc_attr( $calculated_delay ) . ');';
 				}
@@ -3184,8 +3184,8 @@ class Social_Community_Popup {
 					if ( ! empty( $popup_will_appear_after_clicking_on_element ) ) {
 						$content .= '$("' . $popup_will_appear_after_clicking_on_element . '").on("click", function($) {
 							if (!is_scp_cookie_present()) {';
-								$content .= $template->template_show_window();
-								$content .= $template->template_show_bottom_button( $delay_before_show_bottom_button );
+								$content .= $template->render_show_window();
+								$content .= $template->render_show_bottom_button( $delay_before_show_bottom_button );
 							$content .= '}
 						});';
 					} else {
@@ -3202,8 +3202,8 @@ class Social_Community_Popup {
 						if (!is_scp_cookie_present()) {
 							value = parseInt(Math.abs(document.body.scrollTop / (document.body.clientHeight - window.innerHeight) * 100));
 							if (showWindowAgain && value >= <?php echo $popup_will_appear_after_scrolling_down_n_percent; ?>) {';
-								$content .= $template->template_show_window();
-								$content .= $template->template_show_bottom_button( $delay_before_show_bottom_button );
+								$content .= $template->render_show_window();
+								$content .= $template->render_show_bottom_button( $delay_before_show_bottom_button );
 
 								$content .= 'showWindowAgain = false;
 							}
@@ -3220,20 +3220,20 @@ class Social_Community_Popup {
 
 						var scroll = window.pageYOffset || document.documentElement.scrollTop;
 						if((e.pageY - scroll) < 7) {';
-							$content .= $template->template_show_window();
-							$content .= $template->template_show_bottom_button( $delay_before_show_bottom_button );
+							$content .= $template->render_show_window();
+							$content .= $template->render_show_bottom_button( $delay_before_show_bottom_button );
 						$content .= '}
 					});';
 				}
 
 				// Если ни одно из событий когда показывать окно не выбрано — показываем окно сразу и без задержки
 				if ( ! $any_event_active && ! is_scp_cookie_present() ) {
-					$content .= $template->template_show_window();
-					$content .= $template->template_show_bottom_button( $delay_before_show_bottom_button );
+					$content .= $template->render_show_window();
+					$content .= $template->render_show_bottom_button( $delay_before_show_bottom_button );
 				}
 
-				$content .= $template->template_close_widget( $close_by_clicking_anywhere, $after_n_days );
-				$content .= $template->template_close_widget_when_esc_pressed( $close_when_esc_pressed, $after_n_days );
+				$content .= $template->render_close_widget( $close_by_clicking_anywhere, $after_n_days );
+				$content .= $template->render_close_widget_when_esc_pressed( $close_when_esc_pressed, $after_n_days );
 			$content .= '});
 		</script>';
 
