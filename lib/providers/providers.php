@@ -12,7 +12,7 @@ class SCP_Provider {
 	 * @return array
 	 */
 	public static function available_providers() {
-		return array( 'facebook', 'vkontakte' ); //, 'odnoklassniki', 'googleplus', 'twitter', 'pinterest' );
+		return array( 'facebook', 'vkontakte', 'odnoklassniki' ); //, 'googleplus', 'twitter', 'pinterest' );
 	}
 
 	/**
@@ -56,8 +56,8 @@ class SCP_Provider {
 			break;
 
 			case 'odnoklassniki': {
-				require_once( dirname( __FILE__ ) . '/vkontakte.php' );
-				return new SCP_VK_Provider();
+				require_once( dirname( __FILE__ ) . '/odnoklassniki.php' );
+				return new SCP_Odnoklassniki_Provider();
 			}
 			break;
 
