@@ -1,6 +1,17 @@
 <?php
 
 class SCP_Facebook_Provider extends SCP_Provider {
+	public static function is_active() {
+		return ( self::$options[ self::$prefix . 'setting_use_facebook' ] === '1' );
+	}
+
+	public static function provide_options_to_tab_caption() {
+		return array(
+			'value'     => esc_attr( self::$options[ self::$prefix . 'setting_facebook_tab_caption'] ),
+			'css_class' => ''
+		);
+	}
+
 	public static function container() {
 		$content = '<div class="box">';
 

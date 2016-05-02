@@ -5,6 +5,29 @@ class SCP_Provider {
 	static $options = null;
 
 	/**
+	 * Returns available providers
+	 *
+	 * @since 0.7.3
+	 *
+	 * @return array
+	 */
+	public static function available_providers() {
+		return array( 'facebook', 'vkontakte' ); //, 'odnoklassniki', 'googleplus', 'twitter', 'pinterest' );
+	}
+
+	/**
+	 * Checks if provider is available
+	 *
+	 * @since 0.7.3
+	 *
+	 * @return boolean
+	 */
+	public static function exists( $provider_name ) {
+		$providers = self::available_providers();
+		return in_array( $provider_name, $providers );
+	}
+
+	/**
 	 * Instantiate a Social Network provider
 	 *
 	 * @since 0.7.3
@@ -18,6 +41,7 @@ class SCP_Provider {
 		self::$prefix = $prefix;
 		self::$options = $options;
 
+		// FIXME: Переписать на проверку провайдера в массиве available_providers()
 		switch( $provider ) {
 			case 'facebook': {
 				require_once( dirname( __FILE__ ) . '/facebook.php' );
@@ -58,6 +82,30 @@ class SCP_Provider {
 			default:
 				throw new Exception( "Provider {$provider} is not implemented!" );
 		}
+	}
+
+	/**
+	 * Returns provider status
+	 * Should be overridden in specific provider
+	 *
+	 * @since 0.7.3
+	 *
+	 * @return boolean
+	 */
+	public static function is_active() {
+		throw new Exception( "Not implemented!" );
+	}
+
+	/**
+	 * Returns Tab Caption options
+	 * Should be overridden in specific provider
+	 *
+	 * @since 0.7.3
+	 *
+	 * @return array
+	 */
+	public static function provide_options_to_tab_caption() {
+		throw new Exception( "Not implemented!" );
 	}
 
 	/**

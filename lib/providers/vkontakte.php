@@ -1,6 +1,17 @@
 <?php
 
 class SCP_VK_Provider extends SCP_Provider {
+	public static function is_active() {
+		return ( self::$options[ self::$prefix . 'setting_use_vkontakte' ] === '1' );
+	}
+
+	public static function provide_options_to_tab_caption() {
+		return array(
+			'value'     => esc_attr( self::$options[ self::$prefix . 'setting_vkontakte_tab_caption'] ),
+			'css_class' => 'vk-tab'
+		);
+	}
+
 	public static function container() {
 		$default_vk_group_id = 1;
 
