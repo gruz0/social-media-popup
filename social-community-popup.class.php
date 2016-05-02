@@ -3068,25 +3068,26 @@ class Social_Community_Popup {
 				$content .= '<a href="#" class="close close-outside" title="' . __( 'Close Modal Dialog', L10N_SCP_PREFIX ) . '">&times;</a>';
 			}
 
-				$content .= '<div class="section" style="width:' . esc_attr( $container_width ) . 'px !important;height:' . esc_attr( $container_height ) . 'px !important;">';
+			$content .= '<div class="section" style="width:' . esc_attr( $container_width ) . 'px !important;height:' . esc_attr( $container_height ) . 'px !important;">';
 
-				if ( $show_plugin_title ) {
-					$content .= '<div class="plugin-title">' . $scp_plugin_title . '</div>';
-				}
+			if ( $show_plugin_title ) {
+				$content .= '<div class="plugin-title">' . $scp_plugin_title . '</div>';
+			}
 
-			$selected_widgets_count = 0;
-			for ( $idx = 0; $idx < count( $tabs_order ); $idx++ ) {
-				switch ( $tabs_order[ $idx ] ) {
-					case 'facebook':      if ( $use_facebook )      $selected_widgets_count++; break;
-					case 'vkontakte':     if ( $use_vkontakte )     $selected_widgets_count++; break;
-					case 'odnoklassniki': if ( $use_odnoklassniki ) $selected_widgets_count++; break;
-					case 'googleplus':    if ( $use_googleplus )    $selected_widgets_count++; break;
-					case 'twitter':       if ( $use_twitter )       $selected_widgets_count++; break;
-					case 'pinterest':     if ( $use_pinterest )     $selected_widgets_count++; break;
+			// FIXME: Should be deleted
+			$providers = array();
+			$active_providers = array();
+
+			foreach ( SCP_Provider::available_providers() as $provider_name ) {
+				$provider = SCP_Provider::create($provider_name, $scp_prefix, $scp_options);
+				$providers[$provider_name] = $provider;
+
+				if ( $provider->is_active() ) {
+					$active_providers[$provider_name] = $provider;
 				}
 			}
 
-			$providers = array();
+			$selected_widgets_count = count( $active_providers );
 
 			if ( $selected_widgets_count == 1 && get_option( $scp_prefix . 'setting_hide_tabs_if_one_widget_is_active' ) == 1 ) {
 
@@ -3096,15 +3097,16 @@ class Social_Community_Popup {
 				for ( $idx = 0; $idx < count( $tabs_order ); $idx++ ) {
 					$provider_name = $tabs_order[$idx];
 
-					if ( ! isset( $providers[$provider_name] ) ) {
-						$provider = SCP_Provider::create($provider_name, $scp_prefix, $scp_options);
-					} else {
-						$provider = $providers[$provider_name];
-					}
+					// Выходим, если текущий провайдер из списка не выбран используемым
+					if ( ! isset( $active_providers[$provider_name] ) ) continue;
 
-					$providers[$provider_name] = $provider;
-					$args = array();
+					$provider = $active_providers[$provider_name];
 
+					$args = array( 'index' => $tab_index++ );
+					$args = array_merge( $args, $provider->provide_options_to_tab_caption() );
+					$content .= $provider->tab_caption( $args );
+
+/*
 					switch ( $provider_name ) {
 						case 'facebook':
 							if ( $use_facebook ) {
@@ -3178,6 +3180,7 @@ class Social_Community_Popup {
 							}
 							break;
 					}
+*/
 				}
 
 				if ( ! $show_plugin_title && $show_close_button_in === 'inside' ) {
