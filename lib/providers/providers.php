@@ -4,6 +4,16 @@ class SCP_Provider {
 	static $prefix = null;
 	static $options = null;
 
+	/**
+	 * Instantiate a Social Network provider
+	 *
+	 * @since 0.7.3
+	 *
+	 * @param string $provider Provider name (ex. facebook, vkontakte, etc.)
+	 * @param string $prefix SCP options prefix (default: 'scp-')
+	 * @param array $options Options for specific provider
+	 * @return SCP_Provider
+	 */
 	public static function create( $provider, $prefix, $options ) {
 		self::$prefix = $prefix;
 		self::$options = $options;
@@ -62,6 +72,15 @@ class SCP_Provider {
 		return '<li data-index="' . $args['index'] . '" class="' . $args['css_class'] . '"><span>' . $args['value'] . '</span></li>';
 	}
 
+	/**
+	 * Abstract method returns a Social Network container
+	 * Should be overridden in specific provider
+	 *
+	 * @since 0.7.3
+	 *
+	 * @param array @args
+	 * @return string
+	 */
 	public static function container( $args ) {
 		throw new Exception( "Not implemented!" );
 	}
