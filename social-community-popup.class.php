@@ -173,7 +173,7 @@ class Social_Community_Popup {
 			'setting_pinterest_height'
 		);
 
-		for ( $idx = 0; $idx < count( $options ); $idx++ ) {
+		for ( $idx = 0, $size = count( $options ); $idx < $size; $idx++ ) {
 			delete_option( $scp_prefix . $options[ $idx ] );
 		}
 	}
@@ -426,7 +426,7 @@ class Social_Community_Popup {
 				'setting_facebook_show_border'
 			);
 
-			for ( $idx = 0; $idx < count( $facebook_remove_options ); $idx++ ) {
+			for ( $idx = 0, $size = count( $facebook_remove_options ); $idx < $size; $idx++ ) {
 				delete_option( $scp_prefix . $facebook_remove_options[ $idx ] );
 			}
 
@@ -2403,7 +2403,7 @@ class Social_Community_Popup {
 		$html = '';
 		foreach ( $options as $option_name => $label ) {
 			$checked = '';
-			for ( $idx = 0; $idx < count( $chains ); $idx++ ) {
+			for ( $idx = 0, $size = count( $chains ); $idx < $size; $idx++ ) {
 				$checked = checked( $chains[$idx], $option_name, false );
 				if ( strlen( $checked ) ) break;
 			}
@@ -2434,7 +2434,7 @@ class Social_Community_Popup {
 		$html = '';
 		foreach ( $options as $option_name => $label ) {
 			$checked = '';
-			for ( $idx = 0; $idx < count( $chains ); $idx++ ) {
+			for ( $idx = 0, $size = count( $chains ); $idx < $size; $idx++ ) {
 				$checked = checked( $chains[$idx], $option_name, false );
 				if ( strlen( $checked ) ) break;
 			}
@@ -2481,7 +2481,7 @@ class Social_Community_Popup {
 		$html = '';
 		foreach ( $options as $option_name => $label ) {
 			$checked = '';
-			for ( $idx = 0; $idx < count( $chains ); $idx++ ) {
+			for ( $idx = 0, $size = count( $chains ); $idx < $size; $idx++ ) {
 				$checked = checked( $chains[$idx], $option_name, false );
 				if ( strlen( $checked ) ) break;
 			}
@@ -2519,7 +2519,7 @@ class Social_Community_Popup {
 
 		// Проверяем наличие всех нужных нам ключей в массиве. Если нет — инициализируем "выключенным" значением.
 		$allowed_values = array( 'noheader', 'nofooter', 'noborders', 'noscrollbars', 'transparent' );
-		for ( $idx = 0; $idx < count($allowed_values); $idx++ ) {
+		for ( $idx = 0, $size = count( $allowed_values ); $idx < $size; $idx++ ) {
 			if ( !isset( $value[$allowed_values[$idx]] ) ) $value[$allowed_values[$idx]] = 0;
 		}
 
@@ -3096,7 +3096,7 @@ class Social_Community_Popup {
 			} else {
 				$content .= '<ul class="tabs"' . ( $align_tabs_to_center ? 'style="text-align:center;"' : '' ) . '>';
 
-				for ( $idx = 0; $idx < count( $tabs_order ); $idx++ ) {
+				for ( $idx = 0, $size = count( $tabs_order ); $idx < $size; $idx++ ) {
 					$provider_name = $tabs_order[$idx];
 
 					// Выходим, если текущий провайдер из списка не выбран используемым
@@ -3116,7 +3116,7 @@ class Social_Community_Popup {
 				$content .= '</ul>';
 			}
 
-			for ( $idx = 0; $idx < count( $tabs_order ); $idx++ ) {
+			for ( $idx = 0, $size = count( $tabs_order ); $idx < $size; $idx++ ) {
 				$provider_name = $tabs_order[$idx];
 
 				// Выходим, если текущий провайдер из списка не выбран используемым
