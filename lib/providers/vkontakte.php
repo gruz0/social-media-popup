@@ -40,7 +40,7 @@ class SCP_VK_Provider extends SCP_Provider {
 			<div id="scp_vk_groups" style="height:250px !important;"></div>
 			<script>
 				var vk_initialized = 0;
-				var scp_VK_closeWindowAfterJoiningGroup = ' . intval( self::$options[ self::$prefix . 'setting_vkontakte_close_window_after_join' ] ) . ';
+				var scp_VK_closeWindowAfterJoiningGroup = ' . ( (int) self::$options[ self::$prefix . 'setting_vkontakte_close_window_after_join' ] ) . ';
 
 				function initialize_VK_Widgets() {
 					VK.init({apiId: ' . $application_id . '

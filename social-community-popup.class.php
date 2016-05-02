@@ -2922,7 +2922,7 @@ class Social_Community_Popup {
 		// Отключаем работу плагина на мобильных устройствах
 		// if ( wp_is_mobile() && get_scp_option( 'setting_show_on_mobile_devices' ) === '0' ) return;
 
-		$debug_mode                                       = intval( $scp_options[ $scp_prefix . 'setting_debug_mode' ] ) == 1;
+		$debug_mode                                       = ( (int) $scp_options[ $scp_prefix . 'setting_debug_mode' ] ) == 1;
 
 		$after_n_days                                     = (int) $scp_options[ $scp_prefix . 'setting_display_after_n_days' ];
 
@@ -2970,7 +2970,7 @@ class Social_Community_Popup {
 
 				// Если существует кука просмотренных страниц — обновляем её
 				if ( isset( $_COOKIE[$page_views_cookie] ) ) {
-					$page_views = intval( $_COOKIE[$page_views_cookie] ) + 1;
+					$page_views = ( (int) $_COOKIE[$page_views_cookie] ) + 1;
 					setcookie( $page_views_cookie, $page_views );
 
 					if ( $page_views > $visitor_opened_at_least_n_number_of_pages ) {
@@ -3021,8 +3021,8 @@ class Social_Community_Popup {
 		$show_close_button_in       = $scp_options[ $scp_prefix . 'setting_show_close_button_in' ];
 		$overlay_color              = $scp_options[ $scp_prefix . 'setting_overlay_color' ];
 		$overlay_opacity            = $scp_options[ $scp_prefix . 'setting_overlay_opacity' ];
-		$align_tabs_to_center       = absint( $scp_options[ $scp_prefix . 'setting_align_tabs_to_center' ] );
-		$delay_before_show_bottom_button = absint( $scp_options[ $scp_prefix . 'setting_delay_before_show_bottom_button' ] );
+		$align_tabs_to_center       = (int) $scp_options[ $scp_prefix . 'setting_align_tabs_to_center' ];
+		$delay_before_show_bottom_button = abs( (int) $scp_options[ $scp_prefix . 'setting_delay_before_show_bottom_button' ] );
 		$background_image           = $scp_options[ $scp_prefix . 'setting_background_image' ];
 
 
@@ -3040,7 +3040,7 @@ class Social_Community_Popup {
 			$parent_popup_styles                  = '';
 			$parent_popup_css                     = array();
 			$parent_popup_css['background-color'] = $overlay_color;
-			$parent_popup_css['opacity']          = '0.' . intval( $overlay_opacity ) / 10.0;
+			$parent_popup_css['opacity']          = '0.' . ( absint( $overlay_opacity ) / 10.0 );
 
 			foreach ( $parent_popup_css as $selector => $value ) {
 				$parent_popup_styles .= "${selector}: ${value}; ";
@@ -3255,7 +3255,7 @@ class Social_Community_Popup {
 		wp_register_script( 'social-community-popup-cookies-script', plugins_url( 'js/cookies.js?' . $version, __FILE__ ), array( 'jquery' ) );
 		wp_localize_script( 'social-community-popup-cookies-script', 'scp', array(
 			'clearCookiesMessage'           => __( 'Page will be reload after clear cookies. Continue?', L10N_SCP_PREFIX ),
-			'showWindowAfterReturningNDays' => intval( get_option( $scp_prefix . 'setting_display_after_n_days' ) ),
+			'showWindowAfterReturningNDays' => (int) get_option( $scp_prefix . 'setting_display_after_n_days' ),
 		));
 		wp_enqueue_script( 'social-community-popup-cookies-script' );
 	}
