@@ -3193,9 +3193,9 @@ class Social_Community_Popup {
 
 				switch ( $provider_name ) {
 					case 'facebook':
-						// if ( $use_facebook ) {
-						// 	$content .= $this->scp_facebook_container( $scp_prefix );
-						// }
+						if ( $use_facebook ) {
+							$content .= $providers[$provider_name]->container();
+						}
 						break;
 
 					case 'vkontakte':
