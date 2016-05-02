@@ -3105,82 +3105,6 @@ class Social_Community_Popup {
 					$args = array( 'index' => $tab_index++ );
 					$args = array_merge( $args, $provider->provide_options_to_tab_caption() );
 					$content .= $provider->tab_caption( $args );
-
-/*
-					switch ( $provider_name ) {
-						case 'facebook':
-							if ( $use_facebook ) {
-								$args = array(
-									'index' => $tab_index++,
-									'value' => esc_attr( $scp_options[ $scp_prefix . 'setting_facebook_tab_caption'] ),
-									'css_class' => ''
-								);
-
-								$content .= $provider->tab_caption( $args );
-							}
-							break;
-
-						case 'vkontakte':
-							if ( $use_vkontakte ) {
-								$args = array(
-									'index' => $tab_index++,
-									'value' => esc_attr( $scp_options[ $scp_prefix . 'setting_vkontakte_tab_caption'] ),
-									'css_class' => 'vk-tab'
-								);
-
-								$content .= $provider->tab_caption( $args );
-							}
-							break;
-
-						case 'odnoklassniki':
-							if ( $use_odnoklassniki ) {
-								$args = array(
-									'index' => $tab_index++,
-									'value' => esc_attr( $scp_options[ $scp_prefix . 'setting_odnoklassniki_tab_caption'] ),
-									'css_class' => ''
-								);
-
-								$content .= $provider->tab_caption( $args );
-							}
-							break;
-
-						case 'googleplus':
-							if ( $use_googleplus ) {
-								$args = array(
-									'index' => $tab_index++,
-									'value' => esc_attr( $scp_options[ $scp_prefix . 'setting_googleplus_tab_caption'] ),
-									'css_class' => 'google-plus-tab'
-								);
-
-								$content .= $provider->tab_caption( $args );
-							}
-							break;
-
-						case 'twitter':
-							if ( $use_twitter ) {
-								$args = array(
-									'index' => $tab_index++,
-									'value' => esc_attr( $scp_options[ $scp_prefix . 'setting_twitter_tab_caption'] ),
-									'css_class' => ''
-								);
-
-								$content .= $provider->tab_caption( $args );
-							}
-							break;
-
-						case 'pinterest':
-							if ( $use_pinterest) {
-								$args = array(
-									'index' => $tab_index++,
-									'value' => esc_attr( $scp_options[ $scp_prefix . 'setting_pinterest_tab_caption'] ),
-									'css_class' => 'pinterest-tab'
-								);
-
-								$content .= $provider->tab_caption( $args );
-							}
-							break;
-					}
-*/
 				}
 
 				if ( ! $show_plugin_title && $show_close_button_in === 'inside' ) {
@@ -3317,14 +3241,30 @@ class Social_Community_Popup {
 		return $content;
 	}
 
+	/**
+	 * Returns JS code to show SCP window by jQuery
+	 *
+	 * @since 0.7.3
+	 *
+	 * @return string
+	 */
 	private function template_show_window() {
 		return 'jQuery("#social-community-popup").show();';
 	}
 
+	/**
+	 * Returns JS code to render bottom button with text 'Please don't show widget again'
+	 *
+	 * @since 0.7.3
+	 *
+	 * @param string $delay_before_show_bottom_button Delay before show bottom button in sec.
+	 * @return string
+	 */
 	private function template_show_bottom_button( $delay_before_show_bottom_button ) {
 		$content = '';
+		$delay_before_show_bottom_button = absint( esc_attr( $delay_before_show_bottom_button ) );
 		if ( $delay_before_show_bottom_button > 0 ) {
-			$content = 'setTimeout(function() { jQuery(".dont-show-widget").show(); }, ' . esc_attr( $delay_before_show_bottom_button ) * 1000 . ');';
+			$content = 'setTimeout(function() { jQuery(".dont-show-widget").show(); }, ' . ( $delay_before_show_bottom_button * 1000 ) . ');';
 		} else {
 			$content = 'jQuery(".dont-show-widget").show();';
 		}
@@ -3332,6 +3272,15 @@ class Social_Community_Popup {
 		return $content;
 	}
 
+	/**
+	 * Returns JS code to render button to close widget
+	 *
+	 * @since 0.7.3
+	 *
+	 * @param boolean $close_by_clicking_anywhere If it is equals to true then window will close by click outside container
+	 * @param string $after_n_days Timeout to show SCP window again
+	 * @return string
+	 */
 	private function template_close_widget( $close_by_clicking_anywhere, $after_n_days ) {
 		if ( $close_by_clicking_anywhere ) {
 			$selector_to_close_widget = '#social-community-popup .parent_popup, #social-community-popup .close';
@@ -3339,15 +3288,27 @@ class Social_Community_Popup {
 			$selector_to_close_widget = '#social-community-popup .close';
 		}
 
-		return '$("' . $selector_to_close_widget . '").click(function() { scp_destroyPlugin($, ' . esc_attr( $after_n_days ) . '); });';
+		$after_n_days = absint( esc_attr( $after_n_days ) );
+		return '$("' . $selector_to_close_widget . '").click(function() { scp_destroyPlugin($, ' . $after_n_days . '); });';
 	}
 
+	/**
+	 * Returns JS code to close widget when ESC button was pressed
+	 *
+	 * @since 0.7.3
+	 *
+	 * @param boolean $close_when_esc_pressed If it is equals to true then SCP window will close by ESC pressed
+	 * @param string $after_n_days Timeout to show SCP window again
+	 * @return string
+	 */
 	private function template_close_widget_when_esc_pressed( $close_when_esc_pressed, $after_n_days ) {
 		$content = '';
+
 		if ( $close_when_esc_pressed ) {
+			$after_n_days = absint( esc_attr( $after_n_days ) );
 			$content .= '$(document).keydown(function(e) {
 				if ( e.keyCode == 27 ) {
-					scp_destroyPlugin($, ' . esc_attr( $after_n_days ) . ');
+					scp_destroyPlugin($, ' . $after_n_days . ');
 				}
 			});';
 		}
