@@ -2,6 +2,7 @@
 defined( 'ABSPATH' ) or exit;
 
 require_once( dirname( __FILE__ ) . "/functions.php" );
+require_once( dirname( __FILE__ ) . "/lib/scp_template.php" );
 require_once( dirname( __FILE__ ) . "/lib/providers/providers.php" );
 
 class Social_Community_Popup {
@@ -2910,6 +2911,7 @@ class Social_Community_Popup {
 
 	private function scp_php( $scp_prefix ) {
 		$scp_prefix = self::get_scp_prefix();
+		$template = new SCP_Template();
 
 		$scp_options = array();
 		$all_options = wp_load_alloptions();
@@ -3169,8 +3171,8 @@ class Social_Community_Popup {
 
 					$content .= 'setTimeout(function() {
 						if (!is_scp_cookie_present()) {';
-							$content .= $this->template_show_window();
-							$content .= $this->template_show_bottom_button( $delay_before_show_bottom_button );
+							$content .= $template->template_show_window();
+							$content .= $template->template_show_bottom_button( $delay_before_show_bottom_button );
 						$content .= '}
 					}, ' . esc_attr( $calculated_delay ) . ');';
 				}
@@ -3182,8 +3184,8 @@ class Social_Community_Popup {
 					if ( ! empty( $popup_will_appear_after_clicking_on_element ) ) {
 						$content .= '$("' . $popup_will_appear_after_clicking_on_element . '").on("click", function($) {
 							if (!is_scp_cookie_present()) {';
-								$content .= $this->template_show_window();
-								$content .= $this->template_show_bottom_button( $delay_before_show_bottom_button );
+								$content .= $template->template_show_window();
+								$content .= $template->template_show_bottom_button( $delay_before_show_bottom_button );
 							$content .= '}
 						});';
 					} else {
@@ -3200,8 +3202,8 @@ class Social_Community_Popup {
 						if (!is_scp_cookie_present()) {
 							value = parseInt(Math.abs(document.body.scrollTop / (document.body.clientHeight - window.innerHeight) * 100));
 							if (showWindowAgain && value >= <?php echo $popup_will_appear_after_scrolling_down_n_percent; ?>) {';
-								$content .= $this->template_show_window();
-								$content .= $this->template_show_bottom_button( $delay_before_show_bottom_button );
+								$content .= $template->template_show_window();
+								$content .= $template->template_show_bottom_button( $delay_before_show_bottom_button );
 
 								$content .= 'showWindowAgain = false;
 							}
@@ -3218,20 +3220,20 @@ class Social_Community_Popup {
 
 						var scroll = window.pageYOffset || document.documentElement.scrollTop;
 						if((e.pageY - scroll) < 7) {';
-							$content .= $this->template_show_window();
-							$content .= $this->template_show_bottom_button( $delay_before_show_bottom_button );
+							$content .= $template->template_show_window();
+							$content .= $template->template_show_bottom_button( $delay_before_show_bottom_button );
 						$content .= '}
 					});';
 				}
 
 				// Если ни одно из событий когда показывать окно не выбрано — показываем окно сразу и без задержки
 				if ( ! $any_event_active && ! is_scp_cookie_present() ) {
-					$content .= $this->template_show_window();
-					$content .= $this->template_show_bottom_button( $delay_before_show_bottom_button );
+					$content .= $template->template_show_window();
+					$content .= $template->template_show_bottom_button( $delay_before_show_bottom_button );
 				}
 
-				$content .= $this->template_close_widget( $close_by_clicking_anywhere, $after_n_days );
-				$content .= $this->template_close_widget_when_esc_pressed( $close_when_esc_pressed, $after_n_days );
+				$content .= $template->template_close_widget( $close_by_clicking_anywhere, $after_n_days );
+				$content .= $template->template_close_widget_when_esc_pressed( $close_when_esc_pressed, $after_n_days );
 			$content .= '});
 		</script>';
 
@@ -3240,82 +3242,6 @@ class Social_Community_Popup {
 
 		return $content;
 	}
-
-	/**
-	 * Returns JS code to show SCP window by jQuery
-	 *
-	 * @since 0.7.3
-	 *
-	 * @return string
-	 */
-	private function template_show_window() {
-		return 'jQuery("#social-community-popup").show();';
-	}
-
-	/**
-	 * Returns JS code to render bottom button with text 'Please don't show widget again'
-	 *
-	 * @since 0.7.3
-	 *
-	 * @param string $delay_before_show_bottom_button Delay before show bottom button in sec.
-	 * @return string
-	 */
-	private function template_show_bottom_button( $delay_before_show_bottom_button ) {
-		$content = '';
-		$delay_before_show_bottom_button = absint( esc_attr( $delay_before_show_bottom_button ) );
-		if ( $delay_before_show_bottom_button > 0 ) {
-			$content = 'setTimeout(function() { jQuery(".dont-show-widget").show(); }, ' . ( $delay_before_show_bottom_button * 1000 ) . ');';
-		} else {
-			$content = 'jQuery(".dont-show-widget").show();';
-		}
-
-		return $content;
-	}
-
-	/**
-	 * Returns JS code to render button to close widget
-	 *
-	 * @since 0.7.3
-	 *
-	 * @param boolean $close_by_clicking_anywhere If it is equals to true then window will close by click outside container
-	 * @param string $after_n_days Timeout to show SCP window again
-	 * @return string
-	 */
-	private function template_close_widget( $close_by_clicking_anywhere, $after_n_days ) {
-		if ( $close_by_clicking_anywhere ) {
-			$selector_to_close_widget = '#social-community-popup .parent_popup, #social-community-popup .close';
-		} else {
-			$selector_to_close_widget = '#social-community-popup .close';
-		}
-
-		$after_n_days = absint( esc_attr( $after_n_days ) );
-		return '$("' . $selector_to_close_widget . '").click(function() { scp_destroyPlugin($, ' . $after_n_days . '); });';
-	}
-
-	/**
-	 * Returns JS code to close widget when ESC button was pressed
-	 *
-	 * @since 0.7.3
-	 *
-	 * @param boolean $close_when_esc_pressed If it is equals to true then SCP window will close by ESC pressed
-	 * @param string $after_n_days Timeout to show SCP window again
-	 * @return string
-	 */
-	private function template_close_widget_when_esc_pressed( $close_when_esc_pressed, $after_n_days ) {
-		$content = '';
-
-		if ( $close_when_esc_pressed ) {
-			$after_n_days = absint( esc_attr( $after_n_days ) );
-			$content .= '$(document).keydown(function(e) {
-				if ( e.keyCode == 27 ) {
-					scp_destroyPlugin($, ' . $after_n_days . ');
-				}
-			});';
-		}
-
-		return $content;
-	}
-
 
 	/**
 	 * Adds cookies script
@@ -3334,4 +3260,3 @@ class Social_Community_Popup {
 		wp_enqueue_script( 'social-community-popup-cookies-script' );
 	}
 }
-
