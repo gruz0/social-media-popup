@@ -2920,7 +2920,7 @@ class Social_Community_Popup {
 		}
 
 		// Отключаем работу плагина на мобильных устройствах
-		// if ( wp_is_mobile() && get_scp_option( 'setting_show_on_mobile_devices' ) === '0' ) return;
+		if ( wp_is_mobile() && get_scp_option( 'setting_show_on_mobile_devices' ) === '0' ) return;
 
 		$debug_mode                                       = ( (int) $scp_options[ $scp_prefix . 'setting_debug_mode' ] ) == 1;
 
