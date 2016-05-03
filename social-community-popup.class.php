@@ -2940,6 +2940,9 @@ class Social_Community_Popup {
 
 		$after_n_days                                     = (int) $scp_options[ $scp_prefix . 'setting_display_after_n_days' ];
 
+		/////////////////////////////////////////////////
+		// Когда показывать окно
+		/////////////////////////////////////////////////
 		$when_should_the_popup_appear                     = split_string_by_comma( $scp_options[ $scp_prefix . 'when_should_the_popup_appear' ] );
 		$when_should_the_popup_appear_events              = array(
 			'after_n_seconds',
@@ -2953,8 +2956,22 @@ class Social_Community_Popup {
 		$popup_will_appear_after_scrolling_down_n_percent = (int) $scp_options[ $scp_prefix . 'popup_will_appear_after_scrolling_down_n_percent' ];
 		$popup_will_appear_on_exit_intent                 = $scp_options[ $scp_prefix . 'popup_will_appear_on_exit_intent' ] === '1';
 
+		/////////////////////////////////////////////////
+		// Кому показывать окно
+		/////////////////////////////////////////////////
 		$who_should_see_the_popup                         = split_string_by_comma( $scp_options[ $scp_prefix . 'who_should_see_the_popup' ] );
+		$who_should_see_the_popup_events                  = array(
+			'visitor_opened_at_least_n_number_of_pages'
+		);
+
 		$visitor_opened_at_least_n_number_of_pages        = (int) $scp_options[ $scp_prefix . 'visitor_opened_at_least_n_number_of_pages' ];
+
+		// Если true, тогда окно будет показываться с учётом событий "Каким посетителям показывать окно"
+		$who_should_see_the_popup_fired                   = false;
+
+		// Используется при обработке событий "Когда показывать окно" и только вместе с $who_should_see_the_popup_fired
+		// Значение примет true только в том случае, если хотя бы одно из событий "Кому показывать окно" активно
+		$who_should_see_the_popup_present                 = false;
 
 		// Обработка событий кому показывать окно плагина
 		$show_popup = false;
@@ -2962,39 +2979,56 @@ class Social_Community_Popup {
 		// Время жизни куки — 1 год
 		$cookie_lifetime = 31536000;
 
-		// Пользователь просмотрел больше N страниц сайта
-		if ( who_should_see_the_popup_has_event( $who_should_see_the_popup, 'visitor_opened_at_least_n_number_of_pages' ) ) {
-			$page_views_cookie = 'scp-page-views';
-
-			// Если окно не было закрыто другими событиями — начинаем проверку условий
-			if ( ! is_scp_cookie_present() ) {
-
-				// Если существует кука просмотренных страниц — обновляем её
-				if ( isset( $_COOKIE[$page_views_cookie] ) ) {
-					$page_views = ( (int) $_COOKIE[$page_views_cookie] ) + 1;
-					setcookie( $page_views_cookie, $page_views );
-
-					if ( $page_views > $visitor_opened_at_least_n_number_of_pages ) {
-						$show_popup = true;
-					}
-
-				// Иначе создаём новую
-				} else {
-					setcookie( $page_views_cookie, 1, time() + $cookie_lifetime, '/' );
-				}
-
-			// Иначе удалим куку
-			} else {
-				setcookie( $page_views_cookie, 0, time() - 3600, '/' );
-				unset( $_COOKIE[$page_views_cookie] );
+		// Проверяем активность любого из события "Кому показывать окно"
+		foreach ( $who_should_see_the_popup_events as $event ) {
+			if ( who_should_see_the_popup_has_event( $who_should_see_the_popup, $event ) ) {
+				$who_should_see_the_popup_present = true;
+				break;
 			}
 		}
 
-		// Активна любая опция когда показывать окно
-		foreach ( $when_should_the_popup_appear_events as $event ) {
-			if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, $event ) ) {
+		// Если хотя бы одна опция "Кому показывать окно" активна, тогда пройдёмся итератором по всем событиям
+		if ( $who_should_see_the_popup_present ) {
+
+			// Пользователь просмотрел больше N страниц сайта
+			if ( who_should_see_the_popup_has_event( $who_should_see_the_popup, 'visitor_opened_at_least_n_number_of_pages' ) ) {
+				$page_views_cookie = 'scp-page-views';
+
+				// Если окно не было закрыто другими событиями — начинаем проверку условий
+				if ( ! is_scp_cookie_present() ) {
+
+					// Если существует кука просмотренных страниц — обновляем её
+					if ( isset( $_COOKIE[$page_views_cookie] ) ) {
+						$page_views = ( (int) $_COOKIE[$page_views_cookie] ) + 1;
+						setcookie( $page_views_cookie, $page_views, time() + $cookie_lifetime, '/' );
+
+						if ( $page_views > $visitor_opened_at_least_n_number_of_pages ) {
+							$who_should_see_the_popup_fired = true;
+						}
+
+					// Иначе создаём новую
+					} else {
+						setcookie( $page_views_cookie, 1, time() + $cookie_lifetime, '/' );
+					}
+
+				// Иначе удалим куку
+				} else {
+					setcookie( $page_views_cookie, 0, time() - $cookie_lifetime, '/' );
+					unset( $_COOKIE[$page_views_cookie] );
+				}
+			}
+
+			if ( $who_should_see_the_popup_fired ) {
 				$show_popup = true;
-				break;
+			}
+
+		// Активна любая опция когда показывать окно
+		} else {
+			foreach ( $when_should_the_popup_appear_events as $event ) {
+				if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, $event ) ) {
+					$show_popup = true;
+					break;
+				}
 			}
 		}
 
