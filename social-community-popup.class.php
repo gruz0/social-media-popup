@@ -3262,7 +3262,7 @@ class Social_Community_Popup {
 			$content .= '});
 		</script>';
 
-		$content = "$('body').prepend('" . $content . "');";
+		$content = "jQuery('body').prepend('" . $content . "');";
 
 		return $content;
 	}
