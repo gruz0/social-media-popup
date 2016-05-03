@@ -2902,7 +2902,7 @@ class Social_Community_Popup {
 		$encoded_content = preg_replace("~[\n\t]~", "", $content);
 		$encoded_content = base64_encode($encoded_content);
 
-		wp_register_script( 'social-community-popup-script', plugins_url( 'js/scripts.js?' . $version . rand(), __FILE__ ), array( 'jquery' ) );
+		wp_register_script( 'social-community-popup-script', plugins_url( 'js/scripts.js?' . $version, __FILE__ ), array( 'jquery' ) );
 		wp_localize_script( 'social-community-popup-script', 'scp', array(
 			'encodedContent' => htmlspecialchars( $encoded_content ),
 		));
