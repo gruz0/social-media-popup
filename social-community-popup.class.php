@@ -2916,6 +2916,7 @@ class Social_Community_Popup {
 		$scp_options = array();
 		$all_options = wp_load_alloptions();
 		foreach( $all_options as $name => $value ) {
+			// TODO: Возможно есть смысл сделать esc_attr именно здесь, но надо проверить
 			if ( stristr( $name, $scp_prefix ) ) $scp_options[$name] = $value;
 		}
 
@@ -3034,7 +3035,16 @@ class Social_Community_Popup {
 
 		$tab_index = 1;
 
-		if ( $use_facebook || $use_vkontakte || $use_odnoklassniki || $use_googleplus || $use_twitter || $use_pinterest ) {
+		$active_providers = array();
+		foreach ( SCP_Provider::available_providers() as $provider_name ) {
+			$provider = SCP_Provider::create($provider_name, $scp_prefix, $scp_options);
+
+			if ( $provider->is_active() ) {
+				$active_providers[$provider_name] = $provider;
+			}
+		}
+
+		if ( count( $active_providers ) ) {
 			$content .= '<div id="social-community-popup">';
 
 			$parent_popup_styles                  = '';
@@ -3074,16 +3084,6 @@ class Social_Community_Popup {
 
 			if ( $show_plugin_title ) {
 				$content .= '<div class="plugin-title">' . $scp_plugin_title . '</div>';
-			}
-
-			$active_providers = array();
-
-			foreach ( SCP_Provider::available_providers() as $provider_name ) {
-				$provider = SCP_Provider::create($provider_name, $scp_prefix, $scp_options);
-
-				if ( $provider->is_active() ) {
-					$active_providers[$provider_name] = $provider;
-				}
 			}
 
 			$selected_widgets_count = count( $active_providers );
