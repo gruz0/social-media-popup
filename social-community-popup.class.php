@@ -2910,7 +2910,6 @@ class Social_Community_Popup {
 	}
 
 	private function scp_php( $scp_prefix ) {
-		$scp_prefix = self::get_scp_prefix();
 		$template = new SCP_Template();
 
 		$scp_options = array();
