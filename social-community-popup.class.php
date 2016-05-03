@@ -3232,7 +3232,7 @@ class Social_Community_Popup {
 					$(window).scroll(function() {
 						if (!is_scp_cookie_present()) {
 							value = parseInt(Math.abs(document.body.scrollTop / (document.body.clientHeight - window.innerHeight) * 100));
-							if (showWindowAgain && value >= <?php echo $popup_will_appear_after_scrolling_down_n_percent; ?>) {';
+							if (showWindowAgain && value >= ' . $popup_will_appear_after_scrolling_down_n_percent . ') {';
 								$content .= $template->render_show_window();
 								$content .= $template->render_show_bottom_button( $delay_before_show_bottom_button );
 
