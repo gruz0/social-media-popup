@@ -45,7 +45,7 @@ function scp_deleteCookie(name) {
 }
 
 function scp_clearAllPluginCookies() {
-	if (window.confirm(scp.clearCookiesMessage)) {
+	if (window.confirm(window.scp_cookies.clearCookiesMessage)) {
 		scp_deleteCookie('social-community-popup');
 		scp_deleteCookie('scp-page-views');
 		document.location.reload(true);

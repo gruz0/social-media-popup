@@ -3253,7 +3253,7 @@ class Social_Community_Popup {
 	 */
 	private function add_cookies_script( $version, $scp_prefix ) {
 		wp_register_script( 'social-community-popup-cookies-script', plugins_url( 'js/cookies.js?' . $version, __FILE__ ), array( 'jquery' ) );
-		wp_localize_script( 'social-community-popup-cookies-script', 'scp', array(
+		wp_localize_script( 'social-community-popup-cookies-script', 'scp_cookies', array(
 			'clearCookiesMessage'           => __( 'Page will be reload after clear cookies. Continue?', L10N_SCP_PREFIX ),
 			'showWindowAfterReturningNDays' => (int) get_option( $scp_prefix . 'setting_display_after_n_days' ),
 		));
