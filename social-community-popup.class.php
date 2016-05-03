@@ -2919,10 +2919,23 @@ class Social_Community_Popup {
 			if ( stristr( $name, $scp_prefix ) ) $scp_options[$name] = $value;
 		}
 
+		$debug_mode = ( (int) $scp_options[ $scp_prefix . 'setting_debug_mode' ] ) == 1;
+
+		// При включённом режиме отладки плагин работает только для администратора сайта
+		if ( $debug_mode ) {
+			if ( ! current_user_can( 'manage_options' ) ) {
+				return;
+			}
+
+		// Если режим отладки выключен и есть кука закрытия окна или пользователь администратор — не показываем окно
+		} else {
+			if ( is_scp_cookie_present() || current_user_can( 'manage_options' ) ) {
+				return;
+			}
+		}
+
 		// Отключаем работу плагина на мобильных устройствах
 		if ( wp_is_mobile() && get_scp_option( 'setting_show_on_mobile_devices' ) === '0' ) return;
-
-		$debug_mode                                       = ( (int) $scp_options[ $scp_prefix . 'setting_debug_mode' ] ) == 1;
 
 		$after_n_days                                     = (int) $scp_options[ $scp_prefix . 'setting_display_after_n_days' ];
 
@@ -2941,19 +2954,6 @@ class Social_Community_Popup {
 
 		$who_should_see_the_popup                         = split_string_by_comma( $scp_options[ $scp_prefix . 'who_should_see_the_popup' ] );
 		$visitor_opened_at_least_n_number_of_pages        = (int) $scp_options[ $scp_prefix . 'visitor_opened_at_least_n_number_of_pages' ];
-
-		// При включённом режиме отладки плагин работает только для администратора сайта
-		if ( $debug_mode ) {
-			if ( ! current_user_can( 'manage_options' ) ) {
-				return;
-			}
-
-		// Если режим отладки выключен и есть кука закрытия окна или пользователь администратор — не показываем окно
-		} else {
-			if ( is_scp_cookie_present() || current_user_can( 'manage_options' ) ) {
-				return;
-			}
-		}
 
 		// Обработка событий кому показывать окно плагина
 		$show_popup = false;
