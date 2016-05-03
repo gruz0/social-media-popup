@@ -3076,13 +3076,10 @@ class Social_Community_Popup {
 				$content .= '<div class="plugin-title">' . $scp_plugin_title . '</div>';
 			}
 
-			// FIXME: Should be deleted
-			$providers = array();
 			$active_providers = array();
 
 			foreach ( SCP_Provider::available_providers() as $provider_name ) {
 				$provider = SCP_Provider::create($provider_name, $scp_prefix, $scp_options);
-				$providers[$provider_name] = $provider;
 
 				if ( $provider->is_active() ) {
 					$active_providers[$provider_name] = $provider;
