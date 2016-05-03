@@ -3021,14 +3021,9 @@ class Social_Community_Popup {
 				$show_popup = true;
 			}
 
-		// Активна любая опция когда показывать окно
+		// Иначе всегда показываем окно
 		} else {
-			foreach ( $when_should_the_popup_appear_events as $event ) {
-				if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, $event ) ) {
-					$show_popup = true;
-					break;
-				}
-			}
+			$show_popup = true;
 		}
 
 		// Если ни одно событие кому показывать окно не сработало — выходим
