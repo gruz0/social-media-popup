@@ -3238,7 +3238,6 @@ class Social_Community_Popup {
 		</script>';
 
 		$content = "$('body').prepend('" . $content . "');";
-		$content .= 'alert("done");';
 
 		return $content;
 	}
