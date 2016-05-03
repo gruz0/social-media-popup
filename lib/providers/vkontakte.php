@@ -43,8 +43,7 @@ class SCP_VK_Provider extends SCP_Provider {
 				var scp_VK_closeWindowAfterJoiningGroup = ' . ( (int) self::$options[ self::$prefix . 'setting_vkontakte_close_window_after_join' ] ) . ';
 
 				function initialize_VK_Widgets() {
-					VK.init({apiId: ' . $application_id . '
-					});
+					VK.init({apiId: ' . $application_id . ' });
 
 					VK.Observer.subscribe("widgets.groups.joined", function f() {
 					if ( scp_VK_closeWindowAfterJoiningGroup ) {
