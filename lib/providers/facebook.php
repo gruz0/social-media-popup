@@ -13,6 +13,8 @@ class SCP_Facebook_Provider extends SCP_Provider {
 	}
 
 	public static function container() {
+		$close_window_after_join = ( (int) self::$options[ self::$prefix . 'setting_facebook_close_window_after_join' ] ) == 1;
+
 		$content = '<div class="box">';
 
 		if ( self::$options[ self::$prefix . 'setting_facebook_show_description' ] === '1' ) {
@@ -37,7 +39,26 @@ class SCP_Facebook_Provider extends SCP_Provider {
 		$content .= '<script>function scp_prependFacebook($) {';
 
 		$prepend_facebook = '<div id="fb-root"></div>'
-			. '<script>(function(d, s, id) {'
+			. '<script>';
+
+		// Если активна опция закрытия окна после подписки на виджет Facebook, тогда добавим дополнительный код
+		if ( $close_window_after_join ) {
+			$prepend_facebook .= 'var scp_facebook_page_like_or_unlike_callback = function(url, html_element) {
+				scp_destroyPlugin(jQuery, scp.showWindowAfterReturningNDays);
+			};
+
+			window.fbAsyncInit = function() {
+				FB.init({
+					appId  : "' . esc_attr( self::$options[ self::$prefix . 'setting_facebook_application_id' ] ) . '",
+					xfbml  : true,
+					version: "v2.5"
+				});
+
+				FB.Event.subscribe("edge.create", scp_facebook_page_like_or_unlike_callback);
+			};';
+		}
+
+		$prepend_facebook .= '(function(d, s, id) {'
 			. 'var js, fjs = d.getElementsByTagName(s)[0];'
 			. 'if (d.getElementById(id)) return;'
 			. 'js = d.createElement(s); js.id = id;'

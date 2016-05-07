@@ -109,6 +109,7 @@ class Social_Community_Popup {
 			'setting_facebook_adapt_container_width',
 			'setting_facebook_use_small_header',
 			'setting_facebook_tabs',
+			'setting_facebook_close_window_after_join',
 
 			// ВКонтакте
 			'setting_use_vkontakte',
@@ -695,6 +696,9 @@ class Social_Community_Popup {
 			// Добавляем новое свойство "Пользователям с какими ролями показывать виджет"
 			add_option( $scp_prefix . 'visitor_registered_and_role_equals_to',              'all' );
 
+			// Добавляем новое свойство "Закрывать окно после вступления в группу" в виджет Facebook
+			add_option( $scp_prefix . 'setting_facebook_close_window_after_join',           0 );
+
 			update_option( $version, '0.7.4' );
 			self::set_scp_version( '0.7.4' );
 		}
@@ -1254,6 +1258,7 @@ class Social_Community_Popup {
 		register_setting( $group, $scp_prefix . 'setting_facebook_show_facepile' );
 		register_setting( $group, $scp_prefix . 'setting_facebook_tabs', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'setting_facebook_adapt_container_width', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_facebook_close_window_after_join', 'absint' );
 
 		add_settings_section(
 			$section,
@@ -1427,6 +1432,18 @@ class Social_Community_Popup {
 			$section,
 			array(
 				'field' => $scp_prefix . 'setting_facebook_tabs'
+			)
+		);
+
+		// Закрывать окно виджета после вступления в группу
+		add_settings_field(
+			$prefix . '-facebook-close-window-after-join',
+			__( 'Close Plugin Window After Joining the Group', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'setting_facebook_close_window_after_join'
 			)
 		);
 	}
