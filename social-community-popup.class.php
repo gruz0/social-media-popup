@@ -2989,9 +2989,31 @@ class Social_Community_Popup {
 
 		// Если режим отладки выключен и есть кука закрытия окна или пользователь администратор — не показываем окно
 		} else {
-			// TODO: Добавить опцию "Не показывать виджет авторизованным пользователям"
-			if ( is_scp_cookie_present() || current_user_can( 'manage_options' ) ) {
+			if ( is_scp_cookie_present() ) {
 				return;
+			}
+
+			// Проверяем, что текущий пользователь залогинен в админку и затем проверяем его роль
+			if ( is_user_logged_in() ) {
+				switch ( $scp_options[ $scp_prefix . 'visitor_registered_and_role_equals_to' ] ) {
+					case 'all_registered_users':
+
+					break;
+
+					case 'exclude_administrators':
+						if ( current_user_can( 'manage_options' ) ) {
+							return;
+						}
+
+					break;
+
+					case 'exclude_administrators_and_managers':
+						if ( current_user_can( 'publish_pages' ) || current_user_can( 'publish_posts' ) ) {
+							return;
+						}
+
+					break;
+				}
 			}
 		}
 
