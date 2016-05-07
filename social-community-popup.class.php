@@ -91,6 +91,7 @@ class Social_Community_Popup {
 			// Кому показывать окно
 			'who_should_see_the_popup',
 			'visitor_opened_at_least_n_number_of_pages',
+			'visitor_registered_and_role_equals_to',
 
 			// Facebook
 			'setting_use_facebook',
@@ -227,6 +228,7 @@ class Social_Community_Popup {
 		self::upgrade_to_0_7_1();
 		self::upgrade_to_0_7_2();
 		self::upgrade_to_0_7_3();
+		self::upgrade_to_0_7_4();
 	}
 
 	public static function upgrade_to_0_1() {
@@ -679,6 +681,24 @@ class Social_Community_Popup {
 		}
 	}
 
+	/**
+	 * Upgrade to 0.7.4
+	 *
+	 * @since 0.7.4
+	 * @return void
+	 */
+	public static function upgrade_to_0_7_4() {
+		$scp_prefix = self::get_scp_prefix();
+		$version    = $scp_prefix . 'version';
+
+		if ( '0.7.4' > get_option( $version ) ) {
+			// Добавляем новое свойство "Пользователям с какими ролями показывать виджет"
+			add_option( $scp_prefix . 'visitor_registered_and_role_equals_to',              'all' );
+
+			update_option( $version, '0.7.4' );
+			self::set_scp_version( '0.7.4' );
+		}
+	}
 
 	/**
 	 * Подключаем локализацию к плагину
@@ -1040,6 +1060,7 @@ class Social_Community_Popup {
 		register_setting( $group, $scp_prefix . 'popup_will_appear_on_exit_intent', 'absint' );
 		register_setting( $group, $scp_prefix . 'who_should_see_the_popup', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'visitor_opened_at_least_n_number_of_pages', 'absint' );
+		register_setting( $group, $scp_prefix . 'visitor_registered_and_role_equals_to', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'setting_display_after_n_days', 'absint' );
 
 		add_settings_section(
@@ -1137,6 +1158,18 @@ class Social_Community_Popup {
 			$section_who_should_see_the_popup,
 			array(
 				'field' => $scp_prefix . 'visitor_opened_at_least_n_number_of_pages'
+			)
+		);
+
+		// Отображение окна авторизованным пользователям
+		add_settings_field(
+			$prefix . '-visitor-registered-and-role-equals-to',
+			__( 'Registered Users Who Should See the Popup', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_visitor_registered_and_role_equals_to' ),
+			$options_page,
+			$section_who_should_see_the_popup,
+			array(
+				'field' => $scp_prefix . 'visitor_registered_and_role_equals_to'
 			)
 		);
 
@@ -2425,6 +2458,7 @@ class Social_Community_Popup {
 
 		$options = array();
 		$options['visitor_opened_at_least_n_number_of_pages'] = __( 'Visitor opened at least N number of page(s)', L10N_SCP_PREFIX );
+		$options['visitor_registered_and_role_equals_to']     = __( 'Registered Users Who Should See the Popup', L10N_SCP_PREFIX );
 
 		$chains = preg_split( "/,/", $value );
 
@@ -2444,6 +2478,32 @@ class Social_Community_Popup {
 		}
 
 		$html .= '<input type="hidden" id="' . $field . '" name="' . $field . '" value="' . esc_attr( $value ) . '" />';
+		echo $html;
+	}
+
+	/**
+	 * Callback-шаблон для выбора каким пользовательским ролям показывать плагин
+	 */
+	public function settings_field_visitor_registered_and_role_equals_to( $args ) {
+		$field = $args[ 'field' ];
+		$value = get_option( $field );
+
+		$options = array();
+		$options['all_registered_users']                = __( 'All Registered Users', L10N_SCP_PREFIX );
+		$options['exclude_administrators']              = __( 'All Registered Users Exclude Administrators', L10N_SCP_PREFIX );
+		$options['exclude_administrators_and_managers'] = __( 'All Registered Users Exclude Administrators and Managers', L10N_SCP_PREFIX );
+
+		$chains = preg_split( "/,/", $value );
+
+		$format = '<option value="%s"%s>%s</option>';
+
+		$html = sprintf( '<select name="%s" id="%s" class="%s">', $field, $field, $field );
+		foreach ( $options as $option_name => $label ) {
+			$html .= sprintf( $format, $option_name, selected( $value, $option_name, false ), $label );
+			$html .= '<br />';
+		}
+		$html .= '</select>';
+
 		echo $html;
 	}
 
@@ -2929,6 +2989,7 @@ class Social_Community_Popup {
 
 		// Если режим отладки выключен и есть кука закрытия окна или пользователь администратор — не показываем окно
 		} else {
+			// TODO: Добавить опцию "Не показывать виджет авторизованным пользователям"
 			if ( is_scp_cookie_present() || current_user_can( 'manage_options' ) ) {
 				return;
 			}
