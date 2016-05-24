@@ -120,7 +120,7 @@ class SCP_Provider {
 		return '<li '
 			. 'data-index="' . $args['index'] . '" '
 			. 'class="' . $args['css_class'] . '" '
-			. '><span>' . $args['value'] . '</span></li>';
+			. '><span>' . $args['tab_caption'] . '</span></li>';
 	}
 
 	/**
@@ -135,7 +135,7 @@ class SCP_Provider {
 		return '<li '
 			. 'class="' . $args['css_class'] . '" '
 			. 'style="width:' . sprintf( '%0.2f', floatval( $args['width'] ) ) . '%;" '
-			. '><a href="' . $args['url'] . '" target="_blank" rel="nofollow" title="' . $args['value'] . '">'
+			. '><a href="' . $args['url'] . '" target="_blank" rel="nofollow" title="' . $args['tab_caption'] . '">'
 			. '<i class="fa ' . $args['icon'] . ' fa-2x"></i></a></li>';
 	}
 

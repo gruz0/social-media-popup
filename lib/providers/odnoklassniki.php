@@ -7,9 +7,9 @@ class SCP_Odnoklassniki_Provider extends SCP_Provider {
 
 	public static function options() {
 		return array(
-			'value'     => esc_attr( self::$options[ self::$prefix . 'setting_odnoklassniki_tab_caption'] ),
-			'css_class' => 'odnoklassniki-tab',
-			'icon'      => 'fa-odnoklassniki'
+			'tab_caption' => esc_attr( self::$options[ self::$prefix . 'setting_odnoklassniki_tab_caption'] ),
+			'css_class'   => 'odnoklassniki-tab',
+			'icon'        => 'fa-odnoklassniki'
 		);
 	}
 

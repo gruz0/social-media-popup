@@ -7,10 +7,9 @@ class SCP_Facebook_Provider extends SCP_Provider {
 
 	public static function options() {
 		return array(
-			// TODO: Переименовать value в tab_caption
-			'value'     => esc_attr( self::$options[ self::$prefix . 'setting_facebook_tab_caption'] ),
-			'css_class' => 'facebook-tab',
-			'icon'      => 'fa-facebook'
+			'tab_caption' => esc_attr( self::$options[ self::$prefix . 'setting_facebook_tab_caption'] ),
+			'css_class'   => 'facebook-tab',
+			'icon'        => 'fa-facebook'
 
 			// TODO: Добавить сюда ключ url, в который поместить ссылку на группу
 		);

@@ -7,9 +7,9 @@ class SCP_GooglePlus_Provider extends SCP_Provider {
 
 	public static function options() {
 		return array(
-			'value'     => esc_attr( self::$options[ self::$prefix . 'setting_googleplus_tab_caption'] ),
-			'css_class' => 'google-plus-tab',
-			'icon'      => 'fa-google-plus'
+			'tab_caption' => esc_attr( self::$options[ self::$prefix . 'setting_googleplus_tab_caption'] ),
+			'css_class'   => 'google-plus-tab',
+			'icon'        => 'fa-google-plus'
 		);
 	}
 
