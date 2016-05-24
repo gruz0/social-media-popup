@@ -134,6 +134,7 @@ class Social_Community_Popup {
 			'setting_odnoklassniki_show_description',
 			'setting_odnoklassniki_description',
 			'setting_odnoklassniki_group_id',
+			'setting_odnoklassniki_page_url',
 			'setting_odnoklassniki_width',
 			'setting_odnoklassniki_height',
 
@@ -700,8 +701,11 @@ class Social_Community_Popup {
 			// Добавляем новое свойство "Закрывать окно после вступления в группу" в виджет Facebook
 			add_option( $scp_prefix . 'setting_facebook_close_window_after_join',           0 );
 
-			// Добавляем новое свойство "Адрес группы ВКонтакте" в виджет Facebook
+			// Добавляем новое свойство "Адрес группы ВКонтакте" в виджет ВКонтакте
 			add_option( $scp_prefix . 'setting_vkontakte_page_url',                         'https://vk.com/blogsonwordpress_new' );
+
+			// Добавляем новое свойство "Адрес группы Одноклассники" в виджет Одноклассников
+			add_option( $scp_prefix . 'setting_odnoklassniki_page_url',                     'https://ok.ru/group/57122812461115' );
 
 			update_option( $version, '0.7.4' );
 			self::set_scp_version( '0.7.4' );
@@ -1696,6 +1700,7 @@ class Social_Community_Popup {
 		register_setting( $group, $scp_prefix . 'setting_odnoklassniki_show_description' );
 		register_setting( $group, $scp_prefix . 'setting_odnoklassniki_description', 'wp_kses_post' );
 		register_setting( $group, $scp_prefix . 'setting_odnoklassniki_group_id', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_odnoklassniki_group_url', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'setting_odnoklassniki_width', 'absint' );
 		register_setting( $group, $scp_prefix . 'setting_odnoklassniki_height', 'absint' );
 
@@ -1763,6 +1768,18 @@ class Social_Community_Popup {
 			$section,
 			array(
 				'field' => $scp_prefix . 'setting_odnoklassniki_group_id'
+			)
+		);
+
+		// URL группы Одноклассников
+		add_settings_field(
+			$prefix . '-odnoklassniki-group-url',
+			__( 'Odnoklassniki Group URL', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'setting_odnoklassniki_group_url'
 			)
 		);
 
