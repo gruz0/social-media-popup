@@ -2969,7 +2969,13 @@ class Social_Community_Popup {
 		$this->add_cookies_script( $version, $scp_prefix );
 		$this->render_popup_window( $version, $scp_prefix );
 
-		wp_register_style( 'social-community-popup-style', plugins_url( 'css/styles.css?' . $version, __FILE__ ) );
+		if ( wp_is_mobile() ) {
+			wp_register_style( 'social-community-popup-style', plugins_url( 'css/mobile.css?' . $version, __FILE__ ) );
+			wp_register_style( 'font-awesome', plugins_url( 'vendor/font-awesome-4.6.3/css/font-awesome.min.css?' . $version, __FILE__ ) );
+			wp_enqueue_style( 'font-awesome' );
+		} else {
+			wp_register_style( 'social-community-popup-style', plugins_url( 'css/styles.css?' . $version, __FILE__ ) );
+		}
 		wp_enqueue_style( 'social-community-popup-style' );
 	}
 
@@ -3034,8 +3040,11 @@ class Social_Community_Popup {
 			}
 		}
 
+		$show_on_mobile = $scp_options[ $scp_prefix .  'setting_show_on_mobile_devices' ] === '1';
+		$wp_is_mobile   = wp_is_mobile();
+
 		// Отключаем работу плагина на мобильных устройствах
-		if ( wp_is_mobile() && $scp_options[ $scp_prefix .  'setting_show_on_mobile_devices' ] === '0' ) return;
+		if ( $wp_is_mobile && ! $show_on_mobile ) return;
 
 		$after_n_days                                     = (int) $scp_options[ $scp_prefix . 'setting_display_after_n_days' ];
 
@@ -3154,14 +3163,11 @@ class Social_Community_Popup {
 		$delay_before_show_bottom_button = abs( (int) $scp_options[ $scp_prefix . 'setting_delay_before_show_bottom_button' ] );
 		$background_image           = $scp_options[ $scp_prefix . 'setting_background_image' ];
 
-
 		////////////////////////////////////////
 		// START RENDER
 		////////////////////////////////////////
 
 		$content = '';
-
-		$tab_index = 1;
 
 		$active_providers = array();
 		foreach ( SCP_Provider::available_providers() as $provider_name ) {
@@ -3173,53 +3179,18 @@ class Social_Community_Popup {
 		}
 
 		if ( count( $active_providers ) ) {
-			$content .= '<div id="social-community-popup">';
+			$active_providers_count = count( $active_providers );
+			$tab_index = 1;
 
-			$parent_popup_styles                  = '';
-			$parent_popup_css                     = array();
-			$parent_popup_css['background-color'] = $overlay_color;
-			$parent_popup_css['opacity']          = '0.' . ( absint( $overlay_opacity ) / 10.0 );
+			if ( $wp_is_mobile ) {
+				$content .= '<div id="scp_mobile">';
+				// TODO: Вынести в локаль
+				$content .= '<div class="scp-mobile-title">Понравился наш сайт?<br />Вступайте в группы в социальных сетях!</div>';
 
-			foreach ( $parent_popup_css as $selector => $value ) {
-				$parent_popup_styles .= "${selector}: ${value}; ";
-			}
-			$content .= '<div class="parent_popup" style="' . esc_attr( $parent_popup_styles ) . '"></div>';
+				$content .= '<ul class="scp-icons">';
 
-			$border_radius_css    = $border_radius > 0 ? "border-radius:{$border_radius}px !important;" : "";
-			$background_image_css = empty( $background_image ) ? '' : "background:#fff url('{$background_image}') center center no-repeat;";
-
-			$popup_css = '';
-			$popup_css .= 'width:' . ( $container_width + 40 ) . 'px !important;height:' . ( $container_height + 10 ) . 'px !important;';
-			$popup_css .= $border_radius_css;
-			$popup_css .= $background_image_css;
-
-			$scp_plugin_title  = trim( $scp_options[ $scp_prefix . 'setting_plugin_title' ] );
-			$show_plugin_title = mb_strlen( $scp_plugin_title ) > 0;
-
-			$content .= '<div id="popup" style="' . esc_attr( $popup_css ) . '">';
-
-			if ( $show_plugin_title && $show_close_button_in === 'inside' ) {
-				$content .= '<div class="top-close">';
-					$content .= '<span class="close" title="' . __( 'Close Modal Dialog', L10N_SCP_PREFIX ) . '">&times;</span>';
-				$content .= '</div>';
-			}
-
-			if ( $show_close_button_in === 'outside' ) {
-				$content .= '<a href="#" class="close close-outside" title="' . __( 'Close Modal Dialog', L10N_SCP_PREFIX ) . '">&times;</a>';
-			}
-
-			$content .= '<div class="section" style="width:' . esc_attr( $container_width ) . 'px !important;height:' . esc_attr( $container_height ) . 'px !important;">';
-
-			if ( $show_plugin_title ) {
-				$content .= '<div class="plugin-title">' . $scp_plugin_title . '</div>';
-			}
-
-			$selected_widgets_count = count( $active_providers );
-
-			if ( $selected_widgets_count == 1 && $scp_options[ $scp_prefix . 'setting_hide_tabs_if_one_widget_is_active' ] == 1 ) {
-
-			} else {
-				$content .= '<ul class="tabs"' . ( $align_tabs_to_center ? 'style="text-align:center;"' : '' ) . '>';
+				$tab_width      = sprintf( '%0.2f', floatval( 100 / $active_providers_count ) );
+				$last_tab_width = 100 - $tab_width * ( $active_providers_count - 1 );
 
 				for ( $idx = 0, $size = count( $tabs_order ); $idx < $size; $idx++ ) {
 					$provider_name = $tabs_order[$idx];
@@ -3229,36 +3200,116 @@ class Social_Community_Popup {
 
 					$provider = $active_providers[$provider_name];
 
-					$args = array( 'index' => $tab_index++ );
-					$args = array_merge( $args, $provider->provide_options_to_tab_caption() );
-					$content .= $provider->tab_caption( $args );
-				}
+					$width = $tab_index == $active_providers_count ? $last_tab_width : $tab_width;
 
-				if ( ! $show_plugin_title && $show_close_button_in === 'inside' ) {
-					$content .= '<li class="last-item"><span class="close" title="' . __( 'Close Modal Dialog', L10N_SCP_PREFIX ) . '">&times;</span></li>';
+					$args = array(
+						'index' => $tab_index++,
+						'width' => $width,
+						'url'   => '#'
+					);
+
+					$args = array_merge( $args, $provider->provide_options_to_tab_caption() );
+
+					if ( $wp_is_mobile ) {
+						$content .= $provider->tab_caption_mobile( $args );
+					} else {
+						$content .= $provider->tab_caption( $args );
+					}
 				}
 
 				$content .= '</ul>';
+
+			} else {
+				$content .= '<div id="social-community-popup">';
+
+				$parent_popup_styles                  = '';
+				$parent_popup_css                     = array();
+				$parent_popup_css['background-color'] = $overlay_color;
+				$parent_popup_css['opacity']          = '0.' . ( absint( $overlay_opacity ) / 10.0 );
+
+				foreach ( $parent_popup_css as $selector => $value ) {
+					$parent_popup_styles .= "${selector}: ${value}; ";
+				}
+				$content .= '<div class="parent_popup" style="' . esc_attr( $parent_popup_styles ) . '"></div>';
+
+				$border_radius_css    = $border_radius > 0 ? "border-radius:{$border_radius}px !important;" : "";
+				$background_image_css = empty( $background_image ) ? '' : "background:#fff url('{$background_image}') center center no-repeat;";
+
+				$popup_css = '';
+				$popup_css .= 'width:' . ( $container_width + 40 ) . 'px !important;height:' . ( $container_height + 10 ) . 'px !important;';
+				$popup_css .= $border_radius_css;
+				$popup_css .= $background_image_css;
+
+				$scp_plugin_title  = trim( $scp_options[ $scp_prefix . 'setting_plugin_title' ] );
+				$show_plugin_title = mb_strlen( $scp_plugin_title ) > 0;
+
+				$content .= '<div id="popup" style="' . esc_attr( $popup_css ) . '">';
+
+				if ( $show_plugin_title && $show_close_button_in === 'inside' ) {
+					$content .= '<div class="top-close">';
+						$content .= '<span class="close" title="' . __( 'Close Modal Dialog', L10N_SCP_PREFIX ) . '">&times;</span>';
+					$content .= '</div>';
+				}
+
+				if ( $show_close_button_in === 'outside' ) {
+					$content .= '<a href="#" class="close close-outside" title="' . __( 'Close Modal Dialog', L10N_SCP_PREFIX ) . '">&times;</a>';
+				}
+
+				$content .= '<div class="section" style="width:' . esc_attr( $container_width ) . 'px !important;height:' . esc_attr( $container_height ) . 'px !important;">';
+
+				if ( $show_plugin_title ) {
+					$content .= '<div class="plugin-title">' . $scp_plugin_title . '</div>';
+				}
+
+
+				if ( $active_providers_count == 1 && $scp_options[ $scp_prefix . 'setting_hide_tabs_if_one_widget_is_active' ] == 1 ) {
+
+				} else {
+					$content .= '<ul class="tabs"' . ( $align_tabs_to_center ? 'style="text-align:center;"' : '' ) . '>';
+
+					for ( $idx = 0, $size = count( $tabs_order ); $idx < $size; $idx++ ) {
+						$provider_name = $tabs_order[$idx];
+
+						// Выходим, если текущий провайдер из списка не выбран используемым
+						if ( ! isset( $active_providers[$provider_name] ) ) continue;
+
+						$provider = $active_providers[$provider_name];
+
+						$args = array( 'index' => $tab_index++ );
+						$args = array_merge( $args, $provider->provide_options_to_tab_caption() );
+						$content .= $provider->tab_caption( $args );
+					}
+
+					if ( ! $show_plugin_title && $show_close_button_in === 'inside' ) {
+						$content .= '<li class="last-item"><span class="close" title="' . __( 'Close Modal Dialog', L10N_SCP_PREFIX ) . '">&times;</span></li>';
+					}
+
+					$content .= '</ul>';
+				}
 			}
 
-			for ( $idx = 0, $size = count( $tabs_order ); $idx < $size; $idx++ ) {
-				$provider_name = $tabs_order[$idx];
+			if ( ! $wp_is_mobile ) {
+				for ( $idx = 0, $size = count( $tabs_order ); $idx < $size; $idx++ ) {
+					$provider_name = $tabs_order[$idx];
 
-				// Выходим, если текущий провайдер из списка не выбран используемым
-				if ( ! isset( $active_providers[$provider_name] ) ) continue;
+					// Выходим, если текущий провайдер из списка не выбран используемым
+					if ( ! isset( $active_providers[$provider_name] ) ) continue;
 
-				$provider = $active_providers[$provider_name];
-				$content .= $provider->container();
+					$provider = $active_providers[$provider_name];
+					$content .= $provider->container();
+				}
 			}
 
 			$content .= '</div>';
 
-			if ( $scp_options[ $scp_prefix . 'setting_show_button_to_close_widget' ] == '1' ) {
-				$button_to_close_widget_style = $scp_options[ $scp_prefix . 'setting_button_to_close_widget_style' ];
-				$button_to_close_widget_class = $button_to_close_widget_style == 'link' ? '' : 'scp-' . $button_to_close_widget_style . '-button';
-				$content .= '<div class="dont-show-widget scp-button ' . esc_attr( $button_to_close_widget_class ) . '">';
-					$content .= '<a href="#" class="close">' . esc_attr( $scp_options[ $scp_prefix . 'setting_button_to_close_widget_title' ] ) . '</a>';
-				$content .= '</div>';
+			if ( ! $wp_is_mobile ) {
+				if ( $scp_options[ $scp_prefix . 'setting_show_button_to_close_widget' ] == '1' ) {
+					$button_to_close_widget_style = $scp_options[ $scp_prefix . 'setting_button_to_close_widget_style' ];
+					$button_to_close_widget_class = $button_to_close_widget_style == 'link' ? '' : 'scp-' . $button_to_close_widget_style . '-button';
+					$content .= '<div class="dont-show-widget scp-button ' . esc_attr( $button_to_close_widget_class ) . '">';
+						$content .= '<a href="#" class="close">' . esc_attr( $scp_options[ $scp_prefix . 'setting_button_to_close_widget_title' ] ) . '</a>';
+					$content .= '</div>';
+				}
 			}
 
 			$content .= '</div>';
@@ -3266,103 +3317,117 @@ class Social_Community_Popup {
 
 		// Окно SCP выводим только после создания его в DOM-дереве
 
-		$content .= '<script>
-			jQuery(document).ready(function($) {
-				if (is_scp_cookie_present()) return;';
+		if ( $wp_is_mobile ) {
+			$content .= '<script>
+				jQuery(document).ready(function($) {
+					if (is_scp_cookie_present()) return;';
 
-				if ( $use_facebook ) {
-					$content .= "scp_prependFacebook(\$);";
-				}
+					// Если ни одно из событий когда показывать окно не выбрано — показываем окно сразу и без задержки
+					if ( ! is_scp_cookie_present() ) {
+						$content .= $template->render_show_window();
+					}
+			$content .= '});';
+			$content .= '</script>';
 
-				if ( $use_vkontakte ) {
-					$content .= "scp_prependVK(\$);";
-				}
+		} else {
+			$content .= '<script>
+				jQuery(document).ready(function($) {
+					if (is_scp_cookie_present()) return;';
 
-				if ( $use_googleplus ) {
-					$content .= "scp_prependGooglePlus(\$);";
-				}
+					if ( $use_facebook ) {
+						$content .= "scp_prependFacebook(\$);";
+					}
 
-				if ( $use_pinterest ) {
-					$content .= "scp_prependPinterest(\$);";
-				}
+					if ( $use_vkontakte ) {
+						$content .= "scp_prependVK(\$);";
+					}
 
-				$any_event_active = false;
+					if ( $use_googleplus ) {
+						$content .= "scp_prependGooglePlus(\$);";
+					}
 
-				// Отображение плагина после просмотра страницы N секунд
-				if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'after_n_seconds' ) ) {
-					$any_event_active = true;
+					if ( $use_pinterest ) {
+						$content .= "scp_prependPinterest(\$);";
+					}
 
-					$calculated_delay = ( $popup_will_appear_after_n_seconds > 0 ? $popup_will_appear_after_n_seconds * 1000 : 1000 );
+					$any_event_active = false;
 
-					$content .= 'setTimeout(function() {
-						if (!is_scp_cookie_present()) {';
-							$content .= $template->render_show_window();
-							$content .= $template->render_show_bottom_button( $delay_before_show_bottom_button );
-						$content .= '}
-					}, ' . esc_attr( $calculated_delay ) . ');';
-				}
+					// Отображение плагина после просмотра страницы N секунд
+					if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'after_n_seconds' ) ) {
+						$any_event_active = true;
 
-				// Отображение плагина после клика по указанному селектору
-				if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'after_clicking_on_element' ) ) {
-					$any_event_active = true;
+						$calculated_delay = ( $popup_will_appear_after_n_seconds > 0 ? $popup_will_appear_after_n_seconds * 1000 : 1000 );
 
-					if ( ! empty( $popup_will_appear_after_clicking_on_element ) ) {
-						$content .= '$("' . $popup_will_appear_after_clicking_on_element . '").on("click", function($) {
+						$content .= 'setTimeout(function() {
 							if (!is_scp_cookie_present()) {';
 								$content .= $template->render_show_window();
 								$content .= $template->render_show_bottom_button( $delay_before_show_bottom_button );
 							$content .= '}
-						});';
-					} else {
-						$content .= 'alert("' . __( "You must add a selector element for the plugin Social Community Popup. Otherwise it won't be work.", L10N_SCP_PREFIX ) . '");';
+						}, ' . esc_attr( $calculated_delay ) . ');';
 					}
-				}
 
-				// Отображение плагина после прокрутки страницы на N процентов
-				if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'after_scrolling_down_n_percent' ) ) {
-					$any_event_active = true;
+					// Отображение плагина после клика по указанному селектору
+					if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'after_clicking_on_element' ) ) {
+						$any_event_active = true;
 
-					$content .= 'var showWindowAgain = true;
-					$(window).scroll(function() {
-						if (!is_scp_cookie_present()) {
-							var bodyScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+						if ( ! empty( $popup_will_appear_after_clicking_on_element ) ) {
+							$content .= '$("' . $popup_will_appear_after_clicking_on_element . '").on("click", function($) {
+								if (!is_scp_cookie_present()) {';
+									$content .= $template->render_show_window();
+									$content .= $template->render_show_bottom_button( $delay_before_show_bottom_button );
+								$content .= '}
+							});';
+						} else {
+							$content .= 'alert("' . __( "You must add a selector element for the plugin Social Community Popup. Otherwise it won't be work.", L10N_SCP_PREFIX ) . '");';
+						}
+					}
 
-							value = parseInt(Math.abs(bodyScrollTop / (document.body.clientHeight - window.innerHeight) * 100));
-							if (showWindowAgain && value >= ' . $popup_will_appear_after_scrolling_down_n_percent . ') {';
+					// Отображение плагина после прокрутки страницы на N процентов
+					if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'after_scrolling_down_n_percent' ) ) {
+						$any_event_active = true;
+
+						$content .= 'var showWindowAgain = true;
+						$(window).scroll(function() {
+							if (!is_scp_cookie_present()) {
+								var bodyScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+
+								value = parseInt(Math.abs(bodyScrollTop / (document.body.clientHeight - window.innerHeight) * 100));
+								if (showWindowAgain && value >= ' . $popup_will_appear_after_scrolling_down_n_percent . ') {';
+									$content .= $template->render_show_window();
+									$content .= $template->render_show_bottom_button( $delay_before_show_bottom_button );
+
+									$content .= 'showWindowAgain = false;
+								}
+							}
+						});';
+					}
+
+					// Отображение плагина при попытке увести мышь за пределы окна
+					if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'on_exit_intent' ) && $popup_will_appear_on_exit_intent ) {
+						$any_event_active = true;
+
+						$content .= '$(document).on("mouseleave", function(e) {
+							if (is_scp_cookie_present()) return;
+
+							var scroll = window.pageYOffset || document.documentElement.scrollTop;
+							if((e.pageY - scroll) < 7) {';
 								$content .= $template->render_show_window();
 								$content .= $template->render_show_bottom_button( $delay_before_show_bottom_button );
+							$content .= '}
+						});';
+					}
 
-								$content .= 'showWindowAgain = false;
-							}
-						}
-					});';
-				}
+					// Если ни одно из событий когда показывать окно не выбрано — показываем окно сразу и без задержки
+					if ( ! $any_event_active && ! is_scp_cookie_present() ) {
+						$content .= $template->render_show_window();
+						$content .= $template->render_show_bottom_button( $delay_before_show_bottom_button );
+					}
 
-				// Отображение плагина при попытке увести мышь за пределы окна
-				if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'on_exit_intent' ) && $popup_will_appear_on_exit_intent ) {
-					$any_event_active = true;
-
-					$content .= '$(document).on("mouseleave", function(e) {
-						if (is_scp_cookie_present()) return;
-
-						var scroll = window.pageYOffset || document.documentElement.scrollTop;
-						if((e.pageY - scroll) < 7) {';
-							$content .= $template->render_show_window();
-							$content .= $template->render_show_bottom_button( $delay_before_show_bottom_button );
-						$content .= '}
-					});';
-				}
-
-				// Если ни одно из событий когда показывать окно не выбрано — показываем окно сразу и без задержки
-				if ( ! $any_event_active && ! is_scp_cookie_present() ) {
-					$content .= $template->render_show_window();
-					$content .= $template->render_show_bottom_button( $delay_before_show_bottom_button );
-				}
-
-				$content .= $template->render_close_widget( $close_by_clicking_anywhere, $after_n_days );
-				$content .= $template->render_close_widget_when_esc_pressed( $close_when_esc_pressed, $after_n_days );
-			$content .= '});
-		</script>';
+					$content .= $template->render_close_widget( $close_by_clicking_anywhere, $after_n_days );
+					$content .= $template->render_close_widget_when_esc_pressed( $close_when_esc_pressed, $after_n_days );
+				$content .= '});
+			</script>';
+		}
 
 		$content = "jQuery('body').prepend('" . $content . "');";
 
