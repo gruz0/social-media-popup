@@ -134,7 +134,7 @@ class Social_Community_Popup {
 			'setting_odnoklassniki_show_description',
 			'setting_odnoklassniki_description',
 			'setting_odnoklassniki_group_id',
-			'setting_odnoklassniki_page_url',
+			'setting_odnoklassniki_group_url',
 			'setting_odnoklassniki_width',
 			'setting_odnoklassniki_height',
 
@@ -705,7 +705,7 @@ class Social_Community_Popup {
 			add_option( $scp_prefix . 'setting_vkontakte_page_url',                         'https://vk.com/blogsonwordpress_new' );
 
 			// Добавляем новое свойство "Адрес группы Одноклассники" в виджет Одноклассников
-			add_option( $scp_prefix . 'setting_odnoklassniki_page_url',                     'https://ok.ru/group/57122812461115' );
+			add_option( $scp_prefix . 'setting_odnoklassniki_group_url',                     'https://ok.ru/group/57122812461115' );
 
 			update_option( $version, '0.7.4' );
 			self::set_scp_version( '0.7.4' );
@@ -3238,8 +3238,7 @@ class Social_Community_Popup {
 
 					$args = array(
 						'index' => $tab_index++,
-						'width' => $width,
-						'url'   => '#'
+						'width' => $width
 					);
 
 					$args = array_merge( $args, $provider->options() );
