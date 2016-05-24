@@ -118,6 +118,7 @@ class Social_Community_Popup {
 			'setting_vkontakte_description',
 			'setting_vkontakte_application_id',
 			'setting_vkontakte_page_or_group_id',
+			'setting_vkontakte_page_url',
 			'setting_vkontakte_width',
 			'setting_vkontakte_height',
 			'setting_vkontakte_layout',
@@ -698,6 +699,9 @@ class Social_Community_Popup {
 
 			// Добавляем новое свойство "Закрывать окно после вступления в группу" в виджет Facebook
 			add_option( $scp_prefix . 'setting_facebook_close_window_after_join',           0 );
+
+			// Добавляем новое свойство "Адрес группы ВКонтакте" в виджет Facebook
+			add_option( $scp_prefix . 'setting_vkontakte_page_url',                         'https://vk.com/blogsonwordpress_new' );
 
 			update_option( $version, '0.7.4' );
 			self::set_scp_version( '0.7.4' );
@@ -1473,6 +1477,7 @@ class Social_Community_Popup {
 		register_setting( $group, $scp_prefix . 'setting_vkontakte_description', 'wp_kses_post' );
 		register_setting( $group, $scp_prefix . 'setting_vkontakte_application_id', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'setting_vkontakte_page_or_group_id', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_vkontakte_page_url', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'setting_vkontakte_width', 'absint' );
 		register_setting( $group, $scp_prefix . 'setting_vkontakte_height', 'absint' );
 		register_setting( $group, $scp_prefix . 'setting_vkontakte_layout', 'absint' );
@@ -1549,7 +1554,7 @@ class Social_Community_Popup {
 			)
 		);
 
-		// URL страницы или группы ВКонтакте
+		// ID страницы или группы ВКонтакте
 		add_settings_field(
 			$prefix . '-vkontakte-page-or-group-id',
 			__( 'VKontakte Page or Group ID', L10N_SCP_PREFIX ),
@@ -1558,6 +1563,18 @@ class Social_Community_Popup {
 			$section,
 			array(
 				'field' => $scp_prefix . 'setting_vkontakte_page_or_group_id'
+			)
+		);
+
+		// URL страницы или группы ВКонтакте
+		add_settings_field(
+			$prefix . '-vkontakte-page-url',
+			__( 'VKontakte Page URL', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'setting_vkontakte_page_url'
 			)
 		);
 
