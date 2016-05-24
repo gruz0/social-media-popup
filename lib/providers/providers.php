@@ -117,7 +117,26 @@ class SCP_Provider {
 	 * @return string
 	 */
 	public static function tab_caption( $args ) {
-		return '<li data-index="' . $args['index'] . '" class="' . $args['css_class'] . '"><span>' . $args['value'] . '</span></li>';
+		return '<li '
+			. 'data-index="' . $args['index'] . '" '
+			. 'class="' . $args['css_class'] . '" '
+			. '><span>' . $args['value'] . '</span></li>';
+	}
+
+	/**
+	 * Add Tab caption under widget title for mobile devices
+	 *
+	 * @since 0.7.4
+	 *
+	 * @param array @args
+	 * @return string
+	 */
+	public static function tab_caption_mobile( $args ) {
+		return '<li '
+			. 'class="' . $args['css_class'] . '" '
+			. 'style="width:' . sprintf( '%0.2f', floatval( $args['width'] ) ) . '%;" '
+			. '><a href="' . $args['url'] . '" target="_blank" rel="nofollow" title="' . $args['value'] . '">'
+			. '<i class="fa ' . $args['icon'] . ' fa-2x"></i></a></li>';
 	}
 
 	/**
@@ -129,7 +148,7 @@ class SCP_Provider {
 	 * @param array @args
 	 * @return string
 	 */
-	public static function container( $args ) {
+	public static function container() {
 		throw new Exception( "Not implemented!" );
 	}
 }
