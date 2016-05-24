@@ -5,10 +5,15 @@ class SCP_Facebook_Provider extends SCP_Provider {
 		return ( self::$options[ self::$prefix . 'setting_use_facebook' ] === '1' );
 	}
 
+	// TODO: Переименовать функцию в options()
 	public static function provide_options_to_tab_caption() {
 		return array(
+			// TODO: Переименовать value в tab_caption
 			'value'     => esc_attr( self::$options[ self::$prefix . 'setting_facebook_tab_caption'] ),
-			'css_class' => ''
+			'css_class' => 'facebook-tab',
+			'icon'      => 'fa-facebook'
+
+			// TODO: Добавить сюда ключ url, в который поместить ссылку на группу
 		);
 	}
 

@@ -8,7 +8,8 @@ class SCP_VK_Provider extends SCP_Provider {
 	public static function provide_options_to_tab_caption() {
 		return array(
 			'value'     => esc_attr( self::$options[ self::$prefix . 'setting_vkontakte_tab_caption'] ),
-			'css_class' => 'vk-tab'
+			'css_class' => 'vk-tab',
+			'icon'      => 'fa-vk'
 		);
 	}
 

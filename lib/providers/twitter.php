@@ -8,7 +8,8 @@ class SCP_Twitter_Provider extends SCP_Provider {
 	public static function provide_options_to_tab_caption() {
 		return array(
 			'value'     => esc_attr( self::$options[ self::$prefix . 'setting_twitter_tab_caption'] ),
-			'css_class' => ''
+			'css_class' => 'twitter-tab',
+			'icon'      => 'fa-twitter'
 		);
 	}
 

@@ -8,7 +8,8 @@ class SCP_Pinterest_Provider extends SCP_Provider {
 	public static function provide_options_to_tab_caption() {
 		return array(
 			'value'     => esc_attr( self::$options[ self::$prefix . 'setting_pinterest_tab_caption'] ),
-			'css_class' => 'pinterest-tab'
+			'css_class' => 'pinterest-tab',
+			'icon'      => 'fa-pinterest'
 		);
 	}
 
