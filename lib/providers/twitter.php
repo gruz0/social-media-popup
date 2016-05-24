@@ -5,7 +5,7 @@ class SCP_Twitter_Provider extends SCP_Provider {
 		return ( self::$options[ self::$prefix . 'setting_use_twitter' ] === '1' );
 	}
 
-	public static function provide_options_to_tab_caption() {
+	public static function options() {
 		return array(
 			'value'     => esc_attr( self::$options[ self::$prefix . 'setting_twitter_tab_caption'] ),
 			'css_class' => 'twitter-tab',

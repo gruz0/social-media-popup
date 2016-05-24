@@ -5,7 +5,7 @@ class SCP_GooglePlus_Provider extends SCP_Provider {
 		return ( self::$options[ self::$prefix . 'setting_use_googleplus' ] === '1' );
 	}
 
-	public static function provide_options_to_tab_caption() {
+	public static function options() {
 		return array(
 			'value'     => esc_attr( self::$options[ self::$prefix . 'setting_googleplus_tab_caption'] ),
 			'css_class' => 'google-plus-tab',

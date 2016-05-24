@@ -3208,7 +3208,7 @@ class Social_Community_Popup {
 						'url'   => '#'
 					);
 
-					$args = array_merge( $args, $provider->provide_options_to_tab_caption() );
+					$args = array_merge( $args, $provider->options() );
 
 					if ( $wp_is_mobile ) {
 						$content .= $provider->tab_caption_mobile( $args );
@@ -3276,7 +3276,7 @@ class Social_Community_Popup {
 						$provider = $active_providers[$provider_name];
 
 						$args = array( 'index' => $tab_index++ );
-						$args = array_merge( $args, $provider->provide_options_to_tab_caption() );
+						$args = array_merge( $args, $provider->options() );
 						$content .= $provider->tab_caption( $args );
 					}
 

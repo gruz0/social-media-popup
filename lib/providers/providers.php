@@ -97,14 +97,14 @@ class SCP_Provider {
 	}
 
 	/**
-	 * Returns Tab Caption options
+	 * Returns provider options
 	 * Should be overridden in specific provider
 	 *
 	 * @since 0.7.3
 	 *
 	 * @return array
 	 */
-	public static function provide_options_to_tab_caption() {
+	public static function options() {
 		throw new Exception( "Not implemented!" );
 	}
 
