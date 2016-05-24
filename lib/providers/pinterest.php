@@ -9,7 +9,8 @@ class SCP_Pinterest_Provider extends SCP_Provider {
 		return array(
 			'tab_caption' => esc_attr( self::$options[ self::$prefix . 'setting_pinterest_tab_caption'] ),
 			'css_class'   => 'pinterest-tab',
-			'icon'        => 'fa-pinterest'
+			'icon'        => 'fa-pinterest',
+			'url'         => self::$options[ self::$prefix . 'setting_pinterest_profile_url' ]
 		);
 	}
 
