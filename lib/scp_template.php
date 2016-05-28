@@ -53,6 +53,21 @@ class SCP_Template {
 	}
 
 	/**
+	 * Returns JS code to render button to close widget on mobile devices
+	 *
+	 * @since 0.7.4
+	 *
+	 * @param string $after_n_days Timeout to show SCP window again
+	 * @return string
+	 */
+	function render_close_widget_on_mobile( $after_n_days ) {
+		$selector_to_close_widget = '#scp_mobile .scp-close a';
+		$after_n_days = absint( esc_attr( $after_n_days ) );
+
+		return '$("' . $selector_to_close_widget . '").click(function() { scp_destroyPlugin($, ' . $after_n_days . ', "#scp_mobile"); });';
+	}
+
+	/**
 	 * Returns JS code to close widget when ESC button was pressed
 	 *
 	 * @since 0.7.3

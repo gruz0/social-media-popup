@@ -3001,6 +3001,8 @@ class Social_Community_Popup {
 		$version = get_option( $scp_prefix . 'version' );
 
 		$this->add_cookies_script( $version, $scp_prefix );
+		if ( is_scp_cookie_present() ) return;
+
 		$this->render_popup_window( $version, $scp_prefix );
 
 		if ( wp_is_mobile() ) {
@@ -3046,10 +3048,6 @@ class Social_Community_Popup {
 
 		// Если режим отладки выключен и есть кука закрытия окна или пользователь администратор — не показываем окно
 		} else {
-			if ( is_scp_cookie_present() ) {
-				return;
-			}
-
 			// Проверяем, что текущий пользователь залогинен в админку и затем проверяем его роль
 			if ( is_user_logged_in() ) {
 				switch ( $scp_options[ $scp_prefix . 'visitor_registered_and_role_equals_to' ] ) {
@@ -3136,27 +3134,18 @@ class Social_Community_Popup {
 			if ( who_should_see_the_popup_has_event( $who_should_see_the_popup, 'visitor_opened_at_least_n_number_of_pages' ) ) {
 				$page_views_cookie = 'scp-page-views';
 
-				// Если окно не было закрыто другими событиями — начинаем проверку условий
-				if ( ! is_scp_cookie_present() ) {
+				// Если существует кука просмотренных страниц — обновляем её
+				if ( isset( $_COOKIE[$page_views_cookie] ) ) {
+					$page_views = ( (int) $_COOKIE[$page_views_cookie] ) + 1;
+					setcookie( $page_views_cookie, $page_views, time() + $cookie_lifetime, '/' );
 
-					// Если существует кука просмотренных страниц — обновляем её
-					if ( isset( $_COOKIE[$page_views_cookie] ) ) {
-						$page_views = ( (int) $_COOKIE[$page_views_cookie] ) + 1;
-						setcookie( $page_views_cookie, $page_views, time() + $cookie_lifetime, '/' );
-
-						if ( $page_views > $visitor_opened_at_least_n_number_of_pages ) {
-							$who_should_see_the_popup_fired = true;
-						}
-
-					// Иначе создаём новую
-					} else {
-						setcookie( $page_views_cookie, 1, time() + $cookie_lifetime, '/' );
+					if ( $page_views > $visitor_opened_at_least_n_number_of_pages ) {
+						$who_should_see_the_popup_fired = true;
 					}
 
-				// Иначе удалим куку
+				// Иначе создаём новую
 				} else {
-					setcookie( $page_views_cookie, 0, time() - $cookie_lifetime, '/' );
-					unset( $_COOKIE[$page_views_cookie] );
+					setcookie( $page_views_cookie, 1, time() + $cookie_lifetime, '/' );
 				}
 			}
 
@@ -3218,8 +3207,11 @@ class Social_Community_Popup {
 
 			if ( $wp_is_mobile ) {
 				$content .= '<div id="scp_mobile">';
+
+				$content .= '<div class="scp-close"><a href="#">&times;</a></div>';
+
 				// TODO: Вынести в локаль
-				$content .= '<div class="scp-mobile-title">Понравился наш сайт?<br />Вступайте в группы в социальных сетях!</div>';
+				$content .= '<div class="scp-mobile-title">Понравился наш сайт?<br />Вступайте в группы в соц. сетях!</div>';
 
 				$content .= '<ul class="scp-icons">';
 
@@ -3359,6 +3351,9 @@ class Social_Community_Popup {
 					if ( ! is_scp_cookie_present() ) {
 						$content .= $template->render_show_window();
 					}
+
+					$content .= $template->render_close_widget_on_mobile( $after_n_days );
+
 			$content .= '});';
 			$content .= '</script>';
 
