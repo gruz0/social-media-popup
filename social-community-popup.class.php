@@ -3397,24 +3397,12 @@ class Social_Community_Popup {
 					);
 
 					// Отображение плагина после прокрутки страницы на N процентов
-					if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'after_scrolling_down_n_percent' ) ) {
-						$any_event_active = true;
-
-						$content .= 'var showWindowAgain = true;
-						$(window).scroll(function() {
-							if (!is_scp_cookie_present()) {
-								var bodyScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-
-								value = parseInt(Math.abs(bodyScrollTop / (document.body.clientHeight - window.innerHeight) * 100));
-								if (showWindowAgain && value >= ' . $popup_will_appear_after_scrolling_down_n_percent . ') {';
-									$content .= $template->render_show_window();
-									$content .= $template->render_show_bottom_button( $delay_before_show_bottom_button );
-
-									$content .= 'showWindowAgain = false;
-								}
-							}
-						});';
-					}
+					$content .= $template->render_when_popup_will_appear_after_scrolling_down_n_percent(
+						$when_should_the_popup_appear,
+						$popup_will_appear_after_scrolling_down_n_percent,
+						$delay_before_show_bottom_button,
+						$any_event_active
+					);
 
 					// Отображение плагина при попытке увести мышь за пределы окна
 					if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'on_exit_intent' ) && $popup_will_appear_on_exit_intent ) {

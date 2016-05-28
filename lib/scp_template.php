@@ -165,5 +165,46 @@ class SCP_Template {
 
 		return $content;
 	}
+
+	/**
+	 * Popup will appear when visitor scrolls window
+	 *
+	 * @since 0.7.4
+	 *
+	 * @param array $when_should_the_popup_appear Events list
+	 * @param int $popup_will_appear_after_scrolling_down_n_percent Event value
+	 * @param int $delay_before_show_bottom_button
+	 * @param boolean $any_event_active
+	 * @return string
+	 */
+	function render_when_popup_will_appear_after_scrolling_down_n_percent(
+		$when_should_the_popup_appear,
+		$popup_will_appear_after_scrolling_down_n_percent,
+		$delay_before_show_bottom_button,
+		& $any_event_active) {
+
+		$content = '';
+
+		if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'after_scrolling_down_n_percent' ) ) {
+			$any_event_active = true;
+
+			$content .= 'var showWindowAgain = true;
+			$(window).scroll(function() {
+				if (!is_scp_cookie_present()) {
+					var bodyScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+
+					value = parseInt(Math.abs(bodyScrollTop / (document.body.clientHeight - window.innerHeight) * 100));
+					if (showWindowAgain && value >= ' . $popup_will_appear_after_scrolling_down_n_percent . ') {';
+						$content .= $this->render_show_window();
+						$content .= $this->render_show_bottom_button( $delay_before_show_bottom_button );
+
+						$content .= 'showWindowAgain = false;
+					}
+				}
+			});';
+		}
+
+		return $content;
+	}
 }
 
