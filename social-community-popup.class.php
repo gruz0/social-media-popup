@@ -3381,18 +3381,12 @@ class Social_Community_Popup {
 					$any_event_active = false;
 
 					// Отображение плагина после просмотра страницы N секунд
-					if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'after_n_seconds' ) ) {
-						$any_event_active = true;
-
-						$calculated_delay = ( $popup_will_appear_after_n_seconds > 0 ? $popup_will_appear_after_n_seconds * 1000 : 1000 );
-
-						$content .= 'setTimeout(function() {
-							if (!is_scp_cookie_present()) {';
-								$content .= $template->render_show_window();
-								$content .= $template->render_show_bottom_button( $delay_before_show_bottom_button );
-							$content .= '}
-						}, ' . esc_attr( $calculated_delay ) . ');';
-					}
+					$content .= $template->render_when_popup_will_appear_after_n_seconds(
+						$when_should_the_popup_appear,
+						$popup_will_appear_after_n_seconds,
+						$delay_before_show_bottom_button,
+						$any_event_active
+					);
 
 					// Отображение плагина после клика по указанному селектору
 					if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'after_clicking_on_element' ) ) {

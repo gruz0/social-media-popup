@@ -90,5 +90,30 @@ class SCP_Template {
 
 		return $content;
 	}
+
+	function render_when_popup_will_appear_after_n_seconds(
+		$when_should_the_popup_appear,
+		$popup_will_appear_after_n_seconds,
+		$delay_before_show_bottom_button,
+		& $any_event_active) {
+
+		$content = '';
+
+		// Отображение плагина после просмотра страницы N секунд
+		if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'after_n_seconds' ) ) {
+			$any_event_active = true;
+
+			$calculated_delay = ( $popup_will_appear_after_n_seconds > 0 ? $popup_will_appear_after_n_seconds * 1000 : 1000 );
+
+			$content .= 'setTimeout(function() {
+				if (!is_scp_cookie_present()) {';
+					$content .= $this->render_show_window();
+					$content .= $this->render_show_bottom_button( $delay_before_show_bottom_button );
+				$content .= '}
+			}, ' . esc_attr( $calculated_delay ) . ');';
+		}
+
+		return $content;
+	}
 }
 
