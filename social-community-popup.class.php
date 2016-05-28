@@ -3389,20 +3389,12 @@ class Social_Community_Popup {
 					);
 
 					// Отображение плагина после клика по указанному селектору
-					if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'after_clicking_on_element' ) ) {
-						$any_event_active = true;
-
-						if ( ! empty( $popup_will_appear_after_clicking_on_element ) ) {
-							$content .= '$("' . $popup_will_appear_after_clicking_on_element . '").on("click", function($) {
-								if (!is_scp_cookie_present()) {';
-									$content .= $template->render_show_window();
-									$content .= $template->render_show_bottom_button( $delay_before_show_bottom_button );
-								$content .= '}
-							});';
-						} else {
-							$content .= 'alert("' . __( "You must add a selector element for the plugin Social Community Popup. Otherwise it won't be work.", L10N_SCP_PREFIX ) . '");';
-						}
-					}
+					$content .= $template->render_when_popup_will_appear_after_clicking_on_element(
+						$when_should_the_popup_appear,
+						$popup_will_appear_after_clicking_on_element,
+						$delay_before_show_bottom_button,
+						$any_event_active
+					);
 
 					// Отображение плагина после прокрутки страницы на N процентов
 					if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'after_scrolling_down_n_percent' ) ) {

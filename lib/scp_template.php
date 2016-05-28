@@ -91,6 +91,17 @@ class SCP_Template {
 		return $content;
 	}
 
+	/**
+	 * Popup will appear after visitor stays on page about N seconds
+	 *
+	 * @since 0.7.4
+	 *
+	 * @param array $when_should_the_popup_appear Events list
+	 * @param int $popup_will_appear_after_n_seconds Event value
+	 * @param int $delay_before_show_bottom_button
+	 * @param boolean $any_event_active
+	 * @return string
+	 */
 	function render_when_popup_will_appear_after_n_seconds(
 		$when_should_the_popup_appear,
 		$popup_will_appear_after_n_seconds,
@@ -111,6 +122,45 @@ class SCP_Template {
 					$content .= $this->render_show_bottom_button( $delay_before_show_bottom_button );
 				$content .= '}
 			}, ' . esc_attr( $calculated_delay ) . ');';
+		}
+
+		return $content;
+	}
+
+	/**
+	 * Popup will appear when visitor clicks on element
+	 *
+	 * @since 0.7.4
+	 *
+	 * @param array $when_should_the_popup_appear Events list
+	 * @param int $popup_will_appear_after_clicking_on_element Event value
+	 * @param int $delay_before_show_bottom_button
+	 * @param boolean $any_event_active
+	 * @return string
+	 */
+	function render_when_popup_will_appear_after_clicking_on_element(
+		$when_should_the_popup_appear,
+		$popup_will_appear_after_clicking_on_element,
+		$delay_before_show_bottom_button,
+		& $any_event_active) {
+
+		$content = '';
+
+		// Отображение плагина после клика по указанному селектору
+		if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'after_clicking_on_element' ) ) {
+			$any_event_active = true;
+
+			if ( ! empty( $popup_will_appear_after_clicking_on_element ) ) {
+				$content .= '$("' . $popup_will_appear_after_clicking_on_element . '").on("click", function($) {
+					if (!is_scp_cookie_present()) {';
+						$content .= $this->render_show_window();
+						$content .= $this->render_show_bottom_button( $delay_before_show_bottom_button );
+						$content .= 'return false;';
+					$content .= '}
+				});';
+			} else {
+				$content .= 'alert("' . __( "You must add a selector element for the plugin Social Community Popup. Otherwise it won't be work.", L10N_SCP_PREFIX ) . '");';
+			}
 		}
 
 		return $content;
