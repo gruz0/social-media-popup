@@ -49,7 +49,10 @@ class SCP_Template {
 		}
 
 		$after_n_days = absint( esc_attr( $after_n_days ) );
-		return '$("' . $selector_to_close_widget . '").click(function() { scp_destroyPlugin($, ' . $after_n_days . '); });';
+		return '$("' . $selector_to_close_widget . '").click(function() {
+			scp_destroyPlugin($, ' . $after_n_days . ');
+			return false;
+		});';
 	}
 
 	/**
@@ -64,7 +67,10 @@ class SCP_Template {
 		$selector_to_close_widget = '#scp_mobile .scp-close a';
 		$after_n_days = absint( esc_attr( $after_n_days ) );
 
-		return '$("' . $selector_to_close_widget . '").click(function() { scp_destroyPlugin($, ' . $after_n_days . ', "#scp_mobile"); });';
+		return '$("' . $selector_to_close_widget . '").click(function() {
+			scp_destroyPlugin($, ' . $after_n_days . ', "#scp_mobile");
+			return false;
+		});';
 	}
 
 	/**
