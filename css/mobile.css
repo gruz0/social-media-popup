@@ -1,7 +1,7 @@
 #scp_mobile {
 	min-height:35px;
 	width: 100%;
-	display:block;
+	display:none;
 	position:fixed;
 	right:0;
 	bottom:0;
