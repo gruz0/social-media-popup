@@ -3405,19 +3405,12 @@ class Social_Community_Popup {
 					);
 
 					// Отображение плагина при попытке увести мышь за пределы окна
-					if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'on_exit_intent' ) && $popup_will_appear_on_exit_intent ) {
-						$any_event_active = true;
-
-						$content .= '$(document).on("mouseleave", function(e) {
-							if (is_scp_cookie_present()) return;
-
-							var scroll = window.pageYOffset || document.documentElement.scrollTop;
-							if((e.pageY - scroll) < 7) {';
-								$content .= $template->render_show_window();
-								$content .= $template->render_show_bottom_button( $delay_before_show_bottom_button );
-							$content .= '}
-						});';
-					}
+					$content .= $template->render_when_popup_will_appear_on_exit_intent(
+						$when_should_the_popup_appear,
+						$popup_will_appear_on_exit_intent,
+						$delay_before_show_bottom_button,
+						$any_event_active
+					);
 
 					// Если ни одно из событий когда показывать окно не выбрано — показываем окно сразу и без задержки
 					if ( ! $any_event_active && ! is_scp_cookie_present() ) {

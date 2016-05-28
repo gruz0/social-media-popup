@@ -206,5 +206,42 @@ class SCP_Template {
 
 		return $content;
 	}
+
+	/**
+	 * Popup will appear on exit intent
+	 *
+	 * @since 0.7.4
+	 *
+	 * @param array $when_should_the_popup_appear Events list
+	 * @param boolean $popup_will_appear_on_exit_intent Event value
+	 * @param int $delay_before_show_bottom_button
+	 * @param boolean $any_event_active
+	 * @return string
+	 */
+	function render_when_popup_will_appear_on_exit_intent(
+		$when_should_the_popup_appear,
+		$popup_will_appear_on_exit_intent,
+		$delay_before_show_bottom_button,
+		& $any_event_active) {
+
+		$content = '';
+
+		// Отображение плагина при попытке увести мышь за пределы окна
+		if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'on_exit_intent' ) && $popup_will_appear_on_exit_intent ) {
+			$any_event_active = true;
+
+			$content .= '$(document).on("mouseleave", function(e) {
+				if (is_scp_cookie_present()) return;
+
+				var scroll = window.pageYOffset || document.documentElement.scrollTop;
+				if((e.pageY - scroll) < 7) {';
+					$content .= $this->render_show_window();
+					$content .= $this->render_show_bottom_button( $delay_before_show_bottom_button );
+				$content .= '}
+			});';
+		}
+
+		return $content;
+	}
 }
 
