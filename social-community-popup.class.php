@@ -70,6 +70,7 @@ class Social_Community_Popup {
 			'setting_close_popup_by_clicking_anywhere',
 			'setting_show_on_mobile_devices',
 			'setting_plugin_title',
+			'setting_plugin_title_on_mobile_devices',
 			'setting_hide_tabs_if_one_widget_is_active',
 			'setting_align_tabs_to_center',
 			'setting_show_button_to_close_widget',
@@ -488,7 +489,7 @@ class Social_Community_Popup {
 			// Надпись над табами плагина
 			update_option( $scp_prefix . 'setting_plugin_title',
 				'<div style="text-align: center;font: bold normal 14pt/16pt Arial">'
-				. __( '<p>Do You Like Our Site?</p><p>Follow Us on Social Networks!</p>', L10N_SCP_PREFIX )
+				. __( 'Follow us on Social Media!', L10N_SCP_PREFIX )
 				. '</div>'
 			);
 
@@ -705,7 +706,10 @@ class Social_Community_Popup {
 			add_option( $scp_prefix . 'setting_vkontakte_page_url',                         'https://vk.com/blogsonwordpress_new' );
 
 			// Добавляем новое свойство "Адрес группы Одноклассники" в виджет Одноклассников
-			add_option( $scp_prefix . 'setting_odnoklassniki_group_url',                     'https://ok.ru/group/57122812461115' );
+			add_option( $scp_prefix . 'setting_odnoklassniki_group_url',                    'https://ok.ru/group/57122812461115' );
+
+			// Добавляем новое свойство "Заголовок главного окна" для мобильных устройств
+			add_option( $scp_prefix . 'setting_plugin_title_on_mobile_devices',             __( 'Follow us on Social Media!', L10N_SCP_PREFIX ) );
 
 			update_option( $version, '0.7.4' );
 			self::set_scp_version( '0.7.4' );
@@ -738,7 +742,9 @@ class Social_Community_Popup {
 		$prefix = 'social_community_popup'; // Желательно чтобы совпадал со slug из add_menu
 
 		$this->init_settings_common( $prefix );
+		// TODO: Should be renamed to view_on_desktop
 		$this->init_settings_common_view( $prefix );
+		$this->init_settings_common_view_on_mobile_devices( $prefix );
 		$this->init_settings_common_events( $prefix );
 		$this->init_settings_common_management( $prefix );
 
@@ -881,6 +887,7 @@ class Social_Community_Popup {
 		// Заголовок окна плагина
 		add_settings_field(
 			$prefix . '-common-plugin-title',
+			// TODO: Should be renamed to 'Widget Title'
 			__( 'Main Window Title', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_wysiwyg' ),
 			$options_page,
@@ -1044,6 +1051,49 @@ class Social_Community_Popup {
 			$section,
 			array(
 				'field' => $scp_prefix . 'setting_background_image'
+			)
+		);
+	}
+
+	/**
+	 * Общие настройки (вкладка "Внешний вид (мобильные устройства)")
+	 *
+	 * @since 0.7.4
+	 *
+	 * @param string $prefix SCP Prefix
+	 * @return void
+	 */
+	public function init_settings_common_view_on_mobile_devices( $prefix ) {
+		$scp_prefix = self::get_scp_prefix();
+
+		// Используется в settings_field и do_settings_field
+		$group = $prefix . '-group-view-mobile';
+
+		// Используется в do_settings_section
+		$options_page = $prefix . '-group-view-mobile';
+
+		// ID секции
+		$section = $prefix . '-section-common-view-mobile';
+
+		// Не забывать добавлять новые опции в uninstall()
+		register_setting( $group, $scp_prefix . 'setting_plugin_title_on_mobile_devices', 'wp_kses_post' );
+
+		add_settings_section(
+			$section,
+			__( 'View (Mobile Devices)', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_section_common_view_on_mobile_devices' ),
+			$options_page
+		);
+
+		// Заголовок окна плагина
+		add_settings_field(
+			$prefix . '-common-plugin-title-on-mobile-devices',
+			__( 'Widget Title', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_wysiwyg' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'setting_plugin_title_on_mobile_devices'
 			)
 		);
 	}
@@ -2314,6 +2364,13 @@ class Social_Community_Popup {
 	}
 
 	/**
+	 * Описание общих настроек (таб "Внешний вид (мобильные устройства)")
+	 */
+	public function settings_section_common_view_on_mobile_devices() {
+		_e( 'In this section, you can customize the appearance of the plugin on mobile devices', L10N_SCP_PREFIX );
+	}
+
+	/**
 	 * Описание общих настроек (таб "События" — "Когда показывать окно")
 	 */
 	public function settings_section_when_should_the_popup_appear() {
@@ -3211,7 +3268,7 @@ class Social_Community_Popup {
 				$content .= '<div class="scp-close"><a href="#">&times;</a></div>';
 
 				// TODO: Вынести в локаль
-				$content .= '<div class="scp-mobile-title">Понравился наш сайт?<br />Вступайте в группы в соц. сетях!</div>';
+				$content .= '<div class="scp-mobile-title">' . $scp_options[ $scp_prefix . 'setting_plugin_title_on_mobile_devices' ] . '</div>';
 
 				$content .= '<ul class="scp-icons">';
 

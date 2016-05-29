@@ -20,11 +20,12 @@ $tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'general';
 function scp_settings_tabs() {
 	$current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'general';
 
-	$tabs               = array();
-	$tabs['general']    = __( 'General', L10N_SCP_PREFIX );
-	$tabs['view']       = __( 'View', L10N_SCP_PREFIX );
-	$tabs['events']     = __( 'Events', L10N_SCP_PREFIX );
-	$tabs['management'] = __( 'Management', L10N_SCP_PREFIX );
+	$tabs                = array();
+	$tabs['general']     = __( 'General', L10N_SCP_PREFIX );
+	$tabs['view']        = __( 'View (Desktop)', L10N_SCP_PREFIX );
+	$tabs['view-mobile'] = __( 'View (Mobile Devices)', L10N_SCP_PREFIX );
+	$tabs['events']      = __( 'Events', L10N_SCP_PREFIX );
+	$tabs['management']  = __( 'Management', L10N_SCP_PREFIX );
 
 	echo '<h2 class="nav-tab-wrapper">';
 	foreach ( $tabs as $tab_key => $tab_caption ) {
