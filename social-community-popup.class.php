@@ -887,8 +887,7 @@ class Social_Community_Popup {
 		// Заголовок окна плагина
 		add_settings_field(
 			$prefix . '-common-plugin-title',
-			// TODO: Should be renamed to 'Widget Title'
-			__( 'Main Window Title', L10N_SCP_PREFIX ),
+			__( 'Widget Title', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_wysiwyg' ),
 			$options_page,
 			$section,
@@ -3267,7 +3266,6 @@ class Social_Community_Popup {
 
 				$content .= '<div class="scp-close"><a href="#">&times;</a></div>';
 
-				// TODO: Вынести в локаль
 				$content .= '<div class="scp-mobile-title">' . $scp_options[ $scp_prefix . 'setting_plugin_title_on_mobile_devices' ] . '</div>';
 
 				$content .= '<ul class="scp-icons">';
