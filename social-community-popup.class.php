@@ -3365,7 +3365,7 @@ class Social_Community_Popup {
 						$after_n_days
 					);
 
-					// // Отображение плагина после прокрутки страницы на N процентов
+					// Отображение плагина после прокрутки страницы на N процентов
 					$content .= $template->render_when_popup_will_appear_after_scrolling_down_n_percent(
 						$when_should_the_popup_appear,
 						$popup_will_appear_after_scrolling_down_n_percent,

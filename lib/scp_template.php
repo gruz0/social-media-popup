@@ -53,8 +53,8 @@ class SCP_Template {
 		}
 
 		$after_n_days = absint( esc_attr( $after_n_days ) );
-		return '$("' . $selector_to_close_widget . '").click(function() {
-			scp_destroyPlugin($, ' . $after_n_days . ');
+		return 'jQuery("' . $selector_to_close_widget . '").on("click", function() {
+			scp_destroyPlugin(jQuery, ' . $after_n_days . ');
 			return false;
 		});';
 	}
@@ -71,8 +71,8 @@ class SCP_Template {
 		$selector_to_close_widget = '#scp_mobile .scp-close a';
 		$after_n_days = absint( esc_attr( $after_n_days ) );
 
-		return '$("' . $selector_to_close_widget . '").click(function() {
-			scp_destroyPlugin($, ' . $after_n_days . ', "#scp_mobile");
+		return 'jQuery("' . $selector_to_close_widget . '").on("click", function() {
+			scp_destroyPlugin(jQuery, ' . $after_n_days . ', "#scp_mobile");
 			return false;
 		});';
 	}
@@ -91,7 +91,7 @@ class SCP_Template {
 
 		if ( $close_when_esc_pressed ) {
 			$after_n_days = absint( esc_attr( $after_n_days ) );
-			$content .= '$(document).keydown(function(e) {
+			$content .= 'jQuery(document).on("keydown", function(e) {
 				if ( e.keyCode == 27 ) {
 					scp_destroyPlugin($, ' . $after_n_days . ');
 				}
@@ -127,7 +127,7 @@ class SCP_Template {
 
 			$calculated_delay = ( $popup_will_appear_after_n_seconds > 0 ? $popup_will_appear_after_n_seconds * 1000 : 1000 );
 
-			$content .= 'setTimeout(function($) {
+			$content .= 'setTimeout(function() {
 				if (is_scp_cookie_present()) return false;';
 
 				$content .= $this->render_show_window();
@@ -169,7 +169,7 @@ class SCP_Template {
 			$any_event_active = true;
 
 			if ( ! empty( $popup_will_appear_after_clicking_on_element ) ) {
-				$content .= '$("' . $popup_will_appear_after_clicking_on_element . '").on("click", function() {
+				$content .= 'jQuery("' . $popup_will_appear_after_clicking_on_element . '").on("click", function() {
 					if (is_scp_cookie_present()) return false;';
 
 					$content .= $this->render_show_window();
@@ -214,7 +214,7 @@ class SCP_Template {
 			$any_event_active = true;
 
 			$content .= 'var showWindowAgain = true;
-			$(window).scroll(function() {
+			jQuery(window).scroll(function() {
 				if (is_scp_cookie_present()) return false;
 				var bodyScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
 
@@ -259,7 +259,7 @@ class SCP_Template {
 		if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'on_exit_intent' ) && $popup_will_appear_on_exit_intent ) {
 			$any_event_active = true;
 
-			$content .= '$(document).on("mouseleave", function(e) {
+			$content .= 'jQuery(document).on("mouseleave", function(e) {
 				if (is_scp_cookie_present()) return;
 
 				var scroll = window.pageYOffset || document.documentElement.scrollTop;
