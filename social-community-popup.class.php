@@ -3311,9 +3311,7 @@ class Social_Community_Popup {
 
 					$content .= '</ul>';
 				}
-			}
 
-			if ( ! $wp_is_mobile ) {
 				for ( $idx = 0, $size = count( $tabs_order ); $idx < $size; $idx++ ) {
 					$provider_name = $tabs_order[$idx];
 
@@ -3347,12 +3345,40 @@ class Social_Community_Popup {
 				jQuery(document).ready(function($) {
 					if (is_scp_cookie_present()) return;';
 
-					// Если ни одно из событий когда показывать окно не выбрано — показываем окно сразу и без задержки
-					if ( ! is_scp_cookie_present() ) {
-						$content .= $template->render_show_window();
-					}
+					$any_event_active = false;
 
-					$content .= $template->render_close_widget_on_mobile( $after_n_days );
+					// Отображение плагина после просмотра страницы N секунд
+					$content .= $template->render_when_popup_will_appear_after_n_seconds(
+						$when_should_the_popup_appear,
+						$popup_will_appear_after_n_seconds,
+						$delay_before_show_bottom_button,
+						$any_event_active,
+						$after_n_days
+					);
+
+					// Отображение плагина после клика по указанному селектору
+					$content .= $template->render_when_popup_will_appear_after_clicking_on_element(
+						$when_should_the_popup_appear,
+						$popup_will_appear_after_clicking_on_element,
+						$delay_before_show_bottom_button,
+						$any_event_active,
+						$after_n_days
+					);
+
+					// // Отображение плагина после прокрутки страницы на N процентов
+					$content .= $template->render_when_popup_will_appear_after_scrolling_down_n_percent(
+						$when_should_the_popup_appear,
+						$popup_will_appear_after_scrolling_down_n_percent,
+						$delay_before_show_bottom_button,
+						$any_event_active,
+						$after_n_days
+					);
+
+					// Если ни одно из событий когда показывать окно не выбрано — показываем окно сразу и без задержки
+					if ( ! $any_event_active ) {
+						$content .= $template->render_show_window();
+						$content .= $template->render_close_widget_on_mobile( $after_n_days );
+					}
 
 			$content .= '});';
 			$content .= '</script>';
@@ -3413,7 +3439,7 @@ class Social_Community_Popup {
 					);
 
 					// Если ни одно из событий когда показывать окно не выбрано — показываем окно сразу и без задержки
-					if ( ! $any_event_active && ! is_scp_cookie_present() ) {
+					if ( ! $any_event_active ) {
 						$content .= $template->render_show_window();
 						$content .= $template->render_show_bottom_button( $delay_before_show_bottom_button );
 					}

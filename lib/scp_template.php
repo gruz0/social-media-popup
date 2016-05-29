@@ -9,7 +9,11 @@ class SCP_Template {
 	 * @return string
 	 */
 	function render_show_window() {
-		return 'jQuery("#social-community-popup").show();';
+		if ( wp_is_mobile() ) {
+			return 'jQuery("#scp_mobile").show();';
+		} else {
+			return 'jQuery("#social-community-popup").show();';
+		}
 	}
 
 	/**
@@ -112,7 +116,8 @@ class SCP_Template {
 		$when_should_the_popup_appear,
 		$popup_will_appear_after_n_seconds,
 		$delay_before_show_bottom_button,
-		& $any_event_active) {
+		& $any_event_active,
+		$after_n_days = 0) {
 
 		$content = '';
 
@@ -122,12 +127,18 @@ class SCP_Template {
 
 			$calculated_delay = ( $popup_will_appear_after_n_seconds > 0 ? $popup_will_appear_after_n_seconds * 1000 : 1000 );
 
-			$content .= 'setTimeout(function() {
-				if (!is_scp_cookie_present()) {';
-					$content .= $this->render_show_window();
+			$content .= 'setTimeout(function($) {
+				if (is_scp_cookie_present()) return false;';
+
+				$content .= $this->render_show_window();
+
+				if ( wp_is_mobile() ) {
+					$content .= $this->render_close_widget_on_mobile( $after_n_days );
+				} else {
 					$content .= $this->render_show_bottom_button( $delay_before_show_bottom_button );
-				$content .= '}
-			}, ' . esc_attr( $calculated_delay ) . ');';
+				}
+
+			$content .= '}, ' . esc_attr( $calculated_delay ) . ');';
 		}
 
 		return $content;
@@ -148,7 +159,8 @@ class SCP_Template {
 		$when_should_the_popup_appear,
 		$popup_will_appear_after_clicking_on_element,
 		$delay_before_show_bottom_button,
-		& $any_event_active) {
+		& $any_event_active,
+		$after_n_days = 0) {
 
 		$content = '';
 
@@ -157,13 +169,19 @@ class SCP_Template {
 			$any_event_active = true;
 
 			if ( ! empty( $popup_will_appear_after_clicking_on_element ) ) {
-				$content .= '$("' . $popup_will_appear_after_clicking_on_element . '").on("click", function($) {
-					if (!is_scp_cookie_present()) {';
-						$content .= $this->render_show_window();
+				$content .= '$("' . $popup_will_appear_after_clicking_on_element . '").on("click", function() {
+					if (is_scp_cookie_present()) return false;';
+
+					$content .= $this->render_show_window();
+
+					if ( wp_is_mobile() ) {
+						$content .= $this->render_close_widget_on_mobile( $after_n_days );
+					} else {
 						$content .= $this->render_show_bottom_button( $delay_before_show_bottom_button );
-						$content .= 'return false;';
-					$content .= '}
-				});';
+					}
+
+					$content .= 'return false;';
+				$content .= '});';
 			} else {
 				$content .= 'alert("' . __( "You must add a selector element for the plugin Social Community Popup. Otherwise it won't be work.", L10N_SCP_PREFIX ) . '");';
 			}
@@ -187,7 +205,8 @@ class SCP_Template {
 		$when_should_the_popup_appear,
 		$popup_will_appear_after_scrolling_down_n_percent,
 		$delay_before_show_bottom_button,
-		& $any_event_active) {
+		& $any_event_active,
+		$after_n_days = 0) {
 
 		$content = '';
 
@@ -196,16 +215,20 @@ class SCP_Template {
 
 			$content .= 'var showWindowAgain = true;
 			$(window).scroll(function() {
-				if (!is_scp_cookie_present()) {
-					var bodyScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+				if (is_scp_cookie_present()) return false;
+				var bodyScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
 
-					value = parseInt(Math.abs(bodyScrollTop / (document.body.clientHeight - window.innerHeight) * 100));
-					if (showWindowAgain && value >= ' . $popup_will_appear_after_scrolling_down_n_percent . ') {';
-						$content .= $this->render_show_window();
+				value = parseInt(Math.abs(bodyScrollTop / (document.body.clientHeight - window.innerHeight) * 100));
+				if (showWindowAgain && value >= ' . $popup_will_appear_after_scrolling_down_n_percent . ') {';
+					$content .= $this->render_show_window();
+
+					if ( wp_is_mobile() ) {
+						$content .= $this->render_close_widget_on_mobile( $after_n_days );
+					} else {
 						$content .= $this->render_show_bottom_button( $delay_before_show_bottom_button );
-
-						$content .= 'showWindowAgain = false;
 					}
+
+					$content .= 'showWindowAgain = false;
 				}
 			});';
 		}
