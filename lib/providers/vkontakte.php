@@ -49,7 +49,7 @@ class SCP_VK_Provider extends SCP_Provider {
 
 					VK.Observer.subscribe("widgets.groups.joined", function f() {
 					if ( scp_VK_closeWindowAfterJoiningGroup ) {
-						scp_destroyPlugin(jQuery, scp.showWindowAfterReturningNDays);
+						scp_destroyPlugin(scp.showWindowAfterReturningNDays);
 					}
 				});
 

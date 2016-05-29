@@ -16,7 +16,7 @@ function is_scp_cookie_present() {
 	return (scp_getCookie('social-community-popup') && scp_getCookie('social-community-popup') == 'true');
 }
 
-function scp_destroyPlugin(jQuery, after_n_days, container_id) {
+function scp_destroyPlugin(after_n_days, container_id) {
 	var date = new Date( new Date().getTime() + (1000 * 60 * 60 * 24 * after_n_days) );
 	scp_setCookie("social-community-popup", "true", { "expires": date, "path": "/" } );
 	scp_deleteCookie('scp-page-views');

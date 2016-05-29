@@ -54,7 +54,7 @@ class SCP_Template {
 
 		$after_n_days = absint( esc_attr( $after_n_days ) );
 		return 'jQuery("' . $selector_to_close_widget . '").on("click", function() {
-			scp_destroyPlugin(jQuery, ' . $after_n_days . ');
+			scp_destroyPlugin(' . $after_n_days . ');
 			return false;
 		});';
 	}
@@ -72,7 +72,7 @@ class SCP_Template {
 		$after_n_days = absint( esc_attr( $after_n_days ) );
 
 		return 'jQuery("' . $selector_to_close_widget . '").on("click", function() {
-			scp_destroyPlugin(jQuery, ' . $after_n_days . ', "#scp_mobile");
+			scp_destroyPlugin(' . $after_n_days . ', "#scp_mobile");
 			return false;
 		});';
 	}
@@ -93,7 +93,7 @@ class SCP_Template {
 			$after_n_days = absint( esc_attr( $after_n_days ) );
 			$content .= 'jQuery(document).on("keydown", function(e) {
 				if ( e.keyCode == 27 ) {
-					scp_destroyPlugin($, ' . $after_n_days . ');
+					scp_destroyPlugin(' . $after_n_days . ');
 				}
 			});';
 		}

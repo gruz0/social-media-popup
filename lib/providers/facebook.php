@@ -46,7 +46,7 @@ class SCP_Facebook_Provider extends SCP_Provider {
 		// Если активна опция закрытия окна после подписки на виджет Facebook, тогда добавим дополнительный код
 		if ( $close_window_after_join ) {
 			$prepend_facebook .= 'var scp_facebook_page_like_or_unlike_callback = function(url, html_element) {
-				scp_destroyPlugin(jQuery, scp.showWindowAfterReturningNDays);
+				scp_destroyPlugin(scp.showWindowAfterReturningNDays);
 			};
 
 			window.fbAsyncInit = function() {
