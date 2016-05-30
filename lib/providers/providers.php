@@ -136,7 +136,7 @@ class SCP_Provider {
 			. 'class="' . $args['css_class'] . '" '
 			. 'style="width:' . sprintf( '%0.2f', floatval( $args['width'] ) ) . '%;" '
 			. '><a href="' . $args['url'] . '" target="_blank" rel="nofollow" title="' . $args['tab_caption'] . '">'
-			. '<i class="fa ' . $args['icon'] . ' fa-2x"></i></a></li>';
+			. '<i class="fa ' . $args['icon'] . ' ' . $args['icon_size'] . '"></i></a></li>';
 	}
 
 	/**

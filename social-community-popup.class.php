@@ -70,7 +70,6 @@ class Social_Community_Popup {
 			'setting_close_popup_by_clicking_anywhere',
 			'setting_show_on_mobile_devices',
 			'setting_plugin_title',
-			'setting_plugin_title_on_mobile_devices',
 			'setting_hide_tabs_if_one_widget_is_active',
 			'setting_align_tabs_to_center',
 			'setting_show_button_to_close_widget',
@@ -81,6 +80,10 @@ class Social_Community_Popup {
 			'setting_overlay_color',
 			'setting_overlay_opacity',
 			'setting_background_image',
+
+			// Мобильные настройки
+			'setting_plugin_title_on_mobile_devices',
+			'setting_icons_size_on_mobile_devices',
 
 			// События
 			'when_should_the_popup_appear',
@@ -717,6 +720,9 @@ class Social_Community_Popup {
 			// Добавляем новое свойство "Скрывать элемент после клика на него"
 			add_option( $scp_prefix . 'event_hide_element_after_click_on_it',               0 );
 
+			// Добавляем новое свойство "Размер иконок" для мобильных устройств
+			add_option( $scp_prefix . 'setting_icons_size_on_mobile_devices',               '2x' );
+
 			update_option( $version, '0.7.4' );
 			self::set_scp_version( '0.7.4' );
 		}
@@ -1082,6 +1088,7 @@ class Social_Community_Popup {
 
 		// Не забывать добавлять новые опции в uninstall()
 		register_setting( $group, $scp_prefix . 'setting_plugin_title_on_mobile_devices', 'wp_kses_post' );
+		register_setting( $group, $scp_prefix . 'setting_icons_size_on_mobile_devices', 'sanitize_text_field' );
 
 		add_settings_section(
 			$section,
@@ -1099,6 +1106,18 @@ class Social_Community_Popup {
 			$section,
 			array(
 				'field' => $scp_prefix . 'setting_plugin_title_on_mobile_devices'
+			)
+		);
+
+		// Размер иконок социальных сетей
+		add_settings_field(
+			$prefix . '-common-icons-size-on-mobile-devices',
+			__( 'Icons Size', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_icons_size' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'setting_icons_size_on_mobile_devices'
 			)
 		);
 	}
@@ -2542,6 +2561,37 @@ class Social_Community_Popup {
 	}
 
 	/**
+	 * Callback-шаблон для формирования комбобокса выбора размера иконок социальных сетей
+	 *
+	 * @since 0.7.4
+	 *
+	 * @param array $args
+	 * @return string
+	 */
+	public function settings_field_icons_size( $args ) {
+		$field = $args[ 'field' ];
+		$value = get_option( $field );
+
+		$options = array();
+		$options['lg'] = __( 'Normal Size', L10N_SCP_PREFIX );
+		$options['2x'] = __( '2x', L10N_SCP_PREFIX );
+		$options['3x'] = __( '3x', L10N_SCP_PREFIX );
+		$options['4x'] = __( '4x', L10N_SCP_PREFIX );
+		$options['5x'] = __( '5x', L10N_SCP_PREFIX );
+
+		$html   = '<select id="scp_icon_size" name="' . $field . '">';
+		$format = '<option value="%s"%s>%s</option>';
+
+		foreach ( $options as $option_name => $label ) {
+			$html .= sprintf( $format, $option_name, selected( $value, $option_name, false ), $label );
+		}
+
+		$html .= '</select>';
+
+		echo $html;
+	}
+
+	/**
 	 * Callback-шаблон для выбора событий, при которых показывается окно
 	 */
 	public function settings_field_when_should_the_popup_appear( $args ) {
@@ -3292,6 +3342,7 @@ class Social_Community_Popup {
 
 				$content .= '<ul class="scp-icons">';
 
+				$icon_size      = 'fa-' . $scp_options[ $scp_prefix . 'setting_icons_size_on_mobile_devices' ];
 				$tab_width      = sprintf( '%0.2f', floatval( 100 / $active_providers_count ) );
 				$last_tab_width = 100 - $tab_width * ( $active_providers_count - 1 );
 
@@ -3307,7 +3358,8 @@ class Social_Community_Popup {
 
 					$args = array(
 						'index' => $tab_index++,
-						'width' => $width
+						'width' => $width,
+						'icon_size' => $icon_size
 					);
 
 					$args = array_merge( $args, $provider->options() );
