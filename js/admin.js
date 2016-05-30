@@ -65,11 +65,19 @@ $j(document).ready(function() {
 
 		$checkboxes.each(function() {
 			var $relatedObject = $j('#' + SCP_PREFIX + relatedObjectPrefix + $j(this).val());
+			checked = $j(this).is(':checked');
 
-			if ($j(this).is(':checked')) {
+			if (checked) {
 				$relatedObject.removeAttr('disabled');
 			} else {
 				$relatedObject.attr('disabled', 'disabled');
+			}
+
+			switch($j(this).val()) {
+				case 'after_clicking_on_element': {
+					$j('#' + SCP_PREFIX + 'event_hide_element_after_click_on_it').prop('disabled', !checked);
+					break;
+				}
 			}
 		});
 	}

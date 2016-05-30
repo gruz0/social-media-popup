@@ -89,6 +89,9 @@ class Social_Community_Popup {
 			'popup_will_appear_after_scrolling_down_n_percent',
 			'popup_will_appear_on_exit_intent',
 
+			// Дополнительные опции событий
+			'event_hide_element_after_click_on_it',
+
 			// Кому показывать окно
 			'who_should_see_the_popup',
 			'visitor_opened_at_least_n_number_of_pages',
@@ -711,6 +714,9 @@ class Social_Community_Popup {
 			// Добавляем новое свойство "Заголовок главного окна" для мобильных устройств
 			add_option( $scp_prefix . 'setting_plugin_title_on_mobile_devices',             __( 'Follow us on Social Media!', L10N_SCP_PREFIX ) );
 
+			// Добавляем новое свойство "Скрывать элемент после клика на него"
+			add_option( $scp_prefix . 'event_hide_element_after_click_on_it',               0 );
+
 			update_option( $version, '0.7.4' );
 			self::set_scp_version( '0.7.4' );
 		}
@@ -1123,6 +1129,7 @@ class Social_Community_Popup {
 		register_setting( $group, $scp_prefix . 'visitor_opened_at_least_n_number_of_pages', 'absint' );
 		register_setting( $group, $scp_prefix . 'visitor_registered_and_role_equals_to', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'setting_display_after_n_days', 'absint' );
+		register_setting( $group, $scp_prefix . 'event_hide_element_after_click_on_it', 'absint' );
 
 		add_settings_section(
 			$section_when_should_the_popup_appear,
@@ -1164,6 +1171,18 @@ class Social_Community_Popup {
 			$section_when_should_the_popup_appear,
 			array(
 				'field' => $scp_prefix . 'popup_will_appear_after_clicking_on_element'
+			)
+		);
+
+		// Скрывать элемент, вызвавший открытие окна, после клика на него
+		add_settings_field(
+			$prefix . '-event-hide-element-after-click-on-it',
+			__( 'Hide Element After Click on It', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section_when_should_the_popup_appear,
+			array(
+				'field' => $scp_prefix . 'event_hide_element_after_click_on_it'
 			)
 		);
 
@@ -3152,6 +3171,9 @@ class Social_Community_Popup {
 		$popup_will_appear_after_scrolling_down_n_percent = (int) $scp_options[ $scp_prefix . 'popup_will_appear_after_scrolling_down_n_percent' ];
 		$popup_will_appear_on_exit_intent                 = $scp_options[ $scp_prefix . 'popup_will_appear_on_exit_intent' ] === '1';
 
+		// Дополнительные события
+		$event_hide_element_after_click_on_it             = $scp_options[ $scp_prefix . 'event_hide_element_after_click_on_it' ] === '1';
+
 		/////////////////////////////////////////////////
 		// Кому показывать окно
 		/////////////////////////////////////////////////
@@ -3415,6 +3437,7 @@ class Social_Community_Popup {
 					$content .= $template->render_when_popup_will_appear_after_clicking_on_element(
 						$when_should_the_popup_appear,
 						$popup_will_appear_after_clicking_on_element,
+						$event_hide_element_after_click_on_it,
 						$delay_before_show_bottom_button,
 						$any_event_active,
 						$after_n_days
@@ -3473,6 +3496,7 @@ class Social_Community_Popup {
 					$content .= $template->render_when_popup_will_appear_after_clicking_on_element(
 						$when_should_the_popup_appear,
 						$popup_will_appear_after_clicking_on_element,
+						$event_hide_element_after_click_on_it,
 						$delay_before_show_bottom_button,
 						$any_event_active
 					);

@@ -158,6 +158,7 @@ class SCP_Template {
 	function render_when_popup_will_appear_after_clicking_on_element(
 		$when_should_the_popup_appear,
 		$popup_will_appear_after_clicking_on_element,
+		$event_hide_element_after_click_on_it,
 		$delay_before_show_bottom_button,
 		& $any_event_active,
 		$after_n_days = 0) {
@@ -178,6 +179,11 @@ class SCP_Template {
 						$content .= $this->render_close_widget_on_mobile( $after_n_days );
 					} else {
 						$content .= $this->render_show_bottom_button( $delay_before_show_bottom_button );
+					}
+
+					// Если активна опция "Удалять элемент после клика по нему" — удалим его из DOM
+					if ( $event_hide_element_after_click_on_it ) {
+						$content .= 'jQuery(this).remove();';
 					}
 
 					$content .= 'return false;';
