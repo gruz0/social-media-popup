@@ -70,6 +70,7 @@ class Social_Community_Popup {
 			'setting_close_popup_by_clicking_anywhere',
 			'setting_show_on_mobile_devices',
 			'setting_plugin_title',
+			'setting_use_icons_instead_of_labels_in_tabs',
 			'setting_hide_tabs_if_one_widget_is_active',
 			'setting_align_tabs_to_center',
 			'setting_show_button_to_close_widget',
@@ -723,6 +724,9 @@ class Social_Community_Popup {
 			// Добавляем новое свойство "Размер иконок" для мобильных устройств
 			add_option( $scp_prefix . 'setting_icons_size_on_mobile_devices',               '2x' );
 
+			// Добавляем новое свойство "Использовать иконки вместо надписей" для десктопов
+			add_option( $scp_prefix . 'setting_use_icons_instead_of_labels_in_tabs',        0 );
+
 			update_option( $version, '0.7.4' );
 			self::set_scp_version( '0.7.4' );
 		}
@@ -875,6 +879,7 @@ class Social_Community_Popup {
 
 		// Не забывать добавлять новые опции в uninstall()
 		register_setting( $group, $scp_prefix . 'setting_plugin_title', 'wp_kses_post' );
+		register_setting( $group, $scp_prefix . 'setting_use_icons_instead_of_labels_in_tabs', 'absint' );
 		register_setting( $group, $scp_prefix . 'setting_hide_tabs_if_one_widget_is_active', 'absint' );
 		register_setting( $group, $scp_prefix . 'setting_container_width', 'absint' );
 		register_setting( $group, $scp_prefix . 'setting_container_height', 'absint' );
@@ -905,6 +910,18 @@ class Social_Community_Popup {
 			$section,
 			array(
 				'field' => $scp_prefix . 'setting_plugin_title'
+			)
+		);
+
+		// Использовать иконки вместо надписей на табах
+		add_settings_field(
+			$prefix . '-common-use-icons-instead-of-labels-in-tabs',
+			__( 'Use Icons Instead of Labels in Tabs', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'setting_use_icons_instead_of_labels_in_tabs'
 			)
 		);
 
@@ -3132,12 +3149,16 @@ class Social_Community_Popup {
 
 		if ( wp_is_mobile() ) {
 			wp_register_style( 'social-community-popup-style', plugins_url( 'css/mobile.css?' . $version, __FILE__ ) );
-			wp_register_style( 'font-awesome', plugins_url( 'vendor/font-awesome-4.6.3/css/font-awesome.min.css?' . $version, __FILE__ ) );
-			wp_enqueue_style( 'font-awesome' );
 		} else {
 			wp_register_style( 'social-community-popup-style', plugins_url( 'css/styles.css?' . $version, __FILE__ ) );
 		}
 		wp_enqueue_style( 'social-community-popup-style' );
+
+		wp_register_style( 'font-awesome', plugins_url( 'vendor/font-awesome-4.6.3/css/font-awesome.min.css?' . $version, __FILE__ ) );
+		wp_enqueue_style( 'font-awesome' );
+
+		wp_register_style( 'social-community-popup-icons', plugins_url( 'css/icons.css?' . $version, __FILE__ ) );
+		wp_enqueue_style( 'social-community-popup-icons' );
 	}
 
 	private function render_popup_window( $version, $scp_prefix ) {
@@ -3331,7 +3352,9 @@ class Social_Community_Popup {
 
 		if ( count( $active_providers ) ) {
 			$active_providers_count = count( $active_providers );
-			$tab_index = 1;
+			$tab_index              = 1;
+			$tab_width              = sprintf( '%0.2f', floatval( 100 / $active_providers_count ) );
+			$last_tab_width         = 100 - $tab_width * ( $active_providers_count - 1 );
 
 			if ( $wp_is_mobile ) {
 				$content .= '<div id="scp_mobile">';
@@ -3342,9 +3365,7 @@ class Social_Community_Popup {
 
 				$content .= '<ul class="scp-icons">';
 
-				$icon_size      = 'fa-' . $scp_options[ $scp_prefix . 'setting_icons_size_on_mobile_devices' ];
-				$tab_width      = sprintf( '%0.2f', floatval( 100 / $active_providers_count ) );
-				$last_tab_width = 100 - $tab_width * ( $active_providers_count - 1 );
+				$icon_size = 'fa-' . $scp_options[ $scp_prefix . 'setting_icons_size_on_mobile_devices' ];
 
 				for ( $idx = 0, $size = count( $tabs_order ); $idx < $size; $idx++ ) {
 					$provider_name = $tabs_order[$idx];
@@ -3364,11 +3385,7 @@ class Social_Community_Popup {
 
 					$args = array_merge( $args, $provider->options() );
 
-					if ( $wp_is_mobile ) {
-						$content .= $provider->tab_caption_mobile( $args );
-					} else {
-						$content .= $provider->tab_caption( $args );
-					}
+					$content .= $provider->tab_caption_mobile( $args );
 				}
 
 				$content .= '</ul>';
@@ -3415,11 +3432,16 @@ class Social_Community_Popup {
 					$content .= '<div class="plugin-title">' . $scp_plugin_title . '</div>';
 				}
 
-
 				if ( $active_providers_count == 1 && $scp_options[ $scp_prefix . 'setting_hide_tabs_if_one_widget_is_active' ] == 1 ) {
 
 				} else {
-					$content .= '<ul class="tabs"' . ( $align_tabs_to_center ? 'style="text-align:center;"' : '' ) . '>';
+					$use_icons_instead_of_labels = $scp_options[ $scp_prefix . 'setting_use_icons_instead_of_labels_in_tabs' ] == 1;
+
+					if ( $use_icons_instead_of_labels ) {
+						$content .= '<ul class="scp-icons scp-icons-desktop">';
+					} else {
+						$content .= '<ul class="tabs"' . ( $align_tabs_to_center ? 'style="text-align:center;"' : '' ) . '>';
+					}
 
 					for ( $idx = 0, $size = count( $tabs_order ); $idx < $size; $idx++ ) {
 						$provider_name = $tabs_order[$idx];
@@ -3429,13 +3451,28 @@ class Social_Community_Popup {
 
 						$provider = $active_providers[$provider_name];
 
-						$args = array( 'index' => $tab_index++ );
+						$width = $tab_index == $active_providers_count ? $last_tab_width : $tab_width;
+
+						$args = array(
+							'index'     => $tab_index++,
+							'width'     => $width,
+							'icon_size' => 'fa-2x'
+						);
+
 						$args = array_merge( $args, $provider->options() );
-						$content .= $provider->tab_caption( $args );
+
+						if ( $use_icons_instead_of_labels ) {
+							$content .= $provider->tab_caption_desktop_icons( $args );
+						} else {
+							$content .= $provider->tab_caption( $args );
+						}
 					}
 
-					if ( ! $show_plugin_title && $show_close_button_in === 'inside' ) {
-						$content .= '<li class="last-item"><span class="close" title="' . __( 'Close Modal Dialog', L10N_SCP_PREFIX ) . '">&times;</span></li>';
+					// Не показываем кнопку закрытия в случае выбора иконок в табах
+					if ( ! $use_icons_instead_of_labels ) {
+						if ( ! $show_plugin_title && $show_close_button_in === 'inside' ) {
+							$content .= '<li class="last-item"><span class="close" title="' . __( 'Close Modal Dialog', L10N_SCP_PREFIX ) . '">&times;</span></li>';
+						}
 					}
 
 					$content .= '</ul>';
