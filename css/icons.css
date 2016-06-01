@@ -1,0 +1,26 @@
+.scp-icons {
+	padding:0;
+	margin:0;
+	display:block;
+	list-style:none;
+}
+	.scp-icons li {
+		padding:5px 0;
+		margin:0;
+		outline:1px solid #fff;
+		display:block;
+		float:left;
+		text-align:center;
+		color:#fff;
+	}
+	.scp-icons li:last-child {clear:right;}
+
+	.scp-icons li.facebook-tab {background-color:#3b5998;}
+	.scp-icons li.vk-tab {background-color:#45668e;}
+	.scp-icons li.google-plus-tab {background-color:#dd4b39;}
+	.scp-icons li.twitter-tab {background-color:#00aced;}
+	.scp-icons li.pinterest-tab {background-color:#cb2027;}
+	.scp-icons li.odnoklassniki-tab {background-color:#ee8208;}
+
+	.scp-icons a, .scp-icons a:link, .scp-icons a:active, .scp-icons a:visited {color:#fff;text-decoration:none;}
+	.scp-icons a:hover {color:#ffc;text-decoration:none;}
