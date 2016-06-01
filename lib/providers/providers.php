@@ -124,6 +124,23 @@ class SCP_Provider {
 	}
 
 	/**
+	 * Add Tab caption under widget title with icons for desktop devices
+	 *
+	 * @since 0.7.4
+	 *
+	 * @param array @args
+	 * @return string
+	 */
+	public static function tab_caption_desktop_icons( $args ) {
+		return '<li '
+			. 'data-index="' . $args['index'] . '" '
+			. 'class="' . $args['css_class'] . '" '
+			. 'style="width:' . sprintf( '%0.2f', floatval( $args['width'] ) ) . '%;" '
+			. '><a href="#" title="' . $args['tab_caption'] . '">'
+			. '<i class="fa ' . $args['icon'] . ' ' . $args['icon_size'] . '"></i></a></li>';
+	}
+
+	/**
 	 * Add Tab caption under widget title for mobile devices
 	 *
 	 * @since 0.7.4
