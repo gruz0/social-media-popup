@@ -4,6 +4,7 @@
 	display:block;
 	list-style:none;
 }
+
 	.scp-icons li {
 		padding:5px 0;
 		margin:0;
@@ -24,3 +25,5 @@
 
 	.scp-icons a, .scp-icons a:link, .scp-icons a:active, .scp-icons a:visited {color:#fff;text-decoration:none;}
 	.scp-icons a:hover {color:#ffc;text-decoration:none;}
+
+.scp-icons-desktop li {margin-bottom:2px !important;}
