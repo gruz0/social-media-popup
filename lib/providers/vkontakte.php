@@ -69,8 +69,8 @@ class SCP_VK_Provider extends SCP_Provider {
 			function scp_prependVK($) {
 				timeout = ' . $delay_before_render . ';
 
-				$tabs   = $("#social-community-popup .tabs");
-				$vk_tab = $("#social-community-popup .vk-tab");
+				$tabs   = $("' . self::$tabs_id . '");
+				$vk_tab = $("' . self::$tabs_id . ' .vk-tab");
 
 				if ($vk_tab.length && parseInt($vk_tab.data("index")) == 1) {
 					setTimeout("initialize_VK_Widgets();", timeout);

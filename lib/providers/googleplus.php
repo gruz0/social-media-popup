@@ -48,8 +48,8 @@ class SCP_GooglePlus_Provider extends SCP_Provider {
 				}
 
 				function scp_prependGooglePlus($) {
-					$tabs            = $("#social-community-popup .tabs");
-					$google_plus_tab = $("#social-community-popup .google-plus-tab");
+					$tabs            = $("' . self::$tabs_id . '");
+					$google_plus_tab = $("' . self::$tabs_id . ' .google-plus-tab");
 
 					if ($google_plus_tab.length && parseInt($google_plus_tab.data("index")) == 1) {
 						initialize_GooglePlus_Widgets();

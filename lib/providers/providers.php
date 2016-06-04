@@ -3,6 +3,7 @@
 class SCP_Provider {
 	static $prefix = null;
 	static $options = null;
+	static $tabs_id = null;
 
 	/**
 	 * Returns available providers
@@ -40,6 +41,7 @@ class SCP_Provider {
 	public static function create( $provider, $prefix, $options ) {
 		self::$prefix = $prefix;
 		self::$options = $options;
+		self::$tabs_id = self::tabs_id();
 
 		// FIXME: Переписать на проверку провайдера в массиве available_providers()
 		switch( $provider ) {
@@ -154,6 +156,25 @@ class SCP_Provider {
 			. 'style="width:' . sprintf( '%0.2f', floatval( $args['width'] ) ) . '%;" '
 			. '><a href="' . $args['url'] . '" target="_blank" rel="nofollow" title="' . $args['tab_caption'] . '">'
 			. '<i class="fa ' . $args['icon'] . ' ' . $args['icon_size'] . '"></i></a></li>';
+	}
+
+	/**
+	 * Returns tabs UL identifier to use in providers JS-prepend* functions
+	 *
+	 * @since 0.7.4
+	 *
+	 * @return string
+	 */
+	private static function tabs_id() {
+		if ( wp_is_mobile() ) {
+			return '#scp_mobile .scp-icons';
+		} else {
+			if ( self::$options[ self::$prefix . 'setting_use_icons_instead_of_labels_in_tabs' ] == 1 ) {
+				return '#social-community-popup .scp-icons';
+			} else {
+				return '#social-community-popup .tabs';
+			}
+		}
 	}
 
 	/**

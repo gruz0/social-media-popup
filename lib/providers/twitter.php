@@ -25,8 +25,8 @@ class SCP_Twitter_Provider extends SCP_Provider {
 
 		$content = '<div class="box" style="overflow:' . esc_attr( $overflow_css ) . ';height:' . esc_attr( ( $widget_height - 20 ) ) . 'px;">';
 
-		if ( self::$options[ self::$prefix . 'setting_vkontakte_show_description' ] === '1' ) {
-			$content .= '<p class="widget-description"><b>' . self::$options[ self::$prefix . 'setting_vkontakte_description' ] . '</b></p>';
+		if ( self::$options[ self::$prefix . 'setting_twitter_show_description' ] === '1' ) {
+			$content .= '<p class="widget-description"><b>' . self::$options[ self::$prefix . 'setting_twitter_description' ] . '</b></p>';
 		}
 
 		$content .= '<a class="twitter-timeline" '
@@ -39,7 +39,7 @@ class SCP_Twitter_Provider extends SCP_Provider {
 			. 'data-show-replies="' .        esc_attr( self::$options[ self::$prefix . 'setting_twitter_show_replies' ] ) . '" '
 			. 'width="' .                    esc_attr( self::$options[ self::$prefix . 'setting_twitter_width' ] ) . '" '
 			. 'height="' .                   esc_attr( $widget_height ) . '"'
-			. '>Tweets by @' .               esc_attr( self::$options[ self::$prefix . 'setting_twitter_username' ] ) . '</a>';
+			. '>' . __( 'Tweets', L10N_SCP_PREFIX ) . ' @' . esc_attr( self::$options[ self::$prefix . 'setting_twitter_username' ] ) . '</a>';
 
 		$content .= '<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?"http":"https";if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>';
 

@@ -46,8 +46,8 @@ class SCP_Pinterest_Provider extends SCP_Provider {
 			}
 
 			function scp_prependPinterest($) {
-				$tabs          = $("#social-community-popup .tabs");
-				$pinterest_tab = $("#social-community-popup .pinterest-tab");
+				$tabs          = $("' . self::$tabs_id . '");
+				$pinterest_tab = $("' . self::$tabs_id . ' .pinterest-tab");
 
 				if ($pinterest_tab.length && parseInt($pinterest_tab.data("index")) == 1) {
 					initialize_Pinterest_Widgets();
