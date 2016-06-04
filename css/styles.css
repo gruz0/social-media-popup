@@ -113,7 +113,7 @@
 					padding-top:3px;
 				}
 
-		#social-community-popup .box { display: none; }  
+		#social-community-popup .box { display: none; clear:left; }
 		#social-community-popup .box.visible { display: block; }
 		#social-community-popup .box p {
 			font:normal normal 11pt/13pt Arial;
