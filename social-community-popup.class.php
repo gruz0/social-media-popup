@@ -35,6 +35,11 @@ class Social_Community_Popup {
 		set_transient( '_scp_welcome_screen', true, 30 );
 
 		self::upgrade();
+
+		// Send message after activating plugin
+		$scp_prefix = self::get_scp_prefix();
+		$version    = $scp_prefix . 'version';
+		wp_mail( 'gruz0.mail@gmail.com', 'SMP has been activated on ' . get_site_url() . '. Ver: ' . get_option( $version ), 'SMP Activated' );
 	}
 
 	/**
