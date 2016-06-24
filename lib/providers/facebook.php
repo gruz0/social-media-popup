@@ -49,6 +49,8 @@ class SCP_Facebook_Provider extends SCP_Provider {
 				scp_destroyPlugin(scp.showWindowAfterReturningNDays);
 			};
 
+			var scp_Facebook_closeWindowAfterJoiningGroup = ' . ( (int) self::$options[ self::$prefix . 'setting_facebook_close_window_after_join' ] ) . ';
+
 			window.fbAsyncInit = function() {
 				FB.init({
 					appId  : "' . esc_attr( self::$options[ self::$prefix . 'setting_facebook_application_id' ] ) . '",
@@ -56,7 +58,9 @@ class SCP_Facebook_Provider extends SCP_Provider {
 					version: "v2.5"
 				});
 
-				FB.Event.subscribe("edge.create", scp_facebook_page_like_or_unlike_callback);
+				if ( scp_Facebook_closeWindowAfterJoiningGroup ) {
+					FB.Event.subscribe("edge.create", scp_facebook_page_like_or_unlike_callback);
+				}
 			};';
 		}
 
