@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Social Community Popup\n"
-"POT-Creation-Date: 2016-06-24 12:48+0300\n"
-"PO-Revision-Date: 2016-06-24 12:59+0300\n"
+"POT-Creation-Date: 2016-06-24 21:38+0300\n"
+"PO-Revision-Date: 2016-06-24 21:39+0300\n"
 "Last-Translator: Alexander Gruzov <gruz0.mail@gmail.com>\n"
 "Language-Team: Alexander Gruzov <support@gruz0.ru>\n"
 "Language: ru_RU\n"
@@ -23,11 +23,11 @@ msgstr "Твиты"
 
 #: ../lib/scp_template.php:192
 msgid ""
-"You must add a selector element for the plugin Social Community Popup. "
-"Otherwise it won't be work."
+"You should to add a CSS selector in the plugin settings. Otherwise it won't "
+"be work."
 msgstr ""
-"Вы должны указать корректный селектор CSS (имя класса или ID элемента). В "
-"противном случае окно плагин не будет работать."
+"Укажите CSS селектор в настройках плагина. В противном случае окно не "
+"появится."
 
 #: ../social-community-popup.class.php:283
 #: ../social-community-popup.class.php:2946
@@ -703,13 +703,13 @@ msgstr "Страница"
 msgid "Welcome To Social Media Popup Welcome Screen"
 msgstr "Экран приветствия Social Media Popup"
 
-#: ../social-community-popup.class.php:2934
+#: ../social-community-popup.class.php:2934 ../templates/settings.php:7
 msgid "Social Media Popup Options"
 msgstr "Настройки Social Media Popup"
 
 #: ../social-community-popup.class.php:2935
-msgid "SCP Options"
-msgstr "SCP Настройки"
+msgid "SMP Options"
+msgstr "SMP Настройки"
 
 #: ../social-community-popup.class.php:2945
 #: ../templates/settings/settings-facebook.php:3
@@ -774,10 +774,6 @@ msgstr "Закрыть окно"
 msgid "Page will be reload after clear cookies. Continue?"
 msgstr "Страница будет перезагружена после очистки кук. Продолжить?"
 
-#: ../templates/settings.php:7
-msgid "Social Community Popup Options"
-msgstr "Настройки плагина Social Community Popup"
-
 #: ../templates/settings.php:24
 msgid "General"
 msgstr "Основные"
@@ -785,6 +781,19 @@ msgstr "Основные"
 #: ../templates/settings.php:25
 msgid "View (Desktop)"
 msgstr "Внешний вид (обычные браузеры)"
+
+#~ msgid ""
+#~ "You must add a selector element for the plugin Social Community Popup. "
+#~ "Otherwise it won't be work."
+#~ msgstr ""
+#~ "Вы должны указать корректный селектор CSS (имя класса или ID элемента). В "
+#~ "противном случае окно плагин не будет работать."
+
+#~ msgid "SCP Options"
+#~ msgstr "SCP Настройки"
+
+#~ msgid "Social Community Popup Options"
+#~ msgstr "Настройки плагина Social Community Popup"
 
 #~ msgid "<p>Do You Like Our Site?</p><p>Follow Us on Social Networks!</p>"
 #~ msgstr ""
