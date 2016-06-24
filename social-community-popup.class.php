@@ -69,6 +69,9 @@ class Social_Community_Popup {
 			'setting_close_popup_when_esc_pressed',
 			'setting_close_popup_by_clicking_anywhere',
 			'setting_show_on_mobile_devices',
+			'setting_show_admin_bar_menu',
+
+			// Десктопные настройки
 			'setting_plugin_title',
 			'setting_use_icons_instead_of_labels_in_tabs',
 			'setting_hide_tabs_if_one_widget_is_active',
@@ -727,6 +730,9 @@ class Social_Community_Popup {
 			// Добавляем новое свойство "Использовать иконки вместо надписей" для десктопов
 			add_option( $scp_prefix . 'setting_use_icons_instead_of_labels_in_tabs',        0 );
 
+			// Добавляем новое свойство "Отображать меню быстрого доступа"
+			add_option( $scp_prefix . 'setting_show_admin_bar_menu',                        1 );
+
 			update_option( $version, '0.7.4' );
 			self::set_scp_version( '0.7.4' );
 		}
@@ -793,6 +799,7 @@ class Social_Community_Popup {
 		register_setting( $group, $scp_prefix . 'setting_close_popup_by_clicking_anywhere', 'absint' );
 		register_setting( $group, $scp_prefix . 'setting_close_popup_when_esc_pressed', 'absint' );
 		register_setting( $group, $scp_prefix . 'setting_show_on_mobile_devices', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_show_admin_bar_menu', 'absint' );
 
 		add_settings_section(
 			$section,
@@ -858,6 +865,18 @@ class Social_Community_Popup {
 			$section,
 			array(
 				'field' => $scp_prefix . 'setting_show_on_mobile_devices'
+			)
+		);
+
+		// Показывать меню в Админ баре
+		add_settings_field(
+			$prefix . '-common-show-admin-bar-menu',
+			__( 'Show Plugin Menu in Admin Bar', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'setting_show_admin_bar_menu'
 			)
 		);
 	}
