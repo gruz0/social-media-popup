@@ -2872,7 +2872,7 @@ class Social_Community_Popup {
 		}
 		echo '</ul>';
 
-		echo '<p>' . __( 'Closed Social Networks Marked As Red', L10N_SCP_PREFIX ) . '</p>';
+		echo '<p>' . __( 'Disabled Social Networks Marked As Red', L10N_SCP_PREFIX ) . '</p>';
 		echo '<input type="hidden" name="' . $field . '" id="' . $field . '" value="' . $value . '" />';
 	}
 
