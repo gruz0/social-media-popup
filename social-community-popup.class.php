@@ -2932,7 +2932,7 @@ class Social_Community_Popup {
 
 		add_menu_page(
 			__( 'Social Media Popup Options', L10N_SCP_PREFIX ),
-			__( 'SCP Options', L10N_SCP_PREFIX ),
+			__( 'SMP Options', L10N_SCP_PREFIX ),
 			'administrator',
 			'social_community_popup',
 			array( & $this, 'plugin_settings_page' ),

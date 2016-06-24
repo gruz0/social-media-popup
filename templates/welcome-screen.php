@@ -1,5 +1,5 @@
 <div id="scp_welcome_screen" class="wrap">
-	<h1>Social Community Popup v<?php echo $version; ?></h1>
+	<h1>Social Media Popup v<?php echo $version; ?></h1>
 	<div class="about-text">Благодарю за установку плагина! Надеюсь он вам понравится :-)</div>
 
 	<ul class="tabs">

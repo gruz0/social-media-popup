@@ -4,7 +4,7 @@ $tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'general';
 ?>
 
 <div class="wrap social-community-popup-settings">
-	<h1><?php _e( 'Social Community Popup Options', L10N_SCP_PREFIX ); ?></h1>
+	<h1><?php _e( 'Social Media Popup Options', L10N_SCP_PREFIX ); ?></h1>
 	<?php echo scp_settings_tabs(); ?>
 	<form method="post" action="options.php">
 		<?php wp_nonce_field( 'scp-update-options' ); ?>

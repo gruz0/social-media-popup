@@ -189,7 +189,7 @@ class SCP_Template {
 					$content .= 'return false;';
 				$content .= '});';
 			} else {
-				$content .= 'alert("' . __( "You must add a selector element for the plugin Social Community Popup. Otherwise it won't be work.", L10N_SCP_PREFIX ) . '");';
+				$content .= 'alert("' . __( "You must add a selector element for the plugin Social Media Popup. Otherwise it won't be work.", L10N_SCP_PREFIX ) . '");';
 			}
 		}
 
