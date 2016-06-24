@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Social Community Popup\n"
 "POT-Creation-Date: 2016-06-24 12:48+0300\n"
-"PO-Revision-Date: 2016-06-24 12:58+0300\n"
+"PO-Revision-Date: 2016-06-24 12:59+0300\n"
 "Last-Translator: Alexander Gruzov <gruz0.mail@gmail.com>\n"
 "Language-Team: Alexander Gruzov <support@gruz0.ru>\n"
 "Language: ru_RU\n"
@@ -97,7 +97,7 @@ msgstr "Закрывать окно при нажатии на клавишу ES
 
 #: ../social-community-popup.class.php:880
 msgid "Show widget on mobile devices"
-msgstr "Отображать виджет для мобильных устройств (не стабильно)"
+msgstr "Отображать виджет для мобильных устройств"
 
 #: ../social-community-popup.class.php:892
 msgid "Show Plugin Menu in Admin Bar"
