@@ -2912,15 +2912,15 @@ class Social_Community_Popup {
 	 */
 	public function add_menu() {
 		add_dashboard_page(
-			__( 'Welcome To Social Community Popup Welcome Screen', L10N_SCP_PREFIX ),
-			__( 'Welcome To Social Community Popup Welcome Screen', L10N_SCP_PREFIX ),
+			__( 'Welcome To Social Media Popup Welcome Screen', L10N_SCP_PREFIX ),
+			__( 'Welcome To Social Media Popup Welcome Screen', L10N_SCP_PREFIX ),
 			'read',
 			'social_community_popup_about',
 			array( & $this, 'plugin_welcome_screen' )
 		);
 
 		add_menu_page(
-			__( 'Social Community Popup Options', L10N_SCP_PREFIX ),
+			__( 'Social Media Popup Options', L10N_SCP_PREFIX ),
 			__( 'SCP Options', L10N_SCP_PREFIX ),
 			'administrator',
 			'social_community_popup',
@@ -3007,7 +3007,7 @@ class Social_Community_Popup {
 
 		$args = array(
 			'id'     => 'scp-admin-bar',
-			'title'  => 'Social Community Popup',
+			'title'  => 'Social Media Popup',
 		);
 		$wp_admin_bar->add_node( $args );
 

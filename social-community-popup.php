@@ -1,9 +1,9 @@
 <?php
 defined( 'ABSPATH' ) or exit;
 /*
-Plugin Name: Social Community Popup
+Plugin Name: Social Media Popup
 Plugin URI: http://gruz0.ru/
-Description: The plugin creates a popup window with most popular social networks widgets
+Description: The plugin creates a popup window with most popular social media widgets
 Author: Alexander Gruzov
 Author URI: http://gruz0.ru/
 Text Domain: social-community-popup
