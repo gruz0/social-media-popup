@@ -2984,6 +2984,8 @@ class Social_Community_Popup {
 		if ( ! ( $user instanceOf WP_User ) ) return;
 		if ( ! current_user_can( 'activate_plugins' ) ) return;
 
+		if ( absint( get_option( self::get_scp_prefix(). 'setting_show_admin_bar_menu' ) ) != 1 ) return;
+
 		$args = array(
 			'id'     => 'scp-admin-bar',
 			'title'  => 'Social Community Popup',
