@@ -1,4 +1,4 @@
-=== Social Community Popup ===
+=== Social Media Popup ===
 Contributors: gruz0
 Tags: social plugins, socials, popup, facebook, widget, vk, vkontakte, odnoklassniki, twitter, google plus, pinterest
 Donate link: http://gruz0.ru/social-community-popup/
@@ -8,10 +8,10 @@ Stable tag: trunk
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Plugin creates the popup window with most popular social networks widgets
+Plugin creates the popup window with most popular social media widgets
 
 == Description ==
-Plugin creates popup window with most popular social networks widget.
+Plugin creates popup window with most popular social media widget.
 
 Available widgets:
 * Facebook Page Plugin
