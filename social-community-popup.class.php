@@ -249,6 +249,17 @@ class Social_Community_Popup {
 		update_option( self::get_scp_prefix() . 'setting_debug_mode', 1 );
 	}
 
+	/**
+	 * Reset SCP version
+	 * Don't forget to reactivate all providers in plugin settings to prevent show PHP notices
+	 *
+	 * @since 0.7.4
+	 */
+	private static function reset_scp_version() {
+		update_option( 'scp-version', '' );
+		update_option( 'social-community-popup-version', '' );
+	}
+
 	public static function upgrade_to_0_1() {
 		$scp_prefix = self::get_scp_prefix();
 		$version    = $scp_prefix . 'version';
@@ -282,7 +293,7 @@ class Social_Community_Popup {
 			update_option( $scp_prefix . 'setting_vkontakte_tab_caption',            __( 'VK', L10N_SCP_PREFIX ) );
 			update_option( $scp_prefix . 'setting_vkontakte_page_or_group_id',       '64088617' );
 			update_option( $scp_prefix . 'setting_vkontakte_width',                  400 );
-			update_option( $scp_prefix . 'setting_vkontakte_height',                 260 );
+			update_option( $scp_prefix . 'setting_vkontakte_height',                 400 );
 			update_option( $scp_prefix . 'setting_vkontakte_color_background',       '#FFFFFF' );
 			update_option( $scp_prefix . 'setting_vkontakte_color_text',             '#2B587A' );
 			update_option( $scp_prefix . 'setting_vkontakte_color_button',           '#5B7FA6' );
@@ -335,7 +346,7 @@ class Social_Community_Popup {
 			// Добавляем новые системные опции
 			update_option( $scp_prefix . 'setting_debug_mode',                       1 );
 			update_option( $scp_prefix . 'setting_container_width',                  400 );
-			update_option( $scp_prefix . 'setting_container_height',                 476 );
+			update_option( $scp_prefix . 'setting_container_height',                 480 );
 
 			// Добавляем настройки Google+
 			update_option( $scp_prefix . 'setting_use_googleplus',                   0 );
@@ -503,7 +514,7 @@ class Social_Community_Popup {
 			// Надпись над табами плагина
 			update_option( $scp_prefix . 'setting_plugin_title',
 				'<div style="text-align: center;font: bold normal 14pt/16pt Arial">'
-				. __( 'Follow us on Social Media!', L10N_SCP_PREFIX )
+				. __( 'Follow Us on Social Media!', L10N_SCP_PREFIX )
 				. '</div>'
 			);
 
@@ -540,8 +551,8 @@ class Social_Community_Popup {
 			update_option( $scp_prefix . 'setting_pinterest_description',              '' );
 			update_option( $scp_prefix . 'setting_pinterest_profile_url',              'http://ru.pinterest.com/gruz0/' );
 			update_option( $scp_prefix . 'setting_pinterest_image_width',              60 );
-			update_option( $scp_prefix . 'setting_pinterest_width',                    400 );
-			update_option( $scp_prefix . 'setting_pinterest_height',                   200 );
+			update_option( $scp_prefix . 'setting_pinterest_width',                    380 );
+			update_option( $scp_prefix . 'setting_pinterest_height',                   300 );
 
 			update_option( $version, '0.6.8' );
 			self::set_scp_version( '0.6.8' );
@@ -723,7 +734,7 @@ class Social_Community_Popup {
 			add_option( $scp_prefix . 'setting_odnoklassniki_group_url',                    'https://ok.ru/group/57122812461115' );
 
 			// Добавляем новое свойство "Заголовок главного окна" для мобильных устройств
-			add_option( $scp_prefix . 'setting_plugin_title_on_mobile_devices',             __( 'Follow us on Social Media!', L10N_SCP_PREFIX ) );
+			add_option( $scp_prefix . 'setting_plugin_title_on_mobile_devices',             __( 'Follow Us on Social Media!', L10N_SCP_PREFIX ) );
 
 			// Добавляем новое свойство "Скрывать элемент после клика на него"
 			add_option( $scp_prefix . 'event_hide_element_after_click_on_it',               0 );
@@ -3353,7 +3364,6 @@ class Social_Community_Popup {
 		}
 
 		// Настройка плагина
-
 		$use_facebook               = $scp_options[ $scp_prefix . 'setting_use_facebook' ]      === '1';
 		$use_vkontakte              = $scp_options[ $scp_prefix . 'setting_use_vkontakte' ]     === '1';
 		$use_odnoklassniki          = $scp_options[ $scp_prefix . 'setting_use_odnoklassniki' ] === '1';

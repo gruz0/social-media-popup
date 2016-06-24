@@ -62,6 +62,8 @@ class Social_Community_Popup_Tests extends PHPUnit_Framework_TestCase {
 		$this->upgradeTo070();
 		$this->upgradeTo071();
 		$this->upgradeTo072();
+		$this->upgradeTo073();
+		$this->upgradeTo074();
 	}
 
 	private function upgradeTo01() {
@@ -95,7 +97,7 @@ class Social_Community_Popup_Tests extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( __( 'VK', L10N_SCP_PREFIX ) == get_option( $scp_prefix . 'setting_vkontakte_tab_caption' ) );
 		$this->assertTrue( '64088617'                  == get_option( $scp_prefix . 'setting_vkontakte_page_or_group_id' ) );
 		$this->assertTrue( 400                         == get_option( $scp_prefix . 'setting_vkontakte_width' ) );
-		$this->assertTrue( 260                         == get_option( $scp_prefix . 'setting_vkontakte_height' ) );
+		$this->assertTrue( 400                         == get_option( $scp_prefix . 'setting_vkontakte_height' ) );
 		$this->assertTrue( '#FFFFFF'                   == get_option( $scp_prefix . 'setting_vkontakte_color_background' ) );
 		$this->assertTrue( '#2B587A'                   == get_option( $scp_prefix . 'setting_vkontakte_color_text' ) );
 		$this->assertTrue( '#5B7FA6'                   == get_option( $scp_prefix . 'setting_vkontakte_color_button' ) );
@@ -135,7 +137,7 @@ class Social_Community_Popup_Tests extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( 'vkontakte,facebook,odnoklassniki,googleplus' == get_option( $scp_prefix . 'setting_tabs_order' ) );
 		$this->assertTrue( 1                                             == get_option( $scp_prefix . 'setting_debug_mode' ) );
 		$this->assertTrue( 400                                           == get_option( $scp_prefix . 'setting_container_width' ) );
-		$this->assertTrue( 476                                           == get_option( $scp_prefix . 'setting_container_height' ) );
+		$this->assertTrue( 480                                           == get_option( $scp_prefix . 'setting_container_height' ) );
 
 		// Google+
 		$this->assertTrue( 0                                             == get_option( $scp_prefix . 'setting_use_googleplus' ) );
@@ -259,7 +261,7 @@ class Social_Community_Popup_Tests extends PHPUnit_Framework_TestCase {
 
 		$this->assertTrue(
 			'<div style="text-align: center;font: bold normal 14pt/16pt Arial">'
-			. __( '<p>Do You Like Our Site?</p><p>Follow Us on Social Networks!</p>', L10N_SCP_PREFIX )
+			. __( 'Follow Us on Social Media!', L10N_SCP_PREFIX )
 			. '</div>' == get_option( $scp_prefix . 'setting_plugin_title' )
 		);
 
@@ -286,8 +288,8 @@ class Social_Community_Popup_Tests extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( ''                                 === get_option( $scp_prefix . 'setting_pinterest_description' ) );
 		$this->assertTrue( 'http://ru.pinterest.com/gruz0/'   == get_option( $scp_prefix . 'setting_pinterest_profile_url' ) );
 		$this->assertTrue( 60                                 == get_option( $scp_prefix . 'setting_pinterest_image_width' ) );
-		$this->assertTrue( 400                                == get_option( $scp_prefix . 'setting_pinterest_width' ) );
-		$this->assertTrue( 200                                == get_option( $scp_prefix . 'setting_pinterest_height' ) );
+		$this->assertTrue( 380                                == get_option( $scp_prefix . 'setting_pinterest_width' ) );
+		$this->assertTrue( 300                                == get_option( $scp_prefix . 'setting_pinterest_height' ) );
 	}
 
 	private function upgradeTo069() {
@@ -378,6 +380,45 @@ class Social_Community_Popup_Tests extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( 0    == get_option( $scp_prefix . 'setting_facebook_use_small_header' ) );
 		$this->assertTrue( null == get_option( $scp_prefix . 'setting_facebook_show_posts' ) );
 		$this->assertTrue( ( $facebook_show_posts == '1' ? 'timeline' : '' ) == get_option( $scp_prefix . 'setting_facebook_tabs' ) );
+	}
+
+	private function upgradeTo073() {
+		self::$plugin->upgrade_to_0_7_3();
+
+		$scp_prefix = self::$plugin->get_scp_prefix();
+
+		$this->assertTrue( '0.7.3' == get_option( $scp_prefix . 'version' ) );
+
+		// VK
+		$this->assertTrue( '' == get_option( $scp_prefix . 'setting_vkontakte_application_id' ) );
+		$this->assertTrue( 0  == get_option( $scp_prefix . 'setting_vkontakte_close_window_after_join' ) );
+	}
+
+	private function upgradeTo074() {
+		self::$plugin->upgrade_to_0_7_4();
+
+		$scp_prefix = self::$plugin->get_scp_prefix();
+
+		$this->assertTrue( '0.7.4' == get_option( $scp_prefix . 'version' ) );
+
+		// Common
+		$this->assertTrue( 'all'                        == get_option( $scp_prefix . 'visitor_registered_and_role_equals_to' ) );
+		$this->assertTrue( 0                            == get_option( $scp_prefix . 'setting_use_icons_instead_of_labels_in_tabs' ) );
+		$this->assertTrue( '2x'                         == get_option( $scp_prefix . 'setting_icons_size_on_desktop' ) );
+
+		$this->assertTrue( 'Follow Us on Social Media!' == get_option( $scp_prefix . 'setting_plugin_title_on_mobile_devices' ) );
+		$this->assertTrue( '2x'                         == get_option( $scp_prefix . 'setting_icons_size_on_mobile_devices' ) );
+		$this->assertTrue( 0                            == get_option( $scp_prefix . 'event_hide_element_after_click_on_it' ) );
+		$this->assertTrue( 1                            == get_option( $scp_prefix . 'setting_show_admin_bar_menu' ) );
+
+		// Facebook
+		$this->assertTrue( 0                            == get_option( $scp_prefix . 'setting_facebook_close_window_after_join' ) );
+
+		// VK
+		$this->assertTrue( 'https://vk.com/blogsonwordpress_new' == get_option( $scp_prefix . 'setting_vkontakte_page_url' ) );
+
+		// Odnoklassniki
+		$this->assertTrue( 'https://ok.ru/group/57122812461115' == get_option( $scp_prefix . 'setting_odnoklassniki_group_url' ) );
 	}
 }
 
