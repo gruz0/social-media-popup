@@ -243,6 +243,9 @@ class Social_Community_Popup {
 		self::upgrade_to_0_7_2();
 		self::upgrade_to_0_7_3();
 		self::upgrade_to_0_7_4();
+
+		// Automatically set debug mode on after reactivating plugin
+		update_option( self::get_scp_prefix() . 'setting_debug_mode', 1 );
 	}
 
 	public static function upgrade_to_0_1() {
