@@ -74,6 +74,7 @@ class Social_Community_Popup {
 			// Десктопные настройки
 			'setting_plugin_title',
 			'setting_use_icons_instead_of_labels_in_tabs',
+			'setting_icons_size_on_desktop',
 			'setting_hide_tabs_if_one_widget_is_active',
 			'setting_align_tabs_to_center',
 			'setting_show_button_to_close_widget',
@@ -736,6 +737,9 @@ class Social_Community_Popup {
 			// Добавляем новое свойство "Отображать меню быстрого доступа"
 			add_option( $scp_prefix . 'setting_show_admin_bar_menu',                        1 );
 
+			// Добавляем новое свойство "Размер иконок" для десктопов
+			add_option( $scp_prefix . 'setting_icons_size_on_desktop',                      '2x' );
+
 			update_option( $version, '0.7.4' );
 			self::set_scp_version( '0.7.4' );
 		}
@@ -902,6 +906,7 @@ class Social_Community_Popup {
 		// Не забывать добавлять новые опции в uninstall()
 		register_setting( $group, $scp_prefix . 'setting_plugin_title', 'wp_kses_post' );
 		register_setting( $group, $scp_prefix . 'setting_use_icons_instead_of_labels_in_tabs', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_icons_size_on_desktop', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'setting_hide_tabs_if_one_widget_is_active', 'absint' );
 		register_setting( $group, $scp_prefix . 'setting_container_width', 'absint' );
 		register_setting( $group, $scp_prefix . 'setting_container_height', 'absint' );
@@ -947,6 +952,18 @@ class Social_Community_Popup {
 			)
 		);
 
+		// Размер иконок социальных сетей
+		add_settings_field(
+			$prefix . '-common-icons-size-on-desktop',
+			__( 'Icons Size', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_icons_size' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'setting_icons_size_on_desktop'
+			)
+		);
+
 		// Скрывать панель табов, если активна только одна соц. сеть
 		add_settings_field(
 			$prefix . '-common-hide-tabs-if-one-widget-is-active',
@@ -970,7 +987,6 @@ class Social_Community_Popup {
 				'field' => $scp_prefix . 'setting_align_tabs_to_center'
 			)
 		);
-
 
 		// Показывать кнопку закрытия окна в заголовке в контейнере или вне его
 		add_settings_field(
@@ -3460,6 +3476,7 @@ class Social_Community_Popup {
 
 				} else {
 					$use_icons_instead_of_labels = $scp_options[ $scp_prefix . 'setting_use_icons_instead_of_labels_in_tabs' ] == 1;
+					$icon_size = 'fa-' . $scp_options[ $scp_prefix . 'setting_icons_size_on_desktop' ];
 
 					if ( $use_icons_instead_of_labels ) {
 						$content .= '<ul class="scp-icons scp-icons-desktop">';
@@ -3480,7 +3497,7 @@ class Social_Community_Popup {
 						$args = array(
 							'index'     => $tab_index++,
 							'width'     => $width,
-							'icon_size' => 'fa-2x'
+							'icon_size' => $icon_size,
 						);
 
 						$args = array_merge( $args, $provider->options() );
