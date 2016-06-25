@@ -7,6 +7,10 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 		parent::setUp();
 	}
 
+	public static function setUpBeforeClass() {
+		self::$plugin = $GLOBALS['social-media-popup'];
+	}
+
 	// Check that that activation doesn't break
 	function testPluginActivated() {
 		$this->assertTrue( is_plugin_active( PLUGIN_PATH ) );
