@@ -10,8 +10,9 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 	public static function setUpBeforeClass() {
 		wp_set_current_user( 1, 'Alexander Gruzov' );
 
-		if ( ! is_plugin_active( 'social-community-popup/social-community-popup.php' ) || ! isset( $GLOBALS['social-community-popup'] ) ) {
-			die( "Plugin deactivated. Activate the plugin first before run this test.\n" );
+		if ( ! is_plugin_active( 'social-media-popup/social-media-popup.php' ) || ! isset( $GLOBALS['social-media-popup'] ) ) {
+			fwrite(STDERR, "Plugin deactivated. Activate the plugin first before run this test.\n" );
+			die(1);
 		}
 
 		self::$plugin = $GLOBALS['social-media-popup'];
