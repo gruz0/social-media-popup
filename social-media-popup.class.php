@@ -1,6 +1,13 @@
 <?php
 defined( 'ABSPATH' ) or exit;
 
+/**
+ * Uses in menu, tabs, copyright and other links
+ *
+ * @since 0.7.4
+ */
+define( 'SMP_PREFIX', 'social_media_popup' );
+
 require_once( dirname( __FILE__ ) . "/functions.php" );
 require_once( dirname( __FILE__ ) . "/lib/scp_template.php" );
 require_once( dirname( __FILE__ ) . "/lib/providers/providers.php" );
@@ -777,44 +784,42 @@ class Social_Media_Popup {
 		if ( ! get_transient( '_scp_welcome_screen' ) ) return;
 		delete_transient( '_scp_welcome_screen' );
 		if ( is_network_admin() || isset( $_GET['activate-multi'] ) ) return;
-		wp_safe_redirect( add_query_arg( array( 'page' => 'social_community_popup_about' ), admin_url( 'index.php' ) ) );
+		wp_safe_redirect( add_query_arg( array( 'page' => SMP_PREFIX . '_about' ), admin_url( 'index.php' ) ) );
 	}
 
 	/**
 	 * Управление настройками плагина: генерация формы, создание полей
 	 */
 	public function init_settings() {
-		$prefix = 'social_community_popup'; // Желательно чтобы совпадал со slug из add_menu
-
-		$this->init_settings_common( $prefix );
+		$this->init_settings_common();
 		// TODO: Should be renamed to view_on_desktop
-		$this->init_settings_common_view( $prefix );
-		$this->init_settings_common_view_on_mobile_devices( $prefix );
-		$this->init_settings_common_events( $prefix );
-		$this->init_settings_common_management( $prefix );
+		$this->init_settings_common_view();
+		$this->init_settings_common_view_on_mobile_devices();
+		$this->init_settings_common_events();
+		$this->init_settings_common_management();
 
-		$this->init_settings_facebook( $prefix );
-		$this->init_settings_vkontakte( $prefix );
-		$this->init_settings_odnoklassniki( $prefix );
-		$this->init_settings_googleplus( $prefix );
-		$this->init_settings_twitter( $prefix );
-		$this->init_settings_pinterest( $prefix );
+		$this->init_settings_facebook();
+		$this->init_settings_vkontakte();
+		$this->init_settings_odnoklassniki();
+		$this->init_settings_googleplus();
+		$this->init_settings_twitter();
+		$this->init_settings_pinterest();
 	}
 
 	/**
 	 * Общие настройки
 	 */
-	public function init_settings_common( $prefix ) {
+	public function init_settings_common() {
 		$scp_prefix = self::get_scp_prefix();
 
 		// Используется в settings_field и do_settings_field
-		$group = $prefix . '-group-general';
+		$group = SMP_PREFIX . '-group-general';
 
 		// Используется в do_settings_section
-		$options_page = $prefix . '-group-general';
+		$options_page = SMP_PREFIX . '-group-general';
 
 		// ID секции
-		$section = $prefix . '-section-common';
+		$section = SMP_PREFIX . '-section-common';
 
 		// Не забывать добавлять новые опции в uninstall()
 		register_setting( $group, $scp_prefix . 'setting_debug_mode' );
@@ -833,7 +838,7 @@ class Social_Media_Popup {
 
 		// Активен плагин или нет
 		add_settings_field(
-			$prefix . '-common-debug-mode',
+			SMP_PREFIX . '-common-debug-mode',
 			__( 'Debug Mode', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -845,7 +850,7 @@ class Social_Media_Popup {
 
 		// Порядок вывода закладок соц. сетей
 		add_settings_field(
-			$prefix . '-common-tabs-order',
+			SMP_PREFIX . '-common-tabs-order',
 			__( 'Tabs Order', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_tabs_order' ),
 			$options_page,
@@ -857,7 +862,7 @@ class Social_Media_Popup {
 
 		// Скрывать окно при нажатии на любой области экрана
 		add_settings_field(
-			$prefix . '-common-close-popup-by-clicking-anywhere',
+			SMP_PREFIX . '-common-close-popup-by-clicking-anywhere',
 			__( 'Close the popup by clicking anywhere on the screen', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -869,7 +874,7 @@ class Social_Media_Popup {
 
 		// Скрывать окно при нажатии на Escape
 		add_settings_field(
-			$prefix . '-common-close-popup-when-esc-pressed',
+			SMP_PREFIX . '-common-close-popup-when-esc-pressed',
 			__( 'Close the popup when ESC pressed', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -881,7 +886,7 @@ class Social_Media_Popup {
 
 		// Показывать виджет на мобильных устройствах
 		add_settings_field(
-			$prefix . '-common-show-on-mobile-devices',
+			SMP_PREFIX . '-common-show-on-mobile-devices',
 			__( 'Show widget on mobile devices', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -893,7 +898,7 @@ class Social_Media_Popup {
 
 		// Показывать меню в Админ баре
 		add_settings_field(
-			$prefix . '-common-show-admin-bar-menu',
+			SMP_PREFIX . '-common-show-admin-bar-menu',
 			__( 'Show Plugin Menu in Admin Bar', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -907,17 +912,17 @@ class Social_Media_Popup {
 	/**
 	 * Общие настройки (вкладка "Внешний вид")
 	 */
-	public function init_settings_common_view( $prefix ) {
+	public function init_settings_common_view() {
 		$scp_prefix = self::get_scp_prefix();
 
 		// Используется в settings_field и do_settings_field
-		$group = $prefix . '-group-view';
+		$group = SMP_PREFIX . '-group-view';
 
 		// Используется в do_settings_section
-		$options_page = $prefix . '-group-view';
+		$options_page = SMP_PREFIX . '-group-view';
 
 		// ID секции
-		$section = $prefix . '-section-common-view';
+		$section = SMP_PREFIX . '-section-common-view';
 
 		// Не забывать добавлять новые опции в uninstall()
 		register_setting( $group, $scp_prefix . 'setting_plugin_title', 'wp_kses_post' );
@@ -946,7 +951,7 @@ class Social_Media_Popup {
 
 		// Заголовок окна плагина
 		add_settings_field(
-			$prefix . '-common-plugin-title',
+			SMP_PREFIX . '-common-plugin-title',
 			__( 'Widget Title', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_wysiwyg' ),
 			$options_page,
@@ -958,7 +963,7 @@ class Social_Media_Popup {
 
 		// Использовать иконки вместо надписей на табах
 		add_settings_field(
-			$prefix . '-common-use-icons-instead-of-labels-in-tabs',
+			SMP_PREFIX . '-common-use-icons-instead-of-labels-in-tabs',
 			__( 'Use Icons Instead of Labels in Tabs', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -970,7 +975,7 @@ class Social_Media_Popup {
 
 		// Размер иконок социальных сетей
 		add_settings_field(
-			$prefix . '-common-icons-size-on-desktop',
+			SMP_PREFIX . '-common-icons-size-on-desktop',
 			__( 'Icons Size', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_icons_size' ),
 			$options_page,
@@ -982,7 +987,7 @@ class Social_Media_Popup {
 
 		// Скрывать панель табов, если активна только одна соц. сеть
 		add_settings_field(
-			$prefix . '-common-hide-tabs-if-one-widget-is-active',
+			SMP_PREFIX . '-common-hide-tabs-if-one-widget-is-active',
 			__( 'Hide Tabs if One Widget is Active', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -994,7 +999,7 @@ class Social_Media_Popup {
 
 		// Отцентрировать табы
 		add_settings_field(
-			$prefix . '-common-align-tabs-to-center',
+			SMP_PREFIX . '-common-align-tabs-to-center',
 			__( 'Align Tabs to Center', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -1006,7 +1011,7 @@ class Social_Media_Popup {
 
 		// Показывать кнопку закрытия окна в заголовке в контейнере или вне его
 		add_settings_field(
-			$prefix . '-common-show-close-button-in',
+			SMP_PREFIX . '-common-show-close-button-in',
 			__( 'Show Close Button in Title', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_show_close_button_in' ),
 			$options_page,
@@ -1018,7 +1023,7 @@ class Social_Media_Popup {
 
 		// Показывать кнопку "Спасибо, я уже с вами"
 		add_settings_field(
-			$prefix . '-common-show-button-to-close-widget',
+			SMP_PREFIX . '-common-show-button-to-close-widget',
 			__( 'Show Button to Close Widget', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -1030,7 +1035,7 @@ class Social_Media_Popup {
 
 		// Надпись на кнопке "Спасибо, я уже с вами"
 		add_settings_field(
-			$prefix . '-common-button-to-close-widget-title',
+			SMP_PREFIX . '-common-button-to-close-widget-title',
 			__( 'Button to Close Widget Title', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1042,7 +1047,7 @@ class Social_Media_Popup {
 
 		// Стиль кнопки "Спасибо, я уже с вами"
 		add_settings_field(
-			$prefix . '-common-button-to-close-widget-style',
+			SMP_PREFIX . '-common-button-to-close-widget-style',
 			__( 'Button to Close Widget Style', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_button_to_close_widget_style' ),
 			$options_page,
@@ -1054,7 +1059,7 @@ class Social_Media_Popup {
 
 		// Задержка перед отображением кнопки "Спасибо, я уже с вами"
 		add_settings_field(
-			$prefix . '-common-delay-before-show-button-to-close-widget',
+			SMP_PREFIX . '-common-delay-before-show-button-to-close-widget',
 			__( 'Delay Before Show Button to Close Widget (sec.)', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1066,7 +1071,7 @@ class Social_Media_Popup {
 
 		// Ширина основного контейнера
 		add_settings_field(
-			$prefix . '-common-container-width',
+			SMP_PREFIX . '-common-container-width',
 			__( 'Container Width', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1078,7 +1083,7 @@ class Social_Media_Popup {
 
 		// Высота основного контейнера
 		add_settings_field(
-			$prefix . '-common-container-height',
+			SMP_PREFIX . '-common-container-height',
 			__( 'Container Height', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1090,7 +1095,7 @@ class Social_Media_Popup {
 
 		// Радиус скругления границ
 		add_settings_field(
-			$prefix . '-common-border-radius',
+			SMP_PREFIX . '-common-border-radius',
 			__( 'Border Radius', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1102,7 +1107,7 @@ class Social_Media_Popup {
 
 		// Цвет фоновой заливки родительского контейннера
 		add_settings_field(
-			$prefix . '-common-overlay-color',
+			SMP_PREFIX . '-common-overlay-color',
 			__( 'Overlay Color', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1114,7 +1119,7 @@ class Social_Media_Popup {
 
 		// Уровень прозрачности фоновой заливки родительского контейннера
 		add_settings_field(
-			$prefix . '-common-overlay-opacity',
+			SMP_PREFIX . '-common-overlay-opacity',
 			__( 'Overlay Opacity', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1126,7 +1131,7 @@ class Social_Media_Popup {
 
 		// Загрузка фонового изображения виджета
 		add_settings_field(
-			$prefix . '-common-background-image',
+			SMP_PREFIX . '-common-background-image',
 			__( 'Widget Background Image', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_background_image' ),
 			$options_page,
@@ -1142,20 +1147,19 @@ class Social_Media_Popup {
 	 *
 	 * @since 0.7.4
 	 *
-	 * @param string $prefix SCP Prefix
 	 * @return void
 	 */
-	public function init_settings_common_view_on_mobile_devices( $prefix ) {
+	public function init_settings_common_view_on_mobile_devices() {
 		$scp_prefix = self::get_scp_prefix();
 
 		// Используется в settings_field и do_settings_field
-		$group = $prefix . '-group-view-mobile';
+		$group = SMP_PREFIX . '-group-view-mobile';
 
 		// Используется в do_settings_section
-		$options_page = $prefix . '-group-view-mobile';
+		$options_page = SMP_PREFIX . '-group-view-mobile';
 
 		// ID секции
-		$section = $prefix . '-section-common-view-mobile';
+		$section = SMP_PREFIX . '-section-common-view-mobile';
 
 		// Не забывать добавлять новые опции в uninstall()
 		register_setting( $group, $scp_prefix . 'setting_plugin_title_on_mobile_devices', 'wp_kses_post' );
@@ -1170,7 +1174,7 @@ class Social_Media_Popup {
 
 		// Заголовок окна плагина
 		add_settings_field(
-			$prefix . '-common-plugin-title-on-mobile-devices',
+			SMP_PREFIX . '-common-plugin-title-on-mobile-devices',
 			__( 'Widget Title', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_wysiwyg' ),
 			$options_page,
@@ -1182,7 +1186,7 @@ class Social_Media_Popup {
 
 		// Размер иконок социальных сетей
 		add_settings_field(
-			$prefix . '-common-icons-size-on-mobile-devices',
+			SMP_PREFIX . '-common-icons-size-on-mobile-devices',
 			__( 'Icons Size', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_icons_size' ),
 			$options_page,
@@ -1196,18 +1200,18 @@ class Social_Media_Popup {
 	/**
 	 * Общие настройки (вкладка "События")
 	 */
-	public function init_settings_common_events( $prefix ) {
+	public function init_settings_common_events() {
 		$scp_prefix = self::get_scp_prefix();
 
 		// Используется в settings_field и do_settings_field
-		$group = $prefix . '-group-events';
+		$group = SMP_PREFIX . '-group-events';
 
 		// Используется в do_settings_section
-		$options_page = $prefix . '-group-events';
+		$options_page = SMP_PREFIX . '-group-events';
 
 		// ID секций настроек
-		$section_when_should_the_popup_appear = $prefix . '-section-when-should-the-popup-appear';
-		$section_who_should_see_the_popup     = $prefix . '-section-who-should-see-the-popup';
+		$section_when_should_the_popup_appear = SMP_PREFIX . '-section-when-should-the-popup-appear';
+		$section_who_should_see_the_popup     = SMP_PREFIX . '-section-who-should-see-the-popup';
 
 		// Не забывать добавлять новые опции в uninstall()
 		register_setting( $group, $scp_prefix . 'when_should_the_popup_appear', 'sanitize_text_field' );
@@ -1230,7 +1234,7 @@ class Social_Media_Popup {
 
 		// При наступлении каких событий показывать окно
 		add_settings_field(
-			$prefix . '-common-when-should-the-popup-appear',
+			SMP_PREFIX . '-common-when-should-the-popup-appear',
 			__( 'Select Events for Customizing', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_when_should_the_popup_appear' ),
 			$options_page,
@@ -1242,7 +1246,7 @@ class Social_Media_Popup {
 
 		// Отображение окна после задержки N секунд
 		add_settings_field(
-			$prefix . '-popup-will-appear-after-n-seconds',
+			SMP_PREFIX . '-popup-will-appear-after-n-seconds',
 			__( 'Popup Will Appear After N Second(s)', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1254,7 +1258,7 @@ class Social_Media_Popup {
 
 		// Отображение окна при клике на CSS-селектор
 		add_settings_field(
-			$prefix . '-popup-will-appear-after-clicking-on-element',
+			SMP_PREFIX . '-popup-will-appear-after-clicking-on-element',
 			__( 'Popup Will Appear After Clicking on the Given CSS Selector', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1266,7 +1270,7 @@ class Social_Media_Popup {
 
 		// Скрывать элемент, вызвавший открытие окна, после клика на него
 		add_settings_field(
-			$prefix . '-event-hide-element-after-click-on-it',
+			SMP_PREFIX . '-event-hide-element-after-click-on-it',
 			__( 'Hide Element After Click on It', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -1278,7 +1282,7 @@ class Social_Media_Popup {
 
 		// Отображение окна при прокрутке страницы на N процентов
 		add_settings_field(
-			$prefix . '-popup-will-appear-after-scrolling-down-n-percent',
+			SMP_PREFIX . '-popup-will-appear-after-scrolling-down-n-percent',
 			__( 'Popup Will Appear After Scrolling Down at Least N Percent', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1290,7 +1294,7 @@ class Social_Media_Popup {
 
 		// Отображение окна при перемещении мыши за границы окна
 		add_settings_field(
-			$prefix . '-popup-will-appear-on-exit-intent',
+			SMP_PREFIX . '-popup-will-appear-on-exit-intent',
 			__( 'Popup Will Appear On Exit-Intent', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -1309,7 +1313,7 @@ class Social_Media_Popup {
 
 		// Кому показывать окно плагина
 		add_settings_field(
-			$prefix . '-who-should-see-the-popup',
+			SMP_PREFIX . '-who-should-see-the-popup',
 			__( 'Select Events for Customizing', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_who_should_see_the_popup' ),
 			$options_page,
@@ -1321,7 +1325,7 @@ class Social_Media_Popup {
 
 		// Отображение окна после просмотра N страниц на сайте
 		add_settings_field(
-			$prefix . '-visitor-opened-at-least-n-number-of-pages',
+			SMP_PREFIX . '-visitor-opened-at-least-n-number-of-pages',
 			__( 'Visitor Opened at Least N Number of Pages', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1333,7 +1337,7 @@ class Social_Media_Popup {
 
 		// Отображение окна авторизованным пользователям
 		add_settings_field(
-			$prefix . '-visitor-registered-and-role-equals-to',
+			SMP_PREFIX . '-visitor-registered-and-role-equals-to',
 			__( 'Registered Users Who Should See the Popup', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_visitor_registered_and_role_equals_to' ),
 			$options_page,
@@ -1345,7 +1349,7 @@ class Social_Media_Popup {
 
 		// Повторный показ окна через N дней
 		add_settings_field(
-			$prefix . '-common-display-after-n-days',
+			SMP_PREFIX . '-common-display-after-n-days',
 			__( 'Display After N-days', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1359,17 +1363,17 @@ class Social_Media_Popup {
 	/**
 	 * Общие настройки (вкладка "Управление")
 	 */
-	public function init_settings_common_management( $prefix ) {
+	public function init_settings_common_management() {
 		$scp_prefix = self::get_scp_prefix();
 
 		// Используется в settings_field и do_settings_field
-		$group = $prefix . '-group-management';
+		$group = SMP_PREFIX . '-group-management';
 
 		// Используется в do_settings_section
-		$options_page = $prefix . '-group-management';
+		$options_page = SMP_PREFIX . '-group-management';
 
 		// ID секции
-		$section = $prefix . '-section-common-management';
+		$section = SMP_PREFIX . '-section-common-management';
 
 		// Не забывать добавлять новые опции в uninstall()
 		register_setting( $group, $scp_prefix . 'setting_remove_settings_on_uninstall' );
@@ -1383,7 +1387,7 @@ class Social_Media_Popup {
 
 		// Удалять все настройки плагина при удалении
 		add_settings_field(
-			$prefix . '-common-remove-settings-on-uninstall',
+			SMP_PREFIX . '-common-remove-settings-on-uninstall',
 			__( 'Remove Settings On Uninstall Plugin', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -1397,17 +1401,17 @@ class Social_Media_Popup {
 	/**
 	 * Настройки Facebook
 	 */
-	private function init_settings_facebook( $prefix ) {
+	private function init_settings_facebook() {
 		$scp_prefix = self::get_scp_prefix();
 
 		// Используется в settings_field и do_settings_field
-		$group = $prefix . '-group-facebook';
+		$group = SMP_PREFIX . '-group-facebook';
 
 		// Используется в do_settings_section
-		$options_page = $prefix . '_facebook_options';
+		$options_page = SMP_PREFIX . '_facebook_options';
 
 		// ID секции
-		$section = $prefix . '-section-facebook';
+		$section = SMP_PREFIX . '-section-facebook';
 
 		// Не забывать добавлять новые опции в uninstall()
 		register_setting( $group, $scp_prefix . 'setting_use_facebook' );
@@ -1435,7 +1439,7 @@ class Social_Media_Popup {
 
 		// Используем Facebook или нет
 		add_settings_field(
-			$prefix . '-use-facebook',
+			SMP_PREFIX . '-use-facebook',
 			__( 'Use Facebook', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -1447,7 +1451,7 @@ class Social_Media_Popup {
 
 		// Название вкладки
 		add_settings_field(
-			$prefix . '-facebook-tab-caption',
+			SMP_PREFIX . '-facebook-tab-caption',
 			__( 'Tab Caption', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1459,7 +1463,7 @@ class Social_Media_Popup {
 
 		// Показывать надпись над виджетом?
 		add_settings_field(
-			$prefix . '-facebook-show-description',
+			SMP_PREFIX . '-facebook-show-description',
 			__( 'Show Description Above The Widget', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -1471,7 +1475,7 @@ class Social_Media_Popup {
 
 		// Надпись над виджетом
 		add_settings_field(
-			$prefix . '-facebook-description',
+			SMP_PREFIX . '-facebook-description',
 			__( 'Description Above The Widget', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_wysiwyg' ),
 			$options_page,
@@ -1483,7 +1487,7 @@ class Social_Media_Popup {
 
 		// ID приложения Facebook
 		add_settings_field(
-			$prefix . '-facebook-application-id',
+			SMP_PREFIX . '-facebook-application-id',
 			__( 'Application ID', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1495,7 +1499,7 @@ class Social_Media_Popup {
 
 		// URL страницы или группы Facebook
 		add_settings_field(
-			$prefix . '-facebook-page-url',
+			SMP_PREFIX . '-facebook-page-url',
 			__( 'Facebook Page URL', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1507,7 +1511,7 @@ class Social_Media_Popup {
 
 		// Локаль, например ru_RU, en_US
 		add_settings_field(
-			$prefix . '-facebook-locale',
+			SMP_PREFIX . '-facebook-locale',
 			__( 'Facebook Locale', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_facebook_locale' ),
 			$options_page,
@@ -1519,7 +1523,7 @@ class Social_Media_Popup {
 
 		// Ширина виджета
 		add_settings_field(
-			$prefix . '-facebook-width',
+			SMP_PREFIX . '-facebook-width',
 			__( 'Widget Width', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1531,7 +1535,7 @@ class Social_Media_Popup {
 
 		// Высота виджета
 		add_settings_field(
-			$prefix . '-facebook-height',
+			SMP_PREFIX . '-facebook-height',
 			__( 'Widget Height', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1543,7 +1547,7 @@ class Social_Media_Popup {
 
 		// Адаптировать виджет под ширину контейнера
 		add_settings_field(
-			$prefix . '-facebook-adapt-container-width',
+			SMP_PREFIX . '-facebook-adapt-container-width',
 			__( 'Adapt to Plugin Container Width', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -1555,7 +1559,7 @@ class Social_Media_Popup {
 
 		// Выводить уменьшенный заголовок виджета
 		add_settings_field(
-			$prefix . '-facebook-use-small-header',
+			SMP_PREFIX . '-facebook-use-small-header',
 			__( 'Use Small Header', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -1567,7 +1571,7 @@ class Social_Media_Popup {
 
 		// Скрывать обложку группы в заголовке виджета
 		add_settings_field(
-			$prefix . '-facebook-hide-cover',
+			SMP_PREFIX . '-facebook-hide-cover',
 			__( 'Hide cover photo in the header', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -1579,7 +1583,7 @@ class Social_Media_Popup {
 
 		// Показывать лица друзей когда страница отмечается понравившейся
 		add_settings_field(
-			$prefix . '-facebook-show-facepile',
+			SMP_PREFIX . '-facebook-show-facepile',
 			__( 'Show profile photos when friends like this', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -1591,7 +1595,7 @@ class Social_Media_Popup {
 
 		// Типы записей (Timeline, Messages, Events)
 		add_settings_field(
-			$prefix . '-facebook-tabs',
+			SMP_PREFIX . '-facebook-tabs',
 			__( 'Show Content from Tabs', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_facebook_tabs' ),
 			$options_page,
@@ -1603,7 +1607,7 @@ class Social_Media_Popup {
 
 		// Закрывать окно виджета после вступления в группу
 		add_settings_field(
-			$prefix . '-facebook-close-window-after-join',
+			SMP_PREFIX . '-facebook-close-window-after-join',
 			__( 'Close Plugin Window After Joining the Group', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -1617,20 +1621,19 @@ class Social_Media_Popup {
 	/**
 	 * VK.com widget settings
 	 *
-	 * @param string $prefix settings_field prefix
 	 * @return void
 	 */
-	private function init_settings_vkontakte( $prefix ) {
+	private function init_settings_vkontakte() {
 		$scp_prefix = self::get_scp_prefix();
 
 		// Используется в settings_field и do_settings_field
-		$group = $prefix . '-group-vkontakte';
+		$group = SMP_PREFIX . '-group-vkontakte';
 
 		// Используется в do_settings_section
-		$options_page = $prefix . '_vkontakte_options';
+		$options_page = SMP_PREFIX . '_vkontakte_options';
 
 		// ID секции
-		$section = $prefix . '-section-vkontakte';
+		$section = SMP_PREFIX . '-section-vkontakte';
 
 		// Не забывать добавлять новые опции в uninstall()
 		register_setting( $group, $scp_prefix . 'setting_use_vkontakte' );
@@ -1658,7 +1661,7 @@ class Social_Media_Popup {
 
 		// Используем ВКонтакте или нет
 		add_settings_field(
-			$prefix . '-use-vkontakte',
+			SMP_PREFIX . '-use-vkontakte',
 			__( 'Use VKontakte', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -1670,7 +1673,7 @@ class Social_Media_Popup {
 
 		// Название вкладки
 		add_settings_field(
-			$prefix . '-vkontakte-tab-caption',
+			SMP_PREFIX . '-vkontakte-tab-caption',
 			__( 'Tab Caption', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1682,7 +1685,7 @@ class Social_Media_Popup {
 
 		// Показывать надпись над виджетом?
 		add_settings_field(
-			$prefix . '-vkontakte-show-description',
+			SMP_PREFIX . '-vkontakte-show-description',
 			__( 'Show Description Above The Widget', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -1694,7 +1697,7 @@ class Social_Media_Popup {
 
 		// Надпись над виджетом
 		add_settings_field(
-			$prefix . '-vkontakte-description',
+			SMP_PREFIX . '-vkontakte-description',
 			__( 'Description Above The Widget', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_wysiwyg' ),
 			$options_page,
@@ -1706,7 +1709,7 @@ class Social_Media_Popup {
 
 		// ID приложения ВКонтакте
 		add_settings_field(
-			$prefix . '-vkontakte-application-id',
+			SMP_PREFIX . '-vkontakte-application-id',
 			__( 'VKontakte Application ID', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1718,7 +1721,7 @@ class Social_Media_Popup {
 
 		// ID страницы или группы ВКонтакте
 		add_settings_field(
-			$prefix . '-vkontakte-page-or-group-id',
+			SMP_PREFIX . '-vkontakte-page-or-group-id',
 			__( 'VKontakte Page or Group ID', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1730,7 +1733,7 @@ class Social_Media_Popup {
 
 		// URL страницы или группы ВКонтакте
 		add_settings_field(
-			$prefix . '-vkontakte-page-url',
+			SMP_PREFIX . '-vkontakte-page-url',
 			__( 'VKontakte Page URL', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1742,7 +1745,7 @@ class Social_Media_Popup {
 
 		// Ширина виджета
 		add_settings_field(
-			$prefix . '-vkontakte-width',
+			SMP_PREFIX . '-vkontakte-width',
 			__( 'Widget Width', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1754,7 +1757,7 @@ class Social_Media_Popup {
 
 		// Высота виджета
 		add_settings_field(
-			$prefix . '-vkontakte-height',
+			SMP_PREFIX . '-vkontakte-height',
 			__( 'Widget Height', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1766,7 +1769,7 @@ class Social_Media_Popup {
 
 		// Макет (участники, новости или имена)
 		add_settings_field(
-			$prefix . '-vkontakte-layout',
+			SMP_PREFIX . '-vkontakte-layout',
 			__( 'Layout', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_vkontakte_layout' ),
 			$options_page,
@@ -1778,7 +1781,7 @@ class Social_Media_Popup {
 
 		// Цвет фона
 		add_settings_field(
-			$prefix . '-vkontakte-color-background',
+			SMP_PREFIX . '-vkontakte-color-background',
 			__( 'Background Color', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1790,7 +1793,7 @@ class Social_Media_Popup {
 
 		// Цвет текста
 		add_settings_field(
-			$prefix . '-vkontakte-color-text',
+			SMP_PREFIX . '-vkontakte-color-text',
 			__( 'Text Color', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1802,7 +1805,7 @@ class Social_Media_Popup {
 
 		// Цвет кнопки
 		add_settings_field(
-			$prefix . '-vkontakte-color-button',
+			SMP_PREFIX . '-vkontakte-color-button',
 			__( 'Button Color', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1814,7 +1817,7 @@ class Social_Media_Popup {
 
 		// Закрывать окно виджета после вступления в группу
 		add_settings_field(
-			$prefix . '-vkontakte-close-window-after-join',
+			SMP_PREFIX . '-vkontakte-close-window-after-join',
 			__( 'Close Plugin Window After Joining the Group', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -1826,7 +1829,7 @@ class Social_Media_Popup {
 
 		// Задержка в ms перед отрисовкой виджета (при проблемах в Firefox)
 		add_settings_field(
-			$prefix . '-vkontakte-delay-before-render',
+			SMP_PREFIX . '-vkontakte-delay-before-render',
 			__( 'Delay before render widget (in ms.)', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1840,17 +1843,17 @@ class Social_Media_Popup {
 	/**
 	 * Настройки Одноклассников
 	 */
-	private function init_settings_odnoklassniki( $prefix ) {
+	private function init_settings_odnoklassniki() {
 		$scp_prefix = self::get_scp_prefix();
 
 		// Используется в settings_field и do_settings_field
-		$group = $prefix . '-group-odnoklassniki';
+		$group = SMP_PREFIX . '-group-odnoklassniki';
 
 		// Используется в do_settings_section
-		$options_page = $prefix . '_odnoklassniki_options';
+		$options_page = SMP_PREFIX . '_odnoklassniki_options';
 
 		// ID секции
-		$section = $prefix . '-section-odnoklassniki';
+		$section = SMP_PREFIX . '-section-odnoklassniki';
 
 		// Не забывать добавлять новые опции в uninstall()
 		register_setting( $group, $scp_prefix . 'setting_use_odnoklassniki' );
@@ -1871,7 +1874,7 @@ class Social_Media_Popup {
 
 		// Используем Одноклассники или нет
 		add_settings_field(
-			$prefix . '-use-odnoklassniki',
+			SMP_PREFIX . '-use-odnoklassniki',
 			__( 'Use Odnoklassniki', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -1883,7 +1886,7 @@ class Social_Media_Popup {
 
 		// Название вкладки
 		add_settings_field(
-			$prefix . '-odnoklassniki-tab-caption',
+			SMP_PREFIX . '-odnoklassniki-tab-caption',
 			__( 'Tab Caption', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1895,7 +1898,7 @@ class Social_Media_Popup {
 
 		// Показывать надпись над виджетом?
 		add_settings_field(
-			$prefix . '-odnoklassniki-show-description',
+			SMP_PREFIX . '-odnoklassniki-show-description',
 			__( 'Show Description Above The Widget', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -1907,7 +1910,7 @@ class Social_Media_Popup {
 
 		// Надпись над виджетом
 		add_settings_field(
-			$prefix . '-odnoklassniki-description',
+			SMP_PREFIX . '-odnoklassniki-description',
 			__( 'Description Above The Widget', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_wysiwyg' ),
 			$options_page,
@@ -1919,7 +1922,7 @@ class Social_Media_Popup {
 
 		// ID группы Одноклассников
 		add_settings_field(
-			$prefix . '-odnoklassniki-group-id',
+			SMP_PREFIX . '-odnoklassniki-group-id',
 			__( 'Odnoklassniki Group ID', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1931,7 +1934,7 @@ class Social_Media_Popup {
 
 		// URL группы Одноклассников
 		add_settings_field(
-			$prefix . '-odnoklassniki-group-url',
+			SMP_PREFIX . '-odnoklassniki-group-url',
 			__( 'Odnoklassniki Group URL', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1943,7 +1946,7 @@ class Social_Media_Popup {
 
 		// Ширина виджета
 		add_settings_field(
-			$prefix . '-odnoklassniki-width',
+			SMP_PREFIX . '-odnoklassniki-width',
 			__( 'Widget Width', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1955,7 +1958,7 @@ class Social_Media_Popup {
 
 		// Высота виджета
 		add_settings_field(
-			$prefix . '-odnoklassniki-height',
+			SMP_PREFIX . '-odnoklassniki-height',
 			__( 'Widget Height', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -1969,17 +1972,17 @@ class Social_Media_Popup {
 	/**
 	 * Настройки Google+
 	 */
-	private function init_settings_googleplus( $prefix ) {
+	private function init_settings_googleplus() {
 		$scp_prefix = self::get_scp_prefix();
 
 		// Используется в settings_field и do_settings_field
-		$group = $prefix . '-group-googleplus';
+		$group = SMP_PREFIX . '-group-googleplus';
 
 		// Используется в do_settings_section
-		$options_page = $prefix . '_googleplus_options';
+		$options_page = SMP_PREFIX . '_googleplus_options';
 
 		// ID секции
-		$section = $prefix . '-section-googleplus';
+		$section = SMP_PREFIX . '-section-googleplus';
 
 		// Не забывать добавлять новые опции в uninstall()
 		register_setting( $group, $scp_prefix . 'setting_use_googleplus' );
@@ -2003,7 +2006,7 @@ class Social_Media_Popup {
 
 		// Используем Google+ или нет
 		add_settings_field(
-			$prefix . '-use-googleplus',
+			SMP_PREFIX . '-use-googleplus',
 			__( 'Use Google+', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -2015,7 +2018,7 @@ class Social_Media_Popup {
 
 		// Название вкладки
 		add_settings_field(
-			$prefix . '-googleplus-tab-caption',
+			SMP_PREFIX . '-googleplus-tab-caption',
 			__( 'Tab Caption', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -2027,7 +2030,7 @@ class Social_Media_Popup {
 
 		// Показывать надпись над виджетом?
 		add_settings_field(
-			$prefix . '-googleplus-show-description',
+			SMP_PREFIX . '-googleplus-show-description',
 			__( 'Show Description Above The Widget', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -2039,7 +2042,7 @@ class Social_Media_Popup {
 
 		// Надпись над виджетом
 		add_settings_field(
-			$prefix . '-googleplus-description',
+			SMP_PREFIX . '-googleplus-description',
 			__( 'Description Above The Widget', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_wysiwyg' ),
 			$options_page,
@@ -2051,7 +2054,7 @@ class Social_Media_Popup {
 
 		// Тип профиля Google Plus
 		add_settings_field(
-			$prefix . '-googleplus-page-type',
+			SMP_PREFIX . '-googleplus-page-type',
 			__( 'Google+ Page Type', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_googleplus_page_type' ),
 			$options_page,
@@ -2063,7 +2066,7 @@ class Social_Media_Popup {
 
 		// URL страницы или группы Google+
 		add_settings_field(
-			$prefix . '-googleplus-page-url',
+			SMP_PREFIX . '-googleplus-page-url',
 			__( 'Google+ Page URL', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -2075,7 +2078,7 @@ class Social_Media_Popup {
 
 		// Локаль, например ru, en
 		add_settings_field(
-			$prefix . '-googleplus-locale',
+			SMP_PREFIX . '-googleplus-locale',
 			__( 'Google+ Locale', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_googleplus_locale' ),
 			$options_page,
@@ -2087,7 +2090,7 @@ class Social_Media_Popup {
 
 		// Размер виджета
 		add_settings_field(
-			$prefix . '-googleplus-size',
+			SMP_PREFIX . '-googleplus-size',
 			__( 'Widget Size', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -2099,7 +2102,7 @@ class Social_Media_Popup {
 
 		// Цветовая схема
 		add_settings_field(
-			$prefix . '-googleplus-theme',
+			SMP_PREFIX . '-googleplus-theme',
 			__( 'Google+ Theme', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_googleplus_theme' ),
 			$options_page,
@@ -2111,7 +2114,7 @@ class Social_Media_Popup {
 
 		// Показывать обложку?
 		add_settings_field(
-			$prefix . '-googleplus-show-cover-photo',
+			SMP_PREFIX . '-googleplus-show-cover-photo',
 			__( 'Show Cover Photo', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -2123,7 +2126,7 @@ class Social_Media_Popup {
 
 		// В двух словах
 		add_settings_field(
-			$prefix . '-googleplus-show-tagline',
+			SMP_PREFIX . '-googleplus-show-tagline',
 			__( 'Show Tagline', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -2137,17 +2140,17 @@ class Social_Media_Popup {
 	/**
 	 * Настройки Twitter
 	 */
-	private function init_settings_twitter( $prefix ) {
+	private function init_settings_twitter() {
 		$scp_prefix = self::get_scp_prefix();
 
 		// Используется в settings_field и do_settings_field
-		$group = $prefix . '-group-twitter';
+		$group = SMP_PREFIX . '-group-twitter';
 
 		// Используется в do_settings_section
-		$options_page = $prefix . '_twitter_options';
+		$options_page = SMP_PREFIX . '_twitter_options';
 
 		// ID секции
-		$section = $prefix . '-section-twitter';
+		$section = SMP_PREFIX . '-section-twitter';
 
 		// Не забывать добавлять новые опции в uninstall()
 		register_setting( $group, $scp_prefix . 'setting_use_twitter' );
@@ -2173,7 +2176,7 @@ class Social_Media_Popup {
 
 		// Используем Twitter или нет
 		add_settings_field(
-			$prefix . '-use-twitter',
+			SMP_PREFIX . '-use-twitter',
 			__( 'Use Twitter', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -2185,7 +2188,7 @@ class Social_Media_Popup {
 
 		// Название вкладки
 		add_settings_field(
-			$prefix . '-twitter-tab-caption',
+			SMP_PREFIX . '-twitter-tab-caption',
 			__( 'Tab Caption', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -2197,7 +2200,7 @@ class Social_Media_Popup {
 
 		// Показывать надпись над виджетом?
 		add_settings_field(
-			$prefix . '-twitter-show-description',
+			SMP_PREFIX . '-twitter-show-description',
 			__( 'Show Description Above The Widget', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -2209,7 +2212,7 @@ class Social_Media_Popup {
 
 		// Надпись над виджетом
 		add_settings_field(
-			$prefix . '-twitter-description',
+			SMP_PREFIX . '-twitter-description',
 			__( 'Description Above The Widget', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_wysiwyg' ),
 			$options_page,
@@ -2221,7 +2224,7 @@ class Social_Media_Popup {
 
 		// Логин пользователя
 		add_settings_field(
-			$prefix . '-twitter-username',
+			SMP_PREFIX . '-twitter-username',
 			__( '@Username', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -2233,7 +2236,7 @@ class Social_Media_Popup {
 
 		// ID виджета
 		add_settings_field(
-			$prefix . '-twitter-widget-id',
+			SMP_PREFIX . '-twitter-widget-id',
 			__( 'Widget ID', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -2245,7 +2248,7 @@ class Social_Media_Popup {
 
 		// Тема оформления
 		add_settings_field(
-			$prefix . '-twitter-theme',
+			SMP_PREFIX . '-twitter-theme',
 			__( 'Theme', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_twitter_theme' ),
 			$options_page,
@@ -2257,7 +2260,7 @@ class Social_Media_Popup {
 
 		// Цвет ссылок
 		add_settings_field(
-			$prefix . '-twitter-link-color',
+			SMP_PREFIX . '-twitter-link-color',
 			__( 'Link Color', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -2269,7 +2272,7 @@ class Social_Media_Popup {
 
 		// Количество выводимых твитов
 		add_settings_field(
-			$prefix . '-twitter-tweet-limit',
+			SMP_PREFIX . '-twitter-tweet-limit',
 			__( 'Tweet Limit', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -2281,7 +2284,7 @@ class Social_Media_Popup {
 
 		// Показывать реплаи или нет
 		add_settings_field(
-			$prefix . '-twitter-show-replies',
+			SMP_PREFIX . '-twitter-show-replies',
 			__( 'Show Replies', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -2293,7 +2296,7 @@ class Social_Media_Popup {
 
 		// Ширина виджета
 		add_settings_field(
-			$prefix . '-twitter-width',
+			SMP_PREFIX . '-twitter-width',
 			__( 'Widget Width', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -2305,7 +2308,7 @@ class Social_Media_Popup {
 
 		// Высота виджета
 		add_settings_field(
-			$prefix . '-twitter-height',
+			SMP_PREFIX . '-twitter-height',
 			__( 'Widget Height', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -2317,7 +2320,7 @@ class Social_Media_Popup {
 
 		// Свойства виджета
 		add_settings_field(
-			$prefix . '-twitter-chrome',
+			SMP_PREFIX . '-twitter-chrome',
 			__( 'Chrome', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_twitter_chrome' ),
 			$options_page,
@@ -2331,17 +2334,17 @@ class Social_Media_Popup {
 	/**
 	 * Настройки Pinterest
 	 */
-	private function init_settings_pinterest( $prefix ) {
+	private function init_settings_pinterest() {
 		$scp_prefix = self::get_scp_prefix();
 
 		// Используется в settings_field и do_settings_field
-		$group = $prefix . '-group-pinterest';
+		$group = SMP_PREFIX . '-group-pinterest';
 
 		// Используется в do_settings_section
-		$options_page = $prefix . '_pinterest_options';
+		$options_page = SMP_PREFIX . '_pinterest_options';
 
 		// ID секции
-		$section = $prefix . '-section-pinterest';
+		$section = SMP_PREFIX . '-section-pinterest';
 
 		// Не забывать добавлять новые опции в uninstall()
 		register_setting( $group, $scp_prefix . 'setting_use_pinterest' );
@@ -2362,7 +2365,7 @@ class Social_Media_Popup {
 
 		// Используем Pinterest или нет
 		add_settings_field(
-			$prefix . '-use-pinterest',
+			SMP_PREFIX . '-use-pinterest',
 			__( 'Use Pinterest', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -2374,7 +2377,7 @@ class Social_Media_Popup {
 
 		// Название вкладки
 		add_settings_field(
-			$prefix . '-pinterest-tab-caption',
+			SMP_PREFIX . '-pinterest-tab-caption',
 			__( 'Tab Caption', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -2386,7 +2389,7 @@ class Social_Media_Popup {
 
 		// Показывать надпись над виджетом?
 		add_settings_field(
-			$prefix . '-pinterest-show-description',
+			SMP_PREFIX . '-pinterest-show-description',
 			__( 'Show Description Above The Widget', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
@@ -2398,7 +2401,7 @@ class Social_Media_Popup {
 
 		// Надпись над виджетом
 		add_settings_field(
-			$prefix . '-pinterest-description',
+			SMP_PREFIX . '-pinterest-description',
 			__( 'Description Above The Widget', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_wysiwyg' ),
 			$options_page,
@@ -2410,7 +2413,7 @@ class Social_Media_Popup {
 
 		// Ссылка на профиль пользователя
 		add_settings_field(
-			$prefix . '-pinterest-profile-url',
+			SMP_PREFIX . '-pinterest-profile-url',
 			__( 'Profile URL', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -2422,7 +2425,7 @@ class Social_Media_Popup {
 
 		// Ширина изображений
 		add_settings_field(
-			$prefix . '-pinterest-image-width',
+			SMP_PREFIX . '-pinterest-image-width',
 			__( 'Image Width', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -2434,7 +2437,7 @@ class Social_Media_Popup {
 
 		// Ширина виджета
 		add_settings_field(
-			$prefix . '-pinterest-width',
+			SMP_PREFIX . '-pinterest-width',
 			__( 'Widget Width', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -2446,7 +2449,7 @@ class Social_Media_Popup {
 
 		// Высота виджета
 		add_settings_field(
-			$prefix . '-pinterest-height',
+			SMP_PREFIX . '-pinterest-height',
 			__( 'Widget Height', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
@@ -2931,7 +2934,7 @@ class Social_Media_Popup {
 			__( 'Welcome To Social Media Popup Welcome Screen', L10N_SCP_PREFIX ),
 			__( 'Welcome To Social Media Popup Welcome Screen', L10N_SCP_PREFIX ),
 			'read',
-			'social_community_popup_about',
+			SMP_PREFIX . '_about',
 			array( & $this, 'plugin_welcome_screen' )
 		);
 
@@ -2939,68 +2942,68 @@ class Social_Media_Popup {
 			__( 'Social Media Popup Options', L10N_SCP_PREFIX ),
 			__( 'SMP Options', L10N_SCP_PREFIX ),
 			'administrator',
-			'social_community_popup',
+			SMP_PREFIX,
 			array( & $this, 'plugin_settings_page' ),
 			'dashicons-format-image'
 		);
 
 		// Facebook
 		add_submenu_page(
-			'social_community_popup', // Родительский пункт меню
+			SMP_PREFIX, // Родительский пункт меню
 			__( 'Facebook Options', L10N_SCP_PREFIX ), // Название пункта на его странице
 			__( 'Facebook', L10N_SCP_PREFIX ), // Пункт меню
 			'administrator',
-			'social_community_popup_facebook_options',
+			SMP_PREFIX . '_facebook_options',
 			array( & $this, 'plugin_settings_page_facebook_options' )
 		);
 
 		// ВКонтакте
 		add_submenu_page(
-			'social_community_popup', // Родительский пункт меню
+			SMP_PREFIX, // Родительский пункт меню
 			__( 'VKontakte Options', L10N_SCP_PREFIX ), // Название пункта на его странице
 			__( 'VKontakte', L10N_SCP_PREFIX), // Пункт меню
 			'administrator',
-			'social_community_popup_vkontakte_options',
+			SMP_PREFIX . '_vkontakte_options',
 			array( & $this, 'plugin_settings_page_vkontakte_options' )
 		);
 
 		// Одноклассники
 		add_submenu_page(
-			'social_community_popup', // Родительский пункт меню
+			SMP_PREFIX, // Родительский пункт меню
 			__( 'Odnoklassniki Options', L10N_SCP_PREFIX ), // Название пункта на его странице
 			__( 'Odnoklassniki', L10N_SCP_PREFIX ), // Пункт меню
 			'administrator',
-			'social_community_popup_odnoklassniki_options',
+			SMP_PREFIX . '_odnoklassniki_options',
 			array( & $this, 'plugin_settings_page_odnoklassniki_options' )
 		);
 
 		// Google+
 		add_submenu_page(
-			'social_community_popup', // Родительский пункт меню
+			SMP_PREFIX, // Родительский пункт меню
 			__( 'Google+ Options', L10N_SCP_PREFIX ), // Название пункта на его странице
 			__( 'Google+', L10N_SCP_PREFIX ), // Пункт меню
 			'administrator',
-			'social_community_popup_googleplus_options',
+			SMP_PREFIX . '_googleplus_options',
 			array( & $this, 'plugin_settings_page_googleplus_options' )
 		);
 
 		// Twitter
 		add_submenu_page(
-			'social_community_popup', // Родительский пункт меню
+			SMP_PREFIX, // Родительский пункт меню
 			__( 'Twitter Options', L10N_SCP_PREFIX ), // Название пункта на его странице
 			__( 'Twitter', L10N_SCP_PREFIX ), // Пункт меню
 			'administrator',
-			'social_community_popup_twitter_options',
+			SMP_PREFIX . '_twitter_options',
 			array( & $this, 'plugin_settings_page_twitter_options' )
 		);
 
 		// Pinterest
 		add_submenu_page(
-			'social_community_popup', // Родительский пункт меню
+			SMP_PREFIX, // Родительский пункт меню
 			__( 'Pinterest Options', L10N_SCP_PREFIX ), // Название пункта на его странице
 			__( 'Pinterest', L10N_SCP_PREFIX ), // Пункт меню
 			'administrator',
-			'social_community_popup_pinterest_options',
+			SMP_PREFIX . '_pinterest_options',
 			array( & $this, 'plugin_settings_page_pinterest_options' )
 		);
 	}
@@ -3031,7 +3034,7 @@ class Social_Media_Popup {
 			'parent' => 'scp-admin-bar',
 			'id'     => 'scp-settings',
 			'title'  => __( 'Settings', L10N_SCP_PREFIX ),
-			'href'   => admin_url( 'admin.php?page=social_community_popup' )
+			'href'   => admin_url( 'admin.php?page=' . SMP_PREFIX )
 		);
 		$wp_admin_bar->add_node( $menu_scp_settings );
 
@@ -3048,7 +3051,7 @@ class Social_Media_Popup {
 	}
 
 	public function admin_head() {
-		remove_submenu_page( 'index.php', 'social_community_popup_about' );
+		remove_submenu_page( 'index.php', SMP_PREFIX . '_about' );
 	}
 
 	/**
@@ -3057,7 +3060,7 @@ class Social_Media_Popup {
 	 * @since 0.7.3 Added add_cookies_script()
 	 * @since 0.7.3 Added WP Color Picker script
 	 *
-	 * @uses Social_Community_Popup::get_scp_prefix()
+	 * @uses Social_Media_Popup::get_scp_prefix()
 	 * @uses $this->add_cookies_script()
 	 *
 	 * @return void
@@ -3079,7 +3082,7 @@ class Social_Media_Popup {
 
 		$this->add_cookies_script( $version, $scp_prefix );
 
-		if ( 'social_community_popup' == get_current_screen()->id ) {
+		if ( SMP_PREFIX == get_current_screen()->id ) {
 			wp_enqueue_script('thickbox');
 			wp_enqueue_style('thickbox');
 
@@ -3189,7 +3192,7 @@ class Social_Media_Popup {
 	 *
 	 * @since 0.7.3 Added add_cookies_script()
 	 *
-	 * @uses Social_Community_Popup::get_scp_prefix()
+	 * @uses Social_Media_Popup::get_scp_prefix()
 	 * @uses $this->add_cookies_script()
 	 *
 	 * @return void

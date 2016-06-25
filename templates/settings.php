@@ -8,9 +8,9 @@ $tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'general';
 	<?php echo scp_settings_tabs(); ?>
 	<form method="post" action="options.php">
 		<?php wp_nonce_field( 'scp-update-options' ); ?>
-		<?php settings_fields( 'social_community_popup-group-' . $tab ); ?>
-		<?php do_settings_fields( 'social_community_popup-group-' . $tab, 'social_community_popup-group-' . $tab ); ?>
-		<?php do_settings_sections( 'social_community_popup-group-' . $tab ); ?>
+		<?php settings_fields( SMP_PREFIX . '-group-' . $tab ); ?>
+		<?php do_settings_fields( SMP_PREFIX . '-group-' . $tab, SMP_PREFIX . '-group-' . $tab ); ?>
+		<?php do_settings_sections( SMP_PREFIX . '-group-' . $tab ); ?>
 		<?php submit_button(); ?>
 	</form>
 	<?php require( sprintf( "%s/copyright.php", dirname( __FILE__ ) ) ); ?>
@@ -30,7 +30,7 @@ function scp_settings_tabs() {
 	echo '<h2 class="nav-tab-wrapper">';
 	foreach ( $tabs as $tab_key => $tab_caption ) {
 		$active = $current_tab == $tab_key ? 'nav-tab-active' : '';
-		echo '<a class="nav-tab ' . $active . '" href="?page=social_community_popup&tab=' . $tab_key . '">' . $tab_caption . '</a>';
+		echo '<a class="nav-tab ' . $active . '" href="?page=' . SMP_PREFIX . '&tab=' . $tab_key . '">' . $tab_caption . '</a>';
 	}
 	echo '</h2>';
 }

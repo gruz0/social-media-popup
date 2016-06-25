@@ -21,12 +21,12 @@ if ( ! array_key_exists( 'social-media-popup', $GLOBALS ) ) {
 
 		include sprintf( "%s/social-media-popup.class.php", dirname( __FILE__ ) );
 
-		$social_community_popup = new Social_Media_Popup();
+		$social_media_popup = new Social_Media_Popup();
 
 		// Uses by PHPUnit
-		$GLOBALS['social-media-popup'] = $social_community_popup;
+		$GLOBALS['social-media-popup'] = $social_media_popup;
 
-		if (isset( $social_community_popup) ) {
+		if (isset( $social_media_popup) ) {
 			// Добавляем пункт "Настройки" в раздел плагинов в WordPress
 			function social_media_popup_plugin_settings_link( $links ) {
 				$settings_link = '<a href="admin.php?page=social_media_popup">' . __( 'Settings', L10N_SCP_PREFIX ) . '</a>';

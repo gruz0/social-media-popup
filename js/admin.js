@@ -20,7 +20,7 @@ $j(document).ready(function() {
 	$j(colorFields.join(',')).wpColorPicker();
 
 	$j('#scp_upload_background_image').click(function() {
-		tb_show('Upload a background image', 'media-upload.php?referer=social_community_popup&type=image&TB_iframe=true&post_id=0', false);
+		tb_show('Upload a background image', 'media-upload.php?referer=social_media_popup&type=image&TB_iframe=true&post_id=0', false);
 
 		window.scp_restore_send_to_editor = window.send_to_editor;
 		window.send_to_editor = function(html) {

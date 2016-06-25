@@ -3,9 +3,9 @@
 	<h2><?php _e( 'Facebook Options', L10N_SCP_PREFIX ); ?></h2>
 	<form method="post" action="options.php">
 		<?php wp_nonce_field( 'scp-update-facebook-options' ); ?>
-		<?php settings_fields( 'social_community_popup-group-facebook' ); ?>
-		<?php do_settings_fields( 'social_community_popup-group-facebook', 'social_community_popup-group-facebook' ); ?>
-		<?php do_settings_sections( 'social_community_popup_facebook_options' ); ?>
+		<?php settings_fields( SMP_PREFIX . '-group-facebook' ); ?>
+		<?php do_settings_fields( SMP_PREFIX . '-group-facebook', SMP_PREFIX . '-group-facebook' ); ?>
+		<?php do_settings_sections( SMP_PREFIX . '_facebook_options' ); ?>
 		<?php submit_button(); ?>
 	</form>
 	<?php require( sprintf( "%s/../copyright.php", dirname( __FILE__ ) ) ); ?>
