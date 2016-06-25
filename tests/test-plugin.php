@@ -1,6 +1,6 @@
 <?php
 
-class Social_Community_Popup_Tests extends PHPUnit_Framework_TestCase {
+class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 	protected static $plugin;
 
 	function setUp() {

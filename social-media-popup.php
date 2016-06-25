@@ -11,29 +11,29 @@ Version: 0.7.4
 License: GPL2
 */
 
-if ( ! array_key_exists( 'social-community-popup', $GLOBALS ) ) {
-	if ( ! class_exists( 'Social_Community_Popup' ) ) {
+if ( ! array_key_exists( 'social-media-popup', $GLOBALS ) ) {
+	if ( ! class_exists( 'Social_Media_Popup' ) ) {
 
 		// Хуки для активации и деактивации плагина
-		register_activation_hook( __FILE__, array( 'Social_Community_Popup', 'activate' ) );
-		register_deactivation_hook( __FILE__, array( 'Social_Community_Popup', 'deactivate' ) );
-		register_uninstall_hook( __FILE__, array('Social_Community_Popup', 'uninstall' ) );
+		register_activation_hook( __FILE__, array( 'Social_Media_Popup', 'activate' ) );
+		register_deactivation_hook( __FILE__, array( 'Social_Media_Popup', 'deactivate' ) );
+		register_uninstall_hook( __FILE__, array('Social_Media_Popup', 'uninstall' ) );
 
-		include sprintf( "%s/social-community-popup.class.php", dirname( __FILE__ ) );
+		include sprintf( "%s/social-media-popup.class.php", dirname( __FILE__ ) );
 
-		$social_community_popup = new Social_Community_Popup();
-		$GLOBALS['social-community-popup'] = $social_community_popup;
+		$social_community_popup = new Social_Media_Popup();
+		$GLOBALS['social-media-popup'] = $social_community_popup;
 
 		if (isset( $social_community_popup) ) {
 			// Добавляем пункт "Настройки" в раздел плагинов в WordPress
-			function social_community_popup_plugin_settings_link( $links ) {
-				$settings_link = '<a href="admin.php?page=social_community_popup">' . __( 'Settings', L10N_SCP_PREFIX ) . '</a>';
+			function social_media_popup_plugin_settings_link( $links ) {
+				$settings_link = '<a href="admin.php?page=social_media_popup">' . __( 'Settings', L10N_SCP_PREFIX ) . '</a>';
 				array_unshift( $links, $settings_link );
 				return $links;
 			}
 
 			$plugin = plugin_basename( __FILE__ );
-			add_filter( 'plugin_action_links_' . $plugin, 'social_community_popup_plugin_settings_link' );
+			add_filter( 'plugin_action_links_' . $plugin, 'social_media_popup_plugin_settings_link' );
 		}
 
 		/**

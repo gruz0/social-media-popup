@@ -5,7 +5,7 @@ require_once( dirname( __FILE__ ) . "/functions.php" );
 require_once( dirname( __FILE__ ) . "/lib/scp_template.php" );
 require_once( dirname( __FILE__ ) . "/lib/providers/providers.php" );
 
-class Social_Community_Popup {
+class Social_Media_Popup {
 	protected static $scp_version;
 
 	/**
