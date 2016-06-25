@@ -14,14 +14,14 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 			die( "Plugin deactivated. Activate the plugin first before run this test.\n" );
 		}
 
-		self::$plugin = $GLOBALS['social-community-popup'];
+		self::$plugin = $GLOBALS['social-media-popup'];
 
 		self::$plugin->set_scp_version( '0.7.1' );
 		self::cleanUp();
 
 		// Очищаем всю информацию о плагине во время тестирования
-		deactivate_plugins( 'social-community-popup/social-community-popup.php' );
-		activate_plugins( 'social-community-popup/social-community-popup.php' );
+		deactivate_plugins( 'social-media-popup/social-media-popup.php' );
+		activate_plugins( 'social-media-popup/social-media-popup.php' );
 
 		self::$plugin->set_scp_version( '0.1' );
 	}
