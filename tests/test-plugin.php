@@ -7,34 +7,9 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 		parent::setUp();
 	}
 
-	public static function setUpBeforeClass() {
-		wp_set_current_user( 1, 'Alexander Gruzov' );
-
-		if ( ! is_plugin_active( 'social-media-popup/social-media-popup.php' ) || ! isset( $GLOBALS['social-media-popup'] ) ) {
-			fwrite(STDERR, "Plugin deactivated. Activate the plugin first before run this test.\n" );
-			die(1);
-		}
-
-		self::$plugin = $GLOBALS['social-media-popup'];
-
-		self::$plugin->set_scp_version( '0.7.1' );
-		self::cleanUp();
-
-		// Очищаем всю информацию о плагине во время тестирования
-		deactivate_plugins( 'social-media-popup/social-media-popup.php' );
-		activate_plugins( 'social-media-popup/social-media-popup.php' );
-
-		self::$plugin->set_scp_version( '0.1' );
-	}
-
-	public static function tearDownAfterClass() {
-		self::$plugin->set_scp_version( '0.7.1' );
-		self::cleanUp();
-	}
-
-	private static function cleanUp() {
-		update_option( self::$plugin->get_scp_prefix() . 'setting_remove_settings_on_uninstall', 1 );
-		self::$plugin->uninstall();
+	// Check that that activation doesn't break
+	function testPluginActivated() {
+		$this->assertTrue( is_plugin_active( PLUGIN_PATH ) );
 	}
 
 	function testPluginInitialization() {
