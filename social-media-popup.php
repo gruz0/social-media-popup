@@ -22,6 +22,8 @@ if ( ! array_key_exists( 'social-media-popup', $GLOBALS ) ) {
 		include sprintf( "%s/social-media-popup.class.php", dirname( __FILE__ ) );
 
 		$social_community_popup = new Social_Media_Popup();
+
+		// Uses by PHPUnit
 		$GLOBALS['social-media-popup'] = $social_community_popup;
 
 		if (isset( $social_community_popup) ) {
