@@ -1,7 +1,4 @@
 <?php
-require_once "../../../wp-load.php";
-require_once "../../../wp-admin/includes/plugin.php";
-require_once "social-community-popup.class.php";
 
 class Social_Community_Popup_Tests extends PHPUnit_Framework_TestCase {
 	protected static $plugin;
