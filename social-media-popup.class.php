@@ -3071,8 +3071,8 @@ class Social_Media_Popup {
 		$scp_prefix = self::get_scp_prefix();
 		$version = get_option( $scp_prefix . 'version' );
 
-		wp_register_style( 'social-community-popup-admin-style', plugins_url( 'css/admin.css?' . $version, __FILE__ ) );
-		wp_enqueue_style( 'social-community-popup-admin-style' );
+		wp_register_style( SMP_PREFIX . '-admin-css', plugins_url( 'css/admin.css?' . $version, __FILE__ ) );
+		wp_enqueue_style( SMP_PREFIX . '-admin-css' );
 
 		wp_register_style( 'jquery-ui-css', '//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css' );
 		wp_enqueue_style( 'jquery-ui-css' );
@@ -3090,10 +3090,10 @@ class Social_Media_Popup {
 		}
 
 		wp_enqueue_style( 'wp-color-picker' );
-		wp_register_script( 'social-community-popup-admin-script', plugins_url( 'js/admin.js?' . $version, __FILE__ ),
+		wp_register_script( SMP_PREFIX . '-admin-js', plugins_url( 'js/admin.js?' . $version, __FILE__ ),
 			array( 'jquery', 'wp-color-picker' )
 		);
-		wp_enqueue_script( 'social-community-popup-admin-script' );
+		wp_enqueue_script( SMP_PREFIX . '-admin-js' );
 	}
 
 	/**
@@ -3207,17 +3207,17 @@ class Social_Media_Popup {
 		$this->render_popup_window( $version, $scp_prefix );
 
 		if ( wp_is_mobile() ) {
-			wp_register_style( 'social-community-popup-style', plugins_url( 'css/mobile.css?' . $version, __FILE__ ) );
+			wp_register_style( SMP_PREFIX . '-css', plugins_url( 'css/mobile.css?' . $version, __FILE__ ) );
 		} else {
-			wp_register_style( 'social-community-popup-style', plugins_url( 'css/styles.css?' . $version, __FILE__ ) );
+			wp_register_style( SMP_PREFIX . '-css', plugins_url( 'css/styles.css?' . $version, __FILE__ ) );
 		}
-		wp_enqueue_style( 'social-community-popup-style' );
+		wp_enqueue_style( SMP_PREFIX . '-css' );
 
 		wp_register_style( 'font-awesome', plugins_url( 'vendor/font-awesome-4.6.3/css/font-awesome.min.css?' . $version, __FILE__ ) );
 		wp_enqueue_style( 'font-awesome' );
 
-		wp_register_style( 'social-community-popup-icons', plugins_url( 'css/icons.css?' . $version, __FILE__ ) );
-		wp_enqueue_style( 'social-community-popup-icons' );
+		wp_register_style( SMP_PREFIX . '-icons', plugins_url( 'css/icons.css?' . $version, __FILE__ ) );
+		wp_enqueue_style( SMP_PREFIX . '-icons' );
 	}
 
 	private function render_popup_window( $version, $scp_prefix ) {
@@ -3226,11 +3226,11 @@ class Social_Media_Popup {
 		$encoded_content = preg_replace("~[\n\t]~", "", $content);
 		$encoded_content = base64_encode($encoded_content);
 
-		wp_register_script( 'social-community-popup-script', plugins_url( 'js/scripts.js?' . $version, __FILE__ ), array( 'jquery' ) );
-		wp_localize_script( 'social-community-popup-script', 'scp', array(
+		wp_register_script( SMP_PREFIX . '-js', plugins_url( 'js/scripts.js?' . $version, __FILE__ ), array( 'jquery' ) );
+		wp_localize_script( SMP_PREFIX . '-js', 'scp', array(
 			'encodedContent' => htmlspecialchars( $encoded_content ),
 		));
-		wp_enqueue_script( 'social-community-popup-script' );
+		wp_enqueue_script( SMP_PREFIX . '-js' );
 	}
 
 	private function scp_php( $scp_prefix ) {
@@ -3691,11 +3691,11 @@ class Social_Media_Popup {
 	 * @return void
 	 */
 	private function add_cookies_script( $version, $scp_prefix ) {
-		wp_register_script( 'social-community-popup-cookies-script', plugins_url( 'js/cookies.js?' . $version, __FILE__ ), array( 'jquery' ) );
-		wp_localize_script( 'social-community-popup-cookies-script', 'scp_cookies', array(
+		wp_register_script( SMP_PREFIX . '-cookies', plugins_url( 'js/cookies.js?' . $version, __FILE__ ), array( 'jquery' ) );
+		wp_localize_script( SMP_PREFIX . '-cookies', 'scp_cookies', array(
 			'clearCookiesMessage'           => __( 'Page will be reload after clear cookies. Continue?', L10N_SCP_PREFIX ),
 			'showWindowAfterReturningNDays' => (int) get_option( $scp_prefix . 'setting_display_after_n_days' ),
 		));
-		wp_enqueue_script( 'social-community-popup-cookies-script' );
+		wp_enqueue_script( SMP_PREFIX . '-cookies' );
 	}
 }
