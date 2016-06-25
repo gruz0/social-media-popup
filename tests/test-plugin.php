@@ -421,7 +421,7 @@ class Social_Community_Popup_Tests extends PHPUnit_Framework_TestCase {
 
 	private function checkDebugModeIsOn() {
 		$scp_prefix = self::$plugin->get_scp_prefix();
-		$this->assertTrue( 0 === get_option( $scp_prefix . 'setting_debug_mode' ) );
+		$this->assertTrue( 1 == get_option( $scp_prefix . 'setting_debug_mode' ) );
 	}
 }
 
