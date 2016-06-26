@@ -41,6 +41,7 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 		$this->upgradeTo072();
 		$this->upgradeTo073();
 		$this->upgradeTo074();
+		$this->upgradeTo075();
 		$this->checkDebugModeIsOn();
 	}
 
@@ -397,6 +398,14 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 
 		// Odnoklassniki
 		$this->assertTrue( 'https://ok.ru/group/57122812461115' == get_option( $scp_prefix . 'setting_odnoklassniki_group_url' ) );
+	}
+
+	private function upgradeTo075() {
+		self::$plugin->upgrade_to_0_7_5();
+
+		$scp_prefix = self::$plugin->get_scp_prefix();
+
+		$this->assertTrue( '0.7.5' == get_option( $scp_prefix . 'version' ) );
 	}
 
 	private function checkDebugModeIsOn() {
