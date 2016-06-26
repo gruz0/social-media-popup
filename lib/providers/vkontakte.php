@@ -70,25 +70,25 @@ class SCP_VK_Provider extends SCP_Provider {
 					}
 				}
 
-			function scp_prependVK($) {
-				timeout = ' . $delay_before_render . ';
+				function scp_prependVK($) {
+					timeout = ' . $delay_before_render . ';
 
-				$tabs   = $("' . self::$tabs_id . '");
-				$vk_tab = $("' . self::$tabs_id . ' .vk-tab");
+					$tabs   = $("' . self::$tabs_id . '");
+					$vk_tab = $("' . self::$tabs_id . ' .vk-tab");
 
-				if ($vk_tab.length && parseInt($vk_tab.data("index")) == 1) {
-					setTimeout("initialize_VK_Widgets();", timeout);
-				} else if ($tabs.length == 0) {
-					setTimeout("initialize_VK_Widgets();", timeout);
-				}
-
-				$vk_tab.on("click", function() {
-					if ((typeof(VK) !== "undefined") && !vk_initialized) {
+					if ($vk_tab.length && parseInt($vk_tab.data("index")) == 1) {
+						setTimeout("initialize_VK_Widgets();", timeout);
+					} else if ($tabs.length == 0) {
 						setTimeout("initialize_VK_Widgets();", timeout);
 					}
-				});
-			}
-		</script>';
+
+					$vk_tab.on("click", function() {
+						if ((typeof(VK) !== "undefined") && !vk_initialized) {
+							setTimeout("initialize_VK_Widgets();", timeout);
+						}
+					});
+				}
+			</script>';
 
 		$content .= '</div>';
 
