@@ -51,7 +51,7 @@ if ( ! array_key_exists( 'social-media-popup', $GLOBALS ) ) {
 			require_once( dirname( __FILE__ ) . '/updater.php' );
 
 			if ( is_admin() ) {
-				new GitHub_Updater( __FILE__, 'gruz0', 'social-community-popup' );
+				new GitHub_Updater( __FILE__, 'gruz0', 'social-media-popup' );
 			}
 		}
 
