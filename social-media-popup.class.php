@@ -256,6 +256,7 @@ class Social_Media_Popup {
 		self::upgrade_to_0_7_2();
 		self::upgrade_to_0_7_3();
 		self::upgrade_to_0_7_4();
+		self::upgrade_to_0_7_5();
 
 		// Automatically set debug mode on after reactivating plugin
 		update_option( self::get_scp_prefix() . 'setting_debug_mode', 1 );
@@ -765,6 +766,22 @@ class Social_Media_Popup {
 
 			update_option( $version, '0.7.4' );
 			self::set_scp_version( '0.7.4' );
+		}
+	}
+
+	/**
+	 * Upgrade to 0.7.5
+	 *
+	 * @since 0.7.5
+	 * @return void
+	 */
+	public static function upgrade_to_0_7_5() {
+		$scp_prefix = self::get_scp_prefix();
+		$version    = $scp_prefix . 'version';
+
+		if ( '0.7.5' > get_option( $version ) ) {
+			update_option( $version, '0.7.5' );
+			self::set_scp_version( '0.7.5' );
 		}
 	}
 
