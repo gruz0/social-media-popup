@@ -1,6 +1,6 @@
 # Social Media Popup
 
-[![Build Status](https://travis-ci.org/gruz0/social-community-popup.svg?branch=master)](https://travis-ci.org/gruz0/social-community-popup)
+[![Build Status](https://travis-ci.org/gruz0/social-media-popup.svg?branch=master)](https://travis-ci.org/gruz0/social-media-popup)
 
 Plugin creates the popup window with most popular social media widgets
 
