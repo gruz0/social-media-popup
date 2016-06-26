@@ -138,7 +138,7 @@ class SCP_Provider {
 			. 'data-index="' . $args['index'] . '" '
 			. 'class="' . $args['css_class'] . '" '
 			. 'style="width:' . sprintf( '%0.2f', floatval( $args['width'] ) ) . '%;" '
-			. '><a href="#" title="' . $args['tab_caption'] . '">'
+			. '><a href="#" title="' . self::clean_tab_caption( $args['tab_caption'] ) . '">'
 			. '<i class="fa ' . $args['icon'] . ' ' . $args['icon_size'] . '"></i></a></li>';
 	}
 
@@ -154,7 +154,7 @@ class SCP_Provider {
 		return '<li '
 			. 'class="' . $args['css_class'] . '" '
 			. 'style="width:' . sprintf( '%0.2f', floatval( $args['width'] ) ) . '%;" '
-			. '><a href="' . $args['url'] . '" target="_blank" rel="nofollow" title="' . $args['tab_caption'] . '">'
+			. '><a href="' . $args['url'] . '" target="_blank" rel="nofollow" title="' . self::clean_tab_caption( $args['tab_caption'] ) . '">'
 			. '<i class="fa ' . $args['icon'] . ' ' . $args['icon_size'] . '"></i></a></li>';
 	}
 
@@ -183,11 +183,23 @@ class SCP_Provider {
 	 *
 	 * @since 0.7.3
 	 *
-	 * @param array @args
 	 * @return string
 	 */
 	public static function container() {
 		throw new Exception( "Not implemented!" );
+	}
+
+	/**
+	 * Removes new lines and uneccessary chars from tab caption
+	 *
+	 * @since 0.7.4
+	 *
+	 * @param string $tab_caption
+	 *
+	 * @return string
+	 */
+	private static function clean_tab_caption( $tab_caption ) {
+		return trim( str_replace( "\r\n", "", $tab_caption ) );
 	}
 }
 

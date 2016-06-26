@@ -3466,7 +3466,7 @@ class Social_Community_Popup {
 				$popup_css .= $border_radius_css;
 				$popup_css .= $background_image_css;
 
-				$scp_plugin_title  = trim( $scp_options[ $scp_prefix . 'setting_plugin_title' ] );
+				$scp_plugin_title  = trim( str_replace( "\r\n", "<br />", $scp_options[ $scp_prefix . 'setting_plugin_title' ] ) );
 				$show_plugin_title = mb_strlen( $scp_plugin_title ) > 0;
 
 				$content .= '<div id="popup" style="' . esc_attr( $popup_css ) . '">';
