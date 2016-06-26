@@ -40,31 +40,35 @@ class SCP_VK_Provider extends SCP_Provider {
 
 		$content .= '<script type="text/javascript" src="//vk.com/js/api/openapi.js?105"></script>
 			<div id="scp_vk_groups" style="height:250px !important;"></div>
-			<script>
+			<script type="text/javascript">
 				var vk_initialized = 0;
 				var scp_VK_closeWindowAfterJoiningGroup = ' . ( (int) self::$options[ self::$prefix . 'setting_vkontakte_close_window_after_join' ] ) . ';
 
 				function initialize_VK_Widgets() {
-					VK.init({apiId: ' . $application_id . ' });
+					if ((typeof(VK) === "undefined") || !vk_initialized) {
+						jQuery.getScript( "//vk.com/js/api/openapi.js?115", function(data, textStatus, jqxhr) {
+							VK.init({apiId: ' . $application_id . ' });
 
-					VK.Observer.subscribe("widgets.groups.joined", function f() {
-					if ( scp_VK_closeWindowAfterJoiningGroup ) {
-						scp_destroyPlugin(scp.showWindowAfterReturningNDays);
+							VK.Observer.subscribe("widgets.groups.joined", function f() {
+								if ( scp_VK_closeWindowAfterJoiningGroup ) {
+									scp_destroyPlugin(scp.showWindowAfterReturningNDays);
+								}
+							});
+
+							VK.Observer.subscribe("widgets.groups.leaved", function f() {});
+
+							VK.Widgets.Group("scp_vk_groups", {
+								mode: ' . esc_attr( self::$options[ self::$prefix . 'setting_vkontakte_layout' ] ) . ',
+								width: "' . esc_attr( self::$options[ self::$prefix . 'setting_vkontakte_width' ] ) . '",
+								height: "' . esc_attr( self::$options[ self::$prefix . 'setting_vkontakte_height' ] ) . '",
+								color1: "' . esc_attr( self::$options[ self::$prefix . 'setting_vkontakte_color_background' ] ) . '",
+								color2: "' . esc_attr( self::$options[ self::$prefix . 'setting_vkontakte_color_text' ] ) . '",
+								color3: "' . esc_attr( self::$options[ self::$prefix . 'setting_vkontakte_color_button' ] ) . '"
+							}, ' . $page_or_group_id . ');
+							vk_initialized = 1;
+						});
 					}
-				});
-
-				VK.Observer.subscribe("widgets.groups.leaved", function f() {});
-
-				VK.Widgets.Group("scp_vk_groups", {
-					mode: ' . esc_attr( self::$options[ self::$prefix . 'setting_vkontakte_layout' ] ) . ',
-					width: "' . esc_attr( self::$options[ self::$prefix . 'setting_vkontakte_width' ] ) . '",
-					height: "' . esc_attr( self::$options[ self::$prefix . 'setting_vkontakte_height' ] ) . '",
-					color1: "' . esc_attr( self::$options[ self::$prefix . 'setting_vkontakte_color_background' ] ) . '",
-					color2: "' . esc_attr( self::$options[ self::$prefix . 'setting_vkontakte_color_text' ] ) . '",
-					color3: "' . esc_attr( self::$options[ self::$prefix . 'setting_vkontakte_color_button' ] ) . '"
-				}, ' . $page_or_group_id . ');
-				vk_initialized = 1;
-			}
+				}
 
 			function scp_prependVK($) {
 				timeout = ' . $delay_before_render . ';
