@@ -3240,7 +3240,7 @@ class Social_Media_Popup {
 	private function render_popup_window( $version, $scp_prefix ) {
 		$content = $this->scp_php( $scp_prefix );
 
-		$encoded_content = preg_replace("~[\n\t]~", "", $content);
+		$encoded_content = preg_replace("~[\n\r\t]~", "", $content);
 		$encoded_content = base64_encode($encoded_content);
 
 		wp_register_script( SMP_PREFIX . '-js', plugins_url( 'js/scripts.js?' . $version, __FILE__ ), array( 'jquery' ) );
