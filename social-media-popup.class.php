@@ -828,8 +828,7 @@ class Social_Media_Popup {
 	 */
 	public function init_settings() {
 		$this->init_settings_common();
-		// TODO: Should be renamed to view_on_desktop
-		$this->init_settings_common_view();
+		$this->init_settings_common_view_on_deskop();
 		$this->init_settings_common_view_on_mobile_devices();
 		$this->init_settings_common_events();
 		$this->init_settings_common_management();
@@ -948,7 +947,7 @@ class Social_Media_Popup {
 	/**
 	 * Общие настройки (вкладка "Внешний вид")
 	 */
-	public function init_settings_common_view() {
+	public function init_settings_common_view_on_deskop() {
 		$scp_prefix = self::get_scp_prefix();
 
 		// Используется в settings_field и do_settings_field
