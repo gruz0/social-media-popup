@@ -2186,19 +2186,38 @@ class Social_Media_Popup {
 	}
 
 	/**
-	 * Настройки Twitter
+	 * Twitter Settings
+	 *
+	 * @uses $this->init_settings_twitter_general()
+	 * @uses $this->init_settings_twitter_follow_button()
+	 * @uses $this->init_settings_twitter_timeline()
+	 *
+	 * @since 0.6
 	 */
 	private function init_settings_twitter() {
+		$this->init_settings_twitter_general();
+		$this->init_settings_twitter_follow_button();
+		$this->init_settings_twitter_timeline();
+	}
+
+	/**
+	 * Twitter general settings
+	 *
+	 * @uses Social_Media_Popup::get_scp_prefix()
+	 *
+	 * @since 0.7.5
+	 */
+	private function init_settings_twitter_general() {
 		$scp_prefix = self::get_scp_prefix();
 
 		// Используется в settings_field и do_settings_field
-		$group = SMP_PREFIX . '-group-twitter';
+		$group = SMP_PREFIX . '-group-twitter-general';
 
 		// Используется в do_settings_section
-		$options_page = SMP_PREFIX . '_twitter_options';
+		$options_page = SMP_PREFIX . '-group-twitter-general';
 
 		// ID секции
-		$section = SMP_PREFIX . '-section-twitter';
+		$section = SMP_PREFIX . '-section-twitter-general';
 
 		// Не забывать добавлять новые опции в uninstall()
 		register_setting( $group, $scp_prefix . 'setting_use_twitter' );
@@ -2206,24 +2225,11 @@ class Social_Media_Popup {
 		register_setting( $group, $scp_prefix . 'setting_twitter_show_description' );
 		register_setting( $group, $scp_prefix . 'setting_twitter_description', 'wp_kses_post' );
 		register_setting( $group, $scp_prefix . 'setting_twitter_username', 'sanitize_text_field' );
-		register_setting( $group, $scp_prefix . 'setting_twitter_use_follow_button', 'absint' );
-		register_setting( $group, $scp_prefix . 'setting_twitter_show_count', 'absint' );
-		register_setting( $group, $scp_prefix . 'setting_twitter_show_screen_name', 'absint' );
-		register_setting( $group, $scp_prefix . 'setting_twitter_follow_button_large_size', 'absint' );
-		register_setting( $group, $scp_prefix . 'setting_twitter_use_timeline', 'absint' );
-		register_setting( $group, $scp_prefix . 'setting_twitter_widget_id', 'sanitize_text_field' );
-		register_setting( $group, $scp_prefix . 'setting_twitter_theme', 'sanitize_text_field' );
-		register_setting( $group, $scp_prefix . 'setting_twitter_link_color', 'sanitize_text_field' );
-		register_setting( $group, $scp_prefix . 'setting_twitter_tweet_limit', 'absint' );
-		register_setting( $group, $scp_prefix . 'setting_twitter_show_replies', 'absint' );
-		register_setting( $group, $scp_prefix . 'setting_twitter_width', 'absint' );
-		register_setting( $group, $scp_prefix . 'setting_twitter_height', 'absint' );
-		register_setting( $group, $scp_prefix . 'setting_twitter_chrome' );
 		register_setting( $group, $scp_prefix . 'setting_twitter_close_window_after_join', 'absint' );
 
 		add_settings_section(
 			$section,
-			__( 'Twitter Timeline Widget', L10N_SCP_PREFIX ),
+			__( 'Common Settings', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_section_twitter' ),
 			$options_page
 		);
@@ -2288,6 +2294,52 @@ class Social_Media_Popup {
 			)
 		);
 
+		// Закрывать окно виджета после вступления в группу
+		add_settings_field(
+			SMP_PREFIX . '-twitter-close-window-after-join',
+			__( 'Close Plugin Window After Joining the Group', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'setting_twitter_close_window_after_join'
+			)
+		);
+	}
+
+	/**
+	 * Twitter Follow Button settings
+	 *
+	 * @uses Social_Media_Popup::get_scp_prefix()
+	 *
+	 * @since 0.7.5
+	 */
+	private function init_settings_twitter_follow_button() {
+		$scp_prefix = self::get_scp_prefix();
+
+		// Используется в settings_field и do_settings_field
+		$group = SMP_PREFIX . '-group-twitter-follow-button';
+
+		// Используется в do_settings_section
+		$options_page = SMP_PREFIX . '-group-twitter-follow-button';
+
+		// ID секции
+		$section = SMP_PREFIX . '-section-twitter-follow-button';
+
+		// Не забывать добавлять новые опции в uninstall()
+		register_setting( $group, $scp_prefix . 'setting_twitter_username', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_use_follow_button', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_show_count', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_show_screen_name', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_follow_button_large_size', 'absint' );
+
+		add_settings_section(
+			$section,
+			__( 'Follow Button Widget', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_section_twitter_follow_button' ),
+			$options_page
+		);
+
 		// Показывать или нет виджет Follow Button
 		add_settings_field(
 			SMP_PREFIX . '-twitter-use-follow-button',
@@ -2334,6 +2386,44 @@ class Social_Media_Popup {
 			array(
 				'field' => $scp_prefix . 'setting_twitter_follow_button_large_size'
 			)
+		);
+	}
+
+	/**
+	 * Twitter Timeline settings
+	 *
+	 * @uses Social_Media_Popup::get_scp_prefix()
+	 *
+	 * @since 0.7.5
+	 */
+	private function init_settings_twitter_timeline() {
+		$scp_prefix = self::get_scp_prefix();
+
+		// Используется в settings_field и do_settings_field
+		$group = SMP_PREFIX . '-group-twitter-timeline';
+
+		// Используется в do_settings_section
+		$options_page = SMP_PREFIX . '-group-twitter-timeline';
+
+		// ID секции
+		$section = SMP_PREFIX . '-section-twitter-timeline';
+
+		// Не забывать добавлять новые опции в uninstall()
+		register_setting( $group, $scp_prefix . 'setting_twitter_use_timeline', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_widget_id', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_theme', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_link_color', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_tweet_limit', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_show_replies', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_width', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_height', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_chrome', 'sanitize_text_field' );
+
+		add_settings_section(
+			$section,
+			__( 'Timeline Widget', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_section_twitter_timeline' ),
+			$options_page
 		);
 
 		// Показывать или нет виджет Timeline
@@ -2441,18 +2531,6 @@ class Social_Media_Popup {
 			$section,
 			array(
 				'field' => $scp_prefix . 'setting_twitter_chrome'
-			)
-		);
-
-		// Закрывать окно виджета после вступления в группу
-		add_settings_field(
-			SMP_PREFIX . '-twitter-close-window-after-join',
-			__( 'Close Plugin Window After Joining the Group', L10N_SCP_PREFIX ),
-			array( & $this, 'settings_field_checkbox' ),
-			$options_page,
-			$section,
-			array(
-				'field' => $scp_prefix . 'setting_twitter_close_window_after_join'
 			)
 		);
 	}
@@ -2657,10 +2735,30 @@ class Social_Media_Popup {
 	}
 
 	/**
-	 * Описание настроек Twitter
+	 * Twitter general settings
+	 *
+	 * @since 0.6
 	 */
 	public function settings_section_twitter() {
-		_e( 'In this section, you must fill out the data to display the Twitter timeline in a popup window', L10N_SCP_PREFIX );
+		_e( 'General Twitter options can be set in this section', L10N_SCP_PREFIX );
+	}
+
+	/**
+	 * Twitter Follow Button settings description
+	 *
+	 * @since 0.7.5
+	 */
+	public function settings_section_twitter_follow_button() {
+		_e( 'Twitter Follow Button options can be set in this section', L10N_SCP_PREFIX );
+	}
+
+	/**
+	 * Twitter Timeline settings description
+	 *
+	 * @since 0.7.5
+	 */
+	public function settings_section_twitter_timeline() {
+		_e( 'Twitter Timeline options can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
