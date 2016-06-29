@@ -190,6 +190,7 @@ class Social_Media_Popup {
 			'setting_twitter_width',
 			'setting_twitter_height',
 			'setting_twitter_chrome',
+			'setting_twitter_close_window_after_join',
 
 			// Pinterest
 			'setting_use_pinterest',
@@ -783,6 +784,9 @@ class Social_Media_Popup {
 		if ( '0.7.5' > get_option( $version ) ) {
 			// Добавляем свойство "Макет" в виджет Google+
 			update_option( $scp_prefix . 'setting_googleplus_layout',                       'portrait' );
+
+			// Добавляем свойство "Закрывать окно после подписки" для Twitter
+			update_option( $scp_prefix . 'setting_twitter_close_window_after_join',         0 );
 
 			update_option( $version, '0.7.5' );
 			self::set_scp_version( '0.7.5' );
@@ -2200,6 +2204,7 @@ class Social_Media_Popup {
 		register_setting( $group, $scp_prefix . 'setting_twitter_width', 'absint' );
 		register_setting( $group, $scp_prefix . 'setting_twitter_height', 'absint' );
 		register_setting( $group, $scp_prefix . 'setting_twitter_chrome' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_close_window_after_join', 'absint' );
 
 		add_settings_section(
 			$section,
@@ -2361,6 +2366,18 @@ class Social_Media_Popup {
 			$section,
 			array(
 				'field' => $scp_prefix . 'setting_twitter_chrome'
+			)
+		);
+
+		// Закрывать окно виджета после вступления в группу
+		add_settings_field(
+			SMP_PREFIX . '-twitter-close-window-after-join',
+			__( 'Close Plugin Window After Joining the Group', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'setting_twitter_close_window_after_join'
 			)
 		);
 	}
