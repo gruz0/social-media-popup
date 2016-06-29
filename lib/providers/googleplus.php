@@ -25,7 +25,8 @@ class SCP_GooglePlus_Provider extends SCP_Provider {
 			. 'data-width="' .esc_attr( self::$options[ self::$prefix . 'setting_googleplus_size' ] ) . '" '
 			. 'data-href="' .esc_attr( self::$options[ self::$prefix . 'setting_googleplus_page_url' ] ) . '" '
 			. 'data-theme="' . esc_attr( self::$options[ self::$prefix . 'setting_googleplus_theme' ] ) . '" '
-			. 'data-showtagline="' .esc_attr( self::$options[ self::$prefix . 'setting_googleplus_show_tagline' ] ) . '" '
+			. 'data-layout="' . esc_attr( self::$options[ self::$prefix . 'setting_googleplus_layout' ] ) . '" '
+			. 'data-showtagline="' . esc_attr( self::$options[ self::$prefix . 'setting_googleplus_show_tagline' ] ) . '" '
 			. 'data-showcoverphoto="' . esc_attr( self::$options[ self::$prefix . 'setting_googleplus_show_cover_photo' ] ) . '" '
 			. 'data-rel="' . esc_attr( self::googleplus_relation_from_page_type() ) . '"'
 			. '></div>';
@@ -36,6 +37,8 @@ class SCP_GooglePlus_Provider extends SCP_Provider {
 
 				function initialize_GooglePlus_Widgets() {
 					if (google_plus_initialized) return;
+
+					window.___gcfg = {lang: "' . esc_attr( self::$options[ self::$prefix . 'setting_googleplus_locale' ] ) . '"};
 
 					var po = document.createElement("script");
 					po.type  = "text/javascript";
@@ -73,7 +76,7 @@ class SCP_GooglePlus_Provider extends SCP_Provider {
 			case 'page':
 				return 'publisher';
 			case 'person':
-				return 'person';
+				return 'author';
 			default:
 				return '';
 		}

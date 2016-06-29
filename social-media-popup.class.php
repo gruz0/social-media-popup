@@ -174,6 +174,7 @@ class Social_Media_Popup {
 			'setting_googleplus_show_cover_photo',
 			'setting_googleplus_show_tagline',
 			'setting_googleplus_page_type',
+			'setting_googleplus_layout',
 
 			// Twitter
 			'setting_use_twitter',
@@ -780,6 +781,9 @@ class Social_Media_Popup {
 		$version    = $scp_prefix . 'version';
 
 		if ( '0.7.5' > get_option( $version ) ) {
+			// Добавляем свойство "Макет" в виджет Google+
+			update_option( $scp_prefix . 'setting_googleplus_layout',                       'portrait' );
+
 			update_option( $version, '0.7.5' );
 			self::set_scp_version( '0.7.5' );
 		}
@@ -2007,6 +2011,7 @@ class Social_Media_Popup {
 		register_setting( $group, $scp_prefix . 'setting_googleplus_show_description' );
 		register_setting( $group, $scp_prefix . 'setting_googleplus_description', 'wp_kses_post' );
 		register_setting( $group, $scp_prefix . 'setting_googleplus_page_url', 'esc_url' );
+		register_setting( $group, $scp_prefix . 'setting_googleplus_layout', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'setting_googleplus_locale', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'setting_googleplus_size', 'absint' );
 		register_setting( $group, $scp_prefix . 'setting_googleplus_theme', 'sanitize_text_field' );
@@ -2090,6 +2095,18 @@ class Social_Media_Popup {
 			$section,
 			array(
 				'field' => $scp_prefix . 'setting_googleplus_page_url'
+			)
+		);
+
+		// Макет Google+
+		add_settings_field(
+			SMP_PREFIX . '-googleplus-layout',
+			__( 'Layout', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_googleplus_layout' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'setting_googleplus_layout'
 			)
 		);
 
@@ -2940,6 +2957,20 @@ class Social_Media_Popup {
 		$html = sprintf( $format, $field . '_0', $field, 'person', checked( $value, 'person', false ), $field . '_0', __( 'Google+ Person', L10N_SCP_PREFIX ) );
 		$html .= '<br />';
 		$html .= sprintf( $format, $field . '_1', $field, 'page', checked( $value, 'page', false ), $field . '_1', __( 'Google+ Page', L10N_SCP_PREFIX ) );
+		echo $html;
+	}
+
+	/**
+	 * Callback-шаблон для формирования радио-кнопок для выбора типа макета Google+
+	 */
+	public function settings_field_googleplus_layout( $args ) {
+		$field = $args[ 'field' ];
+		$value = get_option( $field );
+		$format = '<input type="radio" id="%s" name="%s" value="%s"%s />';
+		$format .= '<label for="%s">%s</label>';
+		$html = sprintf( $format, $field . '_0', $field, 'portrait', checked( $value, 'portrait', false ), $field . '_0', __( 'Portrait', L10N_SCP_PREFIX ) );
+		$html .= '<br />';
+		$html .= sprintf( $format, $field . '_1', $field, 'landscape', checked( $value, 'landscape', false ), $field . '_1', __( 'Landscape', L10N_SCP_PREFIX ) );
 		echo $html;
 	}
 
