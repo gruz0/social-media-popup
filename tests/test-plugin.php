@@ -416,6 +416,7 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( 1 == get_option( $scp_prefix . 'setting_twitter_show_count' ) );
 		$this->assertTrue( 1 == get_option( $scp_prefix . 'setting_twitter_show_screen_name' ) );
 		$this->assertTrue( 1 == get_option( $scp_prefix . 'setting_twitter_follow_button_large_size' ) );
+		$this->assertTrue( 1 == get_option( $scp_prefix . 'setting_twitter_use_timeline' ) );
 	}
 
 	private function checkDebugModeIsOn() {

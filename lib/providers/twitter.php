@@ -34,7 +34,10 @@ class SCP_Twitter_Provider extends SCP_Provider {
 			$content .= self::render_follow_button();
 		}
 
-		$content .= self::render_timeline( $twitter_chrome, $widget_height );
+		// Показывать Twitter Timeline или нет
+		if ( self::$options[ self::$prefix . 'setting_twitter_use_timeline' ] === '1' ) {
+			$content .= self::render_timeline( $twitter_chrome, $widget_height );
+		}
 
 		$content .= '<script type="text/javascript">
 			window.twttr = (function(d, s, id) {

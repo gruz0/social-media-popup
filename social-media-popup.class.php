@@ -186,6 +186,7 @@ class Social_Media_Popup {
 			'setting_twitter_show_count',
 			'setting_twitter_show_screen_name',
 			'setting_twitter_follow_button_large_size',
+			'setting_twitter_use_timeline',
 			'setting_twitter_widget_id',
 			'setting_twitter_theme',
 			'setting_twitter_link_color',
@@ -796,6 +797,7 @@ class Social_Media_Popup {
 			update_option( $scp_prefix . 'setting_twitter_show_count',                      1 );
 			update_option( $scp_prefix . 'setting_twitter_show_screen_name',                1 );
 			update_option( $scp_prefix . 'setting_twitter_follow_button_large_size',        1 );
+			update_option( $scp_prefix . 'setting_twitter_use_timeline',                    1 );
 
 			update_option( $version, '0.7.5' );
 			self::set_scp_version( '0.7.5' );
@@ -2209,6 +2211,7 @@ class Social_Media_Popup {
 		register_setting( $group, $scp_prefix . 'setting_twitter_show_count', 'absint' );
 		register_setting( $group, $scp_prefix . 'setting_twitter_show_screen_name', 'absint' );
 		register_setting( $group, $scp_prefix . 'setting_twitter_follow_button_large_size', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_use_timeline', 'absint' );
 		register_setting( $group, $scp_prefix . 'setting_twitter_widget_id', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'setting_twitter_theme', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'setting_twitter_link_color', 'sanitize_text_field' );
@@ -2289,7 +2292,7 @@ class Social_Media_Popup {
 		// Показывать или нет виджет Follow Button
 		add_settings_field(
 			SMP_PREFIX . '-twitter-use-follow-button',
-			__( 'Use Follow Button', L10N_SCP_PREFIX ),
+			__( 'Use Follow Button Widget', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_checkbox' ),
 			$options_page,
 			$section,
@@ -2331,6 +2334,18 @@ class Social_Media_Popup {
 			$section,
 			array(
 				'field' => $scp_prefix . 'setting_twitter_follow_button_large_size'
+			)
+		);
+
+		// Показывать или нет виджет Timeline
+		add_settings_field(
+			SMP_PREFIX . '-twitter-use-timeline',
+			__( 'Use Timeline Widget', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'setting_twitter_use_timeline'
 			)
 		);
 
