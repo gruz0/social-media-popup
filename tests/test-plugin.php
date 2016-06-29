@@ -406,6 +406,9 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 		$scp_prefix = self::$plugin->get_scp_prefix();
 
 		$this->assertTrue( '0.7.5' == get_option( $scp_prefix . 'version' ) );
+
+		// Google+
+		$this->assertTrue( 'portrait' == get_option( $scp_prefix . 'setting_googleplus_layout' ) );
 	}
 
 	private function checkDebugModeIsOn() {
