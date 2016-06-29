@@ -34,17 +34,7 @@ class SCP_Twitter_Provider extends SCP_Provider {
 			$content .= self::render_follow_button();
 		}
 
-		$content .= '<a class="twitter-timeline" '
-			. 'href="https://twitter.com/' . esc_attr( self::$options[ self::$prefix . 'setting_twitter_username' ] ) . '" '
-			. 'data-widget-id="' .           esc_attr( self::$options[ self::$prefix . 'setting_twitter_widget_id' ] ) . '" '
-			. 'data-theme="' .               esc_attr( self::$options[ self::$prefix . 'setting_twitter_theme' ] ) . '" '
-			. 'data-link-color="' .          esc_attr( self::$options[ self::$prefix . 'setting_twitter_link_color' ] ) . '" '
-			. 'data-chrome="' .              esc_attr( join( " ", $twitter_chrome ) ) . '" '
-			. 'data-tweet-limit="' .         esc_attr( self::$options[ self::$prefix . 'setting_twitter_tweet_limit' ] ) . '" '
-			. 'data-show-replies="' .        esc_attr( self::$options[ self::$prefix . 'setting_twitter_show_replies' ] ) . '" '
-			. 'width="' .                    esc_attr( self::$options[ self::$prefix . 'setting_twitter_width' ] ) . '" '
-			. 'height="' .                   esc_attr( $widget_height ) . '"'
-			. '>' . __( 'Tweets', L10N_SCP_PREFIX ) . ' @' . esc_attr( self::$options[ self::$prefix . 'setting_twitter_username' ] ) . '</a>';
+		$content .= self::render_timeline( $twitter_chrome, $widget_height );
 
 		$content .= '<script type="text/javascript">
 			window.twttr = (function(d, s, id) {
@@ -91,6 +81,20 @@ class SCP_Twitter_Provider extends SCP_Provider {
 			. 'data-show-screen-name="'    . scp_to_bool( self::$options[ self::$prefix . 'setting_twitter_show_screen_name' ] ) . '" '
 			. 'data-size="'                . ( self::$options[ self::$prefix . 'setting_twitter_follow_button_large_size' ] === '1' ? 'large' : '' ) . '" '
 			. '>' . __( 'Follow', L10N_SCP_PREFIX ) . ' @' . esc_attr( self::$options[ self::$prefix . 'setting_twitter_username' ] ) . '</a>';
+	}
+
+	private static function render_timeline( $twitter_chrome, $widget_height ) {
+		return '<a class="twitter-timeline" '
+			. 'href="https://twitter.com/' . esc_attr( self::$options[ self::$prefix . 'setting_twitter_username' ] ) . '" '
+			. 'data-widget-id="' .           esc_attr( self::$options[ self::$prefix . 'setting_twitter_widget_id' ] ) . '" '
+			. 'data-theme="' .               esc_attr( self::$options[ self::$prefix . 'setting_twitter_theme' ] ) . '" '
+			. 'data-link-color="' .          esc_attr( self::$options[ self::$prefix . 'setting_twitter_link_color' ] ) . '" '
+			. 'data-chrome="' .              esc_attr( join( " ", $twitter_chrome ) ) . '" '
+			. 'data-tweet-limit="' .         esc_attr( self::$options[ self::$prefix . 'setting_twitter_tweet_limit' ] ) . '" '
+			. 'data-show-replies="' .        esc_attr( self::$options[ self::$prefix . 'setting_twitter_show_replies' ] ) . '" '
+			. 'width="' .                    esc_attr( self::$options[ self::$prefix . 'setting_twitter_width' ] ) . '" '
+			. 'height="' .                   esc_attr( $widget_height ) . '"'
+			. '>' . __( 'Tweets', L10N_SCP_PREFIX ) . ' @' . esc_attr( self::$options[ self::$prefix . 'setting_twitter_username' ] ) . '</a>';
 	}
 }
 
