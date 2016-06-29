@@ -29,6 +29,11 @@ class SCP_Twitter_Provider extends SCP_Provider {
 			$content .= '<p class="widget-description"><b>' . self::$options[ self::$prefix . 'setting_twitter_description' ] . '</b></p>';
 		}
 
+		// Показывать Twitter Follow Button или нет
+		if ( self::$options[ self::$prefix . 'setting_twitter_use_follow_button' ] === '1' ) {
+			$content .= self::render_follow_button();
+		}
+
 		$content .= '<a class="twitter-timeline" '
 			. 'href="https://twitter.com/' . esc_attr( self::$options[ self::$prefix . 'setting_twitter_username' ] ) . '" '
 			. 'data-widget-id="' .           esc_attr( self::$options[ self::$prefix . 'setting_twitter_widget_id' ] ) . '" '
@@ -77,6 +82,15 @@ class SCP_Twitter_Provider extends SCP_Provider {
 		$content .= '</div>';
 
 		return $content;
+	}
+
+	private static function render_follow_button() {
+		return '<a class="twitter-follow-button" '
+			. 'href="https://twitter.com/' . esc_attr( self::$options[ self::$prefix . 'setting_twitter_username' ] ) . '" '
+			. 'data-show-count="'          . scp_to_bool( self::$options[ self::$prefix . 'setting_twitter_show_count' ] ) . '" '
+			. 'data-show-screen-name="'    . scp_to_bool( self::$options[ self::$prefix . 'setting_twitter_show_screen_name' ] ) . '" '
+			. 'data-size="'                . ( self::$options[ self::$prefix . 'setting_twitter_follow_button_large_size' ] === '1' ? 'large' : '' ) . '" '
+			. '>' . __( 'Follow', L10N_SCP_PREFIX ) . ' @' . esc_attr( self::$options[ self::$prefix . 'setting_twitter_username' ] ) . '</a>';
 	}
 }
 

@@ -409,6 +409,13 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 
 		// Google+
 		$this->assertTrue( 'portrait' == get_option( $scp_prefix . 'setting_googleplus_layout' ) );
+
+		// Twitter
+		$this->assertTrue( 0 == get_option( $scp_prefix . 'setting_twitter_close_window_after_join' ) );
+		$this->assertTrue( 1 == get_option( $scp_prefix . 'setting_twitter_use_follow_button' ) );
+		$this->assertTrue( 1 == get_option( $scp_prefix . 'setting_twitter_show_count' ) );
+		$this->assertTrue( 1 == get_option( $scp_prefix . 'setting_twitter_show_screen_name' ) );
+		$this->assertTrue( 1 == get_option( $scp_prefix . 'setting_twitter_follow_button_large_size' ) );
 	}
 
 	private function checkDebugModeIsOn() {

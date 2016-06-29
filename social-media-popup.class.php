@@ -182,6 +182,10 @@ class Social_Media_Popup {
 			'setting_twitter_show_description',
 			'setting_twitter_description',
 			'setting_twitter_username',
+			'setting_twitter_use_follow_button',
+			'setting_twitter_show_count',
+			'setting_twitter_show_screen_name',
+			'setting_twitter_follow_button_large_size',
 			'setting_twitter_widget_id',
 			'setting_twitter_theme',
 			'setting_twitter_link_color',
@@ -787,6 +791,11 @@ class Social_Media_Popup {
 
 			// Добавляем свойство "Закрывать окно после подписки" для Twitter
 			update_option( $scp_prefix . 'setting_twitter_close_window_after_join',         0 );
+
+			update_option( $scp_prefix . 'setting_twitter_use_follow_button',               1 );
+			update_option( $scp_prefix . 'setting_twitter_show_count',                      1 );
+			update_option( $scp_prefix . 'setting_twitter_show_screen_name',                1 );
+			update_option( $scp_prefix . 'setting_twitter_follow_button_large_size',        1 );
 
 			update_option( $version, '0.7.5' );
 			self::set_scp_version( '0.7.5' );
@@ -2196,6 +2205,10 @@ class Social_Media_Popup {
 		register_setting( $group, $scp_prefix . 'setting_twitter_show_description' );
 		register_setting( $group, $scp_prefix . 'setting_twitter_description', 'wp_kses_post' );
 		register_setting( $group, $scp_prefix . 'setting_twitter_username', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_use_follow_button', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_show_count', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_show_screen_name', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_follow_button_large_size', 'absint' );
 		register_setting( $group, $scp_prefix . 'setting_twitter_widget_id', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'setting_twitter_theme', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'setting_twitter_link_color', 'sanitize_text_field' );
@@ -2270,6 +2283,54 @@ class Social_Media_Popup {
 			$section,
 			array(
 				'field' => $scp_prefix . 'setting_twitter_username'
+			)
+		);
+
+		// Показывать или нет виджет Follow Button
+		add_settings_field(
+			SMP_PREFIX . '-twitter-use-follow-button',
+			__( 'Use Follow Button', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'setting_twitter_use_follow_button'
+			)
+		);
+
+		// Показывать количество фолловеров
+		add_settings_field(
+			SMP_PREFIX . '-twitter-show-count',
+			__( 'Show Followers Count', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'setting_twitter_show_count'
+			)
+		);
+
+		// Показывать логин
+		add_settings_field(
+			SMP_PREFIX . '-twitter-show-screen-name',
+			__( 'Show Username', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'setting_twitter_show_screen_name'
+			)
+		);
+
+		// Размер виджета Follow Button
+		add_settings_field(
+			SMP_PREFIX . '-twitter-follow-button-large-size',
+			__( 'Follow Button Large Size', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'setting_twitter_follow_button_large_size'
 			)
 		);
 
