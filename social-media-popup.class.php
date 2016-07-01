@@ -980,7 +980,7 @@ class Social_Media_Popup {
 		add_settings_section(
 			$section,
 			__( 'View', L10N_SCP_PREFIX ),
-			array( & $this, 'settings_section_common_view' ),
+			array( & $this, 'settings_section_common_view_on_desktop' ),
 			$options_page
 		);
 
@@ -2674,64 +2674,64 @@ class Social_Media_Popup {
 	/**
 	 * Описание общих настроек (таб "Внешний вид")
 	 */
-	public function settings_section_common_view() {
-		_e( 'In this section, you can customize the appearance of the plugin', L10N_SCP_PREFIX );
+	public function settings_section_common_view_on_desktop() {
+		_e( 'Plugin appearance on desktop devices can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
 	 * Описание общих настроек (таб "Внешний вид (мобильные устройства)")
 	 */
 	public function settings_section_common_view_on_mobile_devices() {
-		_e( 'In this section, you can customize the appearance of the plugin on mobile devices', L10N_SCP_PREFIX );
+		_e( 'Plugin appearance on mobile devices can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
 	 * Описание общих настроек (таб "События" — "Когда показывать окно")
 	 */
 	public function settings_section_when_should_the_popup_appear() {
-		_e( 'In this section, you can customize the events when the plugin will shown', L10N_SCP_PREFIX );
+		_e( 'Plugin events "When should the popup will appear" can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
 	 * Описание общих настроек (таб "События" – "Кому показывать окно")
 	 */
 	public function settings_section_who_should_see_the_popup() {
-		_e( 'In this section, you can customize the events who should see the popup', L10N_SCP_PREFIX );
+		_e( 'Plugin events "Who should see the popup" can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
 	 * Описание общих настроек (таб "Управление")
 	 */
 	public function settings_section_common_management() {
-		_e( 'In this section, you can export, import and remove plugin settings', L10N_SCP_PREFIX );
+		_e( 'Management settings can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
 	 * Описание настроек Facebook
 	 */
 	public function settings_section_facebook() {
-		_e( 'In this section, you must fill out the data to display the Facebook page in a popup window', L10N_SCP_PREFIX );
+		_e( 'Facebook settings can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
 	 * Описание настроек ВКонтакте
 	 */
 	public function settings_section_vkontakte() {
-		_e( 'In this section, you must fill out the data to display the VK.com page in a popup window', L10N_SCP_PREFIX );
+		_e( 'VK.com settings can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
 	 * Описание настроек Одноклассников
 	 */
 	public function settings_section_odnoklassniki() {
-		_e( 'In this section, you must fill out the data to display the Odnoklassniki group in a popup window', L10N_SCP_PREFIX );
+		_e( 'Odnoklassniki.ru settings can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
 	 * Описание настроек Google+
 	 */
 	public function settings_section_googleplus() {
-		_e( 'In this section, you must fill out the data to display the Google+ page in a popup window', L10N_SCP_PREFIX );
+		_e( 'Google+ settings can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
@@ -2740,7 +2740,7 @@ class Social_Media_Popup {
 	 * @since 0.6
 	 */
 	public function settings_section_twitter() {
-		_e( 'General Twitter options can be set in this section', L10N_SCP_PREFIX );
+		_e( 'Twitter settings can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
@@ -2749,7 +2749,7 @@ class Social_Media_Popup {
 	 * @since 0.7.5
 	 */
 	public function settings_section_twitter_follow_button() {
-		_e( 'Twitter Follow Button options can be set in this section', L10N_SCP_PREFIX );
+		_e( 'Twitter Follow Button widget settings can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
@@ -2758,14 +2758,14 @@ class Social_Media_Popup {
 	 * @since 0.7.5
 	 */
 	public function settings_section_twitter_timeline() {
-		_e( 'Twitter Timeline options can be set in this section', L10N_SCP_PREFIX );
+		_e( 'Twitter Timeline widget settings can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
 	 * Описание настроек Pinterest
 	 */
 	public function settings_section_pinterest() {
-		_e( 'In this section, you must fill out the data to display the Pinterest Profile Widget in a popup window', L10N_SCP_PREFIX );
+		_e( 'Pinterest settings can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
