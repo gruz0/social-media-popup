@@ -80,12 +80,13 @@ class SCP_Twitter_Provider extends SCP_Provider {
 	}
 
 	private static function render_follow_button() {
-		return '<a class="twitter-follow-button" '
+		return '<div style="text-align:' . esc_attr( self::$options[ self::$prefix . 'setting_twitter_follow_button_align_by' ] ) . '">'
+			. '<a class="twitter-follow-button" '
 			. 'href="//twitter.com/'    . esc_attr( self::$options[ self::$prefix . 'setting_twitter_username' ] ) . '" '
 			. 'data-show-count="'       . scp_to_bool( self::$options[ self::$prefix . 'setting_twitter_show_count' ] ) . '" '
 			. 'data-show-screen-name="' . scp_to_bool( self::$options[ self::$prefix . 'setting_twitter_show_screen_name' ] ) . '" '
 			. 'data-size="'             . ( self::$options[ self::$prefix . 'setting_twitter_follow_button_large_size' ] === '1' ? 'large' : '' ) . '" '
-			. '>' . __( 'Follow', L10N_SCP_PREFIX ) . ' @' . esc_attr( self::$options[ self::$prefix . 'setting_twitter_username' ] ) . '</a>';
+			. '>' . __( 'Follow', L10N_SCP_PREFIX ) . ' @' . esc_attr( self::$options[ self::$prefix . 'setting_twitter_username' ] ) . '</a></div>';
 	}
 
 	private static function render_timeline( $twitter_chrome, $widget_height ) {

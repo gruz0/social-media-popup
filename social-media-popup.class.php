@@ -186,6 +186,7 @@ class Social_Media_Popup {
 			'setting_twitter_show_count',
 			'setting_twitter_show_screen_name',
 			'setting_twitter_follow_button_large_size',
+			'setting_twitter_follow_button_align_by',
 			'setting_twitter_use_timeline',
 			'setting_twitter_widget_id',
 			'setting_twitter_theme',
@@ -797,6 +798,7 @@ class Social_Media_Popup {
 			update_option( $scp_prefix . 'setting_twitter_show_count',                      1 );
 			update_option( $scp_prefix . 'setting_twitter_show_screen_name',                1 );
 			update_option( $scp_prefix . 'setting_twitter_follow_button_large_size',        1 );
+			update_option( $scp_prefix . 'setting_twitter_follow_button_align_by',          'center' );
 			update_option( $scp_prefix . 'setting_twitter_use_timeline',                    1 );
 
 			update_option( $version, '0.7.5' );
@@ -2327,11 +2329,11 @@ class Social_Media_Popup {
 		$section = SMP_PREFIX . '-section-twitter-follow-button';
 
 		// Не забывать добавлять новые опции в uninstall()
-		register_setting( $group, $scp_prefix . 'setting_twitter_username', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'setting_twitter_use_follow_button', 'absint' );
 		register_setting( $group, $scp_prefix . 'setting_twitter_show_count', 'absint' );
 		register_setting( $group, $scp_prefix . 'setting_twitter_show_screen_name', 'absint' );
 		register_setting( $group, $scp_prefix . 'setting_twitter_follow_button_large_size', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_follow_button_align_by', 'sanitize_text_field' );
 
 		add_settings_section(
 			$section,
@@ -2385,6 +2387,18 @@ class Social_Media_Popup {
 			$section,
 			array(
 				'field' => $scp_prefix . 'setting_twitter_follow_button_large_size'
+			)
+		);
+
+		// Выравнивание кнопки Follow Button
+		add_settings_field(
+			SMP_PREFIX . '-twitter-follow-button-align-by',
+			__( 'Follow Button Align', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_twitter_follow_button_align_by' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'setting_twitter_follow_button_align_by'
 			)
 		);
 	}
@@ -3082,6 +3096,35 @@ class Social_Media_Popup {
 		$html = sprintf( $format, $field . '_0', $field, 'light', checked( $value, 'light', false ), $field . '_0', __( 'Light', L10N_SCP_PREFIX ) );
 		$html .= '<br />';
 		$html .= sprintf( $format, $field . '_1', $field, 'dark', checked( $value, 'dark', false ), $field . '_1', __( 'Dark', L10N_SCP_PREFIX ) );
+		echo $html;
+	}
+
+	/**
+	 * Callback-шаблон для формирования комбобокса выравнивания кнопки Twitter Follow Button
+	 *
+	 * @since 0.7.5
+	 *
+	 * @param array $args
+	 * @return string
+	 */
+	public function settings_field_twitter_follow_button_align_by( $args ) {
+		$field = $args[ 'field' ];
+		$value = get_option( $field );
+
+		$options = array();
+		$options['left']   = __( 'Left', L10N_SCP_PREFIX );
+		$options['center'] = __( 'Center', L10N_SCP_PREFIX );
+		$options['right']  = __( 'Right', L10N_SCP_PREFIX );
+
+		$html   = '<select name="' . $field . '">';
+		$format = '<option value="%s"%s>%s</option>';
+
+		foreach ( $options as $option_name => $label ) {
+			$html .= sprintf( $format, $option_name, selected( $value, $option_name, false ), $label );
+		}
+
+		$html .= '</select>';
+
 		echo $html;
 	}
 
