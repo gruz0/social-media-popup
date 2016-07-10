@@ -800,6 +800,7 @@ class Social_Media_Popup {
 			update_option( $scp_prefix . 'setting_twitter_follow_button_large_size',        1 );
 			update_option( $scp_prefix . 'setting_twitter_follow_button_align_by',          'center' );
 			update_option( $scp_prefix . 'setting_twitter_use_timeline',                    1 );
+			delete_option( $scp_prefix . 'setting_twitter_widget_id' );
 
 			update_option( $version, '0.7.5' );
 			self::set_scp_version( '0.7.5' );
@@ -2424,7 +2425,6 @@ class Social_Media_Popup {
 
 		// Не забывать добавлять новые опции в uninstall()
 		register_setting( $group, $scp_prefix . 'setting_twitter_use_timeline', 'absint' );
-		register_setting( $group, $scp_prefix . 'setting_twitter_widget_id', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'setting_twitter_theme', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'setting_twitter_link_color', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'setting_twitter_tweet_limit', 'absint' );
@@ -2449,18 +2449,6 @@ class Social_Media_Popup {
 			$section,
 			array(
 				'field' => $scp_prefix . 'setting_twitter_use_timeline'
-			)
-		);
-
-		// ID виджета
-		add_settings_field(
-			SMP_PREFIX . '-twitter-widget-id',
-			__( 'Widget ID', L10N_SCP_PREFIX ),
-			array( & $this, 'settings_field_input_text' ),
-			$options_page,
-			$section,
-			array(
-				'field' => $scp_prefix . 'setting_twitter_widget_id'
 			)
 		);
 

@@ -92,7 +92,7 @@ class SCP_Twitter_Provider extends SCP_Provider {
 	private static function render_timeline( $twitter_chrome, $widget_height ) {
 		return '<a class="twitter-timeline" '
 			. 'href="//twitter.com/' . esc_attr( self::$options[ self::$prefix . 'setting_twitter_username' ] ) . '" '
-			. 'data-widget-id="' .     esc_attr( self::$options[ self::$prefix . 'setting_twitter_widget_id' ] ) . '" '
+			. 'data-screen-name="' .   esc_attr( self::$options[ self::$prefix . 'setting_twitter_username' ] ) . '" '
 			. 'data-theme="' .         esc_attr( self::$options[ self::$prefix . 'setting_twitter_theme' ] ) . '" '
 			. 'data-link-color="' .    esc_attr( self::$options[ self::$prefix . 'setting_twitter_link_color' ] ) . '" '
 			. 'data-chrome="' .        esc_attr( join( " ", $twitter_chrome ) ) . '" '
