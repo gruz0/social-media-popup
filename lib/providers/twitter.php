@@ -100,7 +100,7 @@ class SCP_Twitter_Provider extends SCP_Provider {
 			. 'data-show-replies="' .  esc_attr( self::$options[ self::$prefix . 'setting_twitter_show_replies' ] ) . '" '
 			. 'width="' .              esc_attr( self::$options[ self::$prefix . 'setting_twitter_width' ] ) . '" '
 			. 'height="' .             esc_attr( $widget_height ) . '"'
-			. '>' . __( 'Tweets', L10N_SCP_PREFIX ) . ' @' . esc_attr( self::$options[ self::$prefix . 'setting_twitter_username' ] ) . '</a>';
+			. ' rel="nofollow" target="_blank">' . __( 'Tweets', L10N_SCP_PREFIX ) . ' @' . esc_attr( self::$options[ self::$prefix . 'setting_twitter_username' ] ) . '</a>';
 	}
 }
 
