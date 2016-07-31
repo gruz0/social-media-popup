@@ -198,6 +198,10 @@ class SCP_Template {
 	 * Popup will appear when visitor clicks on element
 	 *
 	 * @since 0.7.4
+	 * @since 0.7.5 Add push event to Google Analytics
+	 *
+	 * @uses $this->prepare_google_analytics_event()
+	 * @uses $this->popup_platform_title()
 	 *
 	 * @param array $when_should_the_popup_appear Events list
 	 * @param int $popup_will_appear_after_clicking_on_element Event value
@@ -222,6 +226,11 @@ class SCP_Template {
 			if ( ! empty( $popup_will_appear_after_clicking_on_element ) ) {
 				$content .= 'jQuery("' . $popup_will_appear_after_clicking_on_element . '").on("click", function() {
 					if (is_scp_cookie_present()) return false;';
+
+					if ( ! $this->_event_fired && $this->_use_events_tracking ) {
+						$content .= $this->prepare_google_analytics_event( "show after click on " . $popup_will_appear_after_clicking_on_element, $this->popup_platform_title() );
+						$this->_event_fired = true;
+					}
 
 					$content .= $this->render_show_window();
 
@@ -334,6 +343,8 @@ class SCP_Template {
 	 *
 	 * @since 0.7.5
 	 *
+	 * @used_by Social_Media_Popup::add_events_tracking_code()
+	 *
 	 * @param string $tracking_id Example: UA-12345678-0
 	 * @return string
 	 */
@@ -354,10 +365,11 @@ class SCP_Template {
 	/**
 	 * Helper for Google Analytics tracking code
 	 *
+	 * @since 0.7.5
+	 *
 	 * @used_by $this->render_show_window()
 	 * @used_by $this->render_when_popup_will_appear_after_n_seconds()
-	 *
-	 * @since 0.7.5
+	 * @used_by $this->render_when_popup_will_appear_after_clicking_on_element()
 	 *
 	 * @param string $action Action to send. Example: show, subscribe, etc.
 	 * @param string $label Source, example: "Popup Desktop", "Facebook", etc.
@@ -379,6 +391,7 @@ class SCP_Template {
 	 *
 	 * @used_by $this->render_show_window()
 	 * @used_by $this->render_when_popup_will_appear_after_n_seconds()
+	 * @used_by $this->render_when_popup_will_appear_after_clicking_on_element()
 	 *
 	 * @return string
 	 */
