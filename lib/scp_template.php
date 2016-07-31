@@ -11,6 +11,15 @@ class SCP_Template {
 	private $_use_events_tracking = false;
 
 	/**
+	 * Trigger to check the event has sent to Google Analytics
+	 *
+	 * @since 0.7.5
+	 *
+	 * @var boolean $_event_fired
+	 */
+	private $_event_fired = false;
+
+	/**
 	 * Constructor
 	 *
 	 * @since 0.7.5
@@ -28,14 +37,15 @@ class SCP_Template {
 	 * @since 0.7.5 Add using event tracking
 	 *
 	 * @uses $this->prepare_google_analytics_event()
+	 * @uses $this->popup_platform_title()
 	 *
 	 * @return string
 	 */
 	function render_show_window() {
 		$content = '';
 
-		if ( $this->_use_events_tracking ) {
-			$content .= $this->prepare_google_analytics_event( "show", "Popup " . ( wp_is_mobile() ? "Mobile" : "Desktop" ) );
+		if ( ! $this->_event_fired && $this->_use_events_tracking ) {
+			$content .= $this->prepare_google_analytics_event( "show immediately", $this->popup_platform_title() );
 		}
 
 		if ( wp_is_mobile() ) {
@@ -136,6 +146,10 @@ class SCP_Template {
 	 * Popup will appear after visitor stays on page about N seconds
 	 *
 	 * @since 0.7.4
+	 * @since 0.7.5 Add push event to Google Analytics
+	 *
+	 * @uses $this->prepare_google_analytics_event()
+	 * @uses $this->popup_platform_title()
 	 *
 	 * @param array $when_should_the_popup_appear Events list
 	 * @param int $popup_will_appear_after_n_seconds Event value
@@ -160,6 +174,11 @@ class SCP_Template {
 
 			$content .= 'setTimeout(function() {
 				if (is_scp_cookie_present()) return false;';
+
+				if ( ! $this->_event_fired && $this->_use_events_tracking ) {
+					$content .= $this->prepare_google_analytics_event( "show after " . ( $calculated_delay / 1000 ) . " seconds", $this->popup_platform_title() );
+					$this->_event_fired = true;
+				}
 
 				$content .= $this->render_show_window();
 
@@ -336,6 +355,7 @@ class SCP_Template {
 	 * Helper for Google Analytics tracking code
 	 *
 	 * @used_by $this->render_show_window()
+	 * @used_by $this->render_when_popup_will_appear_after_n_seconds()
 	 *
 	 * @since 0.7.5
 	 *
@@ -350,6 +370,20 @@ class SCP_Template {
 			eventLabel:    "' . $label . '",
 			hitCallback: function() { }
 		});';
+	}
+
+	/**
+	 * Helper to prepare event label to show popup title depends on wp_is_mobile()
+	 *
+	 * @since 0.7.5
+	 *
+	 * @used_by $this->render_show_window()
+	 * @used_by $this->render_when_popup_will_appear_after_n_seconds()
+	 *
+	 * @return string
+	 */
+	private function popup_platform_title() {
+		return "Popup " . ( wp_is_mobile() ? "Mobile" : "Desktop" );
 	}
 }
 
