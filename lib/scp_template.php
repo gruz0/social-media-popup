@@ -303,6 +303,10 @@ class SCP_Template {
 	 * Popup will appear on exit intent
 	 *
 	 * @since 0.7.4
+	 * @since 0.7.5 Add push event to Google Analytics
+	 *
+	 * @uses $this->prepare_google_analytics_event()
+	 * @uses $this->popup_platform_title()
 	 *
 	 * @param array $when_should_the_popup_appear Events list
 	 * @param boolean $popup_will_appear_on_exit_intent Event value
@@ -327,6 +331,10 @@ class SCP_Template {
 
 				var scroll = window.pageYOffset || document.documentElement.scrollTop;
 				if((e.pageY - scroll) < 7) {';
+					if ( $this->_use_events_tracking ) {
+						$content .= $this->prepare_google_analytics_event( "show on exit intent", $this->popup_platform_title() );
+					}
+
 					$content .= $this->render_show_window();
 					$content .= $this->render_show_bottom_button( $delay_before_show_bottom_button );
 				$content .= '}
@@ -369,6 +377,7 @@ class SCP_Template {
 	 * @used_by $this->render_when_popup_will_appear_after_n_seconds()
 	 * @used_by $this->render_when_popup_will_appear_after_clicking_on_element()
 	 * @used_by $this->render_when_popup_will_appear_after_scrolling_down_n_percent()
+	 * @used_by $this->render_when_popup_will_appear_on_exit_intent()
 	 *
 	 * @param string $action Action to send. Example: show, subscribe, etc.
 	 * @param string $label Source, example: "Popup Desktop", "Facebook", etc.
@@ -397,6 +406,7 @@ class SCP_Template {
 	 * @used_by $this->render_when_popup_will_appear_after_n_seconds()
 	 * @used_by $this->render_when_popup_will_appear_after_clicking_on_element()
 	 * @used_by $this->render_when_popup_will_appear_after_scrolling_down_n_percent()
+	 * @used_by $this->render_when_popup_will_appear_on_exit_intent()
 	 *
 	 * @return string
 	 */
