@@ -11,15 +11,6 @@ class SCP_Template {
 	private $_use_events_tracking = false;
 
 	/**
-	 * Trigger to check the event has sent to Google Analytics
-	 *
-	 * @since 0.7.5
-	 *
-	 * @var boolean $_event_fired
-	 */
-	private $_event_fired = false;
-
-	/**
 	 * Constructor
 	 *
 	 * @since 0.7.5
@@ -44,7 +35,7 @@ class SCP_Template {
 	function render_show_window() {
 		$content = '';
 
-		if ( ! $this->_event_fired && $this->_use_events_tracking ) {
+		if ( $this->_use_events_tracking ) {
 			$content .= $this->prepare_google_analytics_event( "show immediately", $this->popup_platform_title() );
 		}
 
@@ -175,9 +166,8 @@ class SCP_Template {
 			$content .= 'setTimeout(function() {
 				if (is_scp_cookie_present()) return false;';
 
-				if ( ! $this->_event_fired && $this->_use_events_tracking ) {
+				if ( $this->_use_events_tracking ) {
 					$content .= $this->prepare_google_analytics_event( "show after " . ( $calculated_delay / 1000 ) . " seconds", $this->popup_platform_title() );
-					$this->_event_fired = true;
 				}
 
 				$content .= $this->render_show_window();
@@ -227,9 +217,8 @@ class SCP_Template {
 				$content .= 'jQuery("' . $popup_will_appear_after_clicking_on_element . '").on("click", function() {
 					if (is_scp_cookie_present()) return false;';
 
-					if ( ! $this->_event_fired && $this->_use_events_tracking ) {
+					if ( $this->_use_events_tracking ) {
 						$content .= $this->prepare_google_analytics_event( "show after click on " . $popup_will_appear_after_clicking_on_element, $this->popup_platform_title() );
-						$this->_event_fired = true;
 					}
 
 					$content .= $this->render_show_window();
@@ -259,6 +248,10 @@ class SCP_Template {
 	 * Popup will appear when visitor scrolls window
 	 *
 	 * @since 0.7.4
+	 * @since 0.7.5 Add push event to Google Analytics
+	 *
+	 * @uses $this->prepare_google_analytics_event()
+	 * @uses $this->popup_platform_title()
 	 *
 	 * @param array $when_should_the_popup_appear Events list
 	 * @param int $popup_will_appear_after_scrolling_down_n_percent Event value
@@ -285,6 +278,11 @@ class SCP_Template {
 
 				value = parseInt(Math.abs(bodyScrollTop / (document.body.clientHeight - window.innerHeight) * 100));
 				if (showWindowAgain && value >= ' . $popup_will_appear_after_scrolling_down_n_percent . ') {';
+
+					if ( $this->_use_events_tracking ) {
+						$content .= $this->prepare_google_analytics_event( "show after scrolling down on " . $popup_will_appear_after_scrolling_down_n_percent . '%', $this->popup_platform_title() );
+					}
+
 					$content .= $this->render_show_window();
 
 					if ( wp_is_mobile() ) {
@@ -370,18 +368,24 @@ class SCP_Template {
 	 * @used_by $this->render_show_window()
 	 * @used_by $this->render_when_popup_will_appear_after_n_seconds()
 	 * @used_by $this->render_when_popup_will_appear_after_clicking_on_element()
+	 * @used_by $this->render_when_popup_will_appear_after_scrolling_down_n_percent()
 	 *
 	 * @param string $action Action to send. Example: show, subscribe, etc.
 	 * @param string $label Source, example: "Popup Desktop", "Facebook", etc.
 	 * @return string
 	 */
 	function prepare_google_analytics_event( $action, $label ) {
-		return 'ga("send", "event", {
-			eventCategory: "Social Media Popup",
-			eventAction:   "' . $action . '",
-			eventLabel:    "' . $label . '",
-			hitCallback: function() { }
-		});';
+		$content = 'if (!smp_eventFired) {
+			ga("send", "event", {
+				eventCategory: "Social Media Popup",
+				eventAction:   "' . $action . '",
+				eventLabel:    "' . $label . '"
+			});
+
+			smp_eventFired = true;
+		}';
+
+		return $content;
 	}
 
 	/**
@@ -392,6 +396,7 @@ class SCP_Template {
 	 * @used_by $this->render_show_window()
 	 * @used_by $this->render_when_popup_will_appear_after_n_seconds()
 	 * @used_by $this->render_when_popup_will_appear_after_clicking_on_element()
+	 * @used_by $this->render_when_popup_will_appear_after_scrolling_down_n_percent()
 	 *
 	 * @return string
 	 */
