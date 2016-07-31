@@ -2,18 +2,49 @@
 
 class SCP_Template {
 	/**
+	 * Use events tracking or not
+	 *
+	 * @since 0.7.5
+	 *
+	 * @var boolean $_use_events_tracking
+	 */
+	private $_use_events_tracking = false;
+
+	/**
+	 * Constructor
+	 *
+	 * @since 0.7.5
+	 *
+	 * @param boolean $use_events_tracking
+	 */
+	public function __construct( $use_events_tracking = false ) {
+		$this->_use_events_tracking = $use_events_tracking;
+	}
+
+	/**
 	 * Returns JS code to show SCP window by jQuery
 	 *
 	 * @since 0.7.3
+	 * @since 0.7.5 Add using event tracking
+	 *
+	 * @uses $this->prepare_google_analytics_event()
 	 *
 	 * @return string
 	 */
 	function render_show_window() {
-		if ( wp_is_mobile() ) {
-			return 'jQuery("#scp_mobile").show();';
-		} else {
-			return 'jQuery("#social-community-popup").show();';
+		$content = '';
+
+		if ( $this->_use_events_tracking ) {
+			$content .= $this->prepare_google_analytics_event( "show", "Popup " . ( wp_is_mobile() ? "Mobile" : "Desktop" ) );
 		}
+
+		if ( wp_is_mobile() ) {
+			$content .= 'jQuery("#scp_mobile").show();';
+		} else {
+			$content .= 'jQuery("#social-community-popup").show();';
+		}
+
+		return $content;
 	}
 
 	/**
@@ -299,6 +330,26 @@ class SCP_Template {
 		ga('send', 'pageview');
 		</script>
 	<?php
+	}
+
+	/**
+	 * Helper for Google Analytics tracking code
+	 *
+	 * @used_by $this->render_show_window()
+	 *
+	 * @since 0.7.5
+	 *
+	 * @param string $action Action to send. Example: show, subscribe, etc.
+	 * @param string $label Source, example: "Popup Desktop", "Facebook", etc.
+	 * @return string
+	 */
+	function prepare_google_analytics_event( $action, $label ) {
+		return 'ga("send", "event", {
+			eventCategory: "Social Media Popup",
+			eventAction:   "' . $action . '",
+			eventLabel:    "' . $label . '",
+			hitCallback: function() { }
+		});';
 	}
 }
 

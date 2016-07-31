@@ -3610,7 +3610,8 @@ class Social_Media_Popup {
 	}
 
 	private function scp_php( $scp_prefix ) {
-		$template = new SCP_Template();
+		$use_events_tracking = esc_attr( get_option( $scp_prefix . 'use_events_tracking' ) ) === '1';
+		$template            = new SCP_Template( $use_events_tracking );
 
 		$scp_options = array();
 		$all_options = wp_load_alloptions();
