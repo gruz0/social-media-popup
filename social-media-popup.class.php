@@ -119,6 +119,7 @@ class Social_Media_Popup {
 
 			// Отслеживание событий
 			'use_events_tracking',
+			'google_analytics_tracking_id',
 
 			// Facebook
 			'setting_use_facebook',
@@ -1420,7 +1421,8 @@ class Social_Media_Popup {
 		$section = SMP_PREFIX . '-section-common-tracking';
 
 		// Не забывать добавлять новые опции в uninstall()
-		register_setting( $group, $scp_prefix . 'use_events_tracking' );
+		register_setting( $group, $scp_prefix . 'use_events_tracking', 'absint' );
+		register_setting( $group, $scp_prefix . 'google_analytics_tracking_id', 'sanitize_text_field' );
 
 		add_settings_section(
 			$section,
@@ -1438,6 +1440,19 @@ class Social_Media_Popup {
 			$section,
 			array(
 				'field' => $scp_prefix . 'use_events_tracking'
+			)
+		);
+
+		// Google Analytics Tracking ID
+		add_settings_field(
+			SMP_PREFIX . '-common-tracking-google-analytics-tracking-id',
+			__( 'Google Analytics Tracking ID', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'google_analytics_tracking_id',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . 'UA-12345678-0'
 			)
 		);
 	}
@@ -2825,11 +2840,16 @@ class Social_Media_Popup {
 
 	/**
 	 * Callback-шаблон для формирования текстового поля на странице настроек
+	 *
+	 * @since 0.7.5 Add placeholder
 	 */
 	public function settings_field_input_text( $args ) {
 		$field = esc_attr( $args[ 'field' ] );
 		$value = get_option( $field );
-		echo sprintf( '<input type="text" name="%s" id="%s" value="%s" />', $field, $field, $value );
+
+		$placeholder = ( empty( $args['placeholder'] ) ? '' : ' placeholder="' . esc_attr( $args['placeholder'] ) . '"' );
+
+		echo sprintf( '<input type="text" name="%s" id="%s" value="%s"' . $placeholder . ' />', $field, $field, $value );
 	}
 
 	/**
