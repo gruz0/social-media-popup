@@ -25,6 +25,7 @@ function scp_settings_tabs() {
 	$tabs['view']        = __( 'View (Desktop)', L10N_SCP_PREFIX );
 	$tabs['view-mobile'] = __( 'View (Mobile Devices)', L10N_SCP_PREFIX );
 	$tabs['events']      = __( 'Events', L10N_SCP_PREFIX );
+	$tabs['tracking']    = __( 'Tracking', L10N_SCP_PREFIX );
 	$tabs['management']  = __( 'Management', L10N_SCP_PREFIX );
 
 	echo '<h2 class="nav-tab-wrapper">';

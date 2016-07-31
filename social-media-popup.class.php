@@ -117,6 +117,9 @@ class Social_Media_Popup {
 			'visitor_opened_at_least_n_number_of_pages',
 			'visitor_registered_and_role_equals_to',
 
+			// Отслеживание событий
+			'use_events_tracking',
+
 			// Facebook
 			'setting_use_facebook',
 			'setting_facebook_tab_caption',
@@ -834,6 +837,7 @@ class Social_Media_Popup {
 		$this->init_settings_common_view_on_deskop();
 		$this->init_settings_common_view_on_mobile_devices();
 		$this->init_settings_common_events();
+		$this->init_settings_common_tracking();
 		$this->init_settings_common_management();
 
 		$this->init_settings_facebook();
@@ -1394,6 +1398,46 @@ class Social_Media_Popup {
 			$section_who_should_see_the_popup,
 			array(
 				'field' => $scp_prefix . 'setting_display_after_n_days'
+			)
+		);
+	}
+
+	/**
+	 * Events tracking
+	 *
+	 * @since 0.7.5
+	 */
+	public function init_settings_common_tracking() {
+		$scp_prefix = self::get_scp_prefix();
+
+		// Используется в settings_field и do_settings_field
+		$group = SMP_PREFIX . '-group-tracking';
+
+		// Используется в do_settings_section
+		$options_page = SMP_PREFIX . '-group-tracking';
+
+		// ID секции
+		$section = SMP_PREFIX . '-section-common-tracking';
+
+		// Не забывать добавлять новые опции в uninstall()
+		register_setting( $group, $scp_prefix . 'use_events_tracking' );
+
+		add_settings_section(
+			$section,
+			__( 'Events Tracking', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_section_common_events_tracking' ),
+			$options_page
+		);
+
+		// Use Events Tracking checkbox
+		add_settings_field(
+			SMP_PREFIX . '-common-use-events-tracking',
+			__( 'Use Events Tracking', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'use_events_tracking'
 			)
 		);
 	}
@@ -2699,6 +2743,15 @@ class Social_Media_Popup {
 	 */
 	public function settings_section_who_should_see_the_popup() {
 		_e( 'Plugin events "Who should see the popup" can be set in this section', L10N_SCP_PREFIX );
+	}
+
+	/**
+	 * Events Tracking tab description
+	 *
+	 * @since 0.7.5
+	 */
+	public function settings_section_common_events_tracking() {
+		_e( 'Events tracking can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
