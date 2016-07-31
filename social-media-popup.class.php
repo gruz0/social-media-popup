@@ -28,6 +28,7 @@ class Social_Media_Popup {
 		add_action( 'admin_menu', array( & $this, 'add_menu' ) );
 		add_action( 'admin_bar_menu', array( & $this, 'admin_bar_menu' ), 999 );
 		add_action( 'admin_head', array( & $this, 'admin_head' ) );
+		add_action( 'wp_footer', array( & $this, 'add_events_tracking_code' ) );
 
 		add_action( 'admin_enqueue_scripts', array( & $this, 'admin_enqueue_scripts' ) );
 		add_action( 'wp_enqueue_scripts', array( & $this, 'enqueue_scripts' ) );
@@ -3438,6 +3439,37 @@ class Social_Media_Popup {
 			array( 'jquery', 'wp-color-picker' )
 		);
 		wp_enqueue_script( SMP_PREFIX . '-admin-js' );
+	}
+
+	/**
+	 * Add events tracking code to wp_footer()
+	 *
+	 * @since 0.7.5
+	 *
+	 * @uses Social_Media_Popup::get_scp_prefix()
+	 * @uses SCP_Template::render_google_analytics_tracking_code()
+	 *
+	 * @return void
+	 */
+	public function add_events_tracking_code() {
+		$scp_prefix = self::get_scp_prefix();
+
+		$use_events_tracking          = esc_attr( get_option( $scp_prefix . 'use_events_tracking' ) ) === '1';
+		$google_analytics_tracking_id = esc_attr( get_option( $scp_prefix . 'google_analytics_tracking_id' ) );
+
+		if ( ! $use_events_tracking ) {
+			return false;
+		}
+
+		$content = '';
+
+		$template = new SCP_Template();
+
+		if ( ! empty( $google_analytics_tracking_id ) ) {
+			$content .= $template->render_google_analytics_tracking_code( $google_analytics_tracking_id );
+		}
+
+		echo $content;
 	}
 
 	/**
