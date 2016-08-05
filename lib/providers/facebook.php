@@ -17,9 +17,9 @@ class SCP_Facebook_Provider extends SCP_Provider {
 	/**
 	 * Render widget container
 	 *
-	 * @since 0.7.5 Uses SCP_Template()->prepare_google_analytics_event()
+	 * @since 0.7.5 Uses SCP_Template()->push_social_media_triggers_to_google_analytics()
 	 *
-	 * @uses SCP_Template()->prepare_google_analytics_event()
+	 * @uses SCP_Template()->push_social_media_trigger_to_google_analytics()
 	 */
 	public static function container() {
 		$close_window_after_join = ( (int) self::$options[ self::$prefix . 'setting_facebook_close_window_after_join' ] ) == 1;
@@ -58,7 +58,7 @@ class SCP_Facebook_Provider extends SCP_Provider {
 		}
 
 		if ( self::$template->use_events_tracking() ) {
-			$prepend_facebook .= self::$template->prepare_google_analytics_event( 'Subscribe on Facebook', 'Facebook' );
+			$prepend_facebook .= self::$template->push_social_media_trigger_to_google_analytics( 'Subscribe on Facebook' );
 		}
 
 		$prepend_facebook .= '};

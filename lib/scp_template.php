@@ -38,8 +38,7 @@ class SCP_Template {
 	 * @since 0.7.3
 	 * @since 0.7.5 Add using event tracking
 	 *
-	 * @uses $this->prepare_google_analytics_event()
-	 * @uses $this->popup_platform_title()
+	 * @uses $this->push_google_analytics_event_on_show_window()
 	 *
 	 * @return string
 	 */
@@ -47,7 +46,7 @@ class SCP_Template {
 		$content = '';
 
 		if ( $this->_use_events_tracking ) {
-			$content .= $this->prepare_google_analytics_event( "show immediately", $this->popup_platform_title(), true );
+			$content .= $this->push_google_analytics_event_on_show_window( "show immediately", "(no events fired)" );
 		}
 
 		if ( wp_is_mobile() ) {
@@ -150,8 +149,7 @@ class SCP_Template {
 	 * @since 0.7.4
 	 * @since 0.7.5 Add push event to Google Analytics
 	 *
-	 * @uses $this->prepare_google_analytics_event()
-	 * @uses $this->popup_platform_title()
+	 * @uses $this->push_google_analytics_event_on_show_window()
 	 *
 	 * @param array $when_should_the_popup_appear Events list
 	 * @param int $popup_will_appear_after_n_seconds Event value
@@ -178,9 +176,7 @@ class SCP_Template {
 				if (is_scp_cookie_present()) return false;';
 
 				if ( $this->_use_events_tracking ) {
-					$content .= $this->prepare_google_analytics_event( "show after " . ( $calculated_delay / 1000 ) . " seconds"
-						, $this->popup_platform_title()
-						, true );
+					$content .= $this->push_google_analytics_event_on_show_window( "show after " . ( $calculated_delay / 1000 ) . " seconds", "after delay before show widget" );
 				}
 
 				$content .= $this->render_show_window();
@@ -203,8 +199,7 @@ class SCP_Template {
 	 * @since 0.7.4
 	 * @since 0.7.5 Add push event to Google Analytics
 	 *
-	 * @uses $this->prepare_google_analytics_event()
-	 * @uses $this->popup_platform_title()
+	 * @uses $this->push_google_analytics_event_on_show_window()
 	 *
 	 * @param array $when_should_the_popup_appear Events list
 	 * @param int $popup_will_appear_after_clicking_on_element Event value
@@ -231,9 +226,7 @@ class SCP_Template {
 					if (is_scp_cookie_present()) return false;';
 
 					if ( $this->_use_events_tracking ) {
-						$content .= $this->prepare_google_analytics_event( "show after click on " . $popup_will_appear_after_clicking_on_element
-							, $this->popup_platform_title()
-							, true );
+						$content .= $this->push_google_analytics_event_on_show_window( "show after click on " . $popup_will_appear_after_clicking_on_element, "after click on CSS selector" );
 					}
 
 					$content .= $this->render_show_window();
@@ -265,8 +258,7 @@ class SCP_Template {
 	 * @since 0.7.4
 	 * @since 0.7.5 Add push event to Google Analytics
 	 *
-	 * @uses $this->prepare_google_analytics_event()
-	 * @uses $this->popup_platform_title()
+	 * @uses $this->push_google_analytics_event_on_show_window()
 	 *
 	 * @param array $when_should_the_popup_appear Events list
 	 * @param int $popup_will_appear_after_scrolling_down_n_percent Event value
@@ -295,9 +287,8 @@ class SCP_Template {
 				if (showWindowAgain && value >= ' . $popup_will_appear_after_scrolling_down_n_percent . ') {';
 
 					if ( $this->_use_events_tracking ) {
-						$content .= $this->prepare_google_analytics_event( "show after scrolling down on " . $popup_will_appear_after_scrolling_down_n_percent . '%'
-							, $this->popup_platform_title()
-							, true );
+						$content .= $this->push_google_analytics_event_on_show_window(
+							"show after scrolling down on " . $popup_will_appear_after_scrolling_down_n_percent . '%', "on scrolling down" );
 					}
 
 					$content .= $this->render_show_window();
@@ -322,8 +313,7 @@ class SCP_Template {
 	 * @since 0.7.4
 	 * @since 0.7.5 Add push event to Google Analytics
 	 *
-	 * @uses $this->prepare_google_analytics_event()
-	 * @uses $this->popup_platform_title()
+	 * @uses $this->push_google_analytics_event_on_show_window()
 	 *
 	 * @param array $when_should_the_popup_appear Events list
 	 * @param boolean $popup_will_appear_on_exit_intent Event value
@@ -349,9 +339,7 @@ class SCP_Template {
 				var scroll = window.pageYOffset || document.documentElement.scrollTop;
 				if((e.pageY - scroll) < 7) {';
 					if ( $this->_use_events_tracking ) {
-						$content .= $this->prepare_google_analytics_event( "show on exit intent"
-							, $this->popup_platform_title()
-							, true );
+						$content .= $this->push_google_analytics_event_on_show_window( "show on exit intent", "on exit intent" );
 					}
 
 					$content .= $this->render_show_window();
@@ -399,42 +387,53 @@ class SCP_Template {
 	 * @used_by $this->render_when_popup_will_appear_on_exit_intent()
 	 * @used_by SCP_Facebook_Provider::container()
 	 *
-	 * @param string $action Action to send. Example: show, subscribe, etc.
-	 * @param string $label Source, example: "Popup Desktop", "Facebook", etc.
-	 * @param boolean $track_custom_event_fired Prevent push to Google Analytics if any window opening events are fired
+	 * @uses $this->popup_platform_title()
+	 *
+	 * @param string $action Action to send. Example: show, destroy, etc.
+	 * @param string $event_description Description to extend Google Analytics event
 	 * @return string
 	 */
-	function prepare_google_analytics_event( $action, $label, $track_custom_event_fired = false ) {
-		$content = '';
-		if ( $track_custom_event_fired ) {
-			$content .= 'if (!smp_eventFired) {';
-		}
-
-		$content .= 'ga("send", "event", {
+	function push_google_analytics_event_on_show_window( $action, $event_description = '' ) {
+		$content = 'if (!smp_eventFired ) {
+			ga("send", "event", {
 				eventCategory: "Social Media Popup",
 				eventAction:   "' . $action . '",
-				eventLabel:    "' . $label . '"
+				eventLabel:    "' . $this->popup_platform_title() . '"
 			});
 
-			smp_eventFired = true;';
-
-		if ( $track_custom_event_fired ) {
-			$content .= '}';
-		}
+			smp_eventFired = true;
+			smp_firedEventDescription = "' . ( empty( $event_description ) ? $action : $event_description ) . '";
+		}';
 
 		return $content;
 	}
+
+	/**
+	 * Helper for push social media triggers to Google Analytics
+	 *
+	 * @since 0.7.5
+	 *
+	 * @used_by SCP_Facebook_Provider::container()
+	 *
+	 * @param string $action Action to send. Example: subscribe, unsubscribe, etc.
+	 * @return string
+	 */
+	function push_social_media_trigger_to_google_analytics( $action ) {
+		$content = 'ga("send", "event", {
+				eventCategory: "Social Media Popup",
+				eventAction:   "' . $action . '" + " " + smp_firedEventDescription
+			});';
+
+		return $content;
+	}
+
 
 	/**
 	 * Helper to prepare event label to show popup title depends on wp_is_mobile()
 	 *
 	 * @since 0.7.5
 	 *
-	 * @used_by $this->render_show_window()
-	 * @used_by $this->render_when_popup_will_appear_after_n_seconds()
-	 * @used_by $this->render_when_popup_will_appear_after_clicking_on_element()
-	 * @used_by $this->render_when_popup_will_appear_after_scrolling_down_n_percent()
-	 * @used_by $this->render_when_popup_will_appear_on_exit_intent()
+	 * @used_by $this->push_google_analytics_event_on_show_window()
 	 *
 	 * @return string
 	 */
