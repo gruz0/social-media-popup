@@ -14,6 +14,13 @@ class SCP_Facebook_Provider extends SCP_Provider {
 		);
 	}
 
+	/**
+	 * Render widget container
+	 *
+	 * @since 0.7.5 Uses SCP_Template()->prepare_google_analytics_event()
+	 *
+	 * @uses SCP_Template()->prepare_google_analytics_event()
+	 */
 	public static function container() {
 		$close_window_after_join = ( (int) self::$options[ self::$prefix . 'setting_facebook_close_window_after_join' ] ) == 1;
 
@@ -43,27 +50,30 @@ class SCP_Facebook_Provider extends SCP_Provider {
 		$prepend_facebook = '<div id="fb-root"></div>'
 			. '<script>';
 
-		// Если активна опция закрытия окна после подписки на виджет Facebook, тогда добавим дополнительный код
-		if ( $close_window_after_join ) {
-			$prepend_facebook .= 'var scp_facebook_page_like_or_unlike_callback = function(url, html_element) {
-				scp_destroyPlugin(scp.showWindowAfterReturningNDays);
-			};
+		// Формирует колбэк для обработки событий при закрытии окна, подписке или отписке от группы
+		$prepend_facebook .= 'var scp_facebook_page_like_or_unlike_callback = function(url, html_element) {';
 
-			var scp_Facebook_closeWindowAfterJoiningGroup = ' . ( (int) self::$options[ self::$prefix . 'setting_facebook_close_window_after_join' ] ) . ';
-
-			window.fbAsyncInit = function() {
-				FB.init({
-					appId  : "' . esc_attr( self::$options[ self::$prefix . 'setting_facebook_application_id' ] ) . '",
-					xfbml  : true,
-					version: "v2.5"
-				});
-
-				if ( scp_Facebook_closeWindowAfterJoiningGroup ) {
-					FB.Event.subscribe("edge.create", scp_facebook_page_like_or_unlike_callback);
-				}
-			};';
+		if ( (int) self::$options[ self::$prefix . 'setting_facebook_close_window_after_join' ] ) {
+			$prepend_facebook .= 'scp_destroyPlugin(scp.showWindowAfterReturningNDays);';
 		}
 
+		if ( self::$template->use_events_tracking() ) {
+			$prepend_facebook .= self::$template->prepare_google_analytics_event( 'Subscribe on Facebook', 'Facebook' );
+		}
+
+		$prepend_facebook .= '};
+
+		window.fbAsyncInit = function() {
+			FB.init({
+				appId  : "' . esc_attr( self::$options[ self::$prefix . 'setting_facebook_application_id' ] ) . '",
+				xfbml  : true,
+				version: "v2.5"
+			});
+
+			FB.Event.subscribe("edge.create", scp_facebook_page_like_or_unlike_callback);
+		};';
+
+		// Подключаем сам Facebook
 		$prepend_facebook .= '(function(d, s, id) {'
 			. 'var js, fjs = d.getElementsByTagName(s)[0];'
 			. 'if (d.getElementById(id)) return;'

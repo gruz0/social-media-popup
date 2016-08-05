@@ -4,6 +4,7 @@ class SCP_Provider {
 	static $prefix = null;
 	static $options = null;
 	static $tabs_id = null;
+	static $template = null;
 
 	/**
 	 * Returns available providers
@@ -187,6 +188,17 @@ class SCP_Provider {
 	 */
 	public static function container() {
 		throw new Exception( "Not implemented!" );
+	}
+
+	/**
+	 * Setter for self::$template to access Events Tracker in SCP_Template
+	 *
+	 * @since 0.7.5
+	 *
+	 * @param SCP_Template $template SCP_Template instance to get access to Events Tracker
+	 */
+	public static function set_template( $template ) {
+		self::$template = $template;
 	}
 
 	/**

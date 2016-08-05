@@ -3776,6 +3776,8 @@ class Social_Media_Popup {
 
 		$content = '';
 
+		SCP_Provider::set_template( $template );
+
 		$active_providers = array();
 		foreach ( SCP_Provider::available_providers() as $provider_name ) {
 			$provider = SCP_Provider::create($provider_name, $scp_prefix, $scp_options);

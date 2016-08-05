@@ -22,6 +22,17 @@ class SCP_Template {
 	}
 
 	/**
+	 * Getter for $this->_use_events_tracking
+	 *
+	 * @since 0.7.5
+	 *
+	 * @return boolean
+	 */
+	public function use_events_tracking() {
+		return $this->_use_events_tracking;
+	}
+
+	/**
 	 * Returns JS code to show SCP window by jQuery
 	 *
 	 * @since 0.7.3
@@ -36,7 +47,7 @@ class SCP_Template {
 		$content = '';
 
 		if ( $this->_use_events_tracking ) {
-			$content .= $this->prepare_google_analytics_event( "show immediately", $this->popup_platform_title() );
+			$content .= $this->prepare_google_analytics_event( "show immediately", $this->popup_platform_title(), true );
 		}
 
 		if ( wp_is_mobile() ) {
@@ -167,7 +178,9 @@ class SCP_Template {
 				if (is_scp_cookie_present()) return false;';
 
 				if ( $this->_use_events_tracking ) {
-					$content .= $this->prepare_google_analytics_event( "show after " . ( $calculated_delay / 1000 ) . " seconds", $this->popup_platform_title() );
+					$content .= $this->prepare_google_analytics_event( "show after " . ( $calculated_delay / 1000 ) . " seconds"
+						, $this->popup_platform_title()
+						, true );
 				}
 
 				$content .= $this->render_show_window();
@@ -218,7 +231,9 @@ class SCP_Template {
 					if (is_scp_cookie_present()) return false;';
 
 					if ( $this->_use_events_tracking ) {
-						$content .= $this->prepare_google_analytics_event( "show after click on " . $popup_will_appear_after_clicking_on_element, $this->popup_platform_title() );
+						$content .= $this->prepare_google_analytics_event( "show after click on " . $popup_will_appear_after_clicking_on_element
+							, $this->popup_platform_title()
+							, true );
 					}
 
 					$content .= $this->render_show_window();
@@ -280,7 +295,9 @@ class SCP_Template {
 				if (showWindowAgain && value >= ' . $popup_will_appear_after_scrolling_down_n_percent . ') {';
 
 					if ( $this->_use_events_tracking ) {
-						$content .= $this->prepare_google_analytics_event( "show after scrolling down on " . $popup_will_appear_after_scrolling_down_n_percent . '%', $this->popup_platform_title() );
+						$content .= $this->prepare_google_analytics_event( "show after scrolling down on " . $popup_will_appear_after_scrolling_down_n_percent . '%'
+							, $this->popup_platform_title()
+							, true );
 					}
 
 					$content .= $this->render_show_window();
@@ -332,7 +349,9 @@ class SCP_Template {
 				var scroll = window.pageYOffset || document.documentElement.scrollTop;
 				if((e.pageY - scroll) < 7) {';
 					if ( $this->_use_events_tracking ) {
-						$content .= $this->prepare_google_analytics_event( "show on exit intent", $this->popup_platform_title() );
+						$content .= $this->prepare_google_analytics_event( "show on exit intent"
+							, $this->popup_platform_title()
+							, true );
 					}
 
 					$content .= $this->render_show_window();
@@ -378,21 +397,30 @@ class SCP_Template {
 	 * @used_by $this->render_when_popup_will_appear_after_clicking_on_element()
 	 * @used_by $this->render_when_popup_will_appear_after_scrolling_down_n_percent()
 	 * @used_by $this->render_when_popup_will_appear_on_exit_intent()
+	 * @used_by SCP_Facebook_Provider::container()
 	 *
 	 * @param string $action Action to send. Example: show, subscribe, etc.
 	 * @param string $label Source, example: "Popup Desktop", "Facebook", etc.
+	 * @param boolean $track_custom_event_fired Prevent push to Google Analytics if any window opening events are fired
 	 * @return string
 	 */
-	function prepare_google_analytics_event( $action, $label ) {
-		$content = 'if (!smp_eventFired) {
-			ga("send", "event", {
+	function prepare_google_analytics_event( $action, $label, $track_custom_event_fired = false ) {
+		$content = '';
+		if ( $track_custom_event_fired ) {
+			$content .= 'if (!smp_eventFired) {';
+		}
+
+		$content .= 'ga("send", "event", {
 				eventCategory: "Social Media Popup",
 				eventAction:   "' . $action . '",
 				eventLabel:    "' . $label . '"
 			});
 
-			smp_eventFired = true;
-		}';
+			smp_eventFired = true;';
+
+		if ( $track_custom_event_fired ) {
+			$content .= '}';
+		}
 
 		return $content;
 	}
