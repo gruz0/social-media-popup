@@ -42,18 +42,23 @@ class SCP_VK_Provider extends SCP_Provider {
 			<div id="scp_vk_groups" style="height:250px !important;"></div>
 			<script type="text/javascript">
 				var vk_initialized = 0;
-				var scp_VK_closeWindowAfterJoiningGroup = ' . ( (int) self::$options[ self::$prefix . 'setting_vkontakte_close_window_after_join' ] ) . ';
 
 				function initialize_VK_Widgets() {
 					if ((typeof(VK) === "undefined") || !vk_initialized) {
 						jQuery.getScript( "//vk.com/js/api/openapi.js?115", function(data, textStatus, jqxhr) {
 							VK.init({apiId: ' . $application_id . ' });
 
-							VK.Observer.subscribe("widgets.groups.joined", function f() {
-								if ( scp_VK_closeWindowAfterJoiningGroup ) {
-									scp_destroyPlugin(scp.showWindowAfterReturningNDays);
+							VK.Observer.subscribe("widgets.groups.joined", function f() {';
+
+								if ( (int) self::$options[ self::$prefix . 'setting_vkontakte_close_window_after_join' ] ) {
+									$content .= 'scp_destroyPlugin(scp.showWindowAfterReturningNDays);';
 								}
-							});
+
+								if ( self::$template->use_events_tracking() ) {
+									$content .= self::$template->push_social_media_trigger_to_google_analytics( 'Subscribe on VK' );
+								}
+
+							$content .= '});
 
 							VK.Observer.subscribe("widgets.groups.leaved", function f() {});
 
