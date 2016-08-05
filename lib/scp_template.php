@@ -385,7 +385,6 @@ class SCP_Template {
 	 * @used_by $this->render_when_popup_will_appear_after_clicking_on_element()
 	 * @used_by $this->render_when_popup_will_appear_after_scrolling_down_n_percent()
 	 * @used_by $this->render_when_popup_will_appear_on_exit_intent()
-	 * @used_by SCP_Facebook_Provider::container()
 	 *
 	 * @uses $this->popup_platform_title()
 	 *
