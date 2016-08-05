@@ -46,7 +46,7 @@ class SCP_Twitter_Provider extends SCP_Provider {
 	}
 
 	private static function render_javascript() {
-		return '<script type="text/javascript">
+		$content = '<script type="text/javascript">
 			window.twttr = (function(d, s, id) {
 				var js, fjs = d.getElementsByTagName(s)[0], t = window.twttr || {};
 				if (d.getElementById(id)) return;
@@ -66,17 +66,24 @@ class SCP_Twitter_Provider extends SCP_Provider {
 			var scp_Twitter_closeWindowAfterJoiningGroup = ' . ( (int) self::$options[ self::$prefix . 'setting_twitter_close_window_after_join' ] ) . ';
 
 			function scp_followIntentToAnalytics(intentEvent) {
-				if (!intentEvent) return;
+				if (!intentEvent) return;';
 
-				if ( scp_Twitter_closeWindowAfterJoiningGroup ) {
-					scp_destroyPlugin(scp.showWindowAfterReturningNDays);
+				if ( (int) self::$options[ self::$prefix . 'setting_twitter_close_window_after_join' ] ) {
+					$content .= 'scp_destroyPlugin(scp.showWindowAfterReturningNDays);';
 				}
-			}
+
+				if ( self::$template->use_events_tracking() ) {
+					$content .= self::$template->push_social_media_trigger_to_google_analytics( 'Follow on Twitter' );
+				}
+
+			$content .= '}
 
 			twttr.ready(function(twttr) {
 				twttr.events.bind("follow", scp_followIntentToAnalytics);
 			});
 		</script>';
+
+		return $content;
 	}
 
 	private static function render_follow_button() {
