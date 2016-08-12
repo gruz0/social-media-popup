@@ -24,6 +24,7 @@ function scp_twitter_settings_tabs() {
 	$tabs['general']       = __( 'General', L10N_SCP_PREFIX );
 	$tabs['follow-button'] = __( 'Follow Button Widget', L10N_SCP_PREFIX );
 	$tabs['timeline']      = __( 'Timeline Widget', L10N_SCP_PREFIX );
+	$tabs['tracking']      = __( 'Tracking', L10N_SCP_PREFIX );
 
 	echo '<h2 class="nav-tab-wrapper">';
 	foreach ( $tabs as $tab_key => $tab_caption ) {

@@ -202,6 +202,7 @@ class Social_Media_Popup {
 			'setting_twitter_height',
 			'setting_twitter_chrome',
 			'setting_twitter_close_window_after_join',
+			'tracking_use_twitter',
 
 			// Pinterest
 			'setting_use_pinterest',
@@ -806,6 +807,8 @@ class Social_Media_Popup {
 			update_option( $scp_prefix . 'setting_twitter_follow_button_align_by',          'center' );
 			update_option( $scp_prefix . 'setting_twitter_use_timeline',                    1 );
 			delete_option( $scp_prefix . 'setting_twitter_widget_id' );
+
+			update_option( $scp_prefix . 'tracking_use_twitter',                            1 );
 
 			update_option( $version, '0.7.5' );
 			self::set_scp_version( '0.7.5' );
@@ -2261,6 +2264,7 @@ class Social_Media_Popup {
 		$this->init_settings_twitter_general();
 		$this->init_settings_twitter_follow_button();
 		$this->init_settings_twitter_timeline();
+		$this->init_settings_twitter_tracking();
 	}
 
 	/**
@@ -2598,6 +2602,48 @@ class Social_Media_Popup {
 	}
 
 	/**
+	 * Twitter Tracking settings
+	 *
+	 * @uses Social_Media_Popup::get_scp_prefix()
+	 *
+	 * @since 0.7.5
+	 */
+	private function init_settings_twitter_tracking() {
+		$scp_prefix = self::get_scp_prefix();
+
+		// Используется в settings_field и do_settings_field
+		$group = SMP_PREFIX . '-group-twitter-tracking';
+
+		// Используется в do_settings_section
+		$options_page = SMP_PREFIX . '-group-twitter-tracking';
+
+		// ID секции
+		$section = SMP_PREFIX . '-section-twitter-tracking';
+
+		// Не забывать добавлять новые опции в uninstall()
+		register_setting( $group, $scp_prefix . 'tracking_use_twitter', 'absint' );
+
+		add_settings_section(
+			$section,
+			__( 'Tracking', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_section_twitter_tracking' ),
+			$options_page
+		);
+
+		// Использовать трекинг или нет
+		add_settings_field(
+			SMP_PREFIX . '-tracking-use-twitter',
+			__( 'Use Tracking', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'tracking_use_twitter'
+			)
+		);
+	}
+
+	/**
 	 * Настройки Pinterest
 	 */
 	private function init_settings_pinterest() {
@@ -2830,6 +2876,15 @@ class Social_Media_Popup {
 	 */
 	public function settings_section_twitter_timeline() {
 		_e( 'Twitter Timeline widget settings can be set in this section', L10N_SCP_PREFIX );
+	}
+
+	/**
+	 * Twitter tracking settings description
+	 *
+	 * @since 0.7.5
+	 */
+	public function settings_section_twitter_tracking() {
+		_e( 'Twitter tracking settings can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
