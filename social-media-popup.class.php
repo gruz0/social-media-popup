@@ -203,6 +203,7 @@ class Social_Media_Popup {
 			'setting_twitter_chrome',
 			'setting_twitter_close_window_after_join',
 			'tracking_use_twitter',
+			'tracking_twitter_event',
 
 			// Pinterest
 			'setting_use_pinterest',
@@ -809,6 +810,7 @@ class Social_Media_Popup {
 			delete_option( $scp_prefix . 'setting_twitter_widget_id' );
 
 			update_option( $scp_prefix . 'tracking_use_twitter',                            1 );
+			update_option( $scp_prefix . 'tracking_twitter_event',                          __( 'Follow on Twitter', L10N_SCP_PREFIX ) );
 
 			update_option( $version, '0.7.5' );
 			self::set_scp_version( '0.7.5' );
@@ -2622,6 +2624,7 @@ class Social_Media_Popup {
 
 		// Не забывать добавлять новые опции в uninstall()
 		register_setting( $group, $scp_prefix . 'tracking_use_twitter', 'absint' );
+		register_setting( $group, $scp_prefix . 'tracking_twitter_event', 'sanitize_text_field' );
 
 		add_settings_section(
 			$section,
@@ -2641,6 +2644,19 @@ class Social_Media_Popup {
 				'field' => $scp_prefix . 'tracking_use_twitter'
 			)
 		);
+
+		// Надпись события в Google Analytics
+		add_settings_field(
+			SMP_PREFIX . '-tracking-twitter-event',
+			__( 'Event Label', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'tracking_twitter_event'
+			)
+		);
+
 	}
 
 	/**

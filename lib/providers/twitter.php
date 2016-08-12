@@ -72,8 +72,8 @@ class SCP_Twitter_Provider extends SCP_Provider {
 					$content .= 'scp_destroyPlugin(scp.showWindowAfterReturningNDays);';
 				}
 
-				if ( self::$template->use_events_tracking() ) {
-					$content .= self::$template->push_social_media_trigger_to_google_analytics( 'Follow on Twitter' );
+				if ( self::$template->use_events_tracking() && ( (int) self::$options[ self::$prefix . 'tracking_use_twitter' ] == 1 ) ) {
+					$content .= self::$template->push_social_media_trigger_to_google_analytics( esc_attr( self::$options[ self::$prefix . 'tracking_twitter_event' ] ) );
 				}
 
 			$content .= '}
