@@ -172,3 +172,6 @@
 		#social-community-popup .widget-description img {border:0 !important;margin:0;}
 
 #social-community-popup .twitter-follow-button {margin-bottom:0 !important;}
+
+/* Фон меню быстрого доступа к настройкам плагина при активном режиме отладки */
+.smp-debug-mode {background: rgba(159, 0, 0, 1) !important;}
