@@ -1123,7 +1123,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_button_to_close_widget_title'
+				'field' => $scp_prefix . 'setting_button_to_close_widget_title',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . __( "Thanks! Please don't show me popup.", L10N_SCP_PREFIX )
 			)
 		);
 
@@ -1147,7 +1148,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_delay_before_show_bottom_button'
+				'field' => $scp_prefix . 'setting_delay_before_show_bottom_button',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . '10'
 			)
 		);
 
@@ -1159,7 +1161,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_container_width'
+				'field' => $scp_prefix . 'setting_container_width',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . '400'
 			)
 		);
 
@@ -1171,7 +1174,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_container_height'
+				'field' => $scp_prefix . 'setting_container_height',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . '400'
 			)
 		);
 
@@ -1183,7 +1187,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_border_radius'
+				'field' => $scp_prefix . 'setting_border_radius',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . '10'
 			)
 		);
 
@@ -1207,7 +1212,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_overlay_opacity'
+				'field' => $scp_prefix . 'setting_overlay_opacity',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . '80'
 			)
 		);
 
@@ -1334,7 +1340,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section_when_should_the_popup_appear,
 			array(
-				'field' => $scp_prefix . 'popup_will_appear_after_n_seconds'
+				'field' => $scp_prefix . 'popup_will_appear_after_n_seconds',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . '5'
 			)
 		);
 
@@ -1346,7 +1353,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section_when_should_the_popup_appear,
 			array(
-				'field' => $scp_prefix . 'popup_will_appear_after_clicking_on_element'
+				'field' => $scp_prefix . 'popup_will_appear_after_clicking_on_element',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . '#my-button, .entry .button'
 			)
 		);
 
@@ -1370,7 +1378,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section_when_should_the_popup_appear,
 			array(
-				'field' => $scp_prefix . 'popup_will_appear_after_scrolling_down_n_percent'
+				'field' => $scp_prefix . 'popup_will_appear_after_scrolling_down_n_percent',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . '70'
 			)
 		);
 
@@ -1413,7 +1422,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section_who_should_see_the_popup,
 			array(
-				'field' => $scp_prefix . 'visitor_opened_at_least_n_number_of_pages'
+				'field' => $scp_prefix . 'visitor_opened_at_least_n_number_of_pages',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . '2'
 			)
 		);
 
@@ -1437,7 +1447,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section_who_should_see_the_popup,
 			array(
-				'field' => $scp_prefix . 'setting_display_after_n_days'
+				'field' => $scp_prefix . 'setting_display_after_n_days',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . '15'
 			)
 		);
 	}
@@ -1770,7 +1781,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_facebook_tab_caption'
+				'field' => $scp_prefix . 'setting_facebook_tab_caption',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . 'Facebook'
 			)
 		);
 
@@ -1806,7 +1818,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_facebook_application_id'
+				'field' => $scp_prefix . 'setting_facebook_application_id',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . '123456789012345'
 			)
 		);
 
@@ -1818,7 +1831,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_facebook_page_url'
+				'field' => $scp_prefix . 'setting_facebook_page_url',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . 'https://www.facebook.com/AlexanderGruzov/'
 			)
 		);
 
@@ -1842,7 +1856,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_facebook_width'
+				'field' => $scp_prefix . 'setting_facebook_width',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . '400'
 			)
 		);
 
@@ -1854,7 +1869,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_facebook_height'
+				'field' => $scp_prefix . 'setting_facebook_height',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . '400'
 			)
 		);
 
@@ -1982,7 +1998,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'tracking_facebook_event'
+				'field' => $scp_prefix . 'tracking_facebook_event',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . __( 'Subscribe on Facebook', L10N_SCP_PREFIX )
 			)
 		);
 	}
@@ -2063,7 +2080,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_vkontakte_tab_caption'
+				'field' => $scp_prefix . 'setting_vkontakte_tab_caption',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . __( 'VK', L10N_SCP_PREFIX )
 			)
 		);
 
@@ -2099,7 +2117,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_vkontakte_application_id'
+				'field' => $scp_prefix . 'setting_vkontakte_application_id',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . '1234567'
 			)
 		);
 
@@ -2111,7 +2130,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_vkontakte_page_or_group_id'
+				'field' => $scp_prefix . 'setting_vkontakte_page_or_group_id',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . '12345678'
 			)
 		);
 
@@ -2123,7 +2143,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_vkontakte_page_url'
+				'field' => $scp_prefix . 'setting_vkontakte_page_url',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . 'https://vk.com/blogsonwordpress_new'
 			)
 		);
 
@@ -2135,7 +2156,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_vkontakte_width'
+				'field' => $scp_prefix . 'setting_vkontakte_width',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . '400'
 			)
 		);
 
@@ -2147,7 +2169,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_vkontakte_height'
+				'field' => $scp_prefix . 'setting_vkontakte_height',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . '400'
 			)
 		);
 
@@ -2219,7 +2242,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_vkontakte_delay_before_render'
+				'field' => $scp_prefix . 'setting_vkontakte_delay_before_render',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . '500'
 			)
 		);
 	}
@@ -2275,7 +2299,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'tracking_vkontakte_event'
+				'field' => $scp_prefix . 'tracking_vkontakte_event',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . __( 'Subscribe on VK', L10N_SCP_PREFIX )
 			)
 		);
 	}
@@ -2332,7 +2357,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_odnoklassniki_tab_caption'
+				'field' => $scp_prefix . 'setting_odnoklassniki_tab_caption',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . __( 'Odnoklassniki', L10N_SCP_PREFIX )
 			)
 		);
 
@@ -2368,7 +2394,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_odnoklassniki_group_id'
+				'field' => $scp_prefix . 'setting_odnoklassniki_group_id',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . '12345678901234'
 			)
 		);
 
@@ -2380,7 +2407,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_odnoklassniki_group_url'
+				'field' => $scp_prefix . 'setting_odnoklassniki_group_url',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . 'https://ok.ru/group/57122812461115'
 			)
 		);
 
@@ -2392,7 +2420,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_odnoklassniki_width'
+				'field' => $scp_prefix . 'setting_odnoklassniki_width',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . '400'
 			)
 		);
 
@@ -2404,7 +2433,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_odnoklassniki_height'
+				'field' => $scp_prefix . 'setting_odnoklassniki_height',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . '400'
 			)
 		);
 	}
@@ -2465,7 +2495,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_googleplus_tab_caption'
+				'field' => $scp_prefix . 'setting_googleplus_tab_caption',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . 'Google+'
 			)
 		);
 
@@ -2513,7 +2544,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_googleplus_page_url'
+				'field' => $scp_prefix . 'setting_googleplus_page_url',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . '//plus.google.com/u/0/117676776729232885815'
 			)
 		);
 
@@ -2549,7 +2581,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_googleplus_size'
+				'field' => $scp_prefix . 'setting_googleplus_size',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . '400'
 			)
 		);
 
@@ -2660,7 +2693,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_twitter_tab_caption'
+				'field' => $scp_prefix . 'setting_twitter_tab_caption',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . __( 'Twitter', L10N_SCP_PREFIX )
 			)
 		);
 
@@ -2696,7 +2730,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_twitter_username'
+				'field' => $scp_prefix . 'setting_twitter_username',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . 'gruz0'
 			)
 		);
 
@@ -2887,7 +2922,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_twitter_tweet_limit'
+				'field' => $scp_prefix . 'setting_twitter_tweet_limit',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . '3'
 			)
 		);
 
@@ -2911,7 +2947,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_twitter_width'
+				'field' => $scp_prefix . 'setting_twitter_width',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . '400'
 			)
 		);
 
@@ -2923,7 +2960,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_twitter_height'
+				'field' => $scp_prefix . 'setting_twitter_height',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . '400'
 			)
 		);
 
@@ -2990,7 +3028,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'tracking_twitter_event'
+				'field' => $scp_prefix . 'tracking_twitter_event',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . __( 'Follow on Twitter', L10N_SCP_PREFIX )
 			)
 		);
 
@@ -3048,7 +3087,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_pinterest_tab_caption'
+				'field' => $scp_prefix . 'setting_pinterest_tab_caption',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . __( 'Pinterest', L10N_SCP_PREFIX )
 			)
 		);
 
@@ -3084,7 +3124,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_pinterest_profile_url'
+				'field' => $scp_prefix . 'setting_pinterest_profile_url',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . 'http://ru.pinterest.com/gruz0/'
 			)
 		);
 
@@ -3096,7 +3137,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_pinterest_image_width'
+				'field' => $scp_prefix . 'setting_pinterest_image_width',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . '60'
 			)
 		);
 
@@ -3108,7 +3150,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_pinterest_width'
+				'field' => $scp_prefix . 'setting_pinterest_width',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . '380'
 			)
 		);
 
@@ -3120,7 +3163,8 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'setting_pinterest_height'
+				'field' => $scp_prefix . 'setting_pinterest_height',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . '300'
 			)
 		);
 	}
