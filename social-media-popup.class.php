@@ -139,6 +139,8 @@ class Social_Media_Popup {
 			'setting_facebook_use_small_header',
 			'setting_facebook_tabs',
 			'setting_facebook_close_window_after_join',
+			'tracking_use_facebook',
+			'tracking_facebook_event',
 
 			// ВКонтакте
 			'setting_use_vkontakte',
@@ -816,6 +818,9 @@ class Social_Media_Popup {
 
 			update_option( $scp_prefix . 'tracking_use_vkontakte',                          1 );
 			update_option( $scp_prefix . 'tracking_vkontakte_event',                        __( 'Subscribe on VK.com', L10N_SCP_PREFIX ) );
+
+			update_option( $scp_prefix . 'tracking_use_facebook',                           1 );
+			update_option( $scp_prefix . 'tracking_facebook_event',                         __( 'Subscribe on Facebook', L10N_SCP_PREFIX ) );
 
 			update_option( $version, '0.7.5' );
 			self::set_scp_version( '0.7.5' );
@@ -1507,19 +1512,36 @@ class Social_Media_Popup {
 	}
 
 	/**
-	 * Настройки Facebook
+	 * Facebook Settings
+	 *
+	 * @uses $this->init_settings_facebook_general()
+	 * @uses $this->init_settings_facebook_tracking()
+	 *
+	 * @since 0.7.5 Add settings tabs
 	 */
 	private function init_settings_facebook() {
+		$this->init_settings_facebook_general();
+		$this->init_settings_facebook_tracking();
+	}
+
+	/**
+	 * Facebook general settings
+	 *
+	 * @used_by $this->init_settings_facebook()
+	 *
+	 * @return void
+	 */
+	private function init_settings_facebook_general() {
 		$scp_prefix = self::get_scp_prefix();
 
 		// Используется в settings_field и do_settings_field
-		$group = SMP_PREFIX . '-group-facebook';
+		$group = SMP_PREFIX . '-group-facebook-general';
 
 		// Используется в do_settings_section
-		$options_page = SMP_PREFIX . '_facebook_options';
+		$options_page = SMP_PREFIX . '-group-facebook-general';
 
 		// ID секции
-		$section = SMP_PREFIX . '-section-facebook';
+		$section = SMP_PREFIX . '-section-facebook-general';
 
 		// Не забывать добавлять новые опции в uninstall()
 		register_setting( $group, $scp_prefix . 'setting_use_facebook' );
@@ -1722,6 +1744,62 @@ class Social_Media_Popup {
 			$section,
 			array(
 				'field' => $scp_prefix . 'setting_facebook_close_window_after_join'
+			)
+		);
+	}
+
+	/**
+	 * Facebook Tracking settings
+	 *
+	 * @uses Social_Media_Popup::get_scp_prefix()
+	 * @used_by $this->init_settings_facebook()
+	 *
+	 * @since 0.7.5
+	 */
+	private function init_settings_facebook_tracking() {
+		$scp_prefix = self::get_scp_prefix();
+
+		// Используется в settings_field и do_settings_field
+		$group = SMP_PREFIX . '-group-facebook-tracking';
+
+		// Используется в do_settings_section
+		$options_page = SMP_PREFIX . '-group-facebook-tracking';
+
+		// ID секции
+		$section = SMP_PREFIX . '-section-facebook-tracking';
+
+		// Не забывать добавлять новые опции в uninstall()
+		register_setting( $group, $scp_prefix . 'tracking_use_facebook', 'absint' );
+		register_setting( $group, $scp_prefix . 'tracking_facebook_event', 'sanitize_text_field' );
+
+		add_settings_section(
+			$section,
+			__( 'Tracking', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_section_facebook_tracking' ),
+			$options_page
+		);
+
+		// Использовать трекинг или нет
+		add_settings_field(
+			SMP_PREFIX . '-tracking-use-facebook',
+			__( 'Use Tracking', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'tracking_use_facebook'
+			)
+		);
+
+		// Надпись события в Google Analytics
+		add_settings_field(
+			SMP_PREFIX . '-tracking-facebook-event',
+			__( 'Event Label', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'tracking_facebook_event'
 			)
 		);
 	}
@@ -2920,6 +2998,15 @@ class Social_Media_Popup {
 	 */
 	public function settings_section_facebook() {
 		_e( 'Facebook settings can be set in this section', L10N_SCP_PREFIX );
+	}
+
+	/**
+	 * Facebook tracking settings description
+	 *
+	 * @since 0.7.5
+	 */
+	public function settings_section_facebook_tracking() {
+		_e( 'Facebook tracking settings can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
