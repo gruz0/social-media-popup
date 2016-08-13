@@ -54,8 +54,8 @@ class SCP_VK_Provider extends SCP_Provider {
 									$content .= 'scp_destroyPlugin(scp.showWindowAfterReturningNDays);';
 								}
 
-								if ( self::$template->use_events_tracking() ) {
-									$content .= self::$template->push_social_media_trigger_to_google_analytics( 'Subscribe on VK' );
+								if ( self::$template->use_events_tracking() && ( (int) self::$options[ self::$prefix . 'tracking_use_vkontakte' ] == 1 ) ) {
+									$content .= self::$template->push_social_media_trigger_to_google_analytics( esc_attr( self::$options[ self::$prefix . 'tracking_vkontakte_event' ] ) );
 								}
 
 							$content .= '});

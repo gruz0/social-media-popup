@@ -156,6 +156,8 @@ class Social_Media_Popup {
 			'setting_vkontakte_color_button',
 			'setting_vkontakte_delay_before_render',
 			'setting_vkontakte_close_window_after_join',
+			'tracking_use_vkontakte',
+			'tracking_vkontakte_event',
 
 			// Одноклассники
 			'setting_use_odnoklassniki',
@@ -811,6 +813,9 @@ class Social_Media_Popup {
 
 			update_option( $scp_prefix . 'tracking_use_twitter',                            1 );
 			update_option( $scp_prefix . 'tracking_twitter_event',                          __( 'Follow on Twitter', L10N_SCP_PREFIX ) );
+
+			update_option( $scp_prefix . 'tracking_use_vkontakte',                          1 );
+			update_option( $scp_prefix . 'tracking_vkontakte_event',                        __( 'Subscribe on VK.com', L10N_SCP_PREFIX ) );
 
 			update_option( $version, '0.7.5' );
 			self::set_scp_version( '0.7.5' );
@@ -1722,21 +1727,36 @@ class Social_Media_Popup {
 	}
 
 	/**
-	 * VK.com widget settings
+	 * VK.com Settings
+	 *
+	 * @uses $this->init_settings_vkontakte_general()
+	 * @uses $this->init_settings_vkontakte_tracking()
+	 *
+	 * @since 0.7.5 Add settings tabs
+	 */
+	private function init_settings_vkontakte() {
+		$this->init_settings_vkontakte_general();
+		$this->init_settings_vkontakte_tracking();
+	}
+
+	/**
+	 * VK.com general settings
+	 *
+	 * @used_by $this->init_settings_vkontakte()
 	 *
 	 * @return void
 	 */
-	private function init_settings_vkontakte() {
+	private function init_settings_vkontakte_general() {
 		$scp_prefix = self::get_scp_prefix();
 
 		// Используется в settings_field и do_settings_field
-		$group = SMP_PREFIX . '-group-vkontakte';
+		$group = SMP_PREFIX . '-group-vkontakte-general';
 
 		// Используется в do_settings_section
-		$options_page = SMP_PREFIX . '_vkontakte_options';
+		$options_page = SMP_PREFIX . '-group-vkontakte-general';
 
 		// ID секции
-		$section = SMP_PREFIX . '-section-vkontakte';
+		$section = SMP_PREFIX . '-section-vkontakte-general';
 
 		// Не забывать добавлять новые опции в uninstall()
 		register_setting( $group, $scp_prefix . 'setting_use_vkontakte' );
@@ -1939,6 +1959,62 @@ class Social_Media_Popup {
 			$section,
 			array(
 				'field' => $scp_prefix . 'setting_vkontakte_delay_before_render'
+			)
+		);
+	}
+
+	/**
+	 * VK.com Tracking settings
+	 *
+	 * @uses Social_Media_Popup::get_scp_prefix()
+	 * @used_by $this->init_settings_vkontakte()
+	 *
+	 * @since 0.7.5
+	 */
+	private function init_settings_vkontakte_tracking() {
+		$scp_prefix = self::get_scp_prefix();
+
+		// Используется в settings_field и do_settings_field
+		$group = SMP_PREFIX . '-group-vkontakte-tracking';
+
+		// Используется в do_settings_section
+		$options_page = SMP_PREFIX . '-group-vkontakte-tracking';
+
+		// ID секции
+		$section = SMP_PREFIX . '-section-vkontakte-tracking';
+
+		// Не забывать добавлять новые опции в uninstall()
+		register_setting( $group, $scp_prefix . 'tracking_use_vkontakte', 'absint' );
+		register_setting( $group, $scp_prefix . 'tracking_vkontakte_event', 'sanitize_text_field' );
+
+		add_settings_section(
+			$section,
+			__( 'Tracking', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_section_vkontakte_tracking' ),
+			$options_page
+		);
+
+		// Использовать трекинг или нет
+		add_settings_field(
+			SMP_PREFIX . '-tracking-use-vkontakte',
+			__( 'Use Tracking', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'tracking_use_vkontakte'
+			)
+		);
+
+		// Надпись события в Google Analytics
+		add_settings_field(
+			SMP_PREFIX . '-tracking-vkontakte-event',
+			__( 'Event Label', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'tracking_vkontakte_event'
 			)
 		);
 	}
@@ -2851,6 +2927,15 @@ class Social_Media_Popup {
 	 */
 	public function settings_section_vkontakte() {
 		_e( 'VK.com settings can be set in this section', L10N_SCP_PREFIX );
+	}
+
+	/**
+	 * VK.com tracking settings description
+	 *
+	 * @since 0.7.5
+	 */
+	public function settings_section_vkontakte_tracking() {
+		_e( 'VK.com tracking settings can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
