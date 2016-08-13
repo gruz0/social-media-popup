@@ -3870,6 +3870,12 @@ class Social_Media_Popup {
 			'id'     => 'scp-admin-bar',
 			'title'  => 'Social Media Popup',
 		);
+
+		if ( absint( get_option( self::get_scp_prefix() . 'setting_debug_mode' ) ) == 1 ) {
+			$args['title'] .= ' – ' . __( 'Debug Mode', L10N_SCP_PREFIX );
+			$args['meta']['class'] = 'smp-debug-mode';
+		}
+
 		$wp_admin_bar->add_node( $args );
 
 		$menu_scp_settings = array(
