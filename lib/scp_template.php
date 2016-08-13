@@ -11,6 +11,15 @@ class SCP_Template {
 	private $_use_events_tracking = false;
 
 	/**
+	 * Use events tracking in Debug mode or not
+	 *
+	 * @since 0.7.5
+	 *
+	 * @var boolean $_do_not_use_tracking_in_debug_mode
+	 */
+	private $_do_not_use_tracking_in_debug_mode = true;
+
+	/**
 	 * Events descriptions
 	 *
 	 * @since 0.7.5
@@ -25,10 +34,12 @@ class SCP_Template {
 	 * @since 0.7.5
 	 *
 	 * @param boolean $use_events_tracking
+	 * @param boolean $do_not_use_tracking_in_debug_mode
 	 * @param array $events_descriptions
 	 */
-	public function __construct( $use_events_tracking = false, $events_descriptions = array() ) {
+	public function __construct( $use_events_tracking = false, $do_not_use_tracking_in_debug_mode = true, $events_descriptions = array() ) {
 		$this->_use_events_tracking = $use_events_tracking;
+		$this->_do_not_use_tracking_in_debug_mode = $do_not_use_tracking_in_debug_mode;
 
 		$default_events_descriptions = array(
 			'window_showed_immediately'       => __( 'Show immediately', L10N_SCP_PREFIX ),
@@ -443,6 +454,10 @@ class SCP_Template {
 	 * @return string
 	 */
 	function push_google_analytics_event_on_show_window( $action, $event_description = '' ) {
+		if ( $this->_do_not_use_tracking_in_debug_mode ) {
+			return '';
+		}
+
 		$content = 'if (!smp_eventFired ) {
 			ga("send", "event", {
 				eventCategory: "Social Media Popup",
@@ -470,6 +485,10 @@ class SCP_Template {
 	 * @return string
 	 */
 	function push_social_media_trigger_to_google_analytics( $action ) {
+		if ( $this->_do_not_use_tracking_in_debug_mode ) {
+			return '';
+		}
+
 		$content = 'ga("send", "event", {
 				eventCategory: "Social Media Popup",
 				eventAction:   "' . $action . '" + " " + smp_firedEventDescription

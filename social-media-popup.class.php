@@ -120,6 +120,7 @@ class Social_Media_Popup {
 
 			// Отслеживание событий
 			'use_events_tracking',
+			'do_not_use_tracking_in_debug_mode',
 			'google_analytics_tracking_id',
 			'tracking_event_label_window_showed_immediately',
 			'tracking_event_label_window_showed_with_delay',
@@ -823,6 +824,11 @@ class Social_Media_Popup {
 			update_option( $scp_prefix . 'setting_twitter_use_timeline',                    1 );
 			delete_option( $scp_prefix . 'setting_twitter_widget_id' );
 
+			// Опции трекинга событий
+			update_option( $scp_prefix . 'use_events_tracking',                             1 );
+			update_option( $scp_prefix . 'do_not_use_tracking_in_debug_mode',               1 );
+			update_option( $scp_prefix . 'google_analytics_tracking_id',                    '' );
+
 			// Трекинг событий социальных сетей
 			update_option( $scp_prefix . 'tracking_use_twitter',                            1 );
 			update_option( $scp_prefix . 'tracking_twitter_event',                          __( 'Follow on Twitter', L10N_SCP_PREFIX ) );
@@ -1472,6 +1478,7 @@ class Social_Media_Popup {
 
 		// Не забывать добавлять новые опции в uninstall()
 		register_setting( $group, $scp_prefix . 'use_events_tracking', 'absint' );
+		register_setting( $group, $scp_prefix . 'do_not_use_tracking_in_debug_mode', 'absint' );
 		register_setting( $group, $scp_prefix . 'google_analytics_tracking_id', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'tracking_event_label_window_showed_immediately', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'tracking_event_label_window_showed_with_delay', 'sanitize_text_field' );
@@ -1500,6 +1507,18 @@ class Social_Media_Popup {
 			$section,
 			array(
 				'field' => $scp_prefix . 'use_events_tracking'
+			)
+		);
+
+		// Don't use tracking in debug mode
+		add_settings_field(
+			SMP_PREFIX . '-common-do-not-use-tracking-in-debug-mode',
+			__( 'Do not use tracking in Debug mode', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'do_not_use_tracking_in_debug_mode'
 			)
 		);
 
@@ -4113,8 +4132,6 @@ class Social_Media_Popup {
 	}
 
 	private function scp_php( $scp_prefix ) {
-		$use_events_tracking = esc_attr( get_option( $scp_prefix . 'use_events_tracking' ) ) === '1';
-
 		$scp_options = array();
 		$all_options = wp_load_alloptions();
 		foreach( $all_options as $name => $value ) {
@@ -4135,9 +4152,18 @@ class Social_Media_Popup {
 			'on_exit_intent'                  => $scp_options[ $scp_prefix . 'tracking_event_label_on_exit_intent' ]
 		);
 
-		$template = new SCP_Template( $use_events_tracking, $events_descriptions );
-
 		$debug_mode = ( (int) $scp_options[ $scp_prefix . 'setting_debug_mode' ] ) == 1;
+
+		$template = new SCP_Template(
+			// Use events tracking
+			absint( $scp_options[ $scp_prefix . 'use_events_tracking' ] ) == 1,
+
+			// Don't use tracking in Debug mode
+			( $debug_mode && absint( $scp_options[ $scp_prefix . 'do_not_use_tracking_in_debug_mode' ] ) == 1 ),
+
+			// Array with events descriptions
+			$events_descriptions
+		);
 
 		// При включённом режиме отладки плагин работает только для администратора сайта
 		if ( $debug_mode ) {
