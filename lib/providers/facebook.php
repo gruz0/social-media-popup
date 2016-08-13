@@ -57,8 +57,8 @@ class SCP_Facebook_Provider extends SCP_Provider {
 			$prepend_facebook .= 'scp_destroyPlugin(scp.showWindowAfterReturningNDays);';
 		}
 
-		if ( self::$template->use_events_tracking() && ( (int) self::$options[ self::$prefix . 'tracking_use_facebook' ] == 1 ) ) {
-			$content .= self::$template->push_social_media_trigger_to_google_analytics( esc_attr( self::$options[ self::$prefix . 'tracking_facebook_event' ] ) );
+		if ( self::$template->use_events_tracking() && ( ( (int) self::$options[ self::$prefix . 'tracking_use_facebook' ] ) == 1 ) ) {
+			$prepend_facebook .= self::$template->push_social_media_trigger_to_google_analytics( esc_attr( self::$options[ self::$prefix . 'tracking_facebook_event' ] ) );
 		}
 
 		$prepend_facebook .= '};
