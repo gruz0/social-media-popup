@@ -413,6 +413,8 @@ class SCP_Template {
 	 * @since 0.7.5
 	 *
 	 * @used_by SCP_Facebook_Provider::container()
+	 * @used_by SCP_VK_Provider::container()
+	 * @used_by SCP_Twitter_Provider::container()
 	 *
 	 * @param string $action Action to send. Example: subscribe, unsubscribe, etc.
 	 * @return string
@@ -425,7 +427,6 @@ class SCP_Template {
 
 		return $content;
 	}
-
 
 	/**
 	 * Helper to prepare event label to show popup title depends on wp_is_mobile()
