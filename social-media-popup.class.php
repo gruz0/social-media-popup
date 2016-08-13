@@ -121,6 +121,16 @@ class Social_Media_Popup {
 			// Отслеживание событий
 			'use_events_tracking',
 			'google_analytics_tracking_id',
+			'tracking_event_label_window_showed_immediately',
+			'tracking_event_label_window_showed_with_delay',
+			'tracking_event_label_window_showed_after_click',
+			'tracking_event_label_window_showed_on_scrolling_down',
+			'tracking_event_label_window_showed_on_exit_intent',
+			'tracking_event_label_no_events_fired',
+			'tracking_event_label_on_delay',
+			'tracking_event_label_after_click',
+			'tracking_event_label_on_scrolling_down',
+			'tracking_event_label_on_exit_intent',
 
 			// Facebook
 			'setting_use_facebook',
@@ -813,6 +823,7 @@ class Social_Media_Popup {
 			update_option( $scp_prefix . 'setting_twitter_use_timeline',                    1 );
 			delete_option( $scp_prefix . 'setting_twitter_widget_id' );
 
+			// Трекинг событий социальных сетей
 			update_option( $scp_prefix . 'tracking_use_twitter',                            1 );
 			update_option( $scp_prefix . 'tracking_twitter_event',                          __( 'Follow on Twitter', L10N_SCP_PREFIX ) );
 
@@ -821,6 +832,18 @@ class Social_Media_Popup {
 
 			update_option( $scp_prefix . 'tracking_use_facebook',                           1 );
 			update_option( $scp_prefix . 'tracking_facebook_event',                         __( 'Subscribe on Facebook', L10N_SCP_PREFIX ) );
+
+			// Описания событий для отправки в Google Analytics
+			update_option( $scp_prefix . 'tracking_event_label_window_showed_immediately',       __( 'Show immediately', L10N_SCP_PREFIX ) );
+			update_option( $scp_prefix . 'tracking_event_label_window_showed_with_delay',        __( 'Show after delay before it rendered', L10N_SCP_PREFIX ) );
+			update_option( $scp_prefix . 'tracking_event_label_window_showed_after_click',       __( 'Show after click on CSS-selector', L10N_SCP_PREFIX ) );
+			update_option( $scp_prefix . 'tracking_event_label_window_showed_on_scrolling_down', __( 'Show after scrolling down', L10N_SCP_PREFIX ) );
+			update_option( $scp_prefix . 'tracking_event_label_window_showed_on_exit_intent',    __( 'Show on exit intent', L10N_SCP_PREFIX ) );
+			update_option( $scp_prefix . 'tracking_event_label_no_events_fired',                 __( '(no events fired)', L10N_SCP_PREFIX ) );
+			update_option( $scp_prefix . 'tracking_event_label_on_delay',                        __( 'After delay before show widget', L10N_SCP_PREFIX ) );
+			update_option( $scp_prefix . 'tracking_event_label_after_click',                     __( 'After click on CSS-selector', L10N_SCP_PREFIX ) );
+			update_option( $scp_prefix . 'tracking_event_label_on_scrolling_down',               __( 'On scrolling down', L10N_SCP_PREFIX ) );
+			update_option( $scp_prefix . 'tracking_event_label_on_exit_intent',                  __( 'On exit intent', L10N_SCP_PREFIX ) );
 
 			update_option( $version, '0.7.5' );
 			self::set_scp_version( '0.7.5' );
@@ -1439,6 +1462,16 @@ class Social_Media_Popup {
 		// Не забывать добавлять новые опции в uninstall()
 		register_setting( $group, $scp_prefix . 'use_events_tracking', 'absint' );
 		register_setting( $group, $scp_prefix . 'google_analytics_tracking_id', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'tracking_event_label_window_showed_immediately', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'tracking_event_label_window_showed_with_delay', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'tracking_event_label_window_showed_after_click', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'tracking_event_label_window_showed_on_scrolling_down', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'tracking_event_label_window_showed_on_exit_intent', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'tracking_event_label_no_events_fired', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'tracking_event_label_on_delay', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'tracking_event_label_after_click', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'tracking_event_label_on_scrolling_down', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'tracking_event_label_on_exit_intent', 'sanitize_text_field' );
 
 		add_settings_section(
 			$section,
@@ -1469,6 +1502,156 @@ class Social_Media_Popup {
 			array(
 				'field' => $scp_prefix . 'google_analytics_tracking_id',
 				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . 'UA-12345678-0'
+			)
+		);
+
+		// ID секции для описания событий
+		$section = SMP_PREFIX . '-section-common-tracking-events-simple-labels';
+
+		add_settings_section(
+			$section,
+			__( 'Window Events Descriptions', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_section_common_window_events_descriptions' ),
+			$options_page
+		);
+
+		// Label for window showed immediately
+		add_settings_field(
+			SMP_PREFIX . '-tracking-event-label-window-showed-immediately',
+			__( 'Window showed immediately', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'tracking_event_label_window_showed_immediately',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . __( 'Show immediately', L10N_SCP_PREFIX )
+			)
+		);
+
+		// Label for window showed after N seconds
+		add_settings_field(
+			SMP_PREFIX . '-tracking-event-label-window-showed-after-n-seconds',
+			__( 'Window showed after N seconds', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'tracking_event_label_window_showed_with_delay',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . __( 'Show after delay before it rendered', L10N_SCP_PREFIX )
+			)
+		);
+
+		// Label for window showed after click on CSS-selector
+		add_settings_field(
+			SMP_PREFIX . '-tracking-event-label-window-showed-after-click',
+			__( 'Window showed after click on CSS-selector', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'tracking_event_label_window_showed_after_click',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . __( 'Show after click on CSS-selector', L10N_SCP_PREFIX )
+			)
+		);
+
+		// Label for window showed on scrolling down
+		add_settings_field(
+			SMP_PREFIX . '-tracking-event-label-window-showed-on-scrolling-down',
+			__( 'Window showed on scrolling down', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'tracking_event_label_window_showed_on_scrolling_down',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . __( 'Show after scrolling down', L10N_SCP_PREFIX )
+			)
+		);
+
+		// Label for window showed on exit intent
+		add_settings_field(
+			SMP_PREFIX . '-tracking-event-label-window-showed-on-exit-intent',
+			__( 'Window showed on exit intent', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'tracking_event_label_window_showed_on_exit_intent',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . __( 'Show on exit intent', L10N_SCP_PREFIX )
+			)
+		);
+
+		// ID секции для описания событий
+		$section = SMP_PREFIX . '-section-common-tracking-events-multiple-labels';
+
+		add_settings_section(
+			$section,
+			__( 'Social Networks Events Descriptions', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_section_common_multiple_events_descriptions' ),
+			$options_page
+		);
+
+		// Label for no events fired
+		add_settings_field(
+			SMP_PREFIX . '-tracking-event-label-no-events-fired',
+			__( 'If no events fired', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'tracking_event_label_no_events_fired',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . __( '(no events fired)', L10N_SCP_PREFIX )
+			)
+		);
+
+		// Label after delay before show widget
+		add_settings_field(
+			SMP_PREFIX . '-tracking-event-label-after-delay-before-show-widget',
+			__( 'When popup will appear after delay before show widget', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'tracking_event_label_on_delay',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . __( 'After delay before show widget', L10N_SCP_PREFIX )
+			)
+		);
+
+		// Label after click on CSS-selector
+		add_settings_field(
+			SMP_PREFIX . '-tracking-event-label-after-click-on-css-selector',
+			__( 'On click on CSS-selector', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'tracking_event_label_after_click',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . __( 'After click on CSS-selector', L10N_SCP_PREFIX )
+			)
+		);
+
+		// Label on window scrolling down
+		add_settings_field(
+			SMP_PREFIX . '-tracking-event-label-on-scrolling-down',
+			__( 'On window scrolling down', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'tracking_event_label_on_scrolling_down',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . __( 'On window scrolling down', L10N_SCP_PREFIX )
+			)
+		);
+
+		// Label on exit intent
+		add_settings_field(
+			SMP_PREFIX . '-tracking-event-label-on-exit-intent',
+			__( 'On exit intent', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'tracking_event_label_on_exit_intent',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . __( 'On exit intent', L10N_SCP_PREFIX )
 			)
 		);
 	}
@@ -2987,6 +3170,33 @@ class Social_Media_Popup {
 	}
 
 	/**
+	 * Events Tracking events description
+	 *
+	 * @since 0.7.5
+	 */
+	public function settings_section_common_events_descriptions() {
+		_e( 'Events descriptions can be set in this section', L10N_SCP_PREFIX );
+	}
+
+	/**
+	 * Window Events Tracking events description
+	 *
+	 * @since 0.7.5
+	 */
+	public function settings_section_common_window_events_descriptions() {
+		_e( 'This events using on window rendering depends on event type and used when/or social networks events are disabled.', L10N_SCP_PREFIX );
+	}
+
+	/**
+	 * Multiple Events Tracking events description
+	 *
+	 * @since 0.7.5
+	 */
+	public function settings_section_common_multiple_events_descriptions() {
+		_e( 'This descriptions will concatenate with social networks events descriptions. Example: [Subscribe on Facebook] + [no events fired].', L10N_SCP_PREFIX );
+	}
+
+	/**
 	 * Описание общих настроек (таб "Управление")
 	 */
 	public function settings_section_common_management() {
@@ -3854,7 +4064,6 @@ class Social_Media_Popup {
 
 	private function scp_php( $scp_prefix ) {
 		$use_events_tracking = esc_attr( get_option( $scp_prefix . 'use_events_tracking' ) ) === '1';
-		$template            = new SCP_Template( $use_events_tracking );
 
 		$scp_options = array();
 		$all_options = wp_load_alloptions();
@@ -3862,6 +4071,21 @@ class Social_Media_Popup {
 			// TODO: Возможно есть смысл сделать esc_attr именно здесь, но надо проверить
 			if ( stristr( $name, $scp_prefix ) ) $scp_options[$name] = $value;
 		}
+
+		$events_descriptions = array(
+			'window_showed_immediately'       => $scp_options[ $scp_prefix . 'tracking_event_label_window_showed_immediately' ],
+			'window_showed_with_delay'        => $scp_options[ $scp_prefix . 'tracking_event_label_window_showed_with_delay' ],
+			'window_showed_after_click'       => $scp_options[ $scp_prefix . 'tracking_event_label_window_showed_after_click' ],
+			'window_showed_on_scrolling_down' => $scp_options[ $scp_prefix . 'tracking_event_label_window_showed_on_scrolling_down' ],
+			'window_showed_on_exit_intent'    => $scp_options[ $scp_prefix . 'tracking_event_label_window_showed_on_exit_intent' ],
+			'no_events_fired'                 => $scp_options[ $scp_prefix . 'tracking_event_label_no_events_fired' ],
+			'on_delay'                        => $scp_options[ $scp_prefix . 'tracking_event_label_on_delay' ],
+			'after_click'                     => $scp_options[ $scp_prefix . 'tracking_event_label_after_click' ],
+			'on_scrolling_down'               => $scp_options[ $scp_prefix . 'tracking_event_label_on_scrolling_down' ],
+			'on_exit_intent'                  => $scp_options[ $scp_prefix . 'tracking_event_label_on_exit_intent' ]
+		);
+
+		$template = new SCP_Template( $use_events_tracking, $events_descriptions );
 
 		$debug_mode = ( (int) $scp_options[ $scp_prefix . 'setting_debug_mode' ] ) == 1;
 

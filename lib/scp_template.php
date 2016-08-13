@@ -11,14 +11,39 @@ class SCP_Template {
 	private $_use_events_tracking = false;
 
 	/**
+	 * Events descriptions
+	 *
+	 * @since 0.7.5
+	 *
+	 * @var array $_events_descriptions
+	 */
+	private $_events_descriptions = array();
+
+	/**
 	 * Constructor
 	 *
 	 * @since 0.7.5
 	 *
 	 * @param boolean $use_events_tracking
+	 * @param array $events_descriptions
 	 */
-	public function __construct( $use_events_tracking = false ) {
+	public function __construct( $use_events_tracking = false, $events_descriptions = array() ) {
 		$this->_use_events_tracking = $use_events_tracking;
+
+		$default_events_descriptions = array(
+			'window_showed_immediately'       => __( 'Show immediately', L10N_SCP_PREFIX ),
+			'window_showed_with_delay'        => __( 'Show after delay before it rendered', L10N_SCP_PREFIX ),
+			'window_showed_after_click'       => __( 'Show after click on CSS-selector', L10N_SCP_PREFIX ),
+			'window_showed_on_scrolling_down' => __( 'Show after scrolling down', L10N_SCP_PREFIX ),
+			'window_showed_on_exit_intent'    => __( 'Show on exit intent', L10N_SCP_PREFIX ),
+			'no_events_fired'                 => __( '(no events fired)', L10N_SCP_PREFIX ),
+			'on_delay'                        => __( 'After delay before show widget', L10N_SCP_PREFIX ),
+			'after_click'                     => __( 'After click on CSS-selector', L10N_SCP_PREFIX ),
+			'on_scrolling_down'               => __( 'On scrolling down', L10N_SCP_PREFIX ),
+			'on_exit_intent'                  => __( 'On exit intent', L10N_SCP_PREFIX )
+		);
+
+		$this->_events_descriptions = wp_parse_args( $events_descriptions, $default_events_descriptions );
 	}
 
 	/**
@@ -46,7 +71,10 @@ class SCP_Template {
 		$content = '';
 
 		if ( $this->_use_events_tracking ) {
-			$content .= $this->push_google_analytics_event_on_show_window( "show immediately", "(no events fired)" );
+			$content .= $this->push_google_analytics_event_on_show_window(
+				$this->_events_descriptions['window_showed_immediately'],
+				$this->_events_descriptions['no_events_fired']
+			);
 		}
 
 		if ( wp_is_mobile() ) {
@@ -150,6 +178,9 @@ class SCP_Template {
 	 * @since 0.7.5 Add push event to Google Analytics
 	 *
 	 * @uses $this->push_google_analytics_event_on_show_window()
+	 * @uses $this->render_show_window()
+	 * @uses $this->render_close_widget_on_mobile()
+	 * @uses $this->render_show_bottom_button()
 	 *
 	 * @param array $when_should_the_popup_appear Events list
 	 * @param int $popup_will_appear_after_n_seconds Event value
@@ -176,7 +207,10 @@ class SCP_Template {
 				if (is_scp_cookie_present()) return false;';
 
 				if ( $this->_use_events_tracking ) {
-					$content .= $this->push_google_analytics_event_on_show_window( "show after " . ( $calculated_delay / 1000 ) . " seconds", "after delay before show widget" );
+					$content .= $this->push_google_analytics_event_on_show_window(
+						$this->_events_descriptions['window_showed_with_delay'],
+						$this->_events_descriptions['on_delay']
+					);
 				}
 
 				$content .= $this->render_show_window();
@@ -200,6 +234,9 @@ class SCP_Template {
 	 * @since 0.7.5 Add push event to Google Analytics
 	 *
 	 * @uses $this->push_google_analytics_event_on_show_window()
+	 * @uses $this->render_show_window()
+	 * @uses $this->render_close_widget_on_mobile()
+	 * @uses $this->render_show_bottom_button()
 	 *
 	 * @param array $when_should_the_popup_appear Events list
 	 * @param int $popup_will_appear_after_clicking_on_element Event value
@@ -226,7 +263,10 @@ class SCP_Template {
 					if (is_scp_cookie_present()) return false;';
 
 					if ( $this->_use_events_tracking ) {
-						$content .= $this->push_google_analytics_event_on_show_window( "show after click on " . $popup_will_appear_after_clicking_on_element, "after click on CSS selector" );
+						$content .= $this->push_google_analytics_event_on_show_window(
+							$this->_events_descriptions['window_showed_after_click'],
+							$this->_events_descriptions['after_click']
+						);
 					}
 
 					$content .= $this->render_show_window();
@@ -259,6 +299,9 @@ class SCP_Template {
 	 * @since 0.7.5 Add push event to Google Analytics
 	 *
 	 * @uses $this->push_google_analytics_event_on_show_window()
+	 * @uses $this->render_show_window()
+	 * @uses $this->render_close_widget_on_mobile()
+	 * @uses $this->render_show_bottom_button()
 	 *
 	 * @param array $when_should_the_popup_appear Events list
 	 * @param int $popup_will_appear_after_scrolling_down_n_percent Event value
@@ -288,7 +331,9 @@ class SCP_Template {
 
 					if ( $this->_use_events_tracking ) {
 						$content .= $this->push_google_analytics_event_on_show_window(
-							"show after scrolling down on " . $popup_will_appear_after_scrolling_down_n_percent . '%', "on scrolling down" );
+							$this->_events_descriptions['window_showed_on_scrolling_down'],
+							$this->_events_descriptions['on_scrolling_down']
+						);
 					}
 
 					$content .= $this->render_show_window();
@@ -314,6 +359,8 @@ class SCP_Template {
 	 * @since 0.7.5 Add push event to Google Analytics
 	 *
 	 * @uses $this->push_google_analytics_event_on_show_window()
+	 * @uses $this->render_show_window()
+	 * @uses $this->render_show_bottom_button()
 	 *
 	 * @param array $when_should_the_popup_appear Events list
 	 * @param boolean $popup_will_appear_on_exit_intent Event value
@@ -339,7 +386,10 @@ class SCP_Template {
 				var scroll = window.pageYOffset || document.documentElement.scrollTop;
 				if((e.pageY - scroll) < 7) {';
 					if ( $this->_use_events_tracking ) {
-						$content .= $this->push_google_analytics_event_on_show_window( "show on exit intent", "on exit intent" );
+						$content .= $this->push_google_analytics_event_on_show_window(
+							$this->_events_descriptions['window_showed_on_exit_intent'],
+							$this->_events_descriptions['on_exit_intent']
+						);
 					}
 
 					$content .= $this->render_show_window();
