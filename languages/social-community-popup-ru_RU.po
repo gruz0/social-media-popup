@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Social Community Popup\n"
-"POT-Creation-Date: 2016-07-10 16:33+0300\n"
-"PO-Revision-Date: 2016-07-10 16:33+0300\n"
+"POT-Creation-Date: 2016-08-14 16:23+0300\n"
+"PO-Revision-Date: 2016-08-14 16:40+0300\n"
 "Last-Translator: Alexander Gruzov <gruz0.mail@gmail.com>\n"
 "Language-Team: Alexander Gruzov <support@gruz0.ru>\n"
 "Language: ru_RU\n"
@@ -17,15 +17,64 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../lib/providers/twitter.php:89
+#: ../lib/providers/twitter.php:144
 msgid "Follow"
 msgstr "Читать"
 
-#: ../lib/providers/twitter.php:103
+#: ../lib/providers/twitter.php:167
 msgid "Tweets"
 msgstr "Твиты"
 
-#: ../lib/scp_template.php:192
+#: ../lib/scp_template.php:43 ../social-media-popup.class.php:851
+#: ../social-media-popup.class.php:1603
+msgid "Show immediately"
+msgstr "Показано сразу"
+
+#: ../lib/scp_template.php:44 ../social-media-popup.class.php:852
+#: ../social-media-popup.class.php:1616
+msgid "Show after delay before it rendered"
+msgstr "Показано после задержки"
+
+#: ../lib/scp_template.php:45 ../social-media-popup.class.php:853
+#: ../social-media-popup.class.php:1629
+msgid "Show after click on CSS-selector"
+msgstr "Показано после клика на CSS-элемент"
+
+#: ../lib/scp_template.php:46 ../social-media-popup.class.php:854
+#: ../social-media-popup.class.php:1642
+msgid "Show after scrolling down"
+msgstr "Показано при прокрутке окна"
+
+#: ../lib/scp_template.php:47 ../social-media-popup.class.php:855
+#: ../social-media-popup.class.php:1655
+msgid "Show on exit intent"
+msgstr "Показано при уходе со страницы"
+
+#: ../lib/scp_template.php:48 ../social-media-popup.class.php:856
+#: ../social-media-popup.class.php:1702
+msgid "(no events fired)"
+msgstr "(событий нет)"
+
+#: ../lib/scp_template.php:49 ../social-media-popup.class.php:857
+#: ../social-media-popup.class.php:1715
+msgid "After delay before show widget"
+msgstr "После задержки перед показом виджета"
+
+#: ../lib/scp_template.php:50 ../social-media-popup.class.php:858
+#: ../social-media-popup.class.php:1728
+msgid "After click on CSS-selector"
+msgstr "После клика на CSS-элемент"
+
+#: ../lib/scp_template.php:51 ../social-media-popup.class.php:859
+msgid "On scrolling down"
+msgstr "При прокрутке окна"
+
+#: ../lib/scp_template.php:52 ../social-media-popup.class.php:860
+#: ../social-media-popup.class.php:1748 ../social-media-popup.class.php:1754
+msgid "On exit intent"
+msgstr "При уходе со страницы"
+
+#: ../lib/scp_template.php:297
 msgid ""
 "You should to add a CSS selector in the plugin settings. Otherwise it won't "
 "be work."
@@ -33,757 +82,946 @@ msgstr ""
 "Укажите CSS селектор в настройках плагина. В противном случае окно не "
 "появится."
 
-#: ../social-media-popup.class.php:304 ../social-media-popup.class.php:3225
+#: ../social-media-popup.class.php:330 ../social-media-popup.class.php:3894
 #: ../tests/test-plugin.php:67
 msgid "Facebook"
 msgstr "Facebook"
 
-#: ../social-media-popup.class.php:314 ../tests/test-plugin.php:76
+#: ../social-media-popup.class.php:340 ../social-media-popup.class.php:2173
+#: ../tests/test-plugin.php:76
 msgid "VK"
 msgstr "ВКонтакте"
 
-#: ../social-media-popup.class.php:323 ../social-media-popup.class.php:3245
-#: ../tests/test-plugin.php:85
+#: ../social-media-popup.class.php:349 ../social-media-popup.class.php:2450
+#: ../social-media-popup.class.php:3914 ../tests/test-plugin.php:85
 msgid "Odnoklassniki"
 msgstr "Одноклассники"
 
-#: ../social-media-popup.class.php:374 ../social-media-popup.class.php:3255
+#: ../social-media-popup.class.php:400 ../social-media-popup.class.php:3924
 #: ../tests/test-plugin.php:123
 msgid "Google+"
 msgstr "Google+"
 
-#: ../social-media-popup.class.php:409 ../social-media-popup.class.php:3265
-#: ../tests/test-plugin.php:151
+#: ../social-media-popup.class.php:435 ../social-media-popup.class.php:2786
+#: ../social-media-popup.class.php:3934 ../tests/test-plugin.php:151
 msgid "Twitter"
 msgstr "Twitter"
 
-#: ../social-media-popup.class.php:538 ../social-media-popup.class.php:758
+#: ../social-media-popup.class.php:564 ../social-media-popup.class.php:784
 #: ../tests/test-plugin.php:243
 msgid "Follow Us on Social Media!"
 msgstr "Следуйте за нами в социальных сетях!"
 
-#: ../social-media-popup.class.php:547 ../tests/test-plugin.php:249
+#: ../social-media-popup.class.php:573 ../social-media-popup.class.php:1141
+#: ../tests/test-plugin.php:249
 msgid "Thanks! Please don't show me popup."
 msgstr "Спасибо! Я уже с вами."
 
-#: ../social-media-popup.class.php:570 ../social-media-popup.class.php:3275
-#: ../tests/test-plugin.php:265
+#: ../social-media-popup.class.php:596 ../social-media-popup.class.php:3180
+#: ../social-media-popup.class.php:3944 ../tests/test-plugin.php:265
 msgid "Pinterest"
 msgstr "Pinterest"
 
-#: ../social-media-popup.class.php:872 ../social-media-popup.class.php:2235
+#: ../social-media-popup.class.php:842 ../social-media-popup.class.php:3121
+msgid "Follow on Twitter"
+msgstr "Подписка в Twitter"
+
+#: ../social-media-popup.class.php:845
+msgid "Subscribe on VK.com"
+msgstr "Подписка во ВКонтакте"
+
+#: ../social-media-popup.class.php:848 ../social-media-popup.class.php:2091
+msgid "Subscribe on Facebook"
+msgstr "Подписка на Facebook"
+
+#: ../social-media-popup.class.php:930 ../social-media-popup.class.php:2760
 msgid "Common Settings"
 msgstr "Общие настройки"
 
-#: ../social-media-popup.class.php:880
+#: ../social-media-popup.class.php:938 ../social-media-popup.class.php:3973
 msgid "Debug Mode"
 msgstr "Режим отладки"
 
-#: ../social-media-popup.class.php:892
+#: ../social-media-popup.class.php:950
 msgid "Tabs Order"
 msgstr "Порядок отображения табов"
 
-#: ../social-media-popup.class.php:904
+#: ../social-media-popup.class.php:962
 msgid "Close the popup by clicking anywhere on the screen"
 msgstr "Закрывать окно при нажатии на любую область экрана"
 
-#: ../social-media-popup.class.php:916
+#: ../social-media-popup.class.php:974
 msgid "Close the popup when ESC pressed"
 msgstr "Закрывать окно при нажатии на клавишу ESC"
 
-#: ../social-media-popup.class.php:928
+#: ../social-media-popup.class.php:986
 msgid "Show widget on mobile devices"
 msgstr "Отображать виджет на мобильных устройствах"
 
-#: ../social-media-popup.class.php:940
+#: ../social-media-popup.class.php:998
 msgid "Show Plugin Menu in Admin Bar"
 msgstr "Показывать меню плагина в админ баре"
 
-#: ../social-media-popup.class.php:985
+#: ../social-media-popup.class.php:1043
 msgid "View"
 msgstr "Внешний вид"
 
-#: ../social-media-popup.class.php:993 ../social-media-popup.class.php:1216
+#: ../social-media-popup.class.php:1051 ../social-media-popup.class.php:1280
 msgid "Widget Title"
 msgstr "Заголовок виджета"
 
-#: ../social-media-popup.class.php:1005
+#: ../social-media-popup.class.php:1063
 msgid "Use Icons Instead of Labels in Tabs"
 msgstr "Использовать иконки вместо надписей в табах"
 
-#: ../social-media-popup.class.php:1017 ../social-media-popup.class.php:1228
+#: ../social-media-popup.class.php:1075 ../social-media-popup.class.php:1292
 msgid "Icons Size"
 msgstr "Размер иконок"
 
-#: ../social-media-popup.class.php:1029
+#: ../social-media-popup.class.php:1087
 msgid "Hide Tabs if One Widget is Active"
 msgstr "Скрывать панель табов, если активна только 1 соц. сеть"
 
-#: ../social-media-popup.class.php:1041
+#: ../social-media-popup.class.php:1099
 msgid "Align Tabs to Center"
 msgstr "Выровнять табы с названием соц. сетей по центру"
 
-#: ../social-media-popup.class.php:1053
+#: ../social-media-popup.class.php:1111
 msgid "Show Close Button in Title"
 msgstr "Отображать кнопку закрытия виджета в заголовке окна"
 
-#: ../social-media-popup.class.php:1065
+#: ../social-media-popup.class.php:1123
 msgid "Show Button to Close Widget"
 msgstr "Показывать кнопку закрытия окна (внизу виджета)"
 
-#: ../social-media-popup.class.php:1077
+#: ../social-media-popup.class.php:1135
 msgid "Button to Close Widget Title"
 msgstr "Надпись на кнопке закрытия окна"
 
-#: ../social-media-popup.class.php:1089
+#: ../social-media-popup.class.php:1141 ../social-media-popup.class.php:1166
+#: ../social-media-popup.class.php:1179 ../social-media-popup.class.php:1192
+#: ../social-media-popup.class.php:1205 ../social-media-popup.class.php:1230
+#: ../social-media-popup.class.php:1358 ../social-media-popup.class.php:1371
+#: ../social-media-popup.class.php:1396 ../social-media-popup.class.php:1440
+#: ../social-media-popup.class.php:1465 ../social-media-popup.class.php:1556
+#: ../social-media-popup.class.php:1603 ../social-media-popup.class.php:1616
+#: ../social-media-popup.class.php:1629 ../social-media-popup.class.php:1642
+#: ../social-media-popup.class.php:1655 ../social-media-popup.class.php:1702
+#: ../social-media-popup.class.php:1715 ../social-media-popup.class.php:1728
+#: ../social-media-popup.class.php:1741 ../social-media-popup.class.php:1754
+#: ../social-media-popup.class.php:1874 ../social-media-popup.class.php:1911
+#: ../social-media-popup.class.php:1924 ../social-media-popup.class.php:1949
+#: ../social-media-popup.class.php:1962 ../social-media-popup.class.php:2091
+#: ../social-media-popup.class.php:2173 ../social-media-popup.class.php:2210
+#: ../social-media-popup.class.php:2223 ../social-media-popup.class.php:2236
+#: ../social-media-popup.class.php:2249 ../social-media-popup.class.php:2262
+#: ../social-media-popup.class.php:2335 ../social-media-popup.class.php:2392
+#: ../social-media-popup.class.php:2450 ../social-media-popup.class.php:2487
+#: ../social-media-popup.class.php:2500 ../social-media-popup.class.php:2513
+#: ../social-media-popup.class.php:2526 ../social-media-popup.class.php:2588
+#: ../social-media-popup.class.php:2637 ../social-media-popup.class.php:2674
+#: ../social-media-popup.class.php:2786 ../social-media-popup.class.php:2823
+#: ../social-media-popup.class.php:3015 ../social-media-popup.class.php:3040
+#: ../social-media-popup.class.php:3053 ../social-media-popup.class.php:3121
+#: ../social-media-popup.class.php:3180 ../social-media-popup.class.php:3217
+#: ../social-media-popup.class.php:3230 ../social-media-popup.class.php:3243
+#: ../social-media-popup.class.php:3256
+msgid "Example: "
+msgstr "Пример: "
+
+#: ../social-media-popup.class.php:1148
 msgid "Button to Close Widget Style"
 msgstr "Стиль кнопки закрытия окна"
 
-#: ../social-media-popup.class.php:1101
+#: ../social-media-popup.class.php:1160
 msgid "Delay Before Show Button to Close Widget (sec.)"
 msgstr "Задержка перед отображением кнопки закрытия окна (внизу), в сек."
 
-#: ../social-media-popup.class.php:1113
+#: ../social-media-popup.class.php:1173
 msgid "Container Width"
 msgstr "Ширина родительского контейнера"
 
-#: ../social-media-popup.class.php:1125
+#: ../social-media-popup.class.php:1186
 msgid "Container Height"
 msgstr "Высота родительского контейнера"
 
-#: ../social-media-popup.class.php:1137
+#: ../social-media-popup.class.php:1199
 msgid "Border Radius"
 msgstr "Радиус скругления углов виджета"
 
-#: ../social-media-popup.class.php:1149
+#: ../social-media-popup.class.php:1212
 msgid "Overlay Color"
 msgstr "Цвет фоновой заливки контейнера (#HEX или RGB)"
 
-#: ../social-media-popup.class.php:1161
+#: ../social-media-popup.class.php:1224
 msgid "Overlay Opacity"
 msgstr "Прозрачность цвета фоновой заливки (в процентах)"
 
-#: ../social-media-popup.class.php:1173
+#: ../social-media-popup.class.php:1237
 msgid "Widget Background Image"
 msgstr "Фоновое изображение виджета"
 
-#: ../social-media-popup.class.php:1208 ../templates/settings.php:26
+#: ../social-media-popup.class.php:1272 ../templates/settings.php:26
 msgid "View (Mobile Devices)"
 msgstr "Внешний вид (мобильные устройства)"
 
-#: ../social-media-popup.class.php:1268
+#: ../social-media-popup.class.php:1332
 msgid "When Should the Popup Appear?"
 msgstr "При наступлении каких событий показывать окно плагина?"
 
-#: ../social-media-popup.class.php:1276 ../social-media-popup.class.php:1355
+#: ../social-media-popup.class.php:1340 ../social-media-popup.class.php:1422
 msgid "Select Events for Customizing"
 msgstr "Выберите события для использования"
 
-#: ../social-media-popup.class.php:1288
+#: ../social-media-popup.class.php:1352
 msgid "Popup Will Appear After N Second(s)"
 msgstr "Показать окно после просмотра сайта N секунд"
 
-#: ../social-media-popup.class.php:1300
+#: ../social-media-popup.class.php:1365
 msgid "Popup Will Appear After Clicking on the Given CSS Selector"
 msgstr "Показать окно при клике на указанный CSS селектор"
 
-#: ../social-media-popup.class.php:1312
+#: ../social-media-popup.class.php:1378
 msgid "Hide Element After Click on It"
 msgstr "Скрыть элемент после клика на него"
 
-#: ../social-media-popup.class.php:1324
+#: ../social-media-popup.class.php:1390
 msgid "Popup Will Appear After Scrolling Down at Least N Percent"
 msgstr "Показать окно при прокрутке страницы больше чем N %"
 
-#: ../social-media-popup.class.php:1336
+#: ../social-media-popup.class.php:1403
 msgid "Popup Will Appear On Exit-Intent"
 msgstr "Показать окно при перемещении мыши за пределы страницы"
 
-#: ../social-media-popup.class.php:1347
+#: ../social-media-popup.class.php:1414
 msgid "Who Should See the Popup?"
 msgstr "Каким посетителям показывать окно?"
 
-#: ../social-media-popup.class.php:1367
+#: ../social-media-popup.class.php:1434
 msgid "Visitor Opened at Least N Number of Pages"
 msgstr "Посетитель открыл больше N страниц"
 
-#: ../social-media-popup.class.php:1379 ../social-media-popup.class.php:2937
+#: ../social-media-popup.class.php:1447 ../social-media-popup.class.php:3606
 msgid "Registered Users Who Should See the Popup"
 msgstr "Зарегистрированные пользователи, которые увидят окно"
 
-#: ../social-media-popup.class.php:1391
+#: ../social-media-popup.class.php:1459
 msgid "Display After N-days"
 msgstr "Повторный показ окна через N дней после закрытия"
 
-#: ../social-media-popup.class.php:1421 ../templates/settings.php:28
+#: ../social-media-popup.class.php:1508
+msgid "Events Tracking"
+msgstr "Отслеживание событий"
+
+#: ../social-media-popup.class.php:1516
+msgid "Use Events Tracking"
+msgstr "Использовать отслеживание событий"
+
+#: ../social-media-popup.class.php:1528
+msgid "Do not use tracking in Debug mode"
+msgstr "Не использовать отслеживание в Режиме отладки"
+
+#: ../social-media-popup.class.php:1542
+msgid "Google Analytics"
+msgstr "Google Analytics"
+
+#: ../social-media-popup.class.php:1550
+msgid "Google Analytics Tracking ID"
+msgstr "Идентификатор Google Analytics"
+
+#: ../social-media-popup.class.php:1563
+msgid "Push events to Aquisition > Social > Plugins"
+msgstr "Отправлять события в \"Соц. функции\" > \"Плагины\""
+
+#: ../social-media-popup.class.php:1577
+msgid "Window Events Descriptions"
+msgstr "Описание событий появления окна"
+
+#: ../social-media-popup.class.php:1585
+msgid "Push events when displaying the window"
+msgstr "Отправлять события при появлении окна"
+
+#: ../social-media-popup.class.php:1597
+msgid "Window showed immediately"
+msgstr "Окно показано сразу (все события отключены)"
+
+#: ../social-media-popup.class.php:1610
+msgid "Window showed after N seconds"
+msgstr "Окно показано с задержкой"
+
+#: ../social-media-popup.class.php:1623
+msgid "Window showed after click on CSS-selector"
+msgstr "Окно показано при клике на CSS-элемент"
+
+#: ../social-media-popup.class.php:1636
+msgid "Window showed on scrolling down"
+msgstr "Окно показано при прокрутке страницы"
+
+#: ../social-media-popup.class.php:1649
+msgid "Window showed on exit intent"
+msgstr "Окно показано при уходе со страницы"
+
+#: ../social-media-popup.class.php:1664
+msgid "Social Networks Events Descriptions"
+msgstr "Описание событий социальных сетей"
+
+#: ../social-media-popup.class.php:1672
+msgid "Push events when subscribing on social networks"
+msgstr "Отправлять события при подписке на соц. сети"
+
+#: ../social-media-popup.class.php:1684
+msgid "Add window events descriptions"
+msgstr "Добавлять события появления окна"
+
+#: ../social-media-popup.class.php:1696
+msgid "If no events fired"
+msgstr "При отключенных событиях"
+
+#: ../social-media-popup.class.php:1709
+msgid "When popup will appear after delay before show widget"
+msgstr "При задержке перед показом окна"
+
+#: ../social-media-popup.class.php:1722
+msgid "On click on CSS-selector"
+msgstr "При клике на CSS-элемент"
+
+#: ../social-media-popup.class.php:1735 ../social-media-popup.class.php:1741
+msgid "On window scrolling down"
+msgstr "При прокнутке окна"
+
+#: ../social-media-popup.class.php:1779 ../templates/settings.php:29
 msgid "Management"
 msgstr "Управление настройками"
 
-#: ../social-media-popup.class.php:1429
+#: ../social-media-popup.class.php:1787
 msgid "Remove Settings On Uninstall Plugin"
 msgstr "Удалить все настройки плагина при его удалении"
 
-#: ../social-media-popup.class.php:1473
+#: ../social-media-popup.class.php:1848
 msgid "Facebook Community Widget"
 msgstr "Виджет групп Facebook"
 
-#: ../social-media-popup.class.php:1481
+#: ../social-media-popup.class.php:1856
 msgid "Use Facebook"
 msgstr "Использовать виджет Facebook"
 
-#: ../social-media-popup.class.php:1493 ../social-media-popup.class.php:1715
-#: ../social-media-popup.class.php:1928 ../social-media-popup.class.php:2061
-#: ../social-media-popup.class.php:2255 ../social-media-popup.class.php:2587
+#: ../social-media-popup.class.php:1868 ../social-media-popup.class.php:2167
+#: ../social-media-popup.class.php:2444 ../social-media-popup.class.php:2582
+#: ../social-media-popup.class.php:2780 ../social-media-popup.class.php:3174
 msgid "Tab Caption"
 msgstr "Надпись на вкладке"
 
-#: ../social-media-popup.class.php:1505 ../social-media-popup.class.php:1727
-#: ../social-media-popup.class.php:1940 ../social-media-popup.class.php:2073
-#: ../social-media-popup.class.php:2267 ../social-media-popup.class.php:2599
+#: ../social-media-popup.class.php:1881 ../social-media-popup.class.php:2180
+#: ../social-media-popup.class.php:2457 ../social-media-popup.class.php:2595
+#: ../social-media-popup.class.php:2793 ../social-media-popup.class.php:3187
 msgid "Show Description Above The Widget"
 msgstr "Показывать текстовое описание над виджетом"
 
-#: ../social-media-popup.class.php:1517 ../social-media-popup.class.php:1739
-#: ../social-media-popup.class.php:1952 ../social-media-popup.class.php:2085
-#: ../social-media-popup.class.php:2279 ../social-media-popup.class.php:2611
+#: ../social-media-popup.class.php:1893 ../social-media-popup.class.php:2192
+#: ../social-media-popup.class.php:2469 ../social-media-popup.class.php:2607
+#: ../social-media-popup.class.php:2805 ../social-media-popup.class.php:3199
 msgid "Description Above The Widget"
 msgstr "Текстовое описание над виджетом"
 
-#: ../social-media-popup.class.php:1529
+#: ../social-media-popup.class.php:1905
 msgid "Application ID"
 msgstr "ID приложения"
 
-#: ../social-media-popup.class.php:1541
+#: ../social-media-popup.class.php:1918
 msgid "Facebook Page URL"
 msgstr "Адрес страницы Facebook (http://)"
 
-#: ../social-media-popup.class.php:1553
+#: ../social-media-popup.class.php:1931
 msgid "Facebook Locale"
 msgstr "Языковая версия"
 
-#: ../social-media-popup.class.php:1565 ../social-media-popup.class.php:1787
-#: ../social-media-popup.class.php:1988 ../social-media-popup.class.php:2506
-#: ../social-media-popup.class.php:2647
+#: ../social-media-popup.class.php:1943 ../social-media-popup.class.php:2243
+#: ../social-media-popup.class.php:2507 ../social-media-popup.class.php:3034
+#: ../social-media-popup.class.php:3237
 msgid "Widget Width"
 msgstr "Ширина виджета в пикселях"
 
-#: ../social-media-popup.class.php:1577 ../social-media-popup.class.php:1799
-#: ../social-media-popup.class.php:2000 ../social-media-popup.class.php:2518
-#: ../social-media-popup.class.php:2659
+#: ../social-media-popup.class.php:1956 ../social-media-popup.class.php:2256
+#: ../social-media-popup.class.php:2520 ../social-media-popup.class.php:3047
+#: ../social-media-popup.class.php:3250
 msgid "Widget Height"
 msgstr "Высота виджета в пикселях"
 
-#: ../social-media-popup.class.php:1589
+#: ../social-media-popup.class.php:1969
 msgid "Adapt to Plugin Container Width"
 msgstr "Подстроить ширину виджета под ширину контейнера"
 
-#: ../social-media-popup.class.php:1601
+#: ../social-media-popup.class.php:1981
 msgid "Use Small Header"
 msgstr "Использовать маленький заголовок"
 
-#: ../social-media-popup.class.php:1613
+#: ../social-media-popup.class.php:1993
 msgid "Hide cover photo in the header"
 msgstr "Скрывать обложку группы в заголовке виджета"
 
-#: ../social-media-popup.class.php:1625
+#: ../social-media-popup.class.php:2005
 msgid "Show profile photos when friends like this"
 msgstr "Показывать профили друзей отметивших страницу как понравившуюся"
 
-#: ../social-media-popup.class.php:1637
+#: ../social-media-popup.class.php:2017
 msgid "Show Content from Tabs"
 msgstr "Показывать в виджете события из следующих табов"
 
-#: ../social-media-popup.class.php:1649 ../social-media-popup.class.php:1859
-#: ../social-media-popup.class.php:2303
+#: ../social-media-popup.class.php:2029 ../social-media-popup.class.php:2317
+#: ../social-media-popup.class.php:2830
 msgid "Close Plugin Window After Joining the Group"
 msgstr "Закрыть окно плагина после вступления в группу"
 
-#: ../social-media-popup.class.php:1695
+#: ../social-media-popup.class.php:2065 ../social-media-popup.class.php:2366
+#: ../social-media-popup.class.php:3095 ../templates/settings.php:28
+#: ../templates/settings/settings-facebook.php:25
+#: ../templates/settings/settings-twitter.php:27
+#: ../templates/settings/settings-vkontakte.php:25
+msgid "Tracking"
+msgstr "Отслеживание"
+
+#: ../social-media-popup.class.php:2073 ../social-media-popup.class.php:2374
+#: ../social-media-popup.class.php:3103
+msgid "Use Tracking"
+msgstr "Использовать отслеживание событий"
+
+#: ../social-media-popup.class.php:2085 ../social-media-popup.class.php:2386
+#: ../social-media-popup.class.php:3115
+msgid "Event Label"
+msgstr "Описание события"
+
+#: ../social-media-popup.class.php:2147
 msgid "VKontakte Community Widget"
 msgstr "Виджет сообществ и групп ВКонтакте"
 
-#: ../social-media-popup.class.php:1703
+#: ../social-media-popup.class.php:2155
 msgid "Use VKontakte"
 msgstr "Использовать виджет ВКонтакте"
 
-#: ../social-media-popup.class.php:1751
+#: ../social-media-popup.class.php:2204
 msgid "VKontakte Application ID"
 msgstr "ID приложения"
 
-#: ../social-media-popup.class.php:1763
+#: ../social-media-popup.class.php:2217
 msgid "VKontakte Page or Group ID"
 msgstr "ID страницы или группы"
 
-#: ../social-media-popup.class.php:1775
+#: ../social-media-popup.class.php:2230
 msgid "VKontakte Page URL"
 msgstr "Ссылка на группу или паблик"
 
-#: ../social-media-popup.class.php:1811 ../social-media-popup.class.php:2121
+#: ../social-media-popup.class.php:2269 ../social-media-popup.class.php:2644
 msgid "Layout"
 msgstr "Тип выводимой информации"
 
-#: ../social-media-popup.class.php:1823
+#: ../social-media-popup.class.php:2281
 msgid "Background Color"
 msgstr "Цвет фона"
 
-#: ../social-media-popup.class.php:1835
+#: ../social-media-popup.class.php:2293
 msgid "Text Color"
 msgstr "Цвет текста"
 
-#: ../social-media-popup.class.php:1847
+#: ../social-media-popup.class.php:2305
 msgid "Button Color"
 msgstr "Цвет кнопки"
 
-#: ../social-media-popup.class.php:1871
+#: ../social-media-popup.class.php:2329
 msgid "Delay before render widget (in ms.)"
 msgstr "Задержка перед отображением виджета ВКонтакте (в мс.)"
 
-#: ../social-media-popup.class.php:1908
+#: ../social-media-popup.class.php:2392
+msgid "Subscribe on VK"
+msgstr "Подписка на ВКонтакте"
+
+#: ../social-media-popup.class.php:2424
 msgid "Odnoklassniki Community Widget"
 msgstr "Виджет групп Одноклассников"
 
-#: ../social-media-popup.class.php:1916
+#: ../social-media-popup.class.php:2432
 msgid "Use Odnoklassniki"
 msgstr "Использовать виджет Одноклассников"
 
-#: ../social-media-popup.class.php:1964
+#: ../social-media-popup.class.php:2481
 msgid "Odnoklassniki Group ID"
 msgstr "ID группы"
 
-#: ../social-media-popup.class.php:1976
+#: ../social-media-popup.class.php:2494
 msgid "Odnoklassniki Group URL"
 msgstr "Ссылка на группу"
 
-#: ../social-media-popup.class.php:2041
+#: ../social-media-popup.class.php:2562
 msgid "Google+ Community Widget"
 msgstr "Виджет профиля Google+"
 
-#: ../social-media-popup.class.php:2049
+#: ../social-media-popup.class.php:2570
 msgid "Use Google+"
 msgstr "Использовать Google+"
 
-#: ../social-media-popup.class.php:2097
+#: ../social-media-popup.class.php:2619
 msgid "Google+ Page Type"
 msgstr "Тип виджета Google+"
 
-#: ../social-media-popup.class.php:2109
+#: ../social-media-popup.class.php:2631
 msgid "Google+ Page URL"
 msgstr "Адрес страницы Google+"
 
-#: ../social-media-popup.class.php:2133
+#: ../social-media-popup.class.php:2656
 msgid "Google+ Locale"
 msgstr "Языковая версия"
 
-#: ../social-media-popup.class.php:2145
+#: ../social-media-popup.class.php:2668
 msgid "Widget Size"
 msgstr "Размер виджета в пикселях"
 
-#: ../social-media-popup.class.php:2157
+#: ../social-media-popup.class.php:2681
 msgid "Google+ Theme"
 msgstr "Цветовая схема"
 
-#: ../social-media-popup.class.php:2169
+#: ../social-media-popup.class.php:2693
 msgid "Show Cover Photo"
 msgstr "Показывать обложку"
 
-#: ../social-media-popup.class.php:2181
+#: ../social-media-popup.class.php:2705
 msgid "Show Tagline"
 msgstr "Показывать краткое описание"
 
-#: ../social-media-popup.class.php:2243
+#: ../social-media-popup.class.php:2768
 msgid "Use Twitter"
 msgstr "Использовать виджет Twitter"
 
-#: ../social-media-popup.class.php:2291
+#: ../social-media-popup.class.php:2817
 msgid "@Username"
 msgstr "@ВашЛогин (без \"собачки\")"
 
-#: ../social-media-popup.class.php:2341
+#: ../social-media-popup.class.php:2868
 #: ../templates/settings/settings-twitter.php:25
 msgid "Follow Button Widget"
 msgstr "Виджет Follow Button"
 
-#: ../social-media-popup.class.php:2349
+#: ../social-media-popup.class.php:2876
 msgid "Use Follow Button Widget"
 msgstr "Использовать виджет Follow Button"
 
-#: ../social-media-popup.class.php:2361
+#: ../social-media-popup.class.php:2888
 msgid "Show Followers Count"
 msgstr "Показывать количество фолловеров"
 
-#: ../social-media-popup.class.php:2373
+#: ../social-media-popup.class.php:2900
 msgid "Show Username"
 msgstr "Показывать имя пользователя"
 
-#: ../social-media-popup.class.php:2385
+#: ../social-media-popup.class.php:2912
 msgid "Follow Button Large Size"
 msgstr "Использовать большой размер кнопки"
 
-#: ../social-media-popup.class.php:2397
+#: ../social-media-popup.class.php:2924
 msgid "Follow Button Align"
 msgstr "Выравнивание кнопки"
 
-#: ../social-media-popup.class.php:2438
+#: ../social-media-popup.class.php:2965
 #: ../templates/settings/settings-twitter.php:26
 msgid "Timeline Widget"
 msgstr "Виджет Timeline"
 
-#: ../social-media-popup.class.php:2446
+#: ../social-media-popup.class.php:2973
 msgid "Use Timeline Widget"
 msgstr "Использовать виджет Timeline"
 
-#: ../social-media-popup.class.php:2458
+#: ../social-media-popup.class.php:2985
 msgid "Theme"
 msgstr "Тема оформления"
 
-#: ../social-media-popup.class.php:2470
+#: ../social-media-popup.class.php:2997
 msgid "Link Color"
 msgstr "Цвет ссылки"
 
-#: ../social-media-popup.class.php:2482
+#: ../social-media-popup.class.php:3009
 msgid "Tweet Limit"
 msgstr "Выводить последних твитов"
 
-#: ../social-media-popup.class.php:2494
+#: ../social-media-popup.class.php:3022
 msgid "Show Replies"
 msgstr "Показывать ответы на ваши твиты"
 
-#: ../social-media-popup.class.php:2530
+#: ../social-media-popup.class.php:3060
 msgid "Chrome"
 msgstr "Свойства виджета"
 
-#: ../social-media-popup.class.php:2567
+#: ../social-media-popup.class.php:3154
 msgid "Pinterest Profile Widget"
 msgstr "Виджет Pinterest"
 
-#: ../social-media-popup.class.php:2575
+#: ../social-media-popup.class.php:3162
 msgid "Use Pinterest"
 msgstr "Использовать виджет Pinterest"
 
-#: ../social-media-popup.class.php:2623
+#: ../social-media-popup.class.php:3211
 msgid "Profile URL"
 msgstr "Ссылка на профиль"
 
-#: ../social-media-popup.class.php:2635
+#: ../social-media-popup.class.php:3224
 msgid "Image Width"
 msgstr "Ширина изображения в пикселях"
 
-#: ../social-media-popup.class.php:2673
+#: ../social-media-popup.class.php:3265
 msgid "Common settings"
 msgstr "Общие настройки"
 
-#: ../social-media-popup.class.php:2680
+#: ../social-media-popup.class.php:3272
 msgid "Plugin appearance on desktop devices can be set in this section"
 msgstr ""
 "В этом разделе настраивается внешний вид плагина для десктопных браузеров"
 
-#: ../social-media-popup.class.php:2687
+#: ../social-media-popup.class.php:3279
 msgid "Plugin appearance on mobile devices can be set in this section"
 msgstr ""
 "В этом разделе настраивается внешний вид плагина для мобильных браузеров"
 
-#: ../social-media-popup.class.php:2694
+#: ../social-media-popup.class.php:3286
 msgid ""
 "Plugin events \"When should the popup will appear\" can be set in this "
 "section"
 msgstr "В этом разделе настраиваются события когда показывать окно плагина"
 
-#: ../social-media-popup.class.php:2701
+#: ../social-media-popup.class.php:3293
 msgid "Plugin events \"Who should see the popup\" can be set in this section"
 msgstr "В этом разделе настраиваются события кому показывать окно плагина"
 
-#: ../social-media-popup.class.php:2708
+#: ../social-media-popup.class.php:3302
+msgid "Events tracking can be set in this section"
+msgstr "В этом разделе настраивается отслеживание событий"
+
+#: ../social-media-popup.class.php:3311
+msgid "Events descriptions can be set in this section"
+msgstr ""
+
+#: ../social-media-popup.class.php:3320
+msgid "Window rendering uses these events when social networks are disabled."
+msgstr ""
+"Эти события используются при отображении окна. Например, вы можете настроить "
+"только отправку событий отображения окна и отключить отправку событий "
+"подписки на социальные сети."
+
+#: ../social-media-popup.class.php:3329
+msgid "Google Analytics settings."
+msgstr "Настройки Google Analytics"
+
+#: ../social-media-popup.class.php:3338
+msgid ""
+"This descriptions will concatenate with social networks events descriptions. "
+"Example: [Subscribe on Facebook] + [no events fired]."
+msgstr ""
+"Эти события используются при подписке на социальные сети и могут дополняться "
+"событиями отображения окна. Например: \"Подписка на Facebook\" + \"при "
+"прокрутке страницы\"."
+
+#: ../social-media-popup.class.php:3345
 msgid "Management settings can be set in this section"
 msgstr "В этом разделе настраивается управление опциями плагина"
 
-#: ../social-media-popup.class.php:2715
+#: ../social-media-popup.class.php:3352
 msgid "Facebook settings can be set in this section"
 msgstr "В этом разделе настраивается виджет Facebook"
 
-#: ../social-media-popup.class.php:2722
+#: ../social-media-popup.class.php:3361
+msgid "Facebook tracking settings can be set in this section"
+msgstr "Настройки отслеживания подписки на Facebook."
+
+#: ../social-media-popup.class.php:3368
 msgid "VK.com settings can be set in this section"
 msgstr "В этом разделе настраивается виджет ВКонтакте"
 
-#: ../social-media-popup.class.php:2729
+#: ../social-media-popup.class.php:3377
+msgid "VK.com tracking settings can be set in this section"
+msgstr "Настройки отслеживания подписки на ВКонтакте."
+
+#: ../social-media-popup.class.php:3384
 msgid "Odnoklassniki.ru settings can be set in this section"
 msgstr "В этом разделе настраивается виджет Одноклассников"
 
-#: ../social-media-popup.class.php:2736
+#: ../social-media-popup.class.php:3391
 msgid "Google+ settings can be set in this section"
 msgstr "В этом разделе настраивается виджет Google+"
 
-#: ../social-media-popup.class.php:2745
+#: ../social-media-popup.class.php:3400
 msgid "Twitter settings can be set in this section"
 msgstr "В этом разделе настраиваются виджеты Twitter"
 
-#: ../social-media-popup.class.php:2754
+#: ../social-media-popup.class.php:3409
 msgid "Twitter Follow Button widget settings can be set in this section"
 msgstr "В этом разделе настраивается виджет Follow Button от Twitter"
 
-#: ../social-media-popup.class.php:2763
+#: ../social-media-popup.class.php:3418
 msgid "Twitter Timeline widget settings can be set in this section"
 msgstr "В этом разделе настраивается виджет Timeline от Twitter"
 
-#: ../social-media-popup.class.php:2770
+#: ../social-media-popup.class.php:3427
+msgid "Twitter tracking settings can be set in this section"
+msgstr "Настройки отслеживания подписки на Twitter."
+
+#: ../social-media-popup.class.php:3434
 msgid "Pinterest settings can be set in this section"
 msgstr "В этом разделе настраивается виджет Pinterest"
 
-#: ../social-media-popup.class.php:2825
+#: ../social-media-popup.class.php:3494
 msgid "Inside Container"
 msgstr "Внутри виджета"
 
-#: ../social-media-popup.class.php:2827
+#: ../social-media-popup.class.php:3496
 msgid "Outside Container"
 msgstr "На фоновой подложке"
 
-#: ../social-media-popup.class.php:2829
+#: ../social-media-popup.class.php:3498
 msgid "Don't show"
 msgstr "Не показывать"
 
-#: ../social-media-popup.class.php:2841
+#: ../social-media-popup.class.php:3510
 msgid "Link"
 msgstr "Обычная ссылка"
 
-#: ../social-media-popup.class.php:2843
+#: ../social-media-popup.class.php:3512
 msgid "Green button"
 msgstr "Зелёная кнопка"
 
-#: ../social-media-popup.class.php:2845
+#: ../social-media-popup.class.php:3514
 msgid "Blue button"
 msgstr "Синяя кнопка"
 
-#: ../social-media-popup.class.php:2847
+#: ../social-media-popup.class.php:3516
 msgid "Red button"
 msgstr "Красная кнопка"
 
-#: ../social-media-popup.class.php:2858
+#: ../social-media-popup.class.php:3527
 msgid "Upload Image"
 msgstr "Загрузить изображение"
 
-#: ../social-media-popup.class.php:2876
+#: ../social-media-popup.class.php:3545
 msgid "Normal Size"
 msgstr "Нормальный размер"
 
-#: ../social-media-popup.class.php:2877
+#: ../social-media-popup.class.php:3546
 msgid "2x"
 msgstr ""
 
-#: ../social-media-popup.class.php:2878
+#: ../social-media-popup.class.php:3547
 msgid "3x"
 msgstr ""
 
-#: ../social-media-popup.class.php:2879
+#: ../social-media-popup.class.php:3548
 msgid "4x"
 msgstr ""
 
-#: ../social-media-popup.class.php:2880
+#: ../social-media-popup.class.php:3549
 msgid "5x"
 msgstr ""
 
-#: ../social-media-popup.class.php:2902
+#: ../social-media-popup.class.php:3571
 msgid "Popup will appear after N second(s)"
 msgstr "После просмотра сайта N секунд"
 
-#: ../social-media-popup.class.php:2903
+#: ../social-media-popup.class.php:3572
 msgid "Popup will appear after clicking on the given CSS selector"
 msgstr "При клике на указанный CSS селектор (ID элемента или имя класса)"
 
-#: ../social-media-popup.class.php:2904
+#: ../social-media-popup.class.php:3573
 msgid ""
 "Popup will appear after a visitor has scrolled on your page at least N "
 "percent"
 msgstr "Прокрутка страницы больше N процентов"
 
-#: ../social-media-popup.class.php:2905
+#: ../social-media-popup.class.php:3574
 msgid ""
 "Popup will appear on exit-intent (when mouse has moved out from the page)"
 msgstr ""
 "При попытке уйти со страницы (переход на другую вкладку, перемещение мыши за "
 "границы окна)"
 
-#: ../social-media-popup.class.php:2936
+#: ../social-media-popup.class.php:3605
 msgid "Visitor opened at least N number of page(s)"
 msgstr "Посетитель открыл больше N страниц"
 
-#: ../social-media-popup.class.php:2968
+#: ../social-media-popup.class.php:3637
 msgid "All Registered Users"
 msgstr "Все зарегистрированные"
 
-#: ../social-media-popup.class.php:2969
+#: ../social-media-popup.class.php:3638
 msgid "All Registered Users Exclude Administrators"
 msgstr "Все зарегистрированные, кроме администраторов"
 
-#: ../social-media-popup.class.php:2970
+#: ../social-media-popup.class.php:3639
 msgid "All Registered Users Exclude Administrators and Managers"
 msgstr "Все зарегистрированные, кроме администраторов и менеджеров"
 
-#: ../social-media-popup.class.php:2994 ../social-media-popup.class.php:3164
+#: ../social-media-popup.class.php:3663 ../social-media-popup.class.php:3833
 msgid "Russian"
 msgstr "Русский"
 
-#: ../social-media-popup.class.php:2996 ../social-media-popup.class.php:3166
+#: ../social-media-popup.class.php:3665 ../social-media-popup.class.php:3835
 msgid "English"
 msgstr "Английский"
 
-#: ../social-media-popup.class.php:3008
+#: ../social-media-popup.class.php:3677
 msgid "Timelime"
 msgstr "Лента новостей"
 
-#: ../social-media-popup.class.php:3009
+#: ../social-media-popup.class.php:3678
 msgid "Messages"
 msgstr "Сообщения"
 
-#: ../social-media-popup.class.php:3010 ../templates/settings.php:27
+#: ../social-media-popup.class.php:3679 ../templates/settings.php:27
 msgid "Events"
 msgstr "События"
 
-#: ../social-media-popup.class.php:3041
+#: ../social-media-popup.class.php:3710
 msgid "Members"
 msgstr "Участники"
 
-#: ../social-media-popup.class.php:3043
+#: ../social-media-popup.class.php:3712
 msgid "News"
 msgstr "Новости"
 
-#: ../social-media-popup.class.php:3045
+#: ../social-media-popup.class.php:3714
 msgid "Name"
 msgstr "Только имена"
 
-#: ../social-media-popup.class.php:3064
+#: ../social-media-popup.class.php:3733
 msgid "No Header"
 msgstr "Не выводить заголовок"
 
-#: ../social-media-popup.class.php:3066
+#: ../social-media-popup.class.php:3735
 msgid "No Footer"
 msgstr "Не выводить нижнюю часть виджета"
 
-#: ../social-media-popup.class.php:3068
+#: ../social-media-popup.class.php:3737
 msgid "No Borders"
 msgstr "Не показывать границы виджета"
 
-#: ../social-media-popup.class.php:3070
+#: ../social-media-popup.class.php:3739
 msgid "No Scrollbars"
 msgstr "Не выводить полосы прокрутки"
 
-#: ../social-media-popup.class.php:3072
+#: ../social-media-popup.class.php:3741
 msgid "Transparent (Removes the background color)"
 msgstr "Сделать виджет прозрачным"
 
-#: ../social-media-popup.class.php:3084 ../social-media-popup.class.php:3150
+#: ../social-media-popup.class.php:3753 ../social-media-popup.class.php:3819
 msgid "Light"
 msgstr "Светлая"
 
-#: ../social-media-popup.class.php:3086 ../social-media-popup.class.php:3152
+#: ../social-media-popup.class.php:3755 ../social-media-popup.class.php:3821
 msgid "Dark"
 msgstr "Тёмная"
 
-#: ../social-media-popup.class.php:3103
+#: ../social-media-popup.class.php:3772
 msgid "Left"
 msgstr "Слева"
 
-#: ../social-media-popup.class.php:3104
+#: ../social-media-popup.class.php:3773
 msgid "Center"
 msgstr "По центру"
 
-#: ../social-media-popup.class.php:3105
+#: ../social-media-popup.class.php:3774
 msgid "Right"
 msgstr "Справа"
 
-#: ../social-media-popup.class.php:3138
+#: ../social-media-popup.class.php:3807
 msgid "Disabled Social Networks Marked As Red"
 msgstr "Неактивные социальные сети помечены красным цветом"
 
-#: ../social-media-popup.class.php:3178
+#: ../social-media-popup.class.php:3847
 msgid "Google+ Person"
 msgstr "Профиль пользователя"
 
-#: ../social-media-popup.class.php:3180
+#: ../social-media-popup.class.php:3849
 msgid "Google+ Page"
 msgstr "Страница"
 
-#: ../social-media-popup.class.php:3182
+#: ../social-media-popup.class.php:3851
 msgid "Google+ Community"
 msgstr "Сообщество"
 
-#: ../social-media-popup.class.php:3194
+#: ../social-media-popup.class.php:3863
 msgid "Portrait"
 msgstr "Портретный режим"
 
-#: ../social-media-popup.class.php:3196
+#: ../social-media-popup.class.php:3865
 msgid "Landscape"
 msgstr "Альбомный режим"
 
-#: ../social-media-popup.class.php:3205 ../social-media-popup.class.php:3206
+#: ../social-media-popup.class.php:3874 ../social-media-popup.class.php:3875
 msgid "Welcome To Social Media Popup Welcome Screen"
 msgstr "Экран приветствия Social Media Popup"
 
-#: ../social-media-popup.class.php:3213 ../templates/settings.php:7
+#: ../social-media-popup.class.php:3882 ../templates/settings.php:7
 msgid "Social Media Popup Options"
 msgstr "Настройки Social Media Popup"
 
-#: ../social-media-popup.class.php:3214
+#: ../social-media-popup.class.php:3883
 msgid "SMP Options"
 msgstr "SMP Настройки"
 
-#: ../social-media-popup.class.php:3224
-#: ../templates/settings/settings-facebook.php:3
+#: ../social-media-popup.class.php:3893
+#: ../templates/settings/settings-facebook.php:7
 msgid "Facebook Options"
 msgstr "Настройка виджета Facebook"
 
-#: ../social-media-popup.class.php:3234
-#: ../templates/settings/settings-vkontakte.php:3
+#: ../social-media-popup.class.php:3903
+#: ../templates/settings/settings-vkontakte.php:7
 msgid "VKontakte Options"
 msgstr "Настройка виджета ВКонтакте"
 
-#: ../social-media-popup.class.php:3235
+#: ../social-media-popup.class.php:3904
 msgid "VKontakte"
 msgstr "ВКонтакте"
 
-#: ../social-media-popup.class.php:3244
+#: ../social-media-popup.class.php:3913
 #: ../templates/settings/settings-odnoklassniki.php:3
 msgid "Odnoklassniki Options"
 msgstr "Настройка виджета Одноклассников"
 
-#: ../social-media-popup.class.php:3254
+#: ../social-media-popup.class.php:3923
 #: ../templates/settings/settings-googleplus.php:3
 msgid "Google+ Options"
 msgstr "Настройка виджета Google+"
 
-#: ../social-media-popup.class.php:3264
+#: ../social-media-popup.class.php:3933
 #: ../templates/settings/settings-twitter.php:7
 msgid "Twitter Options"
 msgstr "Настройка виджета Twitter"
 
-#: ../social-media-popup.class.php:3274
+#: ../social-media-popup.class.php:3943
 #: ../templates/settings/settings-pinterest.php:3
 msgid "Pinterest Options"
 msgstr "Настройка виджета Pinterest"
 
-#: ../social-media-popup.class.php:3307 ../social-media-popup.php:32
+#: ../social-media-popup.class.php:3982 ../social-media-popup.php:32
 msgid "Settings"
 msgstr "Настройки"
 
-#: ../social-media-popup.class.php:3315
+#: ../social-media-popup.class.php:3990
 msgid "Clear Cookies"
 msgstr "Очистить куки"
 
-#: ../social-media-popup.class.php:3375 ../social-media-popup.class.php:3389
-#: ../social-media-popup.class.php:3400 ../social-media-popup.class.php:3411
-#: ../social-media-popup.class.php:3422 ../social-media-popup.class.php:3433
-#: ../social-media-popup.class.php:3444 ../social-media-popup.class.php:3455
+#: ../social-media-popup.class.php:4081 ../social-media-popup.class.php:4095
+#: ../social-media-popup.class.php:4106 ../social-media-popup.class.php:4117
+#: ../social-media-popup.class.php:4128 ../social-media-popup.class.php:4139
+#: ../social-media-popup.class.php:4150 ../social-media-popup.class.php:4161
 msgid "You do not have sufficient permissions to access this page."
 msgstr "У вас нет полномочий для доступа к этой странице"
 
-#: ../social-media-popup.class.php:3750 ../social-media-popup.class.php:3755
-#: ../social-media-popup.class.php:3804
+#: ../social-media-popup.class.php:4483 ../social-media-popup.class.php:4488
+#: ../social-media-popup.class.php:4537
 msgid "Close Modal Dialog"
 msgstr "Закрыть окно"
 
-#: ../social-media-popup.class.php:3967
+#: ../social-media-popup.class.php:4700
 msgid "Page will be reload after clear cookies. Continue?"
 msgstr "Страница будет перезагружена после очистки кук. Продолжить?"
 
-#: ../templates/settings.php:24 ../templates/settings/settings-twitter.php:24
+#: ../templates/settings.php:24 ../templates/settings/settings-facebook.php:24
+#: ../templates/settings/settings-twitter.php:24
+#: ../templates/settings/settings-vkontakte.php:24
 msgid "General"
 msgstr "Основные"
 
