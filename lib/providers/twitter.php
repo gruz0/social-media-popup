@@ -1,10 +1,24 @@
 <?php
 
 class SCP_Twitter_Provider extends SCP_Provider {
+	/**
+	 * Return widget is active
+	 *
+	 * @since 0.7.5
+	 *
+	 * @return boolean
+	 */
 	public static function is_active() {
 		return ( self::$options[ self::$prefix . 'setting_use_twitter' ] === '1' );
 	}
 
+	/**
+	 * Return options as array
+	 *
+	 * @since 0.7.5
+	 *
+	 * @return array
+	 */
 	public static function options() {
 		return array(
 			'tab_caption' => esc_attr( self::$options[ self::$prefix . 'setting_twitter_tab_caption'] ),
@@ -14,6 +28,17 @@ class SCP_Twitter_Provider extends SCP_Provider {
 		);
 	}
 
+	/**
+	 * Render widget container
+	 *
+	 * @uses self::render_follow_button()
+	 * @uses self::render_timeline()
+	 * @uses self::render_javascript()
+	 *
+	 * @since 0.7.5
+	 *
+	 * @return string
+	 */
 	public static function container() {
 		// Для нормального отображения/скрытия полос прокрутки нужно задавать свойство overflow
 		$twitter_chrome = self::$options[ self::$prefix . 'setting_twitter_chrome' ];
@@ -45,6 +70,18 @@ class SCP_Twitter_Provider extends SCP_Provider {
 		return $content;
 	}
 
+	/**
+	 * Return JavaScript
+	 *
+	 * @uses SCP_Template()->use_events_tracking()
+	 * @uses SCP_Template()->push_social_media_trigger_to_google_analytics()
+	 * @uses SCP_Template()->push_social_network_and_action_to_google_analytics()
+	 * @used_by self::container()
+	 *
+	 * @since 0.7.5
+	 *
+	 * @return string
+	 */
 	private static function render_javascript() {
 		$content = '<script type="text/javascript">
 			window.twttr = (function(d, s, id) {
@@ -74,6 +111,7 @@ class SCP_Twitter_Provider extends SCP_Provider {
 
 				if ( self::$template->use_events_tracking() && ( (int) self::$options[ self::$prefix . 'tracking_use_twitter' ] == 1 ) ) {
 					$content .= self::$template->push_social_media_trigger_to_google_analytics( esc_attr( self::$options[ self::$prefix . 'tracking_twitter_event' ] ) );
+					$content .= self::$template->push_social_network_and_action_to_google_analytics( 'Twitter', 'Follow' );
 				}
 
 			$content .= '}
@@ -86,6 +124,16 @@ class SCP_Twitter_Provider extends SCP_Provider {
 		return $content;
 	}
 
+	/**
+	 * Return Follow Button container
+	 *
+	 * @uses scp_to_bool()
+	 * @used_by self::container()
+	 *
+	 * @since 0.7.5
+	 *
+	 * @return string
+	 */
 	private static function render_follow_button() {
 		return '<div style="text-align:' . esc_attr( self::$options[ self::$prefix . 'setting_twitter_follow_button_align_by' ] ) . '">'
 			. '<a class="twitter-follow-button" '
@@ -96,6 +144,15 @@ class SCP_Twitter_Provider extends SCP_Provider {
 			. '>' . __( 'Follow', L10N_SCP_PREFIX ) . ' @' . esc_attr( self::$options[ self::$prefix . 'setting_twitter_username' ] ) . '</a></div>';
 	}
 
+	/**
+	 * Return Timeline container
+	 *
+	 * @used_by self::container()
+	 *
+	 * @since 0.7.5
+	 *
+	 * @return string
+	 */
 	private static function render_timeline( $twitter_chrome, $widget_height ) {
 		return '<a class="twitter-timeline" '
 			. 'href="//twitter.com/' . esc_attr( self::$options[ self::$prefix . 'setting_twitter_username' ] ) . '" '

@@ -498,6 +498,30 @@ class SCP_Template {
 	}
 
 	/**
+	 * Helper for push social network and action to Google Analytics
+	 * It should be viewed in Acquisition > Social > Plugins in GA
+	 *
+	 * @since 0.7.5
+	 *
+	 * @used_by SCP_Facebook_Provider::container()
+	 * @used_by SCP_VK_Provider::container()
+	 * @used_by SCP_Twitter_Provider::container()
+	 *
+	 * @param string $network Social network name (Facebook, VK, Twitter, etc.)
+	 * @param string $event_type Type description (like, unlike, etc.)
+	 * @return string
+	 */
+	function push_social_network_and_action_to_google_analytics( $network, $event_type ) {
+		$content = 'ga("send", {
+			hitType:       "social",
+			socialNetwork: "' . $network . '",
+			socialAction:  "' . $event_type . '",
+			socialTarget:  "' . get_permalink() . '"
+		});';
+		return $content;
+	}
+
+	/**
 	 * Helper to prepare event label to show popup title depends on wp_is_mobile()
 	 *
 	 * @since 0.7.5

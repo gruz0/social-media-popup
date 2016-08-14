@@ -1,10 +1,24 @@
 <?php
 
 class SCP_Pinterest_Provider extends SCP_Provider {
+	/**
+	 * Return widget is active
+	 *
+	 * @since 0.7.5
+	 *
+	 * @return boolean
+	 */
 	public static function is_active() {
 		return ( self::$options[ self::$prefix . 'setting_use_pinterest' ] === '1' );
 	}
 
+	/**
+	 * Return options as array
+	 *
+	 * @since 0.7.5
+	 *
+	 * @return array
+	 */
 	public static function options() {
 		return array(
 			'tab_caption' => esc_attr( self::$options[ self::$prefix . 'setting_pinterest_tab_caption'] ),
@@ -14,8 +28,14 @@ class SCP_Pinterest_Provider extends SCP_Provider {
 		);
 	}
 
+	/**
+	 * Return widget container
+	 *
+	 * @since 0.7.5
+	 *
+	 * @return string
+	 */
 	public static function container() {
-
 		$content = '<div class="box">';
 
 		if ( self::$options[ self::$prefix . 'setting_pinterest_show_description' ] === '1' ) {

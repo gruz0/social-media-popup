@@ -1,10 +1,24 @@
 <?php
 
 class SCP_VK_Provider extends SCP_Provider {
+	/**
+	 * Return widget is active
+	 *
+	 * @since 0.7.5
+	 *
+	 * @return boolean
+	 */
 	public static function is_active() {
 		return ( self::$options[ self::$prefix . 'setting_use_vkontakte' ] === '1' );
 	}
 
+	/**
+	 * Return options as array
+	 *
+	 * @since 0.7.5
+	 *
+	 * @return array
+	 */
 	public static function options() {
 		return array(
 			'tab_caption' => esc_attr( self::$options[ self::$prefix . 'setting_vkontakte_tab_caption'] ),
@@ -14,6 +28,17 @@ class SCP_VK_Provider extends SCP_Provider {
 		);
 	}
 
+	/**
+	 * Return widget container
+	 *
+	 * @uses SCP_Template()->use_events_tracking()
+	 * @uses SCP_Template()->push_social_media_trigger_to_google_analytics()
+	 * @uses SCP_Template()->push_social_network_and_action_to_google_analytics()
+	 *
+	 * @since 0.7.5
+	 *
+	 * @return string
+	 */
 	public static function container() {
 		$default_vk_group_id = 1;
 
@@ -56,6 +81,7 @@ class SCP_VK_Provider extends SCP_Provider {
 
 								if ( self::$template->use_events_tracking() && ( (int) self::$options[ self::$prefix . 'tracking_use_vkontakte' ] == 1 ) ) {
 									$content .= self::$template->push_social_media_trigger_to_google_analytics( esc_attr( self::$options[ self::$prefix . 'tracking_vkontakte_event' ] ) );
+									$content .= self::$template->push_social_network_and_action_to_google_analytics( 'VK', 'Subscribe' );
 								}
 
 							$content .= '});

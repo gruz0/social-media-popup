@@ -1,10 +1,24 @@
 <?php
 
 class SCP_GooglePlus_Provider extends SCP_Provider {
+	/**
+	 * Return widget is active
+	 *
+	 * @since 0.7.5
+	 *
+	 * @return boolean
+	 */
 	public static function is_active() {
 		return ( self::$options[ self::$prefix . 'setting_use_googleplus' ] === '1' );
 	}
 
+	/**
+	 * Return options as array
+	 *
+	 * @since 0.7.5
+	 *
+	 * @return array
+	 */
 	public static function options() {
 		return array(
 			'tab_caption' => esc_attr( self::$options[ self::$prefix . 'setting_googleplus_tab_caption'] ),
@@ -14,6 +28,15 @@ class SCP_GooglePlus_Provider extends SCP_Provider {
 		);
 	}
 
+	/**
+	 * Return widget container
+	 *
+	 * @uses self::googleplus_relation_from_page_type()
+	 *
+	 * @since 0.7.5
+	 *
+	 * @return string
+	 */
 	public static function container() {
 		$content = '<div class="box">';
 
@@ -71,6 +94,15 @@ class SCP_GooglePlus_Provider extends SCP_Provider {
 		return $content;
 	}
 
+	/**
+	 * Return Google+ relation type depends on page type
+	 *
+	 * @used_by self::container()
+	 *
+	 * @since 0.7.5
+	 *
+	 * @return string
+	 */
 	private static function googleplus_relation_from_page_type() {
 		switch ( self::$options[ self::$prefix . 'setting_googleplus_page_type' ] ) {
 			case 'page':
