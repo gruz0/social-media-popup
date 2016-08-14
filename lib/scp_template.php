@@ -33,7 +33,8 @@ class SCP_Template {
 			'do_not_use_tracking_in_debug_mode' => true,
 			'push_events_to_aquisition_social_plugins' => true,
 			'push_events_when_displaying_window' => true,
-			'push_events_when_subscribing_on_social_networks' => true
+			'push_events_when_subscribing_on_social_networks' => true,
+			'add_window_events_descriptions' => true
 		);
 
 		$this->_options = wp_parse_args( $options, $default_options );
@@ -455,20 +456,28 @@ class SCP_Template {
 			return '';
 		}
 
-		if ( ! $this->_options['push_events_when_displaying_window'] ) {
-			return '';
+		$content = '';
+
+		if ( $this->_options['push_events_when_displaying_window'] ) {
+			$content = 'if (!smp_eventFired ) {
+				ga("send", "event", {
+					eventCategory: "Social Media Popup",
+					eventAction:   "' . $action . '",
+					eventLabel:    "' . $this->popup_platform_title() . '"
+				});
+
+				smp_eventFired = true;
+				smp_firedEventDescription = "' . ( empty( $event_description ) ? $action : $event_description ) . '";
+			}';
+
+		} else {
+			if ( $this->_options['add_window_events_descriptions'] ) {
+				$content = 'if (!smp_eventFired ) {
+					smp_eventFired = true;
+					smp_firedEventDescription = "' . ( empty( $event_description ) ? $action : $event_description ) . '";
+				}';
+			}
 		}
-
-		$content = 'if (!smp_eventFired ) {
-			ga("send", "event", {
-				eventCategory: "Social Media Popup",
-				eventAction:   "' . $action . '",
-				eventLabel:    "' . $this->popup_platform_title() . '"
-			});
-
-			smp_eventFired = true;
-			smp_firedEventDescription = "' . ( empty( $event_description ) ? $action : $event_description ) . '";
-		}';
 
 		return $content;
 	}
