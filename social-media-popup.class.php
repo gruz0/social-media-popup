@@ -3247,7 +3247,7 @@ class Social_Media_Popup {
 	 * @since 0.7.5
 	 */
 	public function settings_section_common_window_events_descriptions() {
-		_e( 'This events using on window rendering depends on event type and used when/or social networks events are disabled.', L10N_SCP_PREFIX );
+		_e( 'Window rendering uses these events when social networks are disabled.', L10N_SCP_PREFIX );
 	}
 
 	/**
