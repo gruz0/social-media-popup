@@ -111,7 +111,7 @@ class SCP_Twitter_Provider extends SCP_Provider {
 
 				if ( self::$template->use_events_tracking() && ( (int) self::$options[ self::$prefix . 'tracking_use_twitter' ] == 1 ) ) {
 					$content .= self::$template->push_social_media_trigger_to_google_analytics( esc_attr( self::$options[ self::$prefix . 'tracking_twitter_event' ] ) );
-					$content .= self::$template->push_social_network_and_action_to_google_analytics( 'Twitter', 'Follow' );
+					$content .= self::$template->push_social_network_and_action_to_google_analytics( 'SMP Twitter', 'Follow' );
 				}
 
 			$content .= '}
