@@ -31,7 +31,9 @@ class SCP_Template {
 		$default_options = array(
 			'use_events_tracking' => false,
 			'do_not_use_tracking_in_debug_mode' => true,
-			'push_events_to_aquisition_social_plugins' => true
+			'push_events_to_aquisition_social_plugins' => true,
+			'push_events_when_displaying_window' => true,
+			'push_events_when_subscribing_on_social_networks' => true
 		);
 
 		$this->_options = wp_parse_args( $options, $default_options );
@@ -453,6 +455,10 @@ class SCP_Template {
 			return '';
 		}
 
+		if ( ! $this->_options['push_events_when_displaying_window'] ) {
+			return '';
+		}
+
 		$content = 'if (!smp_eventFired ) {
 			ga("send", "event", {
 				eventCategory: "Social Media Popup",
@@ -481,6 +487,10 @@ class SCP_Template {
 	 */
 	function push_social_media_trigger_to_google_analytics( $action ) {
 		if ( $this->_options['do_not_use_tracking_in_debug_mode'] ) {
+			return '';
+		}
+
+		if ( ! $this->_options['push_events_when_subscribing_on_social_networks'] ) {
 			return '';
 		}
 

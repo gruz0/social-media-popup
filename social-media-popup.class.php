@@ -123,6 +123,8 @@ class Social_Media_Popup {
 			'do_not_use_tracking_in_debug_mode',
 			'google_analytics_tracking_id',
 			'push_events_to_aquisition_social_plugins',
+			'push_events_when_displaying_window',
+			'push_events_when_subscribing_on_social_networks',
 			'tracking_event_label_window_showed_immediately',
 			'tracking_event_label_window_showed_with_delay',
 			'tracking_event_label_window_showed_after_click',
@@ -830,6 +832,8 @@ class Social_Media_Popup {
 			update_option( $scp_prefix . 'do_not_use_tracking_in_debug_mode',               1 );
 			update_option( $scp_prefix . 'google_analytics_tracking_id',                    '' );
 			update_option( $scp_prefix . 'push_events_to_aquisition_social_plugins',        1 );
+			update_option( $scp_prefix . 'push_events_when_displaying_window',              1 );
+			update_option( $scp_prefix . 'push_events_when_subscribing_on_social_networks', 1 );
 
 			// Трекинг событий социальных сетей
 			update_option( $scp_prefix . 'tracking_use_twitter',                            1 );
@@ -1483,6 +1487,8 @@ class Social_Media_Popup {
 		register_setting( $group, $scp_prefix . 'do_not_use_tracking_in_debug_mode', 'absint' );
 		register_setting( $group, $scp_prefix . 'google_analytics_tracking_id', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'push_events_to_aquisition_social_plugins', 'absint' );
+		register_setting( $group, $scp_prefix . 'push_events_when_displaying_window', 'absint' );
+		register_setting( $group, $scp_prefix . 'push_events_when_subscribing_on_social_networks', 'absint' );
 		register_setting( $group, $scp_prefix . 'tracking_event_label_window_showed_immediately', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'tracking_event_label_window_showed_with_delay', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'tracking_event_label_window_showed_after_click', 'sanitize_text_field' );
@@ -1570,6 +1576,18 @@ class Social_Media_Popup {
 			$options_page
 		);
 
+		// Отправка событий при отображении окна
+		add_settings_field(
+			SMP_PREFIX . '-push-events-when-displaying-the-window',
+			__( 'Push events when displaying the window', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'push_events_when_displaying_window'
+			)
+		);
+
 		// Label for window showed immediately
 		add_settings_field(
 			SMP_PREFIX . '-tracking-event-label-window-showed-immediately',
@@ -1643,6 +1661,18 @@ class Social_Media_Popup {
 			__( 'Social Networks Events Descriptions', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_section_common_multiple_events_descriptions' ),
 			$options_page
+		);
+
+		// Отправка событий при подписке на соц. сети
+		add_settings_field(
+			SMP_PREFIX . '-push-events-when-subscribing-on-social-networks',
+			__( 'Push events when subscribing on social networks', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'push_events_when_subscribing_on_social_networks'
+			)
 		);
 
 		// Label for no events fired
@@ -4189,9 +4219,11 @@ class Social_Media_Popup {
 		$debug_mode = ( (int) $scp_options[ $scp_prefix . 'setting_debug_mode' ] ) == 1;
 
 		$template_options = array(
-			'use_events_tracking'                      => absint( $scp_options[ $scp_prefix . 'use_events_tracking' ] ) == 1,
-			'do_not_use_tracking_in_debug_mode'        => ( $debug_mode && absint( $scp_options[ $scp_prefix . 'do_not_use_tracking_in_debug_mode' ] ) == 1 ),
-			'push_events_to_aquisition_social_plugins' => absint( $scp_options[ $scp_prefix . 'push_events_to_aquisition_social_plugins' ] ) == 1
+			'use_events_tracking'                             => absint( $scp_options[ $scp_prefix . 'use_events_tracking' ] ) == 1,
+			'do_not_use_tracking_in_debug_mode'               => ( $debug_mode && absint( $scp_options[ $scp_prefix . 'do_not_use_tracking_in_debug_mode' ] ) == 1 ),
+			'push_events_to_aquisition_social_plugins'        => absint( $scp_options[ $scp_prefix . 'push_events_to_aquisition_social_plugins' ] ) == 1,
+			'push_events_when_displaying_window'              => absint( $scp_options[ $scp_prefix . 'push_events_when_displaying_window' ] ) == 1,
+			'push_events_when_subscribing_on_social_networks' => absint( $scp_options[ $scp_prefix . 'push_events_when_subscribing_on_social_networks' ] ) == 1
 		);
 
 		$template = new SCP_Template(
