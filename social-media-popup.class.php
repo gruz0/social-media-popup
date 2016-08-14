@@ -3303,15 +3303,6 @@ class Social_Media_Popup {
 	}
 
 	/**
-	 * Events Tracking events description
-	 *
-	 * @since 0.7.5
-	 */
-	public function settings_section_common_events_descriptions() {
-		_e( 'Events descriptions can be set in this section', L10N_SCP_PREFIX );
-	}
-
-	/**
 	 * Window Events Tracking events description
 	 *
 	 * @since 0.7.5
