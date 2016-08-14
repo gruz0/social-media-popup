@@ -2,22 +2,13 @@
 
 class SCP_Template {
 	/**
-	 * Use events tracking or not
+	 * Template options
 	 *
 	 * @since 0.7.5
 	 *
-	 * @var boolean $_use_events_tracking
+	 * @var array $_options
 	 */
-	private $_use_events_tracking = false;
-
-	/**
-	 * Use events tracking in Debug mode or not
-	 *
-	 * @since 0.7.5
-	 *
-	 * @var boolean $_do_not_use_tracking_in_debug_mode
-	 */
-	private $_do_not_use_tracking_in_debug_mode = true;
+	private $_options = array();
 
 	/**
 	 * Events descriptions
@@ -33,13 +24,17 @@ class SCP_Template {
 	 *
 	 * @since 0.7.5
 	 *
-	 * @param boolean $use_events_tracking
-	 * @param boolean $do_not_use_tracking_in_debug_mode
+	 * @param array $options
 	 * @param array $events_descriptions
 	 */
-	public function __construct( $use_events_tracking = false, $do_not_use_tracking_in_debug_mode = true, $events_descriptions = array() ) {
-		$this->_use_events_tracking = $use_events_tracking;
-		$this->_do_not_use_tracking_in_debug_mode = $do_not_use_tracking_in_debug_mode;
+	public function __construct( $options = array(), $events_descriptions = array() ) {
+		$default_options = array(
+			'use_events_tracking' => false,
+			'do_not_use_tracking_in_debug_mode' => true,
+			'push_events_to_aquisition_social_plugins' => true
+		);
+
+		$this->_options = wp_parse_args( $options, $default_options );
 
 		$default_events_descriptions = array(
 			'window_showed_immediately'       => __( 'Show immediately', L10N_SCP_PREFIX ),
@@ -58,14 +53,14 @@ class SCP_Template {
 	}
 
 	/**
-	 * Getter for $this->_use_events_tracking
+	 * Getter for $this->_options['use_events_tracking']
 	 *
 	 * @since 0.7.5
 	 *
 	 * @return boolean
 	 */
 	public function use_events_tracking() {
-		return $this->_use_events_tracking;
+		return $this->_options['use_events_tracking'];
 	}
 
 	/**
@@ -81,7 +76,7 @@ class SCP_Template {
 	function render_show_window() {
 		$content = '';
 
-		if ( $this->_use_events_tracking ) {
+		if ( $this->_options['use_events_tracking'] ) {
 			$content .= $this->push_google_analytics_event_on_show_window(
 				$this->_events_descriptions['window_showed_immediately'],
 				$this->_events_descriptions['no_events_fired']
@@ -217,7 +212,7 @@ class SCP_Template {
 			$content .= 'setTimeout(function() {
 				if (is_scp_cookie_present()) return false;';
 
-				if ( $this->_use_events_tracking ) {
+				if ( $this->_options['use_events_tracking'] ) {
 					$content .= $this->push_google_analytics_event_on_show_window(
 						$this->_events_descriptions['window_showed_with_delay'],
 						$this->_events_descriptions['on_delay']
@@ -273,7 +268,7 @@ class SCP_Template {
 				$content .= 'jQuery("' . $popup_will_appear_after_clicking_on_element . '").on("click", function() {
 					if (is_scp_cookie_present()) return false;';
 
-					if ( $this->_use_events_tracking ) {
+					if ( $this->_options['use_events_tracking'] ) {
 						$content .= $this->push_google_analytics_event_on_show_window(
 							$this->_events_descriptions['window_showed_after_click'],
 							$this->_events_descriptions['after_click']
@@ -340,7 +335,7 @@ class SCP_Template {
 				value = parseInt(Math.abs(bodyScrollTop / (document.body.clientHeight - window.innerHeight) * 100));
 				if (showWindowAgain && value >= ' . $popup_will_appear_after_scrolling_down_n_percent . ') {';
 
-					if ( $this->_use_events_tracking ) {
+					if ( $this->_options['use_events_tracking'] ) {
 						$content .= $this->push_google_analytics_event_on_show_window(
 							$this->_events_descriptions['window_showed_on_scrolling_down'],
 							$this->_events_descriptions['on_scrolling_down']
@@ -396,7 +391,7 @@ class SCP_Template {
 
 				var scroll = window.pageYOffset || document.documentElement.scrollTop;
 				if((e.pageY - scroll) < 7) {';
-					if ( $this->_use_events_tracking ) {
+					if ( $this->_options['use_events_tracking'] ) {
 						$content .= $this->push_google_analytics_event_on_show_window(
 							$this->_events_descriptions['window_showed_on_exit_intent'],
 							$this->_events_descriptions['on_exit_intent']
@@ -454,7 +449,7 @@ class SCP_Template {
 	 * @return string
 	 */
 	function push_google_analytics_event_on_show_window( $action, $event_description = '' ) {
-		if ( $this->_do_not_use_tracking_in_debug_mode ) {
+		if ( $this->_options['do_not_use_tracking_in_debug_mode'] ) {
 			return '';
 		}
 
@@ -485,7 +480,7 @@ class SCP_Template {
 	 * @return string
 	 */
 	function push_social_media_trigger_to_google_analytics( $action ) {
-		if ( $this->_do_not_use_tracking_in_debug_mode ) {
+		if ( $this->_options['do_not_use_tracking_in_debug_mode'] ) {
 			return '';
 		}
 
@@ -512,6 +507,10 @@ class SCP_Template {
 	 * @return string
 	 */
 	function push_social_network_and_action_to_google_analytics( $network, $event_type ) {
+		if ( ! $this->_options['push_events_to_aquisition_social_plugins'] ) {
+			return '';
+		}
+
 		$content = 'ga("send", {
 			hitType:       "social",
 			socialNetwork: "' . $network . '",

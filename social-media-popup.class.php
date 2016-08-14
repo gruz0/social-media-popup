@@ -122,6 +122,7 @@ class Social_Media_Popup {
 			'use_events_tracking',
 			'do_not_use_tracking_in_debug_mode',
 			'google_analytics_tracking_id',
+			'push_events_to_aquisition_social_plugins',
 			'tracking_event_label_window_showed_immediately',
 			'tracking_event_label_window_showed_with_delay',
 			'tracking_event_label_window_showed_after_click',
@@ -828,6 +829,7 @@ class Social_Media_Popup {
 			update_option( $scp_prefix . 'use_events_tracking',                             1 );
 			update_option( $scp_prefix . 'do_not_use_tracking_in_debug_mode',               1 );
 			update_option( $scp_prefix . 'google_analytics_tracking_id',                    '' );
+			update_option( $scp_prefix . 'push_events_to_aquisition_social_plugins',        1 );
 
 			// Трекинг событий социальных сетей
 			update_option( $scp_prefix . 'tracking_use_twitter',                            1 );
@@ -1480,6 +1482,7 @@ class Social_Media_Popup {
 		register_setting( $group, $scp_prefix . 'use_events_tracking', 'absint' );
 		register_setting( $group, $scp_prefix . 'do_not_use_tracking_in_debug_mode', 'absint' );
 		register_setting( $group, $scp_prefix . 'google_analytics_tracking_id', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'push_events_to_aquisition_social_plugins', 'absint' );
 		register_setting( $group, $scp_prefix . 'tracking_event_label_window_showed_immediately', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'tracking_event_label_window_showed_with_delay', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'tracking_event_label_window_showed_after_click', 'sanitize_text_field' );
@@ -1522,6 +1525,16 @@ class Social_Media_Popup {
 			)
 		);
 
+		// ID секции для описания событий
+		$section = SMP_PREFIX . '-section-common-tracking-events-google-analytics';
+
+		add_settings_section(
+			$section,
+			__( 'Google Analytics', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_section_common_google_analytics' ),
+			$options_page
+		);
+
 		// Google Analytics Tracking ID
 		add_settings_field(
 			SMP_PREFIX . '-common-tracking-google-analytics-tracking-id',
@@ -1532,6 +1545,18 @@ class Social_Media_Popup {
 			array(
 				'field' => $scp_prefix . 'google_analytics_tracking_id',
 				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . 'UA-12345678-0'
+			)
+		);
+
+		// Отправка событий в "Источники трафика" > "Соцфункции" > "Плагины"
+		add_settings_field(
+			SMP_PREFIX . '-push-events-to-aquisition-social-plugins',
+			__( 'Push events to Aquisition > Social > Plugins', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'push_events_to_aquisition_social_plugins'
 			)
 		);
 
@@ -3251,6 +3276,15 @@ class Social_Media_Popup {
 	}
 
 	/**
+	 * Google Analytics Events Tracking description
+	 *
+	 * @since 0.7.5
+	 */
+	public function settings_section_common_google_analytics() {
+		_e( 'Google Analytics settings.', L10N_SCP_PREFIX );
+	}
+
+	/**
 	 * Multiple Events Tracking events description
 	 *
 	 * @since 0.7.5
@@ -4154,14 +4188,14 @@ class Social_Media_Popup {
 
 		$debug_mode = ( (int) $scp_options[ $scp_prefix . 'setting_debug_mode' ] ) == 1;
 
+		$template_options = array(
+			'use_events_tracking'                      => absint( $scp_options[ $scp_prefix . 'use_events_tracking' ] ) == 1,
+			'do_not_use_tracking_in_debug_mode'        => ( $debug_mode && absint( $scp_options[ $scp_prefix . 'do_not_use_tracking_in_debug_mode' ] ) == 1 ),
+			'push_events_to_aquisition_social_plugins' => absint( $scp_options[ $scp_prefix . 'push_events_to_aquisition_social_plugins' ] ) == 1
+		);
+
 		$template = new SCP_Template(
-			// Use events tracking
-			absint( $scp_options[ $scp_prefix . 'use_events_tracking' ] ) == 1,
-
-			// Don't use tracking in Debug mode
-			( $debug_mode && absint( $scp_options[ $scp_prefix . 'do_not_use_tracking_in_debug_mode' ] ) == 1 ),
-
-			// Array with events descriptions
+			$template_options,
 			$events_descriptions
 		);
 
