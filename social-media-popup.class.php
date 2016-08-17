@@ -1470,38 +1470,43 @@ class Social_Media_Popup {
 	/**
 	 * Events tracking
 	 *
+	 * @uses $this->init_settings_common_tracking_general()
+	 * @uses $this->init_settings_common_tracking_google_analytics()
+	 * @uses $this->init_settings_common_tracking_window_events()
+	 * @uses $this->init_settings_common_tracking_social_events()
+	 *
 	 * @since 0.7.5
 	 */
 	public function init_settings_common_tracking() {
+		$this->init_settings_common_tracking_general();
+		$this->init_settings_common_tracking_google_analytics();
+		$this->init_settings_common_tracking_window_events();
+		$this->init_settings_common_tracking_social_events();
+	}
+
+	/**
+	 * Events tracking – General
+	 *
+	 * @uses Social_Media_Popup::get_scp_prefix()
+	 * @used_by Social_Media_Popup::init_settings_common_tracking()
+	 *
+	 * @since 0.7.5
+	 */
+	public function init_settings_common_tracking_general() {
 		$scp_prefix = self::get_scp_prefix();
 
 		// Используется в settings_field и do_settings_field
-		$group = SMP_PREFIX . '-group-tracking';
+		$group = SMP_PREFIX . '-group-tracking-general';
 
 		// Используется в do_settings_section
-		$options_page = SMP_PREFIX . '-group-tracking';
+		$options_page = SMP_PREFIX . '-group-tracking-general';
 
 		// ID секции
-		$section = SMP_PREFIX . '-section-common-tracking';
+		$section = SMP_PREFIX . '-section-common-tracking-general';
 
 		// Не забывать добавлять новые опции в uninstall()
 		register_setting( $group, $scp_prefix . 'use_events_tracking', 'absint' );
 		register_setting( $group, $scp_prefix . 'do_not_use_tracking_in_debug_mode', 'absint' );
-		register_setting( $group, $scp_prefix . 'google_analytics_tracking_id', 'sanitize_text_field' );
-		register_setting( $group, $scp_prefix . 'push_events_to_aquisition_social_plugins', 'absint' );
-		register_setting( $group, $scp_prefix . 'push_events_when_displaying_window', 'absint' );
-		register_setting( $group, $scp_prefix . 'push_events_when_subscribing_on_social_networks', 'absint' );
-		register_setting( $group, $scp_prefix . 'add_window_events_descriptions', 'absint' );
-		register_setting( $group, $scp_prefix . 'tracking_event_label_window_showed_immediately', 'sanitize_text_field' );
-		register_setting( $group, $scp_prefix . 'tracking_event_label_window_showed_with_delay', 'sanitize_text_field' );
-		register_setting( $group, $scp_prefix . 'tracking_event_label_window_showed_after_click', 'sanitize_text_field' );
-		register_setting( $group, $scp_prefix . 'tracking_event_label_window_showed_on_scrolling_down', 'sanitize_text_field' );
-		register_setting( $group, $scp_prefix . 'tracking_event_label_window_showed_on_exit_intent', 'sanitize_text_field' );
-		register_setting( $group, $scp_prefix . 'tracking_event_label_no_events_fired', 'sanitize_text_field' );
-		register_setting( $group, $scp_prefix . 'tracking_event_label_on_delay', 'sanitize_text_field' );
-		register_setting( $group, $scp_prefix . 'tracking_event_label_after_click', 'sanitize_text_field' );
-		register_setting( $group, $scp_prefix . 'tracking_event_label_on_scrolling_down', 'sanitize_text_field' );
-		register_setting( $group, $scp_prefix . 'tracking_event_label_on_exit_intent', 'sanitize_text_field' );
 
 		add_settings_section(
 			$section,
@@ -1533,9 +1538,31 @@ class Social_Media_Popup {
 				'field' => $scp_prefix . 'do_not_use_tracking_in_debug_mode'
 			)
 		);
+	}
 
-		// ID секции для описания событий
-		$section = SMP_PREFIX . '-section-common-tracking-events-google-analytics';
+	/**
+	 * Events tracking – Google Analytics
+	 *
+	 * @uses Social_Media_Popup::get_scp_prefix()
+	 * @used_by Social_Media_Popup::init_settings_common_tracking()
+	 *
+	 * @since 0.7.5
+	 */
+	public function init_settings_common_tracking_google_analytics() {
+		$scp_prefix = self::get_scp_prefix();
+
+		// Используется в settings_field и do_settings_field
+		$group = SMP_PREFIX . '-group-tracking-google-analytics';
+
+		// Используется в do_settings_section
+		$options_page = SMP_PREFIX . '-group-tracking-google-analytics';
+
+		// ID секции
+		$section = SMP_PREFIX . '-section-common-tracking-google-analytics';
+
+		// Не забывать добавлять новые опции в uninstall()
+		register_setting( $group, $scp_prefix . 'google_analytics_tracking_id', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'push_events_to_aquisition_social_plugins', 'absint' );
 
 		add_settings_section(
 			$section,
@@ -1568,9 +1595,35 @@ class Social_Media_Popup {
 				'field' => $scp_prefix . 'push_events_to_aquisition_social_plugins'
 			)
 		);
+	}
 
-		// ID секции для описания событий
-		$section = SMP_PREFIX . '-section-common-tracking-events-simple-labels';
+	/**
+	 * Events tracking – Windows Events
+	 *
+	 * @uses Social_Media_Popup::get_scp_prefix()
+	 * @used_by Social_Media_Popup::init_settings_common_tracking()
+	 *
+	 * @since 0.7.5
+	 */
+	public function init_settings_common_tracking_window_events() {
+		$scp_prefix = self::get_scp_prefix();
+
+		// Используется в settings_field и do_settings_field
+		$group = SMP_PREFIX . '-group-tracking-window-events';
+
+		// Используется в do_settings_section
+		$options_page = SMP_PREFIX . '-group-tracking-window-events';
+
+		// ID секции
+		$section = SMP_PREFIX . '-section-common-tracking-window-events';
+
+		// Не забывать добавлять новые опции в uninstall()
+		register_setting( $group, $scp_prefix . 'push_events_when_displaying_window', 'absint' );
+		register_setting( $group, $scp_prefix . 'tracking_event_label_window_showed_immediately', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'tracking_event_label_window_showed_with_delay', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'tracking_event_label_window_showed_after_click', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'tracking_event_label_window_showed_on_scrolling_down', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'tracking_event_label_window_showed_on_exit_intent', 'sanitize_text_field' );
 
 		add_settings_section(
 			$section,
@@ -1655,9 +1708,36 @@ class Social_Media_Popup {
 				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . __( 'Show on exit intent', L10N_SCP_PREFIX )
 			)
 		);
+	}
 
-		// ID секции для описания событий
-		$section = SMP_PREFIX . '-section-common-tracking-events-multiple-labels';
+	/**
+	 * Events tracking – Social Events
+	 *
+	 * @uses Social_Media_Popup::get_scp_prefix()
+	 * @used_by Social_Media_Popup::init_settings_common_tracking()
+	 *
+	 * @since 0.7.5
+	 */
+	public function init_settings_common_tracking_social_events() {
+		$scp_prefix = self::get_scp_prefix();
+
+		// Используется в settings_field и do_settings_field
+		$group = SMP_PREFIX . '-group-tracking-social-events';
+
+		// Используется в do_settings_section
+		$options_page = SMP_PREFIX . '-group-tracking-social-events';
+
+		// ID секции
+		$section = SMP_PREFIX . '-section-common-tracking-social-events';
+
+		// Не забывать добавлять новые опции в uninstall()
+		register_setting( $group, $scp_prefix . 'push_events_when_subscribing_on_social_networks', 'absint' );
+		register_setting( $group, $scp_prefix . 'add_window_events_descriptions', 'absint' );
+		register_setting( $group, $scp_prefix . 'tracking_event_label_no_events_fired', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'tracking_event_label_on_delay', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'tracking_event_label_after_click', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'tracking_event_label_on_scrolling_down', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'tracking_event_label_on_exit_intent', 'sanitize_text_field' );
 
 		add_settings_section(
 			$section,
@@ -2841,6 +2921,7 @@ class Social_Media_Popup {
 	 * Twitter Follow Button settings
 	 *
 	 * @uses Social_Media_Popup::get_scp_prefix()
+	 * @used_by Social_Media_Popup::init_settings_twitter()
 	 *
 	 * @since 0.7.5
 	 */
@@ -2935,6 +3016,7 @@ class Social_Media_Popup {
 	 * Twitter Timeline settings
 	 *
 	 * @uses Social_Media_Popup::get_scp_prefix()
+	 * @used_by Social_Media_Popup::init_settings_twitter()
 	 *
 	 * @since 0.7.5
 	 */
@@ -3071,6 +3153,7 @@ class Social_Media_Popup {
 	 * Twitter Tracking settings
 	 *
 	 * @uses Social_Media_Popup::get_scp_prefix()
+	 * @used_by Social_Media_Popup::init_settings_twitter()
 	 *
 	 * @since 0.7.5
 	 */
