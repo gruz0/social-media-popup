@@ -1,5 +1,15 @@
 <?php
+/**
+ * Social Media Popup
+ *
+ * @package  Social_Media_Popup
+ * @author   Alexander Gruzov
+ * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link     https://github.com/gruz0/social-media-popup
+ */
+
 defined( 'ABSPATH' ) or exit;
+
 /*
 Plugin Name: Social Media Popup
 Plugin URI: http://gruz0.ru/
@@ -17,17 +27,22 @@ if ( ! array_key_exists( 'social-media-popup', $GLOBALS ) ) {
 		// Хуки для активации и деактивации плагина
 		register_activation_hook( __FILE__, array( 'Social_Media_Popup', 'activate' ) );
 		register_deactivation_hook( __FILE__, array( 'Social_Media_Popup', 'deactivate' ) );
-		register_uninstall_hook( __FILE__, array('Social_Media_Popup', 'uninstall' ) );
+		register_uninstall_hook( __FILE__, array( 'Social_Media_Popup', 'uninstall' ) );
 
-		include sprintf( "%s/social-media-popup.class.php", dirname( __FILE__ ) );
+		include sprintf( '%s/social-media-popup.class.php', dirname( __FILE__ ) );
 
 		$social_media_popup = new Social_Media_Popup();
 
 		// Uses by PHPUnit
 		$GLOBALS['social-media-popup'] = $social_media_popup;
 
-		if (isset( $social_media_popup) ) {
-			// Добавляем пункт "Настройки" в раздел плагинов в WordPress
+		if ( isset( $social_media_popup ) ) {
+			/**
+			 * Добавляет пункт "Настройки" в раздел плагинов в WordPress
+			 *
+			 * @param array $links Links
+			 * @return array
+			 */
 			function social_media_popup_plugin_settings_link( $links ) {
 				$settings_link = '<a href="admin.php?page=social_media_popup">' . __( 'Settings', L10N_SCP_PREFIX ) . '</a>';
 				array_unshift( $links, $settings_link );
@@ -40,13 +55,17 @@ if ( ! array_key_exists( 'social-media-popup', $GLOBALS ) ) {
 
 		/**
 		 * Переводит текстовое значение get_option для чекбокса в булевое
-		 * @param string $variable
+		 *
+		 * @param string $variable Value
 		 * @return string
 		 */
 		function scp_to_bool( $variable ) {
-			return ( $variable === '1' ? 'true' : 'false' );
+			return ( '1' === $variable ? 'true' : 'false' );
 		}
 
+		/**
+		 * Автообновление плагина
+		 */
 		function scp_updater() {
 			require_once( dirname( __FILE__ ) . '/updater.php' );
 
@@ -58,3 +77,4 @@ if ( ! array_key_exists( 'social-media-popup', $GLOBALS ) ) {
 		scp_updater();
 	}
 }
+
