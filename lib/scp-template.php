@@ -1,5 +1,16 @@
 <?php
+/**
+ * Social Media Popup Template
+ *
+ * @package  Social_Media_Popup
+ * @author   Alexander Gruzov
+ * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link     https://github.com/gruz0/social-media-popup
+ */
 
+/**
+ * SCP_Template class
+ */
 class SCP_Template {
 	/**
 	 * Template options
@@ -24,8 +35,8 @@ class SCP_Template {
 	 *
 	 * @since 0.7.5
 	 *
-	 * @param array $options
-	 * @param array $events_descriptions
+	 * @param array $options Options
+	 * @param array $events_descriptions Events descriptions
 	 */
 	public function __construct( $options = array(), $events_descriptions = array() ) {
 		$default_options = array(
@@ -34,7 +45,7 @@ class SCP_Template {
 			'push_events_to_aquisition_social_plugins' => true,
 			'push_events_when_displaying_window' => true,
 			'push_events_when_subscribing_on_social_networks' => true,
-			'add_window_events_descriptions' => true
+			'add_window_events_descriptions' => true,
 		);
 
 		$this->_options = wp_parse_args( $options, $default_options );
@@ -49,7 +60,7 @@ class SCP_Template {
 			'on_delay'                        => __( 'After delay before show widget', L10N_SCP_PREFIX ),
 			'after_click'                     => __( 'After click on CSS-selector', L10N_SCP_PREFIX ),
 			'on_scrolling_down'               => __( 'On scrolling down', L10N_SCP_PREFIX ),
-			'on_exit_intent'                  => __( 'On exit intent', L10N_SCP_PREFIX )
+			'on_exit_intent'                  => __( 'On exit intent', L10N_SCP_PREFIX ),
 		);
 
 		$this->_events_descriptions = wp_parse_args( $events_descriptions, $default_events_descriptions );
@@ -121,7 +132,7 @@ class SCP_Template {
 	 * @since 0.7.3
 	 *
 	 * @param boolean $close_by_clicking_anywhere If it is equals to true then window will close by click outside container
-	 * @param string $after_n_days Timeout to show SCP window again
+	 * @param string  $after_n_days Timeout to show SCP window again
 	 * @return string
 	 */
 	function render_close_widget( $close_by_clicking_anywhere, $after_n_days ) {
@@ -162,7 +173,7 @@ class SCP_Template {
 	 * @since 0.7.3
 	 *
 	 * @param boolean $close_when_esc_pressed If it is equals to true then SCP window will close by ESC pressed
-	 * @param string $after_n_days Timeout to show SCP window again
+	 * @param string  $after_n_days Timeout to show SCP window again
 	 * @return string
 	 */
 	function render_close_widget_when_esc_pressed( $close_when_esc_pressed, $after_n_days ) {
@@ -191,10 +202,11 @@ class SCP_Template {
 	 * @uses $this->render_close_widget_on_mobile()
 	 * @uses $this->render_show_bottom_button()
 	 *
-	 * @param array $when_should_the_popup_appear Events list
-	 * @param int $popup_will_appear_after_n_seconds Event value
-	 * @param int $delay_before_show_bottom_button
-	 * @param boolean $any_event_active
+	 * @param array   $when_should_the_popup_appear Events list
+	 * @param int     $popup_will_appear_after_n_seconds Event value
+	 * @param int     $delay_before_show_bottom_button Delay before show bottom button in seconds
+	 * @param boolean $any_event_active Changed by function if event is active
+	 * @param int     $after_n_days Show window again after N days
 	 * @return string
 	 */
 	function render_when_popup_will_appear_after_n_seconds(
@@ -202,7 +214,7 @@ class SCP_Template {
 		$popup_will_appear_after_n_seconds,
 		$delay_before_show_bottom_button,
 		& $any_event_active,
-		$after_n_days = 0) {
+		$after_n_days = 0 ) {
 
 		$content = '';
 
@@ -247,10 +259,12 @@ class SCP_Template {
 	 * @uses $this->render_close_widget_on_mobile()
 	 * @uses $this->render_show_bottom_button()
 	 *
-	 * @param array $when_should_the_popup_appear Events list
-	 * @param int $popup_will_appear_after_clicking_on_element Event value
-	 * @param int $delay_before_show_bottom_button
-	 * @param boolean $any_event_active
+	 * @param array   $when_should_the_popup_appear Events list
+	 * @param int     $popup_will_appear_after_clicking_on_element Event value
+	 * @param boolean $event_hide_element_after_click_on_it Hide element after click on it
+	 * @param int     $delay_before_show_bottom_button Delay before show bottom button in seconds
+	 * @param boolean $any_event_active Changed by function if event is active
+	 * @param int     $after_n_days Show window again after N days
 	 * @return string
 	 */
 	function render_when_popup_will_appear_after_clicking_on_element(
@@ -259,7 +273,7 @@ class SCP_Template {
 		$event_hide_element_after_click_on_it,
 		$delay_before_show_bottom_button,
 		& $any_event_active,
-		$after_n_days = 0) {
+		$after_n_days = 0 ) {
 
 		$content = '';
 
@@ -312,10 +326,11 @@ class SCP_Template {
 	 * @uses $this->render_close_widget_on_mobile()
 	 * @uses $this->render_show_bottom_button()
 	 *
-	 * @param array $when_should_the_popup_appear Events list
-	 * @param int $popup_will_appear_after_scrolling_down_n_percent Event value
-	 * @param int $delay_before_show_bottom_button
-	 * @param boolean $any_event_active
+	 * @param array   $when_should_the_popup_appear Events list
+	 * @param int     $popup_will_appear_after_scrolling_down_n_percent Event value
+	 * @param int     $delay_before_show_bottom_button Delay before show botton button in seconds
+	 * @param boolean $any_event_active Changed by function if event is active
+	 * @param int     $after_n_days Show window again after N days
 	 * @return string
 	 */
 	function render_when_popup_will_appear_after_scrolling_down_n_percent(
@@ -323,7 +338,7 @@ class SCP_Template {
 		$popup_will_appear_after_scrolling_down_n_percent,
 		$delay_before_show_bottom_button,
 		& $any_event_active,
-		$after_n_days = 0) {
+		$after_n_days = 0 ) {
 
 		$content = '';
 
@@ -371,17 +386,17 @@ class SCP_Template {
 	 * @uses $this->render_show_window()
 	 * @uses $this->render_show_bottom_button()
 	 *
-	 * @param array $when_should_the_popup_appear Events list
+	 * @param array   $when_should_the_popup_appear Events list
 	 * @param boolean $popup_will_appear_on_exit_intent Event value
-	 * @param int $delay_before_show_bottom_button
-	 * @param boolean $any_event_active
+	 * @param int     $delay_before_show_bottom_button Delay in seconds
+	 * @param boolean $any_event_active Changed by function if event is active
 	 * @return string
 	 */
 	function render_when_popup_will_appear_on_exit_intent(
 		$when_should_the_popup_appear,
 		$popup_will_appear_on_exit_intent,
 		$delay_before_show_bottom_button,
-		& $any_event_active) {
+		& $any_event_active ) {
 
 		$content = '';
 
@@ -418,7 +433,6 @@ class SCP_Template {
 	 * @used_by Social_Media_Popup::add_events_tracking_code()
 	 *
 	 * @param string $tracking_id Example: UA-12345678-0
-	 * @return string
 	 */
 	function render_google_analytics_tracking_code( $tracking_id ) {
 	?>
@@ -549,7 +563,7 @@ class SCP_Template {
 	 * @return string
 	 */
 	private function popup_platform_title() {
-		return "Popup " . ( wp_is_mobile() ? "Mobile" : "Desktop" );
+		return 'Popup ' . ( wp_is_mobile() ? 'Mobile' : 'Desktop' );
 	}
 }
 

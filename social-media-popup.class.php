@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) or exit;
 define( 'SMP_PREFIX', 'social_media_popup' );
 
 require_once( dirname( __FILE__ ) . '/functions.php' );
-require_once( dirname( __FILE__ ) . '/lib/scp_template.php' );
+require_once( dirname( __FILE__ ) . '/lib/scp-template.php' );
 require_once( dirname( __FILE__ ) . '/lib/providers/providers.php' );
 
 /**
