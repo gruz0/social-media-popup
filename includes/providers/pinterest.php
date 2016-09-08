@@ -1,5 +1,17 @@
 <?php
+/**
+ * Pinterest Template
+ *
+ * @package    Social_Media_Popup
+ * @subpackage SCP_Template
+ * @author     Alexander Gruzov
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link       https://github.com/gruz0/social-media-popup
+ */
 
+/**
+ * SCP_Pinterest_Provider
+ */
 class SCP_Pinterest_Provider extends SCP_Provider {
 	/**
 	 * Return widget is active
@@ -9,7 +21,7 @@ class SCP_Pinterest_Provider extends SCP_Provider {
 	 * @return boolean
 	 */
 	public static function is_active() {
-		return ( self::$options[ self::$prefix . 'setting_use_pinterest' ] === '1' );
+		return ( '1' === self::$options[ self::$prefix . 'setting_use_pinterest' ] );
 	}
 
 	/**
@@ -21,10 +33,10 @@ class SCP_Pinterest_Provider extends SCP_Provider {
 	 */
 	public static function options() {
 		return array(
-			'tab_caption' => esc_attr( self::$options[ self::$prefix . 'setting_pinterest_tab_caption'] ),
+			'tab_caption' => esc_attr( self::$options[ self::$prefix . 'setting_pinterest_tab_caption' ] ),
 			'css_class'   => 'pinterest-tab',
 			'icon'        => 'fa-pinterest',
-			'url'         => self::$options[ self::$prefix . 'setting_pinterest_profile_url' ]
+			'url'         => self::$options[ self::$prefix . 'setting_pinterest_profile_url' ],
 		);
 	}
 
@@ -38,7 +50,7 @@ class SCP_Pinterest_Provider extends SCP_Provider {
 	public static function container() {
 		$content = '<div class="box">';
 
-		if ( self::$options[ self::$prefix . 'setting_pinterest_show_description' ] === '1' ) {
+		if ( '1' === self::$options[ self::$prefix . 'setting_pinterest_show_description' ] ) {
 			$content .= '<p class="widget-description"><b>' . self::$options[ self::$prefix . 'setting_pinterest_description' ] . '</b></p>';
 		}
 

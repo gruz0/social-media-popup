@@ -1,5 +1,17 @@
 <?php
+/**
+ * VK.com Template
+ *
+ * @package    Social_Media_Popup
+ * @subpackage SCP_Template
+ * @author     Alexander Gruzov
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link       https://github.com/gruz0/social-media-popup
+ */
 
+/**
+ * SCP_VK_Provider
+ */
 class SCP_VK_Provider extends SCP_Provider {
 	/**
 	 * Return widget is active
@@ -9,7 +21,7 @@ class SCP_VK_Provider extends SCP_Provider {
 	 * @return boolean
 	 */
 	public static function is_active() {
-		return ( self::$options[ self::$prefix . 'setting_use_vkontakte' ] === '1' );
+		return ( '1' === self::$options[ self::$prefix . 'setting_use_vkontakte' ] );
 	}
 
 	/**
@@ -21,10 +33,10 @@ class SCP_VK_Provider extends SCP_Provider {
 	 */
 	public static function options() {
 		return array(
-			'tab_caption' => esc_attr( self::$options[ self::$prefix . 'setting_vkontakte_tab_caption'] ),
+			'tab_caption' => esc_attr( self::$options[ self::$prefix . 'setting_vkontakte_tab_caption' ] ),
 			'css_class'   => 'vk-tab',
 			'icon'        => 'fa-vk',
-			'url'         => self::$options[ self::$prefix . 'setting_vkontakte_page_url' ]
+			'url'         => self::$options[ self::$prefix . 'setting_vkontakte_page_url' ],
 		);
 	}
 
@@ -44,7 +56,7 @@ class SCP_VK_Provider extends SCP_Provider {
 
 		$content = '<div class="box">';
 
-		if ( self::$options[ self::$prefix . 'setting_vkontakte_show_description' ] === '1' ) {
+		if ( '1' === self::$options[ self::$prefix . 'setting_vkontakte_show_description' ] ) {
 			$content .= '<p class="widget-description"><b>' . self::$options[ self::$prefix . 'setting_vkontakte_description' ] . '</b></p>';
 		}
 
@@ -79,7 +91,7 @@ class SCP_VK_Provider extends SCP_Provider {
 									$content .= 'scp_destroyPlugin(scp.showWindowAfterReturningNDays);';
 								}
 
-								if ( self::$template->use_events_tracking() && ( (int) self::$options[ self::$prefix . 'tracking_use_vkontakte' ] == 1 ) ) {
+								if ( self::$template->use_events_tracking() && absint( self::$options[ self::$prefix .  'tracking_use_vkontakte' ] ) === 1 ) {
 									$content .= self::$template->push_social_media_trigger_to_google_analytics( esc_attr( self::$options[ self::$prefix . 'tracking_vkontakte_event' ] ) );
 									$content .= self::$template->push_social_network_and_action_to_google_analytics( 'SMP VK', 'Subscribe' );
 								}

@@ -17,9 +17,9 @@ defined( 'ABSPATH' ) or exit;
  */
 define( 'SMP_PREFIX', 'social_media_popup' );
 
-require_once( dirname( __FILE__ ) . '/functions.php' );
-require_once( dirname( __FILE__ ) . '/lib/scp-template.php' );
-require_once( dirname( __FILE__ ) . '/lib/providers/providers.php' );
+require_once( SMP_INCLUDES_DIR . 'functions.php' );
+require_once( SMP_INCLUDES_DIR . 'scp-template.php' );
+require_once( SMP_INCLUDES_DIR . 'providers/providers.php' );
 
 /**
  * Social Media Popup class
@@ -1024,7 +1024,7 @@ class Social_Media_Popup {
 	 * Подключаем локализацию к плагину
 	 */
 	public function localization() {
-		load_plugin_textdomain( L10N_SCP_PREFIX, false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+		load_plugin_textdomain( L10N_SCP_PREFIX, false, SMP_PLUGIN_DIRNAME . 'languages' );
 	}
 
 	/**
@@ -4299,7 +4299,7 @@ class Social_Media_Popup {
 		$scp_prefix = self::get_scp_prefix();
 		$version = get_option( $scp_prefix . 'version' );
 
-		wp_register_style( SMP_PREFIX . '-admin-css', plugins_url( 'css/admin.css?' . $version, __FILE__ ) );
+		wp_register_style( SMP_PREFIX . '-admin-css', SMP_PLUGIN_URL . 'css/admin.css?' . $version );
 		wp_enqueue_style( SMP_PREFIX . '-admin-css' );
 
 		wp_register_style( 'jquery-ui-css', '//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css' );
@@ -4318,7 +4318,7 @@ class Social_Media_Popup {
 		}
 
 		wp_enqueue_style( 'wp-color-picker' );
-		wp_register_script( SMP_PREFIX . '-admin-js', plugins_url( 'js/admin.js?' . $version, __FILE__ ),
+		wp_register_script( SMP_PREFIX . '-admin-js', SMP_PLUGIN_URL . 'js/admin.js?' . $version,
 			array( 'jquery', 'wp-color-picker' )
 		);
 		wp_enqueue_script( SMP_PREFIX . '-admin-js' );
@@ -4366,7 +4366,7 @@ class Social_Media_Popup {
 		$scp_prefix = self::get_scp_prefix();
 		$version = get_option( $scp_prefix . 'version' );
 
-		include( sprintf( '%s/templates/welcome-screen.php', dirname( __FILE__ ) ) );
+		include( SMP_TEMPLATES_DIR . 'welcome-screen.php' );
 	}
 
 	/**
@@ -4377,7 +4377,7 @@ class Social_Media_Popup {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 		}
 
-		include( sprintf( '%s/templates/settings.php', dirname( __FILE__ ) ) );
+		include( SMP_TEMPLATES_DIR . 'settings.php' );
 	}
 
 	/**
@@ -4388,7 +4388,7 @@ class Social_Media_Popup {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 		}
 
-		include( sprintf( '%s/templates/settings/settings-facebook.php', dirname( __FILE__ ) ) );
+		include( SMP_TEMPLATES_DIR . 'settings/settings-facebook.php' );
 	}
 
 	/**
@@ -4399,7 +4399,7 @@ class Social_Media_Popup {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 		}
 
-		include( sprintf( '%s/templates/settings/settings-vkontakte.php', dirname( __FILE__ ) ) );
+		include( SMP_TEMPLATES_DIR . 'settings/settings-vkontakte.php' );
 	}
 
 	/**
@@ -4410,7 +4410,7 @@ class Social_Media_Popup {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 		}
 
-		include( sprintf( '%s/templates/settings/settings-odnoklassniki.php', dirname( __FILE__ ) ) );
+		include( SMP_TEMPLATES_DIR . 'settings/settings-odnoklassniki.php' );
 	}
 
 	/**
@@ -4421,7 +4421,7 @@ class Social_Media_Popup {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 		}
 
-		include( sprintf( '%s/templates/settings/settings-googleplus.php', dirname( __FILE__ ) ) );
+		include( SMP_TEMPLATES_DIR . 'settings/settings-googleplus.php' );
 	}
 
 	/**
@@ -4432,7 +4432,7 @@ class Social_Media_Popup {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 		}
 
-		include( sprintf( '%s/templates/settings/settings-twitter.php', dirname( __FILE__ ) ) );
+		include( SMP_TEMPLATES_DIR . 'settings/settings-twitter.php' );
 	}
 
 	/**
@@ -4443,7 +4443,7 @@ class Social_Media_Popup {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 		}
 
-		include( sprintf( '%s/templates/settings/settings-pinterest.php', dirname( __FILE__ ) ) );
+		include( SMP_TEMPLATES_DIR . 'settings/settings-pinterest.php' );
 	}
 
 	/**
@@ -4466,16 +4466,16 @@ class Social_Media_Popup {
 		$this->render_popup_window( $version, $scp_prefix );
 
 		if ( wp_is_mobile() ) {
-			wp_register_style( SMP_PREFIX . '-css', plugins_url( 'css/mobile.css?' . $version, __FILE__ ) );
+			wp_register_style( SMP_PREFIX . '-css', SMP_PLUGIN_URL . 'css/mobile.css?' . $version );
 		} else {
-			wp_register_style( SMP_PREFIX . '-css', plugins_url( 'css/styles.css?' . $version, __FILE__ ) );
+			wp_register_style( SMP_PREFIX . '-css', SMP_PLUGIN_URL . 'css/styles.css?' . $version );
 		}
 		wp_enqueue_style( SMP_PREFIX . '-css' );
 
-		wp_register_style( 'font-awesome', plugins_url( 'vendor/font-awesome-4.6.3/css/font-awesome.min.css?' . $version, __FILE__ ) );
+		wp_register_style( 'font-awesome', SMP_PLUGIN_URL . 'vendor/font-awesome-4.6.3/css/font-awesome.min.css?' . $version );
 		wp_enqueue_style( 'font-awesome' );
 
-		wp_register_style( SMP_PREFIX . '-icons', plugins_url( 'css/icons.css?' . $version, __FILE__ ) );
+		wp_register_style( SMP_PREFIX . '-icons', SMP_PLUGIN_URL . 'css/icons.css?' . $version );
 		wp_enqueue_style( SMP_PREFIX . '-icons' );
 	}
 
@@ -4491,7 +4491,7 @@ class Social_Media_Popup {
 		$encoded_content = preg_replace( "~[\n\r\t]~", '', $content );
 		$encoded_content = base64_encode( $encoded_content );
 
-		wp_register_script( SMP_PREFIX . '-js', plugins_url( 'js/scripts.js?' . $version, __FILE__ ), array( 'jquery' ) );
+		wp_register_script( SMP_PREFIX . '-js', SMP_PLUGIN_URL . 'js/scripts.js?' . $version, array( 'jquery' ) );
 		wp_localize_script( SMP_PREFIX . '-js', 'scp', array(
 			'encodedContent' => htmlspecialchars( $encoded_content ),
 		));
@@ -4990,7 +4990,7 @@ class Social_Media_Popup {
 	 * @return void
 	 */
 	private function add_cookies_script( $version, $scp_prefix ) {
-		wp_register_script( SMP_PREFIX . '-cookies', plugins_url( 'js/cookies.js?' . $version, __FILE__ ), array( 'jquery' ) );
+		wp_register_script( SMP_PREFIX . '-cookies', SMP_PLUGIN_URL . 'js/cookies.js?' . $version, array( 'jquery' ) );
 		wp_localize_script( SMP_PREFIX . '-cookies', 'scp_cookies', array(
 			'clearCookiesMessage'           => __( 'Page will be reload after clear cookies. Continue?', L10N_SCP_PREFIX ),
 			'showWindowAfterReturningNDays' => (int) get_option( $scp_prefix . 'setting_display_after_n_days' ),

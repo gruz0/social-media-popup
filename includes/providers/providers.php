@@ -1,9 +1,44 @@
 <?php
+/**
+ * Providers base class
+ *
+ * @package    Social_Media_Popup
+ * @subpackage SCP_Template
+ * @author     Alexander Gruzov
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link       https://github.com/gruz0/social-media-popup
+ */
 
+/**
+ * SCP_Provider
+ */
 class SCP_Provider {
+	/**
+	 * Option name prefix
+	 *
+	 * @var string $prefix
+	 */
 	static $prefix = null;
+
+	/**
+	 * Options for specific provider
+	 *
+	 * @var array $options
+	 */
 	static $options = null;
+
+	/**
+	 * Tabs UL identifier to use in providers JS-prepend* functions
+	 *
+	 * @var string $tabs_id
+	 */
 	static $tabs_id = null;
+
+	/**
+	 * An instance of SCP_Template class
+	 *
+	 * @var SCP_Template $template
+	 */
 	static $template = null;
 
 	/**
@@ -22,11 +57,12 @@ class SCP_Provider {
 	 *
 	 * @since 0.7.3
 	 *
+	 * @param string $provider_name Provider name
 	 * @return boolean
 	 */
 	public static function exists( $provider_name ) {
 		$providers = self::available_providers();
-		return in_array( $provider_name, $providers );
+		return in_array( $provider_name, $providers, true );
 	}
 
 	/**
@@ -36,7 +72,8 @@ class SCP_Provider {
 	 *
 	 * @param string $provider Provider name (ex. facebook, vkontakte, etc.)
 	 * @param string $prefix SCP options prefix (default: 'scp-')
-	 * @param array $options Options for specific provider
+	 * @param array  $options Options for specific provider
+	 * @throws Exception Throws Exception if the provided $provider is not exist
 	 * @return SCP_Provider
 	 */
 	public static function create( $provider, $prefix, $options ) {
@@ -45,7 +82,7 @@ class SCP_Provider {
 		self::$tabs_id = self::tabs_id();
 
 		// FIXME: Переписать на проверку провайдера в массиве available_providers()
-		switch( $provider ) {
+		switch ( $provider ) {
 			case 'facebook': {
 				require_once( dirname( __FILE__ ) . '/facebook.php' );
 				return new SCP_Facebook_Provider();
@@ -93,10 +130,10 @@ class SCP_Provider {
 	 *
 	 * @since 0.7.3
 	 *
-	 * @return boolean
+	 * @throws Exception Throws Exception if function called directly
 	 */
 	public static function is_active() {
-		throw new Exception( "Not implemented!" );
+		throw new Exception( 'Not implemented!' );
 	}
 
 	/**
@@ -105,10 +142,10 @@ class SCP_Provider {
 	 *
 	 * @since 0.7.3
 	 *
-	 * @return array
+	 * @throws Exception Throws Exception if function called directly
 	 */
 	public static function options() {
-		throw new Exception( "Not implemented!" );
+		throw new Exception( 'Not implemented!' );
 	}
 
 	/**
@@ -116,7 +153,7 @@ class SCP_Provider {
 	 *
 	 * @since 0.7.3
 	 *
-	 * @param array @args
+	 * @param array $args Options
 	 * @return string
 	 */
 	public static function tab_caption( $args ) {
@@ -131,7 +168,7 @@ class SCP_Provider {
 	 *
 	 * @since 0.7.4
 	 *
-	 * @param array @args
+	 * @param array $args Options
 	 * @return string
 	 */
 	public static function tab_caption_desktop_icons( $args ) {
@@ -148,7 +185,7 @@ class SCP_Provider {
 	 *
 	 * @since 0.7.4
 	 *
-	 * @param array @args
+	 * @param array $args Options
 	 * @return string
 	 */
 	public static function tab_caption_mobile( $args ) {
@@ -170,7 +207,7 @@ class SCP_Provider {
 		if ( wp_is_mobile() ) {
 			return '#scp_mobile .scp-icons';
 		} else {
-			if ( self::$options[ self::$prefix . 'setting_use_icons_instead_of_labels_in_tabs' ] == 1 ) {
+			if ( '1' === self::$options[ self::$prefix . 'setting_use_icons_instead_of_labels_in_tabs' ] ) {
 				return '#social-community-popup .scp-icons';
 			} else {
 				return '#social-community-popup .tabs';
@@ -184,10 +221,10 @@ class SCP_Provider {
 	 *
 	 * @since 0.7.3
 	 *
-	 * @return string
+	 * @throws Exception Throws Exception if function called directly
 	 */
 	public static function container() {
-		throw new Exception( "Not implemented!" );
+		throw new Exception( 'Not implemented!' );
 	}
 
 	/**
@@ -206,12 +243,11 @@ class SCP_Provider {
 	 *
 	 * @since 0.7.4
 	 *
-	 * @param string $tab_caption
-	 *
+	 * @param string $tab_caption Tab caption
 	 * @return string
 	 */
 	private static function clean_tab_caption( $tab_caption ) {
-		return trim( str_replace( "\r\n", "", $tab_caption ) );
+		return trim( str_replace( "\r\n", '', $tab_caption ) );
 	}
 }
 

@@ -29,7 +29,13 @@ if ( ! array_key_exists( 'social-media-popup', $GLOBALS ) ) {
 		register_deactivation_hook( __FILE__, array( 'Social_Media_Popup', 'deactivate' ) );
 		register_uninstall_hook( __FILE__, array( 'Social_Media_Popup', 'uninstall' ) );
 
-		include sprintf( '%s/social-media-popup.class.php', dirname( __FILE__ ) );
+		define( 'SMP_DIR',            dirname( __FILE__ ) . DIRECTORY_SEPARATOR );
+		define( 'SMP_INCLUDES_DIR',   SMP_DIR . 'includes' . DIRECTORY_SEPARATOR );
+		define( 'SMP_TEMPLATES_DIR',  SMP_DIR . 'templates' . DIRECTORY_SEPARATOR );
+		define( 'SMP_PLUGIN_URL',     plugin_dir_url( __FILE__ ) );
+		define( 'SMP_PLUGIN_DIRNAME', dirname( plugin_basename( __FILE__ ) ) . DIRECTORY_SEPARATOR );
+
+		include( SMP_INCLUDES_DIR . 'social-media-popup.class.php' );
 
 		$social_media_popup = new Social_Media_Popup();
 
