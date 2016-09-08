@@ -411,13 +411,45 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( 'portrait' == get_option( $scp_prefix . 'setting_googleplus_layout' ) );
 
 		// Twitter
-		$this->assertTrue( 0 == get_option( $scp_prefix . 'setting_twitter_close_window_after_join' ) );
-		$this->assertTrue( 1 == get_option( $scp_prefix . 'setting_twitter_use_follow_button' ) );
-		$this->assertTrue( 1 == get_option( $scp_prefix . 'setting_twitter_show_count' ) );
-		$this->assertTrue( 1 == get_option( $scp_prefix . 'setting_twitter_show_screen_name' ) );
-		$this->assertTrue( 1 == get_option( $scp_prefix . 'setting_twitter_follow_button_large_size' ) );
-		$this->assertTrue( 1 == get_option( $scp_prefix . 'setting_twitter_use_timeline' ) );
-		$this->assertTrue( 0 == get_option( $scp_prefix . 'setting_twitter_widget_id' ) );
+		$this->assertTrue( 0        == get_option( $scp_prefix . 'setting_twitter_close_window_after_join' ) );
+		$this->assertTrue( 1        == get_option( $scp_prefix . 'setting_twitter_use_follow_button' ) );
+		$this->assertTrue( 1        == get_option( $scp_prefix . 'setting_twitter_show_count' ) );
+		$this->assertTrue( 1        == get_option( $scp_prefix . 'setting_twitter_show_screen_name' ) );
+		$this->assertTrue( 1        == get_option( $scp_prefix . 'setting_twitter_follow_button_large_size' ) );
+		$this->assertTrue( 'center' == get_option( $scp_prefix . 'setting_twitter_follow_button_align_by' ) );
+		$this->assertTrue( 1        == get_option( $scp_prefix . 'setting_twitter_use_timeline' ) );
+		$this->assertTrue( 0        == get_option( $scp_prefix . 'setting_twitter_widget_id' ) );
+
+		// Опции трекинга событий
+		$this->assertTrue( 1  == get_option( $scp_prefix . 'use_events_tracking' ) );
+		$this->assertTrue( 1  == get_option( $scp_prefix . 'do_not_use_tracking_in_debug_mode' ) );
+		$this->assertTrue( '' == get_option( $scp_prefix . 'google_analytics_tracking_id' ) );
+		$this->assertTrue( 1  == get_option( $scp_prefix . 'push_events_to_aquisition_social_plugins' ) );
+		$this->assertTrue( 1  == get_option( $scp_prefix . 'push_events_when_displaying_window' ) );
+		$this->assertTrue( 1  == get_option( $scp_prefix . 'push_events_when_subscribing_on_social_networks' ) );
+		$this->assertTrue( 1  == get_option( $scp_prefix . 'add_window_events_descriptions' ) );
+
+		// Трекинг событий социальных сетей
+		$this->assertTrue( 1 == get_option( $scp_prefix . 'tracking_use_twitter' ) );
+		$this->assertTrue( __( 'Follow on Twitter', L10N_SCP_PREFIX ) == get_option( $scp_prefix . 'tracking_twitter_event' ) );
+
+		$this->assertTrue( 1 == get_option( $scp_prefix . 'tracking_use_vkontakte' ) );
+		$this->assertTrue( __( 'Subscribe on VK.com', L10N_SCP_PREFIX ) == get_option( $scp_prefix . 'tracking_vkontakte_event' ) );
+
+		$this->assertTrue( 1 == get_option( $scp_prefix . 'tracking_use_facebook' ) );
+		$this->assertTrue( __( 'Subscribe on Facebook', L10N_SCP_PREFIX ) == get_option( $scp_prefix . 'tracking_facebook_event' ) );
+
+		// Описания событий для отправки в Google Analytics
+		$this->assertTrue( __( 'Show immediately', L10N_SCP_PREFIX )                    == get_option( $scp_prefix . 'tracking_event_label_window_showed_immediately' ) );
+		$this->assertTrue( __( 'Show after delay before it rendered', L10N_SCP_PREFIX ) == get_option( $scp_prefix . 'tracking_event_label_window_showed_with_delay' ) );
+		$this->assertTrue( __( 'Show after click on CSS-selector', L10N_SCP_PREFIX )    == get_option( $scp_prefix . 'tracking_event_label_window_showed_after_click' ) );
+		$this->assertTrue( __( 'Show after scrolling down', L10N_SCP_PREFIX )           == get_option( $scp_prefix . 'tracking_event_label_window_showed_on_scrolling_down' ) );
+		$this->assertTrue( __( 'Show on exit intent', L10N_SCP_PREFIX )                 == get_option( $scp_prefix . 'tracking_event_label_window_showed_on_exit_intent' ) );
+		$this->assertTrue( __( '(no events fired)', L10N_SCP_PREFIX )                   == get_option( $scp_prefix . 'tracking_event_label_no_events_fired' ) );
+		$this->assertTrue( __( 'After delay before show widget', L10N_SCP_PREFIX )      == get_option( $scp_prefix . 'tracking_event_label_on_delay' ) );
+		$this->assertTrue( __( 'After click on CSS-selector', L10N_SCP_PREFIX )         == get_option( $scp_prefix . 'tracking_event_label_after_click' ) );
+		$this->assertTrue( __( 'On scrolling down', L10N_SCP_PREFIX )                   == get_option( $scp_prefix . 'tracking_event_label_on_scrolling_down' ) );
+		$this->assertTrue( __( 'On exit intent', L10N_SCP_PREFIX )                      == get_option( $scp_prefix . 'tracking_event_label_on_exit_intent' ) );
 	}
 
 	private function checkDebugModeIsOn() {
