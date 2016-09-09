@@ -4787,10 +4787,10 @@ class Social_Media_Popup {
 					$content .= '<div class="plugin-title">' . $scp_plugin_title . '</div>';
 				}
 
-				if ( 1 === $active_providers_count && 1 === $scp_options[ $scp_prefix . 'setting_hide_tabs_if_one_widget_is_active' ] ) {
+				if ( 1 === $active_providers_count && 1 === absint( $scp_options[ $scp_prefix . 'setting_hide_tabs_if_one_widget_is_active' ] ) ) {
 
 				} else {
-					$use_icons_instead_of_labels = 1 === $scp_options[ $scp_prefix . 'setting_use_icons_instead_of_labels_in_tabs' ];
+					$use_icons_instead_of_labels = absint( $scp_options[ $scp_prefix . 'setting_use_icons_instead_of_labels_in_tabs' ] ) === 1;
 					$icon_size = 'fa-' . $scp_options[ $scp_prefix . 'setting_icons_size_on_desktop' ];
 
 					if ( $use_icons_instead_of_labels ) {
