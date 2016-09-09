@@ -4472,8 +4472,7 @@ class Social_Media_Popup {
 		}
 		wp_enqueue_style( SMP_PREFIX . '-css' );
 
-		wp_register_style( 'font-awesome', SMP_PLUGIN_URL . 'vendor/font-awesome-4.6.3/css/font-awesome.min.css?' . $version );
-		wp_enqueue_style( 'font-awesome' );
+		wp_enqueue_style( 'font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' );
 
 		wp_register_style( SMP_PREFIX . '-icons', SMP_PLUGIN_URL . 'css/icons.css?' . $version );
 		wp_enqueue_style( SMP_PREFIX . '-icons' );
