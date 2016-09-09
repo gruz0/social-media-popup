@@ -21,7 +21,7 @@ class SCP_Pinterest_Provider extends SCP_Provider {
 	 * @return boolean
 	 */
 	public static function is_active() {
-		return ( '1' === self::$options[ self::$prefix . 'setting_use_pinterest' ] );
+		return self::get_option_as_boolean( 'setting_use_pinterest' );
 	}
 
 	/**
@@ -33,10 +33,10 @@ class SCP_Pinterest_Provider extends SCP_Provider {
 	 */
 	public static function options() {
 		return array(
-			'tab_caption' => esc_attr( self::$options[ self::$prefix . 'setting_pinterest_tab_caption' ] ),
+			'tab_caption' => self::get_option_as_escaped_string( 'setting_pinterest_tab_caption' ),
 			'css_class'   => 'pinterest-tab',
 			'icon'        => 'fa-pinterest',
-			'url'         => self::$options[ self::$prefix . 'setting_pinterest_profile_url' ],
+			'url'         => self::get_option_as_escaped_string( 'setting_pinterest_profile_url' ),
 		);
 	}
 
@@ -50,15 +50,15 @@ class SCP_Pinterest_Provider extends SCP_Provider {
 	public static function container() {
 		$content = '<div class="box">';
 
-		if ( '1' === self::$options[ self::$prefix . 'setting_pinterest_show_description' ] ) {
+		if ( self::get_option_as_boolean( 'setting_pinterest_show_description' ) ) {
 			$content .= '<p class="widget-description"><b>' . self::$options[ self::$prefix . 'setting_pinterest_description' ] . '</b></p>';
 		}
 
 		$content .= '<a data-pin-do="embedUser" '
-			. 'href="' . self::$options[ self::$prefix . 'setting_pinterest_profile_url' ] . '" '
-			. 'data-pin-scale-width="' . self::$options[ self::$prefix . 'setting_pinterest_image_width' ] . '" '
-			. 'data-pin-board-width="' . self::$options[ self::$prefix . 'setting_pinterest_width' ] . '" '
-			. 'data-pin-scale-height="' . self::$options[ self::$prefix . 'setting_pinterest_height' ] . '"'
+			. 'href="'                  . self::get_option_as_escaped_string( 'setting_pinterest_profile_url' ) . '" '
+			. 'data-pin-scale-width="'  . self::get_option_as_integer( 'setting_pinterest_image_width' ) . '" '
+			. 'data-pin-board-width="'  . self::get_option_as_integer( 'setting_pinterest_width' ) . '" '
+			. 'data-pin-scale-height="' . self::get_option_as_integer( 'setting_pinterest_height' ) . '"'
 			. '></a>';
 
 		$content .= '<script type="text/javascript">

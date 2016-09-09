@@ -21,7 +21,7 @@ class SCP_Facebook_Provider extends SCP_Provider {
 	 * @return boolean
 	 */
 	public static function is_active() {
-		return ( '1' === self::$options[ self::$prefix . 'setting_use_facebook' ] );
+		return self::get_option_as_boolean( 'setting_use_facebook' );
 	}
 
 	/**
@@ -33,10 +33,10 @@ class SCP_Facebook_Provider extends SCP_Provider {
 	 */
 	public static function options() {
 		return array(
-			'tab_caption' => esc_attr( self::$options[ self::$prefix . 'setting_facebook_tab_caption' ] ),
+			'tab_caption' => self::get_option_as_escaped_string( 'setting_facebook_tab_caption' ),
 			'css_class'   => 'facebook-tab',
 			'icon'        => 'fa-facebook',
-			'url'         => esc_attr( self::$options[ self::$prefix . 'setting_facebook_page_url' ] ),
+			'url'         => self::get_option_as_escaped_string( 'setting_facebook_page_url' ),
 		);
 	}
 
@@ -58,12 +58,12 @@ class SCP_Facebook_Provider extends SCP_Provider {
 	 * @return string
 	 */
 	public static function container() {
-		$close_window_after_join = ( 1 === absint( self::$options[ self::$prefix .  'setting_facebook_close_window_after_join' ] ) );
+		$close_window_after_join = self::get_option_as_boolean( 'setting_facebook_close_window_after_join' );
 
 		$content = '<div class="box">';
 
 		// FIXME: Should be refactored with self::show_description() and move condition to it
-		if ( '1' === self::$options[ self::$prefix . 'setting_facebook_show_description' ] ) {
+		if ( self::get_option_as_boolean( 'setting_facebook_show_description' ) ) {
 			$content .= '<p class="widget-description"><b>' . self::$options[ self::$prefix . 'setting_facebook_description' ] . '</b></p>';
 		}
 
@@ -92,16 +92,16 @@ class SCP_Facebook_Provider extends SCP_Provider {
 	 */
 	private static function prepare_facebook_widget() {
 		return '<div class="fb-page" '
-			. 'data-href="' .                  esc_attr( self::$options[ self::$prefix . 'setting_facebook_page_url' ] ) . '" '
-			. 'data-width="' .                 esc_attr( self::$options[ self::$prefix . 'setting_facebook_width' ] ) . '" '
-			. 'width="' .                      esc_attr( self::$options[ self::$prefix . 'setting_facebook_width' ] ) . '" '
-			. 'data-height="' .                esc_attr( self::$options[ self::$prefix . 'setting_facebook_height' ] ) . '" '
-			. 'height="' .                     esc_attr( self::$options[ self::$prefix . 'setting_facebook_height' ] ) . '" '
-			. 'data-hide-cover="' .            esc_attr( scp_to_bool( self::$options[ self::$prefix . 'setting_facebook_hide_cover' ] ) ) . '" '
-			. 'data-show-facepile="' .         esc_attr( scp_to_bool( self::$options[ self::$prefix . 'setting_facebook_show_facepile' ] ) ) . '" '
-			. 'data-adapt-container-width="' . esc_attr( scp_to_bool( self::$options[ self::$prefix . 'setting_facebook_adapt_container_width' ] ) ) . '" '
-			. 'data-small-header="' .          esc_attr( scp_to_bool( self::$options[ self::$prefix . 'setting_facebook_use_small_header' ] ) ) . '" '
-			. 'data-tabs="' .                  esc_attr( self::$options[ self::$prefix . 'setting_facebook_tabs' ] ) . '" '
+			. 'data-href="'                  . self::get_option_as_escaped_string( 'setting_facebook_page_url' ) . '" '
+			. 'data-width="'                 . self::get_option_as_integer( 'setting_facebook_width' ) . '" '
+			. 'width="'                      . self::get_option_as_integer( 'setting_facebook_width' ) . '" '
+			. 'data-height="'                . self::get_option_as_integer( 'setting_facebook_height' ) . '" '
+			. 'height="'                     . self::get_option_as_integer( 'setting_facebook_height' ) . '" '
+			. 'data-hide-cover="'            . scp_to_bool( self::get_option_as_escaped_string( 'setting_facebook_hide_cover' ) ) . '" '
+			. 'data-show-facepile="'         . scp_to_bool( self::get_option_as_escaped_string( 'setting_facebook_show_facepile' ) ) . '" '
+			. 'data-adapt-container-width="' . scp_to_bool( self::get_option_as_escaped_string( 'setting_facebook_adapt_container_width' ) ) . '" '
+			. 'data-small-header="'          . scp_to_bool( self::get_option_as_escaped_string( 'setting_facebook_use_small_header' ) ) . '" '
+			. 'data-tabs="'                  . self::get_option_as_escaped_string( 'setting_facebook_tabs' ) . '" '
 			. '></div>';
 	}
 
@@ -122,8 +122,8 @@ class SCP_Facebook_Provider extends SCP_Provider {
 			. 'var js, fjs = d.getElementsByTagName(s)[0];'
 			. 'if (d.getElementById(id)) return;'
 			. 'js = d.createElement(s); js.id = id;'
-			. 'js.src = "//connect.facebook.net/' . esc_attr( self::$options[ self::$prefix . 'setting_facebook_locale' ] )
-			. '/sdk.js#xfbml=1&appId=' .            esc_attr( self::$options[ self::$prefix . 'setting_facebook_application_id' ] ) . '&version=v2.5";'
+			. 'js.src = "//connect.facebook.net/' . self::get_option_as_escaped_string( 'setting_facebook_locale' )
+			. '/sdk.js#xfbml=1&appId=' .            self::get_option_as_escaped_string( 'setting_facebook_application_id' ) . '&version=v2.5";'
 			. 'fjs.parentNode.insertBefore(js, fjs);'
 			. '}(document, "script", "facebook-jssdk"));</script>';
 
@@ -158,10 +158,8 @@ class SCP_Facebook_Provider extends SCP_Provider {
 		}
 
 		// FIXME: Should be refactored with self::use_widget() and move second condition to it
-		if ( self::$template->use_events_tracking() && ( 1 === absint( self::$options[ self::$prefix . 'tracking_use_facebook' ] ) ) ) {
-			$facebook_events .= self::$template->push_social_media_trigger_to_google_analytics(
-				esc_attr( self::$options[ self::$prefix . 'tracking_facebook_event' ] )
-			);
+		if ( self::$template->use_events_tracking() && self::get_option_as_boolean( 'tracking_use_facebook' ) ) {
+			$facebook_events .= self::$template->push_social_media_trigger_to_google_analytics( self::get_option_as_escaped_string( 'tracking_facebook_event' ) );
 			$facebook_events .= self::$template->push_social_network_and_action_to_google_analytics( 'SMP Facebook', 'Subscribe' );
 		}
 
@@ -172,7 +170,7 @@ class SCP_Facebook_Provider extends SCP_Provider {
 		if ( typeof window.fbAsyncInit == "undefined" ) {
 			window.fbAsyncInit = function() {
 				FB.init({
-					appId  : "' . esc_attr( self::$options[ self::$prefix . 'setting_facebook_application_id' ] ) . '",
+					appId  : "' . self::get_option_as_escaped_string( 'setting_facebook_application_id' ) . '",
 					xfbml  : true,
 					version: "v2.5"
 				});

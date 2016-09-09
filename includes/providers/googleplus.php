@@ -21,7 +21,7 @@ class SCP_GooglePlus_Provider extends SCP_Provider {
 	 * @return boolean
 	 */
 	public static function is_active() {
-		return ( '1' === self::$options[ self::$prefix . 'setting_use_googleplus' ] );
+		return self::get_option_as_boolean( 'setting_use_googleplus' );
 	}
 
 	/**
@@ -33,10 +33,10 @@ class SCP_GooglePlus_Provider extends SCP_Provider {
 	 */
 	public static function options() {
 		return array(
-			'tab_caption' => esc_attr( self::$options[ self::$prefix . 'setting_googleplus_tab_caption' ] ),
+			'tab_caption' => self::get_option_as_escaped_string( 'setting_googleplus_tab_caption' ),
 			'css_class'   => 'google-plus-tab',
 			'icon'        => 'fa-google-plus',
-			'url'         => self::$options[ self::$prefix . 'setting_googleplus_page_url' ],
+			'url'         => self::get_option_as_escaped_string( 'setting_googleplus_page_url' ),
 		);
 	}
 
@@ -52,18 +52,18 @@ class SCP_GooglePlus_Provider extends SCP_Provider {
 	public static function container() {
 		$content = '<div class="box">';
 
-		if ( '1' === self::$options[ self::$prefix . 'setting_googleplus_show_description' ] ) {
+		if ( self::get_option_as_boolean( 'setting_googleplus_show_description' ) ) {
 			$content .= '<p class="widget-description"><b>' . self::$options[ self::$prefix . 'setting_googleplus_description' ] . '</b></p>';
 		}
 
-		$content .= '<div class="g-' . esc_attr( self::$options[ self::$prefix . 'setting_googleplus_page_type' ] ) . '" '
-			. 'data-width="' .esc_attr( self::$options[ self::$prefix . 'setting_googleplus_size' ] ) . '" '
-			. 'data-href="' .esc_attr( self::$options[ self::$prefix . 'setting_googleplus_page_url' ] ) . '" '
-			. 'data-theme="' . esc_attr( self::$options[ self::$prefix . 'setting_googleplus_theme' ] ) . '" '
-			. 'data-layout="' . esc_attr( self::$options[ self::$prefix . 'setting_googleplus_layout' ] ) . '" '
-			. 'data-showtagline="' . esc_attr( self::$options[ self::$prefix . 'setting_googleplus_show_tagline' ] ) . '" '
-			. 'data-showcoverphoto="' . esc_attr( self::$options[ self::$prefix . 'setting_googleplus_show_cover_photo' ] ) . '" '
-			. 'data-rel="' . esc_attr( self::googleplus_relation_from_page_type() ) . '"'
+		$content .= '<div class="g-'  . self::get_option_as_escaped_string( 'setting_googleplus_page_type' ) . '" '
+			. 'data-width="'          . self::get_option_as_integer( 'setting_googleplus_size' ) . '" '
+			. 'data-href="'           . self::get_option_as_escaped_string( 'setting_googleplus_page_url' ) . '" '
+			. 'data-theme="'          . self::get_option_as_escaped_string( 'setting_googleplus_theme' ) . '" '
+			. 'data-layout="'         . self::get_option_as_escaped_string( 'setting_googleplus_layout' ) . '" '
+			. 'data-showtagline="'    . self::get_option_as_escaped_string( 'setting_googleplus_show_tagline' ) . '" '
+			. 'data-showcoverphoto="' . self::get_option_as_escaped_string( 'setting_googleplus_show_cover_photo' ) . '" '
+			. 'data-rel="'            . esc_attr( self::googleplus_relation_from_page_type() ) . '"'
 			. '></div>';
 
 		$content .= '<!-- Place this tag after the last widget tag. -->
@@ -73,7 +73,7 @@ class SCP_GooglePlus_Provider extends SCP_Provider {
 				function initialize_GooglePlus_Widgets() {
 					if (google_plus_initialized) return;
 
-					window.___gcfg = {lang: "' . esc_attr( self::$options[ self::$prefix . 'setting_googleplus_locale' ] ) . '"};
+					window.___gcfg = {lang: "' . self::get_option_as_escaped_string( 'setting_googleplus_locale' ) . '"};
 
 					var po = document.createElement("script");
 					po.type  = "text/javascript";
@@ -116,7 +116,7 @@ class SCP_GooglePlus_Provider extends SCP_Provider {
 	 * @return string
 	 */
 	private static function googleplus_relation_from_page_type() {
-		switch ( self::$options[ self::$prefix . 'setting_googleplus_page_type' ] ) {
+		switch ( self::get_option_as_escaped_string( 'setting_googleplus_page_type' ) ) {
 			case 'page':
 				return 'publisher';
 			case 'person':

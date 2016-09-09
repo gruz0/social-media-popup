@@ -21,7 +21,7 @@ class SCP_Twitter_Provider extends SCP_Provider {
 	 * @return boolean
 	 */
 	public static function is_active() {
-		return ( '1' === self::$options[ self::$prefix . 'setting_use_twitter' ] );
+		return self::get_option_as_boolean( 'setting_use_twitter' );
 	}
 
 	/**
@@ -33,10 +33,10 @@ class SCP_Twitter_Provider extends SCP_Provider {
 	 */
 	public static function options() {
 		return array(
-			'tab_caption' => esc_attr( self::$options[ self::$prefix . 'setting_twitter_tab_caption' ] ),
+			'tab_caption' => self::get_option_as_escaped_string( 'setting_twitter_tab_caption' ),
 			'css_class'   => 'twitter-tab',
 			'icon'        => 'fa-twitter',
-			'url'         => '//twitter.com/' . self::$options[ self::$prefix . 'setting_twitter_username' ],
+			'url'         => '//twitter.com/' . self::get_option_as_escaped_string( 'setting_twitter_username' ),
 		);
 	}
 
@@ -58,21 +58,21 @@ class SCP_Twitter_Provider extends SCP_Provider {
 		$noscrollbars   = in_array( 'noscrollbars', $twitter_chrome, true );
 		$overflow_css   = $noscrollbars ? 'hidden' : 'auto';
 
-		$widget_height  = self::$options[ self::$prefix . 'setting_twitter_height' ];
+		$widget_height  = self::get_option_as_integer( 'setting_twitter_height' );
 
 		$content = '<div class="box" style="overflow:' . esc_attr( $overflow_css ) . ';height:' . esc_attr( ( $widget_height - 20 ) ) . 'px;">';
 
-		if ( '1' === self::$options[ self::$prefix . 'setting_twitter_show_description' ] ) {
+		if ( self::get_option_as_boolean( 'setting_twitter_show_description' ) ) {
 			$content .= '<p class="widget-description"><b>' . self::$options[ self::$prefix . 'setting_twitter_description' ] . '</b></p>';
 		}
 
 		// Показывать Twitter Follow Button или нет
-		if ( '1' === self::$options[ self::$prefix . 'setting_twitter_use_follow_button' ] ) {
+		if ( self::get_option_as_boolean( 'setting_twitter_use_follow_button' ) ) {
 			$content .= self::render_follow_button();
 		}
 
 		// Показывать Twitter Timeline или нет
-		if ( '1' === self::$options[ self::$prefix . 'setting_twitter_use_timeline' ] ) {
+		if ( self::get_option_as_boolean( 'setting_twitter_use_timeline' ) ) {
 			$content .= self::render_timeline( $twitter_chrome, $widget_height );
 		}
 
@@ -112,7 +112,7 @@ class SCP_Twitter_Provider extends SCP_Provider {
 			return t;
 			}(document, "script", "twitter-wjs"));
 
-			var scp_Twitter_closeWindowAfterJoiningGroup = ' . ( (int) self::$options[ self::$prefix . 'setting_twitter_close_window_after_join' ] ) . ';
+			var scp_Twitter_closeWindowAfterJoiningGroup = ' . self::get_option_as_integer( 'setting_twitter_close_window_after_join' ) . ';
 
 			function scp_followIntentToAnalytics(intentEvent) {
 				if (!intentEvent) return;';
@@ -121,8 +121,8 @@ class SCP_Twitter_Provider extends SCP_Provider {
 					$content .= 'scp_destroyPlugin(scp.showWindowAfterReturningNDays);';
 				}
 
-				if ( self::$template->use_events_tracking() && 1 === absint( self::$options[ self::$prefix . 'tracking_use_twitter' ] ) ) {
-					$content .= self::$template->push_social_media_trigger_to_google_analytics( esc_attr( self::$options[ self::$prefix . 'tracking_twitter_event' ] ) );
+				if ( self::$template->use_events_tracking() && self::get_option_as_boolean( 'tracking_use_twitter' ) ) {
+					$content .= self::$template->push_social_media_trigger_to_google_analytics( self::get_option_as_escaped_string( 'tracking_twitter_event' ) );
 					$content .= self::$template->push_social_network_and_action_to_google_analytics( 'SMP Twitter', 'Follow' );
 				}
 
@@ -147,13 +147,13 @@ class SCP_Twitter_Provider extends SCP_Provider {
 	 * @return string
 	 */
 	private static function render_follow_button() {
-		return '<div style="text-align:' . esc_attr( self::$options[ self::$prefix . 'setting_twitter_follow_button_align_by' ] ) . '">'
+		return '<div style="text-align:' . self::get_option_as_escaped_string( 'setting_twitter_follow_button_align_by' ) . '">'
 			. '<a class="twitter-follow-button" '
-			. 'href="//twitter.com/'    . esc_attr( self::$options[ self::$prefix . 'setting_twitter_username' ] ) . '" '
-			. 'data-show-count="'       . scp_to_bool( self::$options[ self::$prefix . 'setting_twitter_show_count' ] ) . '" '
-			. 'data-show-screen-name="' . scp_to_bool( self::$options[ self::$prefix . 'setting_twitter_show_screen_name' ] ) . '" '
-			. 'data-size="'             . ( '1' === self::$options[ self::$prefix . 'setting_twitter_follow_button_large_size' ] ? 'large' : '' ) . '" '
-			. '>' . __( 'Follow', L10N_SCP_PREFIX ) . ' @' . esc_attr( self::$options[ self::$prefix . 'setting_twitter_username' ] ) . '</a></div>';
+			. 'href="//twitter.com/'    . self::get_option_as_escaped_string( 'setting_twitter_username' ) . '" '
+			. 'data-show-count="'       . scp_to_bool( self::get_option_as_escaped_string( 'setting_twitter_show_count' ) ) . '" '
+			. 'data-show-screen-name="' . scp_to_bool( self::get_option_as_escaped_string( 'setting_twitter_show_screen_name' ) ) . '" '
+			. 'data-size="'             . ( self::get_option_as_boolean( 'setting_twitter_follow_button_large_size' ) ? 'large' : '' ) . '" '
+			. '>' . __( 'Follow', L10N_SCP_PREFIX ) . ' @' . self::get_option_as_escaped_string( 'setting_twitter_username' ) . '</a></div>';
 	}
 
 	/**
@@ -169,16 +169,16 @@ class SCP_Twitter_Provider extends SCP_Provider {
 	 */
 	private static function render_timeline( $twitter_chrome, $widget_height ) {
 		return '<a class="twitter-timeline" '
-			. 'href="//twitter.com/' . esc_attr( self::$options[ self::$prefix . 'setting_twitter_username' ] ) . '" '
-			. 'data-screen-name="' .   esc_attr( self::$options[ self::$prefix . 'setting_twitter_username' ] ) . '" '
-			. 'data-theme="' .         esc_attr( self::$options[ self::$prefix . 'setting_twitter_theme' ] ) . '" '
-			. 'data-link-color="' .    esc_attr( self::$options[ self::$prefix . 'setting_twitter_link_color' ] ) . '" '
-			. 'data-chrome="' .        esc_attr( join( ' ', $twitter_chrome ) ) . '" '
-			. 'data-tweet-limit="' .   esc_attr( self::$options[ self::$prefix . 'setting_twitter_tweet_limit' ] ) . '" '
-			. 'data-show-replies="' .  esc_attr( self::$options[ self::$prefix . 'setting_twitter_show_replies' ] ) . '" '
-			. 'width="' .              esc_attr( self::$options[ self::$prefix . 'setting_twitter_width' ] ) . '" '
-			. 'height="' .             esc_attr( $widget_height ) . '"'
-			. ' rel="nofollow" target="_blank">' . __( 'Tweets', L10N_SCP_PREFIX ) . ' @' . esc_attr( self::$options[ self::$prefix . 'setting_twitter_username' ] ) . '</a>';
+			. 'href="//twitter.com/' . self::get_option_as_escaped_string( 'setting_twitter_username' ) . '" '
+			. 'data-screen-name="'   . self::get_option_as_escaped_string( 'setting_twitter_username' ) . '" '
+			. 'data-theme="'         . self::get_option_as_escaped_string( 'setting_twitter_theme' ) . '" '
+			. 'data-link-color="'    . self::get_option_as_escaped_string( 'setting_twitter_link_color' ) . '" '
+			. 'data-chrome="'        . esc_attr( join( ' ', $twitter_chrome ) ) . '" '
+			. 'data-tweet-limit="'   . self::get_option_as_integer( 'setting_twitter_tweet_limit' ) . '" '
+			. 'data-show-replies="'  . self::get_option_as_escaped_string( 'setting_twitter_show_replies' ) . '" '
+			. 'width="'              . self::get_option_as_integer( 'setting_twitter_width' ) . '" '
+			. 'height="'             . $widget_height . '"'
+			. ' rel="nofollow" target="_blank">' . __( 'Tweets', L10N_SCP_PREFIX ) . ' @' . self::get_option_as_escaped_string( 'setting_twitter_username' ) . '</a>';
 	}
 }
 

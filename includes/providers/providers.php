@@ -21,7 +21,7 @@ class SCP_Provider {
 	static $prefix = null;
 
 	/**
-	 * Options for specific provider
+	 * Plugin options
 	 *
 	 * @var array $options
 	 */
@@ -40,6 +40,13 @@ class SCP_Provider {
 	 * @var SCP_Template $template
 	 */
 	static $template = null;
+
+	/**
+	 * Using for cached options values
+	 *
+	 * @var array $cached_option_values
+	 */
+	protected static $cached_option_values = array();
 
 	/**
 	 * Returns available providers
@@ -72,7 +79,7 @@ class SCP_Provider {
 	 *
 	 * @param string $provider Provider name (ex. facebook, vkontakte, etc.)
 	 * @param string $prefix SCP options prefix (default: 'scp-')
-	 * @param array  $options Options for specific provider
+	 * @param array  $options Plugin options
 	 * @throws Exception Throws Exception if the provided $provider is not exist
 	 * @return SCP_Provider
 	 */
@@ -236,6 +243,54 @@ class SCP_Provider {
 	 */
 	public static function set_template( $template ) {
 		self::$template = $template;
+	}
+
+	/**
+	 * Returns option by short name as escaped string
+	 *
+	 * @since 0.7.5
+	 *
+	 * @param string $option_name Option name
+	 * @return string
+	 */
+	protected static function get_option_as_escaped_string( $option_name ) {
+		if ( ! isset( self::$cached_option_values[ $option_name ] ) ) {
+			self::$cached_option_values[ $option_name ] = esc_attr( self::$options[ self::$prefix . $option_name ] );
+		}
+
+		return self::$cached_option_values[ $option_name ];
+	}
+
+	/**
+	 * Returns option by short name as absolute integer
+	 *
+	 * @since 0.7.5
+	 *
+	 * @param string $option_name Option name
+	 * @return integer
+	 */
+	protected static function get_option_as_integer( $option_name ) {
+		if ( ! isset( self::$cached_option_values[ $option_name ] ) ) {
+			self::$cached_option_values[ $option_name ] = absint( self::$options[ self::$prefix . $option_name ] );
+		}
+
+		return self::$cached_option_values[ $option_name ];
+	}
+
+	/**
+	 * Returns option by short name as boolean
+	 *
+	 * @since 0.7.5
+	 *
+	 * @param string $option_name Option name
+	 * @return boolean
+	 */
+	protected static function get_option_as_boolean( $option_name ) {
+		if ( ! isset( self::$cached_option_values[ $option_name ] ) ) {
+			self::$cached_option_values[ $option_name ] = absint( self::$options[ self::$prefix . $option_name ] ) === 1;
+		}
+
+		return self::$cached_option_values[ $option_name ];
 	}
 
 	/**
