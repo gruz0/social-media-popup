@@ -175,3 +175,66 @@
 
 /* Фон меню быстрого доступа к настройкам плагина при активном режиме отладки */
 .smp-debug-mode {background: rgba(159, 0, 0, 1) !important;}
+
+/* Мобильная версия плагина */
+#scp_mobile {
+	min-height:35px;
+	width: 100%;
+	display:none;
+	position:fixed;
+	right:0;
+	bottom:0;
+	left:0;
+	padding:0;
+	margin:0;
+	background-color:#fff;
+	z-index:9999;
+}
+
+	.scp-close {
+		padding:3px 7px 0 7px;
+		text-align:right;
+		font:bold normal 10pt/10pt Arial;
+		background-color:#E0EFF1;
+		color:#111;
+		border-top:3px solid #7DB4B5;
+	}
+
+	.scp-mobile-title {
+		padding:0 10px 10px 10px;
+		text-align:center;
+		font:bold normal 12pt/14pt Arial;
+		background-color:#E0EFF1;
+		color:#111;
+	}
+
+/* Иконки соц. сетей */
+.scp-icons {
+	padding:0;
+	margin:0;
+	display:block;
+	list-style:none;
+}
+
+	.scp-icons li {
+		padding:5px 0;
+		margin:0;
+		outline:1px solid #fff;
+		display:block;
+		float:left;
+		text-align:center;
+		color:#fff;
+	}
+	.scp-icons li:last-child {clear:right;}
+
+	.scp-icons li.facebook-tab {background-color:#3b5998;}
+	.scp-icons li.vk-tab {background-color:#45668e;}
+	.scp-icons li.google-plus-tab {background-color:#dd4b39;}
+	.scp-icons li.twitter-tab {background-color:#00aced;}
+	.scp-icons li.pinterest-tab {background-color:#cb2027;}
+	.scp-icons li.odnoklassniki-tab {background-color:#ee8208;}
+
+	.scp-icons a, .scp-icons a:link, .scp-icons a:active, .scp-icons a:visited {color:#fff;text-decoration:none;}
+	.scp-icons a:hover {color:#ffc;text-decoration:none;}
+
+.scp-icons-desktop li {margin-bottom:2px !important;}

@@ -4299,7 +4299,7 @@ class Social_Media_Popup {
 		$scp_prefix = self::get_scp_prefix();
 		$version = get_option( $scp_prefix . 'version' );
 
-		wp_register_style( SMP_PREFIX . '-admin-css', SMP_PLUGIN_URL . 'css/admin.css?' . $version );
+		wp_register_style( SMP_PREFIX . '-admin-css', SMP_PLUGIN_URL . 'css/admin.min.css?' . $version );
 		wp_enqueue_style( SMP_PREFIX . '-admin-css' );
 
 		wp_register_style( 'jquery-ui-css', '//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css' );
@@ -4465,17 +4465,10 @@ class Social_Media_Popup {
 
 		$this->render_popup_window( $version, $scp_prefix );
 
-		if ( wp_is_mobile() ) {
-			wp_register_style( SMP_PREFIX . '-css', SMP_PLUGIN_URL . 'css/mobile.css?' . $version );
-		} else {
-			wp_register_style( SMP_PREFIX . '-css', SMP_PLUGIN_URL . 'css/styles.css?' . $version );
-		}
+		wp_register_style( SMP_PREFIX . '-css', SMP_PLUGIN_URL . 'css/styles.min.css?' . $version . rand() );
 		wp_enqueue_style( SMP_PREFIX . '-css' );
 
 		wp_enqueue_style( 'font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' );
-
-		wp_register_style( SMP_PREFIX . '-icons', SMP_PLUGIN_URL . 'css/icons.css?' . $version );
-		wp_enqueue_style( SMP_PREFIX . '-icons' );
 	}
 
 	/**
