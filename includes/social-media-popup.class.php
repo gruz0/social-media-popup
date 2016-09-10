@@ -4465,7 +4465,7 @@ class Social_Media_Popup {
 
 		$this->render_popup_window( $version, $scp_prefix );
 
-		wp_register_style( SMP_PREFIX . '-css', SMP_PLUGIN_URL . 'css/styles.min.css?' . $version . rand() );
+		wp_register_style( SMP_PREFIX . '-css', SMP_PLUGIN_URL . 'css/styles.min.css?' . $version );
 		wp_enqueue_style( SMP_PREFIX . '-css' );
 
 		wp_enqueue_style( 'font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' );
