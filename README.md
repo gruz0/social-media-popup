@@ -23,3 +23,17 @@ This section describes how to install the plugin and get it working.
 2. Extract files from the archive
 3. Activate the plugin through the 'Plugins' menu in WordPress
 
+## Development
+
+Install npm and gulp:
+```
+yum install nodejs npm
+npm install -g gulp
+npm install --save-dev gulp
+```
+
+Install gulp-clean-css:
+```
+npm install gulp-clean-css --save-dev
+```
+
