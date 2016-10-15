@@ -4287,6 +4287,7 @@ class Social_Media_Popup {
 	 *
 	 * @since 0.7.3 Added add_cookies_script()
 	 * @since 0.7.3 Added WP Color Picker script
+	 * @since 0.7.5 Added custom CSS for quick-access menu
 	 *
 	 * @uses Social_Media_Popup::get_scp_prefix()
 	 * @uses $this->add_cookies_script()
@@ -4294,6 +4295,8 @@ class Social_Media_Popup {
 	 * @return void
 	 */
 	public function admin_enqueue_scripts() {
+		$this->add_custom_css();
+
 		if ( ! is_admin() ) return;
 
 		$scp_prefix = self::get_scp_prefix();
@@ -4450,6 +4453,7 @@ class Social_Media_Popup {
 	 * Добавляем свои скрипты и таблицы CSS
 	 *
 	 * @since 0.7.3 Added add_cookies_script()
+	 * @since 0.7.5 Added custom CSS for quick-access menu
 	 *
 	 * @uses Social_Media_Popup::get_scp_prefix()
 	 * @uses $this->add_cookies_script()
@@ -4457,6 +4461,10 @@ class Social_Media_Popup {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
+		if ( is_user_logged_in() && current_user_can( 'manage_options' ) ) {
+			$this->add_custom_css();
+		}
+
 		$scp_prefix = self::get_scp_prefix();
 		$version = get_option( $scp_prefix . 'version' );
 
@@ -4988,5 +4996,17 @@ class Social_Media_Popup {
 			'showWindowAfterReturningNDays' => (int) get_option( $scp_prefix . 'setting_display_after_n_days' ),
 		));
 		wp_enqueue_script( SMP_PREFIX . '-cookies' );
+	}
+
+	/**
+	 * Adds custom CSS
+	 *
+	 * @since 0.7.5
+	 */
+	private function add_custom_css() {
+		$css = '.smp-debug-mode {background: rgba(159, 0, 0, 1) !important;}';
+
+		wp_enqueue_style( SMP_PREFIX . '-custom-css', get_template_directory_uri() );
+		wp_add_inline_style( SMP_PREFIX . '-custom-css', $css );
 	}
 }

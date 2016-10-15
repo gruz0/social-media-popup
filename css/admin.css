@@ -28,6 +28,3 @@
 #scp_welcome_screen .box ul li {margin-left:15px;}
 
 .scp-background-image img {width:350px !important;height:350px !important;margin:10px 0 0 0;}
-
-/* Фон меню быстрого доступа к настройкам плагина при активном режиме отладки */
-.smp-debug-mode {background: rgba(159, 0, 0, 1) !important;}
