@@ -33,10 +33,11 @@ class SCP_VK_Provider extends SCP_Provider {
 	 */
 	public static function options() {
 		return array(
-			'tab_caption' => self::get_option_as_escaped_string( 'setting_vkontakte_tab_caption' ),
-			'css_class'   => 'vk-tab',
-			'icon'        => 'fa-vk',
-			'url'         => self::get_option_as_escaped_string( 'setting_vkontakte_page_url' ),
+			'default_tab_caption' => __( 'VK', L10N_SCP_PREFIX ),
+			'tab_caption'         => self::get_option_as_escaped_string( 'setting_vkontakte_tab_caption' ),
+			'css_class'           => 'vk-tab',
+			'icon'                => 'fa-vk',
+			'url'                 => self::get_option_as_escaped_string( 'setting_vkontakte_page_url' ),
 		);
 	}
 

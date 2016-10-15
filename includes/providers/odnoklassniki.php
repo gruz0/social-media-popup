@@ -33,10 +33,11 @@ class SCP_Odnoklassniki_Provider extends SCP_Provider {
 	 */
 	public static function options() {
 		return array(
-			'tab_caption' => self::get_option_as_escaped_string( 'setting_odnoklassniki_tab_caption' ),
-			'css_class'   => 'odnoklassniki-tab',
-			'icon'        => 'fa-odnoklassniki',
-			'url'         => self::get_option_as_escaped_string( 'setting_odnoklassniki_group_url' ),
+			'default_tab_caption' => __( 'Odnoklassniki', L10N_SCP_PREFIX ),
+			'tab_caption'         => self::get_option_as_escaped_string( 'setting_odnoklassniki_tab_caption' ),
+			'css_class'           => 'odnoklassniki-tab',
+			'icon'                => 'fa-odnoklassniki',
+			'url'                 => self::get_option_as_escaped_string( 'setting_odnoklassniki_group_url' ),
 		);
 	}
 

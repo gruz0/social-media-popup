@@ -33,10 +33,11 @@ class SCP_Twitter_Provider extends SCP_Provider {
 	 */
 	public static function options() {
 		return array(
-			'tab_caption' => self::get_option_as_escaped_string( 'setting_twitter_tab_caption' ),
-			'css_class'   => 'twitter-tab',
-			'icon'        => 'fa-twitter',
-			'url'         => '//twitter.com/' . self::get_option_as_escaped_string( 'setting_twitter_username' ),
+			'default_tab_caption' => __( 'Twitter', L10N_SCP_PREFIX ),
+			'tab_caption'         => self::get_option_as_escaped_string( 'setting_twitter_tab_caption' ),
+			'css_class'           => 'twitter-tab',
+			'icon'                => 'fa-twitter',
+			'url'                 => '//twitter.com/' . self::get_option_as_escaped_string( 'setting_twitter_username' ),
 		);
 	}
 

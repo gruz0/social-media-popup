@@ -167,7 +167,7 @@ class SCP_Provider {
 		return '<li '
 			. 'data-index="' . $args['index'] . '" '
 			. 'class="' . $args['css_class'] . '" '
-			. '><span>' . $args['tab_caption'] . '</span></li>';
+			. '><span>' . ( empty( $args['tab_caption'] ) ? $args['default_tab_caption'] : $args['tab_caption'] ) . '</span></li>';
 	}
 
 	/**

@@ -33,10 +33,11 @@ class SCP_Facebook_Provider extends SCP_Provider {
 	 */
 	public static function options() {
 		return array(
-			'tab_caption' => self::get_option_as_escaped_string( 'setting_facebook_tab_caption' ),
-			'css_class'   => 'facebook-tab',
-			'icon'        => 'fa-facebook',
-			'url'         => self::get_option_as_escaped_string( 'setting_facebook_page_url' ),
+			'default_tab_caption' => __( 'Facebook', L10N_SCP_PREFIX ),
+			'tab_caption'         => self::get_option_as_escaped_string( 'setting_facebook_tab_caption' ),
+			'css_class'           => 'facebook-tab',
+			'icon'                => 'fa-facebook',
+			'url'                 => self::get_option_as_escaped_string( 'setting_facebook_page_url' ),
 		);
 	}
 

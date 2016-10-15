@@ -33,10 +33,11 @@ class SCP_GooglePlus_Provider extends SCP_Provider {
 	 */
 	public static function options() {
 		return array(
-			'tab_caption' => self::get_option_as_escaped_string( 'setting_googleplus_tab_caption' ),
-			'css_class'   => 'google-plus-tab',
-			'icon'        => 'fa-google-plus',
-			'url'         => self::get_option_as_escaped_string( 'setting_googleplus_page_url' ),
+			'default_tab_caption' => __( 'Google+', L10N_SCP_PREFIX ),
+			'tab_caption'         => self::get_option_as_escaped_string( 'setting_googleplus_tab_caption' ),
+			'css_class'           => 'google-plus-tab',
+			'icon'                => 'fa-google-plus',
+			'url'                 => self::get_option_as_escaped_string( 'setting_googleplus_page_url' ),
 		);
 	}
 
