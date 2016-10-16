@@ -4302,7 +4302,7 @@ class Social_Media_Popup {
 		$scp_prefix = self::get_scp_prefix();
 		$version = get_option( $scp_prefix . 'version' );
 
-		wp_register_style( SMP_PREFIX . '-admin-css', SMP_PLUGIN_URL . 'css/admin.min.css?' . $version );
+		wp_register_style( SMP_PREFIX . '-admin-css', SMP_ASSETS_URL . 'css/admin.min.css?' . $version );
 		wp_enqueue_style( SMP_PREFIX . '-admin-css' );
 
 		wp_register_style( 'jquery-ui-css', '//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css' );
@@ -4321,7 +4321,7 @@ class Social_Media_Popup {
 		}
 
 		wp_enqueue_style( 'wp-color-picker' );
-		wp_register_script( SMP_PREFIX . '-admin-js', SMP_PLUGIN_URL . 'js/admin.js?' . $version,
+		wp_register_script( SMP_PREFIX . '-admin-js', SMP_ASSETS_URL . 'js/admin.js?' . $version,
 			array( 'jquery', 'wp-color-picker' )
 		);
 		wp_enqueue_script( SMP_PREFIX . '-admin-js' );
@@ -4473,7 +4473,7 @@ class Social_Media_Popup {
 
 		$this->render_popup_window( $version, $scp_prefix );
 
-		wp_register_style( SMP_PREFIX . '-css', SMP_PLUGIN_URL . 'css/styles.min.css?' . $version );
+		wp_register_style( SMP_PREFIX . '-css', SMP_ASSETS_URL . 'css/styles.min.css?' . $version );
 		wp_enqueue_style( SMP_PREFIX . '-css' );
 
 		wp_enqueue_style( 'font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' );
@@ -4491,7 +4491,7 @@ class Social_Media_Popup {
 		$encoded_content = preg_replace( "~[\n\r\t]~", '', $content );
 		$encoded_content = base64_encode( $encoded_content );
 
-		wp_register_script( SMP_PREFIX . '-js', SMP_PLUGIN_URL . 'js/scripts.js?' . $version, array( 'jquery' ) );
+		wp_register_script( SMP_PREFIX . '-js', SMP_ASSETS_URL . 'js/scripts.js?' . $version, array( 'jquery' ) );
 		wp_localize_script( SMP_PREFIX . '-js', 'scp', array(
 			'encodedContent' => htmlspecialchars( $encoded_content ),
 		));
@@ -4990,7 +4990,7 @@ class Social_Media_Popup {
 	 * @return void
 	 */
 	private function add_cookies_script( $version, $scp_prefix ) {
-		wp_register_script( SMP_PREFIX . '-cookies', SMP_PLUGIN_URL . 'js/cookies.js?' . $version, array( 'jquery' ) );
+		wp_register_script( SMP_PREFIX . '-cookies', SMP_ASSETS_URL . 'js/cookies.js?' . $version, array( 'jquery' ) );
 		wp_localize_script( SMP_PREFIX . '-cookies', 'scp_cookies', array(
 			'clearCookiesMessage'           => __( 'Page will be reload after clear cookies. Continue?', L10N_SCP_PREFIX ),
 			'showWindowAfterReturningNDays' => (int) get_option( $scp_prefix . 'setting_display_after_n_days' ),

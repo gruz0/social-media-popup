@@ -34,6 +34,7 @@ if ( ! array_key_exists( 'social-media-popup', $GLOBALS ) ) {
 		define( 'SMP_TEMPLATES_DIR',  SMP_DIR . 'templates' . DIRECTORY_SEPARATOR );
 		define( 'SMP_PLUGIN_URL',     plugin_dir_url( __FILE__ ) );
 		define( 'SMP_PLUGIN_DIRNAME', dirname( plugin_basename( __FILE__ ) ) . DIRECTORY_SEPARATOR );
+		define( 'SMP_ASSETS_URL',     plugin_dir_url( __FILE__ ) . 'assets/' );
 
 		include( SMP_INCLUDES_DIR . 'social-media-popup.class.php' );
 
