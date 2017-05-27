@@ -93,13 +93,20 @@ class SCP_VK_Provider extends SCP_Provider {
 								}
 
 								if ( self::$template->use_events_tracking() && self::get_option_as_boolean( 'tracking_use_vkontakte' ) ) {
-									$content .= self::$template->push_social_media_trigger_to_google_analytics( self::get_option_as_escaped_string( 'tracking_vkontakte_event' ) );
+									$content .= self::$template->push_social_media_trigger_to_google_analytics( self::get_option_as_escaped_string( 'tracking_vkontakte_subscribe_event' ) );
 									$content .= self::$template->push_social_network_and_action_to_google_analytics( 'SMP VK', 'Subscribe' );
 								}
 
 							$content .= '});
 
-							VK.Observer.subscribe("widgets.groups.leaved", function f() {});
+							VK.Observer.subscribe("widgets.groups.leaved", function f() {';
+
+								if ( self::$template->use_events_tracking() && self::get_option_as_boolean( 'tracking_use_vkontakte' ) ) {
+									$content .= self::$template->push_social_media_trigger_to_google_analytics( self::get_option_as_escaped_string( 'tracking_vkontakte_unsubscribe_event' ) );
+									$content .= self::$template->push_social_network_and_action_to_google_analytics( 'SMP VK', 'Unsubscribe' );
+								}
+
+							$content .= '});
 
 							VK.Widgets.Group("scp_vk_groups", {
 								mode: '    . self::get_option_as_escaped_string( 'setting_vkontakte_layout' ) . ',

@@ -192,7 +192,8 @@ class Social_Media_Popup {
 			'setting_vkontakte_delay_before_render',
 			'setting_vkontakte_close_window_after_join',
 			'tracking_use_vkontakte',
-			'tracking_vkontakte_event',
+			'tracking_vkontakte_subscribe_event',
+			'tracking_vkontakte_unsubscribe_event',
 
 			// Одноклассники
 			'setting_use_odnoklassniki',
@@ -999,7 +1000,8 @@ class Social_Media_Popup {
 			update_option( $scp_prefix . 'tracking_twitter_event',                          __( 'Follow on Twitter', L10N_SCP_PREFIX ) );
 
 			update_option( $scp_prefix . 'tracking_use_vkontakte',                          1 );
-			update_option( $scp_prefix . 'tracking_vkontakte_event',                        __( 'Subscribe on VK.com', L10N_SCP_PREFIX ) );
+			update_option( $scp_prefix . 'tracking_vkontakte_subscribe_event',              __( 'Subscribe on VK.com', L10N_SCP_PREFIX ) );
+			update_option( $scp_prefix . 'tracking_vkontakte_unsubscribe_event',            __( 'Unsubscribe from VK.com', L10N_SCP_PREFIX ) );
 
 			update_option( $scp_prefix . 'tracking_use_facebook',                           1 );
 			update_option( $scp_prefix . 'tracking_facebook_subscribe_event',               __( 'Subscribe on Facebook', L10N_SCP_PREFIX ) );
@@ -2621,7 +2623,8 @@ class Social_Media_Popup {
 
 		// Не забывать добавлять новые опции в uninstall()
 		register_setting( $group, $scp_prefix . 'tracking_use_vkontakte', 'absint' );
-		register_setting( $group, $scp_prefix . 'tracking_vkontakte_event', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'tracking_vkontakte_subscribe_event', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'tracking_vkontakte_unsubscribe_event', 'sanitize_text_field' );
 
 		add_settings_section(
 			$section,
@@ -2642,16 +2645,29 @@ class Social_Media_Popup {
 			)
 		);
 
-		// Надпись события в Google Analytics
+		// Надпись события в Google Analytics при подписке
 		add_settings_field(
-			SMP_PREFIX . '-tracking-vkontakte-event',
-			__( 'Event Label', L10N_SCP_PREFIX ),
+			SMP_PREFIX . '-tracking-vkontakte-subscribe-event',
+			__( 'Subscribe Event Label', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'tracking_vkontakte_event',
+				'field' => $scp_prefix . 'tracking_vkontakte_subscribe_event',
 				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . __( 'Subscribe on VK', L10N_SCP_PREFIX ),
+			)
+		);
+
+		// Надпись события в Google Analytics при отписке
+		add_settings_field(
+			SMP_PREFIX . '-tracking-vkontakte-unsubscribe-event',
+			__( 'Unsubscribe Event Label', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'tracking_vkontakte_unsubscribe_event',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . __( 'Unsubscribe from VK', L10N_SCP_PREFIX ),
 			)
 		);
 	}
