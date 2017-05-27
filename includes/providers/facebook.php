@@ -151,8 +151,8 @@ class SCP_Facebook_Provider extends SCP_Provider {
 	private static function prepare_facebook_events() {
 		$facebook_events = '<script>';
 
-		// Формирует колбэк для обработки событий при закрытии окна, подписке или отписке от группы
-		$facebook_events .= 'var scp_facebook_page_like_or_unlike_callback = function(url, html_element) {';
+		// Формирует колбэк для обработки событий при закрытии окна и подписке на группу
+		$facebook_events .= 'var scp_facebook_page_like_callback = function(url, html_element) {';
 
 		if ( (int) self::$options[ self::$prefix . 'setting_facebook_close_window_after_join' ] ) {
 			$facebook_events .= 'scp_destroyPlugin(scp.showWindowAfterReturningNDays);';
@@ -160,8 +160,19 @@ class SCP_Facebook_Provider extends SCP_Provider {
 
 		// FIXME: Should be refactored with self::use_widget() and move second condition to it
 		if ( self::$template->use_events_tracking() && self::get_option_as_boolean( 'tracking_use_facebook' ) ) {
-			$facebook_events .= self::$template->push_social_media_trigger_to_google_analytics( self::get_option_as_escaped_string( 'tracking_facebook_event' ) );
+			$facebook_events .= self::$template->push_social_media_trigger_to_google_analytics( self::get_option_as_escaped_string( 'tracking_facebook_subscribe_event' ) );
 			$facebook_events .= self::$template->push_social_network_and_action_to_google_analytics( 'SMP Facebook', 'Subscribe' );
+		}
+
+		$facebook_events .= '};';
+
+		// Формирует колбэк для обработки событий при отписке от группы
+		$facebook_events .= 'var scp_facebook_page_unlike_callback = function(url, html_element) {';
+
+		// FIXME: Should be refactored with self::use_widget() and move second condition to it
+		if ( self::$template->use_events_tracking() && self::get_option_as_boolean( 'tracking_use_facebook' ) ) {
+			$facebook_events .= self::$template->push_social_media_trigger_to_google_analytics( self::get_option_as_escaped_string( 'tracking_facebook_unsubscribe_event' ) );
+			$facebook_events .= self::$template->push_social_network_and_action_to_google_analytics( 'SMP Facebook', 'Unsubscribe' );
 		}
 
 		$facebook_events .= '};';
@@ -176,12 +187,14 @@ class SCP_Facebook_Provider extends SCP_Provider {
 					version: "v2.5"
 				});
 
-				FB.Event.subscribe("edge.create", scp_facebook_page_like_or_unlike_callback);
+				FB.Event.subscribe("edge.create", scp_facebook_page_like_callback);
+				FB.Event.subscribe("edge.remove", scp_facebook_page_unlike_callback);
 			};
 		} else {
 			smp_facebookInterval = setInterval(function() {
 				if ( typeof FB === "object" ) {
-					FB.Event.subscribe("edge.create", scp_facebook_page_like_or_unlike_callback);
+					FB.Event.subscribe("edge.create", scp_facebook_page_like_callback);
+					FB.Event.subscribe("edge.remove", scp_facebook_page_unlike_callback);
 					clearInterval(smp_facebookInterval);
 				}
 			}, 1000);

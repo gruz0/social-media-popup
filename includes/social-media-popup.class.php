@@ -172,7 +172,8 @@ class Social_Media_Popup {
 			'setting_facebook_tabs',
 			'setting_facebook_close_window_after_join',
 			'tracking_use_facebook',
-			'tracking_facebook_event',
+			'tracking_facebook_subscribe_event',
+			'tracking_facebook_unsubscribe_event',
 
 			// ВКонтакте
 			'setting_use_vkontakte',
@@ -1001,7 +1002,8 @@ class Social_Media_Popup {
 			update_option( $scp_prefix . 'tracking_vkontakte_event',                        __( 'Subscribe on VK.com', L10N_SCP_PREFIX ) );
 
 			update_option( $scp_prefix . 'tracking_use_facebook',                           1 );
-			update_option( $scp_prefix . 'tracking_facebook_event',                         __( 'Subscribe on Facebook', L10N_SCP_PREFIX ) );
+			update_option( $scp_prefix . 'tracking_facebook_subscribe_event',               __( 'Subscribe on Facebook', L10N_SCP_PREFIX ) );
+			update_option( $scp_prefix . 'tracking_facebook_unsubscribe_event',             __( 'Unsubscribe from Facebook', L10N_SCP_PREFIX ) );
 
 			// Описания событий для отправки в Google Analytics
 			update_option( $scp_prefix . 'tracking_event_label_window_showed_immediately',       __( 'Show immediately', L10N_SCP_PREFIX ) );
@@ -2304,7 +2306,8 @@ class Social_Media_Popup {
 
 		// Не забывать добавлять новые опции в uninstall()
 		register_setting( $group, $scp_prefix . 'tracking_use_facebook', 'absint' );
-		register_setting( $group, $scp_prefix . 'tracking_facebook_event', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'tracking_facebook_subscribe_event', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'tracking_facebook_unsubscribe_event', 'sanitize_text_field' );
 
 		add_settings_section(
 			$section,
@@ -2325,16 +2328,29 @@ class Social_Media_Popup {
 			)
 		);
 
-		// Надпись события в Google Analytics
+		// Надпись события в Google Analytics при подписке
 		add_settings_field(
-			SMP_PREFIX . '-tracking-facebook-event',
-			__( 'Event Label', L10N_SCP_PREFIX ),
+			SMP_PREFIX . '-tracking-facebook-subscribe-event',
+			__( 'Subscribe Event Label', L10N_SCP_PREFIX ),
 			array( & $this, 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
-				'field' => $scp_prefix . 'tracking_facebook_event',
+				'field' => $scp_prefix . 'tracking_facebook_subscribe_event',
 				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . __( 'Subscribe on Facebook', L10N_SCP_PREFIX ),
+			)
+		);
+
+		// Надпись события в Google Analytics при отписке
+		add_settings_field(
+			SMP_PREFIX . '-tracking-facebook-unsubscribe-event',
+			__( 'Unsubscribe Event Label', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_input_text' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'tracking_facebook_unsubscribe_event',
+				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . __( 'Unsubscribe from Facebook', L10N_SCP_PREFIX ),
 			)
 		);
 	}
