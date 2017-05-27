@@ -37,3 +37,9 @@ Install gulp-clean-css:
 npm install gulp-clean-css --save-dev
 ```
 
+## PHP CodeSniffer usage
+
+In the project directory run:
+```
+phpcs --standard=phpcs.xml path/to/file.php -s
+```
