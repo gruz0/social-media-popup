@@ -44,7 +44,7 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 	 * Check that plugin initialized
 	 */
 	function testPluginInitialization() {
-		$this->assertFalse( null === self::$plugin );
+		$this->assertFalse( null == self::$plugin );
 	}
 
 	/**
@@ -251,13 +251,13 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( '0.6.3' === get_option( $scp_prefix . 'version' ) );
 
 		// Facebook
-		$this->assertTrue( null === get_option( $scp_prefix . 'setting_facebook_show_header' ) );
+		$this->assertTrue( null == get_option( $scp_prefix . 'setting_facebook_show_header' ) );
 		$this->assertTrue( ( $facebook_show_header ? '1' : '' ) === get_option( $scp_prefix . 'setting_facebook_hide_cover' ) );
 
-		$this->assertTrue( null === get_option( $scp_prefix . 'setting_facebook_show_faces' ) );
+		$this->assertTrue( null == get_option( $scp_prefix . 'setting_facebook_show_faces' ) );
 		$this->assertTrue( $facebook_show_faces === get_option( $scp_prefix . 'setting_facebook_show_facepile' ) );
 
-		$this->assertTrue( null === get_option( $scp_prefix . 'setting_facebook_show_stream' ) );
+		$this->assertTrue( null == get_option( $scp_prefix . 'setting_facebook_show_stream' ) );
 		$this->assertTrue( $facebook_show_stream === get_option( $scp_prefix . 'setting_facebook_show_posts' ) );
 	}
 
@@ -379,7 +379,7 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( '' === get_option( $scp_prefix . 'when_should_the_popup_appear' ) );
 		$this->assertTrue( '' === get_option( $scp_prefix . 'popup_will_appear_after_clicking_on_element' ) );
 
-		$this->assertTrue( null === get_option( $scp_prefix . 'setting_display_after_delay_of_n_seconds' ) );
+		$this->assertTrue( null == get_option( $scp_prefix . 'setting_display_after_delay_of_n_seconds' ) );
 		$this->assertTrue( $display_after_delay_of_n_seconds === get_option( $scp_prefix . 'popup_will_appear_after_n_seconds' ) );
 	}
 
@@ -408,18 +408,18 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 		// Проверим, что все опции со старым префиксом не существуют
 		foreach ( $scp_options as $option_name => $value ) {
 			$old_option_name = preg_replace( '/^' . $scp_prefix . '/', '', $option_name );
-			$this->assertTrue( null === get_option( $old_scp_prefix . $old_option_name ) );
+			$this->assertTrue( null == get_option( $old_scp_prefix . $old_option_name ) );
 		}
 
-		$this->assertTrue( null === get_option( $old_scp_prefix . 'popup_will_appear_after_clicking_on_eleme' ) );
-		$this->assertTrue( null === get_option( $scp_prefix . 'popup_will_appear_after_clicking_on_eleme' ) );
+		$this->assertTrue( null == get_option( $old_scp_prefix . 'popup_will_appear_after_clicking_on_eleme' ) );
+		$this->assertTrue( null == get_option( $scp_prefix . 'popup_will_appear_after_clicking_on_eleme' ) );
 
 		$this->assertTrue( '' === get_option( $scp_prefix . 'popup_will_appear_after_clicking_on_element' ) );
-		$this->assertTrue( 70 === get_option( $scp_prefix . 'popup_will_appear_after_scrolling_down_n_percent' ) );
+		$this->assertTrue( '70' === get_option( $scp_prefix . 'popup_will_appear_after_scrolling_down_n_percent' ) );
 		$this->assertTrue( 0  === get_option( $scp_prefix . 'popup_will_appear_on_exit_intent' ) );
 		$this->assertTrue( '' === get_option( $scp_prefix . 'who_should_see_the_popup' ) );
 
-		$this->assertTrue( null === get_option( $old_scp_prefix . 'setting_display_after_visiting_n_pages' ) );
+		$this->assertTrue( null == get_option( $old_scp_prefix . 'setting_display_after_visiting_n_pages' ) );
 		$this->assertTrue( $display_after_visiting_n_pages === get_option( $scp_prefix . 'visitor_opened_at_least_n_number_of_pages' ) );
 	}
 
@@ -441,7 +441,7 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 		// Facebook
 		$this->assertTrue( 1    === get_option( $scp_prefix . 'setting_facebook_adapt_container_width' ) );
 		$this->assertTrue( 0    === get_option( $scp_prefix . 'setting_facebook_use_small_header' ) );
-		$this->assertTrue( null === get_option( $scp_prefix . 'setting_facebook_show_posts' ) );
+		$this->assertTrue( null ==  get_option( $scp_prefix . 'setting_facebook_show_posts' ) );
 		$this->assertTrue( ( $facebook_show_posts === '1' ? 'timeline' : '' ) === get_option( $scp_prefix . 'setting_facebook_tabs' ) );
 	}
 
@@ -511,7 +511,7 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( 1        === get_option( $scp_prefix . 'setting_twitter_follow_button_large_size' ) );
 		$this->assertTrue( 'center' === get_option( $scp_prefix . 'setting_twitter_follow_button_align_by' ) );
 		$this->assertTrue( 1        === get_option( $scp_prefix . 'setting_twitter_use_timeline' ) );
-		$this->assertTrue( 0        === get_option( $scp_prefix . 'setting_twitter_widget_id' ) );
+		$this->assertTrue( false    === get_option( $scp_prefix . 'setting_twitter_widget_id' ) );
 
 		// Опции трекинга событий
 		$this->assertTrue( 1  === get_option( $scp_prefix . 'use_events_tracking' ) );
@@ -527,10 +527,12 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( __( 'Follow on Twitter', L10N_SCP_PREFIX ) === get_option( $scp_prefix . 'tracking_twitter_event' ) );
 
 		$this->assertTrue( 1 === get_option( $scp_prefix . 'tracking_use_vkontakte' ) );
-		$this->assertTrue( __( 'Subscribe on VK.com', L10N_SCP_PREFIX ) === get_option( $scp_prefix . 'tracking_vkontakte_event' ) );
+		$this->assertTrue( __( 'Subscribe on VK.com', L10N_SCP_PREFIX )     === get_option( $scp_prefix . 'tracking_vkontakte_subscribe_event' ) );
+		$this->assertTrue( __( 'Unsubscribe from VK.com', L10N_SCP_PREFIX ) === get_option( $scp_prefix . 'tracking_vkontakte_unsubscribe_event' ) );
 
 		$this->assertTrue( 1 === get_option( $scp_prefix . 'tracking_use_facebook' ) );
-		$this->assertTrue( __( 'Subscribe on Facebook', L10N_SCP_PREFIX ) === get_option( $scp_prefix . 'tracking_facebook_event' ) );
+		$this->assertTrue( __( 'Subscribe on Facebook', L10N_SCP_PREFIX )     === get_option( $scp_prefix . 'tracking_facebook_subscribe_event' ) );
+		$this->assertTrue( __( 'Unsubscribe from Facebook', L10N_SCP_PREFIX ) === get_option( $scp_prefix . 'tracking_facebook_unsubscribe_event' ) );
 
 		// Описания событий для отправки в Google Analytics
 		$this->assertTrue( __( 'Show immediately', L10N_SCP_PREFIX )                    === get_option( $scp_prefix . 'tracking_event_label_window_showed_immediately' ) );

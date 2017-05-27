@@ -831,11 +831,12 @@ class Social_Media_Popup {
 			}
 
 			// Переименуем опцию в правильное название, т.к. из-за длинного прошлого префикса были ошибки
-			$old_value = get_option( $new_scp_prefix . 'popup_will_appear_after_clicking_on_eleme' );
+			$old_value  = get_option( $new_scp_prefix . 'popup_will_appear_after_clicking_on_eleme' );
+			$old_value2 = get_option( $new_scp_prefix . 'popup_will_appear_after_clicking_on_element' );
 			delete_option( $new_scp_prefix . 'popup_will_appear_after_clicking_on_eleme' );
 			delete_option( $new_scp_prefix . 'popup_will_appear_after_clicking_on_element' );
 
-			if ( ! add_option( $new_scp_prefix . 'popup_will_appear_after_clicking_on_element', $old_value ) ) {
+			if ( ! add_option( $new_scp_prefix . 'popup_will_appear_after_clicking_on_element', ( $old_value ? $old_value : $old_value2 ) ) ) {
 				var_dump( $new_scp_prefix . 'popup_will_appear_after_clicking_on_eleme' );
 				var_dump( $value );
 				die();
