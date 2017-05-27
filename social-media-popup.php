@@ -3,7 +3,7 @@
  * Social Media Popup
  *
  * @package  Social_Media_Popup
- * @author   Alexander Gruzov
+ * @author   Alexander Kadyrov
  * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
  * @link     https://github.com/gruz0/social-media-popup
  */
@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) or exit;
 Plugin Name: Social Media Popup
 Plugin URI: http://gruz0.ru/
 Description: The plugin creates a popup window with most popular social media widgets
-Author: Alexander Gruzov
+Author: Alexander Kadyrov
 Author URI: http://gruz0.ru/
 Text Domain: social-community-popup
 Version: 0.7.5
