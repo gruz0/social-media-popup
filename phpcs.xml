@@ -10,6 +10,7 @@
 		<exclude name="Generic.ControlStructures.InlineControlStructure.NotAllowed" />
 		<exclude name="Generic.WhiteSpace.ScopeIndent.Incorrect" />
 		<exclude name="WordPress.XSS.EscapeOutput.UnsafePrintingFunction" />
+		<exclude name="WordPress.WhiteSpace.OperatorSpacing.SpacingBefore" />
     </rule>
 
     <rule ref="WordPress-Docs">
