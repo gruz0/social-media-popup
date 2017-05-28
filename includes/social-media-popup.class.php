@@ -4158,7 +4158,7 @@ class Social_Media_Popup {
 		$html .= '<br />';
 		$html .= sprintf( $format, $field . '_1', $field, 'page', checked( $value, 'page', false ), $field . '_1', __( 'Google+ Page', L10N_SCP_PREFIX ) );
 		$html .= '<br />';
-		$html .= sprintf( $format, $field . '_2', $field, 'community', checked( $value, 'community', false ), $field . '_1', __( 'Google+ Community', L10N_SCP_PREFIX ) );
+		$html .= sprintf( $format, $field . '_2', $field, 'community', checked( $value, 'community', false ), $field . '_2', __( 'Google+ Community', L10N_SCP_PREFIX ) );
 		echo $html;
 	}
 
