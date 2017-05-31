@@ -19,6 +19,7 @@ define( 'SMP_PREFIX', 'social_media_popup' );
 
 require_once( SMP_INCLUDES_DIR . 'functions.php' );
 require_once( SMP_INCLUDES_DIR . 'scp-template.php' );
+require_once( SMP_INCLUDES_DIR . 'validator.php' );
 require_once( SMP_INCLUDES_DIR . 'providers/providers.php' );
 
 /**
@@ -4258,6 +4259,16 @@ class Social_Media_Popup {
 			SMP_PREFIX . '_pinterest_options',
 			array( & $this, 'plugin_settings_page_pinterest_options' )
 		);
+
+		// Debug
+		add_submenu_page(
+			SMP_PREFIX, // Родительский пункт меню
+			__( 'Debug', L10N_SCP_PREFIX ), // Название пункта на его странице
+			__( 'Debug', L10N_SCP_PREFIX ), // Пункт меню
+			'administrator',
+			SMP_PREFIX . '_debug',
+			array( & $this, 'plugin_settings_page_debug' )
+		);
 	}
 
 	/**
@@ -4480,6 +4491,18 @@ class Social_Media_Popup {
 		}
 
 		include( SMP_TEMPLATES_DIR . 'settings/settings-pinterest.php' );
+	}
+
+	/**
+	 * Страница отладки плагина
+	 */
+	public function plugin_settings_page_debug() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+		}
+
+		$content = $this->validate_settings();
+		include( SMP_TEMPLATES_DIR . 'settings/settings-debug.php' );
 	}
 
 	/**
@@ -5041,5 +5064,30 @@ class Social_Media_Popup {
 
 		wp_enqueue_style( SMP_PREFIX . '-custom-css', get_template_directory_uri() );
 		wp_add_inline_style( SMP_PREFIX . '-custom-css', $css );
+	}
+
+	/**
+	 * Validate settings
+	 *
+	 * @since 0.7.5
+	 *
+	 * @uses SMP_Validator
+	 *
+	 * @return string
+	 */
+	private function validate_settings() {
+		$scp_prefix = self::get_scp_prefix();
+		$options = array();
+
+		$all_options = wp_load_alloptions();
+		foreach ( $all_options as $name => $value ) {
+			if ( preg_match( '/^' . $scp_prefix . '/', $name ) ) {
+				$name = str_replace( $scp_prefix, '', $name );
+				$options[ $name ] = $value;
+			}
+		}
+
+		$validator = new SMP_Validator( $options );
+		return $validator->validate();
 	}
 }
