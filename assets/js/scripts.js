@@ -29,3 +29,26 @@ function scp_destroyPlugin(after_n_days, container_id) {
 function scp_renderPopup() {
 	eval(scp_Base64.decode(scp.encodedContent));
 }
+
+function scp_getWindowHeight() {
+	return window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight || 0;
+}
+
+function scp_getWindowYscroll() {
+	return window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop || 0;
+}
+
+function scp_getDocHeight() {
+	return Math.max(
+		document.body.scrollHeight || 0,
+		document.documentElement.scrollHeight || 0,
+		document.body.offsetHeight || 0,
+		document.documentElement.offsetHeight || 0,
+		document.body.clientHeight || 0,
+		document.documentElement.clientHeight || 0
+		);
+}
+
+function scp_getScrollPercentage() {
+	return parseInt(Math.abs(((scp_getWindowYscroll() + scp_getWindowHeight()) / scp_getDocHeight()) * 100));
+}

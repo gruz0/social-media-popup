@@ -353,9 +353,8 @@ class SCP_Template {
 			$content .= 'var showWindowAgain = true;
 			jQuery(window).scroll(function() {
 				if (is_scp_cookie_present()) return false;
-				var bodyScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-				value = parseInt(Math.abs(bodyScrollTop / (document.body.clientHeight - window.innerHeight) * 100));
-				if (showWindowAgain && value >= ' . $popup_will_appear_after_scrolling_down_n_percent . ') {';
+
+				if (showWindowAgain && scp_getScrollPercentage() >= ' . $popup_will_appear_after_scrolling_down_n_percent . ') {';
 
 					if ( $this->_options['use_events_tracking'] ) {
 						$content .= $this->push_google_analytics_event_on_show_window(
