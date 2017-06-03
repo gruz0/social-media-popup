@@ -76,6 +76,7 @@ $j(document).ready(function() {
 			switch($j(this).val()) {
 				case 'after_clicking_on_element': {
 					$j('#' + SCP_PREFIX + 'event_hide_element_after_click_on_it').prop('disabled', !checked);
+					$j('#' + SCP_PREFIX + 'do_not_use_cookies_after_click_on_element').prop('disabled', !checked);
 					break;
 				}
 			}

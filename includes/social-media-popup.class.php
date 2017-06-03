@@ -130,6 +130,7 @@ class Social_Media_Popup {
 
 			// Дополнительные опции событий
 			'event_hide_element_after_click_on_it',
+			'do_not_use_cookies_after_click_on_element',
 
 			// Кому показывать окно
 			'who_should_see_the_popup',
@@ -1021,6 +1022,9 @@ class Social_Media_Popup {
 			update_option( $scp_prefix . 'tracking_event_label_on_scrolling_down',               __( 'On scrolling down', L10N_SCP_PREFIX ) );
 			update_option( $scp_prefix . 'tracking_event_label_on_exit_intent',                  __( 'On exit intent', L10N_SCP_PREFIX ) );
 
+			// Добавляем новое свойство "Не учитывать куки при клике на элемент"
+			update_option( $scp_prefix . 'do_not_use_cookies_after_click_on_element',            1 );
+
 			update_option( $version, '0.7.5' );
 			self::set_scp_version( '0.7.5' );
 		}
@@ -1498,6 +1502,7 @@ class Social_Media_Popup {
 		register_setting( $group, $scp_prefix . 'visitor_registered_and_role_equals_to', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'setting_display_after_n_days', 'absint' );
 		register_setting( $group, $scp_prefix . 'event_hide_element_after_click_on_it', 'absint' );
+		register_setting( $group, $scp_prefix . 'do_not_use_cookies_after_click_on_element', 'absint' );
 
 		add_settings_section(
 			$section_when_should_the_popup_appear,
@@ -1553,6 +1558,18 @@ class Social_Media_Popup {
 			$section_when_should_the_popup_appear,
 			array(
 				'field' => $scp_prefix . 'event_hide_element_after_click_on_it',
+			)
+		);
+
+		// Не учитывать куки при клике на элемент
+		add_settings_field(
+			SMP_PREFIX . '-do-not-use-cookies-after-click-on-element',
+			__( 'Do not Use Cookies After Click on Element', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section_when_should_the_popup_appear,
+			array(
+				'field' => $scp_prefix . 'do_not_use_cookies_after_click_on_element',
 			)
 		);
 
@@ -4525,7 +4542,20 @@ class Social_Media_Popup {
 		$version = get_option( $scp_prefix . 'version' );
 
 		$this->add_cookies_script( $version, $scp_prefix );
-		if ( is_scp_cookie_present() ) return;
+		if ( is_scp_cookie_present() ) {
+			$when_should_the_popup_appear = split_string_by_comma( get_option( $scp_prefix . 'when_should_the_popup_appear' ) );
+
+			if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'after_clicking_on_element' ) ) {
+				$popup_will_appear_after_clicking_on_element = get_option( $scp_prefix . 'popup_will_appear_after_clicking_on_element' );
+				$do_not_use_cookies_after_click_on_element   = get_option( $scp_prefix . 'do_not_use_cookies_after_click_on_element' );
+
+				if ( empty( $popup_will_appear_after_clicking_on_element ) || 0 === absint( $do_not_use_cookies_after_click_on_element ) ) {
+					return;
+				}
+			} else {
+				return;
+			}
+		}
 
 		$this->render_popup_window( $version, $scp_prefix );
 
@@ -4655,6 +4685,7 @@ class Social_Media_Popup {
 
 		// Дополнительные события
 		$event_hide_element_after_click_on_it             = '1' === $scp_options[ $scp_prefix . 'event_hide_element_after_click_on_it' ];
+		$do_not_use_cookies_after_click_on_element        = absint( $scp_options[ $scp_prefix . 'do_not_use_cookies_after_click_on_element' ] ) === 1;
 
 		//
 		// Кому показывать окно
@@ -4940,6 +4971,7 @@ class Social_Media_Popup {
 						$when_should_the_popup_appear,
 						$popup_will_appear_after_clicking_on_element,
 						$event_hide_element_after_click_on_it,
+						$do_not_use_cookies_after_click_on_element,
 						$delay_before_show_bottom_button,
 						$any_event_active,
 						$after_n_days
@@ -4965,8 +4997,16 @@ class Social_Media_Popup {
 
 		} else {
 			$content .= '<script>
-				jQuery(document).ready(function($) {
-					if (is_scp_cookie_present()) return;';
+				jQuery(document).ready(function($) {';
+
+					// Проверяем событие "Не учитывать куки при клике на CSS-селектор"
+					if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'after_clicking_on_element' ) ) {
+						if ( empty( $popup_will_appear_after_clicking_on_element ) || ! $do_not_use_cookies_after_click_on_element ) {
+							$content .= 'if (is_scp_cookie_present()) return;';
+						}
+					} else {
+						$content .= 'if (is_scp_cookie_present()) return;';
+					}
 
 					if ( $use_facebook ) {
 						$content .= 'scp_prependFacebook($);';
@@ -4999,6 +5039,7 @@ class Social_Media_Popup {
 						$when_should_the_popup_appear,
 						$popup_will_appear_after_clicking_on_element,
 						$event_hide_element_after_click_on_it,
+						$do_not_use_cookies_after_click_on_element,
 						$delay_before_show_bottom_button,
 						$any_event_active
 					);

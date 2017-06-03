@@ -262,6 +262,7 @@ class SCP_Template {
 	 * @param array   $when_should_the_popup_appear Events list
 	 * @param int     $popup_will_appear_after_clicking_on_element Event value
 	 * @param boolean $event_hide_element_after_click_on_it Hide element after click on it
+	 * @param boolean $do_not_use_cookies_after_click_on_element Do not use cookies after click on element
 	 * @param int     $delay_before_show_bottom_button Delay before show bottom button in seconds
 	 * @param boolean $any_event_active Changed by function if event is active
 	 * @param int     $after_n_days Show window again after N days
@@ -271,6 +272,7 @@ class SCP_Template {
 		$when_should_the_popup_appear,
 		$popup_will_appear_after_clicking_on_element,
 		$event_hide_element_after_click_on_it,
+		$do_not_use_cookies_after_click_on_element,
 		$delay_before_show_bottom_button,
 		& $any_event_active,
 		$after_n_days = 0 ) {
@@ -282,8 +284,11 @@ class SCP_Template {
 			$any_event_active = true;
 
 			if ( ! empty( $popup_will_appear_after_clicking_on_element ) ) {
-				$content .= 'jQuery("' . $popup_will_appear_after_clicking_on_element . '").on("click", function() {
-					if (is_scp_cookie_present()) return false;';
+				$content .= 'jQuery("' . $popup_will_appear_after_clicking_on_element . '").on("click", function() {';
+
+					if ( ! $do_not_use_cookies_after_click_on_element ) {
+						$content .= 'if (is_scp_cookie_present()) return false;';
+					}
 
 					if ( $this->_options['use_events_tracking'] ) {
 						$content .= $this->push_google_analytics_event_on_show_window(
@@ -349,7 +354,6 @@ class SCP_Template {
 			jQuery(window).scroll(function() {
 				if (is_scp_cookie_present()) return false;
 				var bodyScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-
 				value = parseInt(Math.abs(bodyScrollTop / (document.body.clientHeight - window.innerHeight) * 100));
 				if (showWindowAgain && value >= ' . $popup_will_appear_after_scrolling_down_n_percent . ') {';
 

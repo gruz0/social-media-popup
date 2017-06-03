@@ -545,6 +545,9 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( __( 'After click on CSS-selector', L10N_SCP_PREFIX )         === get_option( $scp_prefix . 'tracking_event_label_after_click' ) );
 		$this->assertTrue( __( 'On scrolling down', L10N_SCP_PREFIX )                   === get_option( $scp_prefix . 'tracking_event_label_on_scrolling_down' ) );
 		$this->assertTrue( __( 'On exit intent', L10N_SCP_PREFIX )                      === get_option( $scp_prefix . 'tracking_event_label_on_exit_intent' ) );
+
+		// Прочие опции
+		$this->assertTrue( 1 === get_option( $scp_prefix . 'do_not_use_cookies_after_click_on_element' ) );
 	}
 
 	/**
