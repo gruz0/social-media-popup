@@ -14,13 +14,6 @@
  */
 class SCP_Provider {
 	/**
-	 * Option name prefix
-	 *
-	 * @var string $prefix
-	 */
-	static $prefix = null;
-
-	/**
 	 * Plugin options
 	 *
 	 * @var array $options
@@ -76,15 +69,14 @@ class SCP_Provider {
 	 * Instantiate a Social Network provider
 	 *
 	 * @since 0.7.3
+	 * @since 0.7.5 Delete $prefix argument
 	 *
 	 * @param string $provider Provider name (ex. facebook, vkontakte, etc.)
-	 * @param string $prefix SCP options prefix (default: 'scp-')
 	 * @param array  $options Plugin options
 	 * @throws Exception Throws Exception if the provided $provider is not exist
 	 * @return SCP_Provider
 	 */
-	public static function create( $provider, $prefix, $options ) {
-		self::$prefix = $prefix;
+	public static function create( $provider, $options ) {
 		self::$options = $options;
 		self::$tabs_id = self::tabs_id();
 
@@ -214,7 +206,7 @@ class SCP_Provider {
 		if ( wp_is_mobile() ) {
 			return '#scp_mobile .scp-icons';
 		} else {
-			if ( '1' === self::$options[ self::$prefix . 'setting_use_icons_instead_of_labels_in_tabs' ] ) {
+			if ( '1' === self::$options['setting_use_icons_instead_of_labels_in_tabs'] ) {
 				return '#social-community-popup .scp-icons';
 			} else {
 				return '#social-community-popup .tabs';
@@ -255,7 +247,7 @@ class SCP_Provider {
 	 */
 	protected static function get_option_as_escaped_string( $option_name ) {
 		if ( ! isset( self::$cached_option_values[ $option_name ] ) ) {
-			self::$cached_option_values[ $option_name ] = esc_attr( self::$options[ self::$prefix . $option_name ] );
+			self::$cached_option_values[ $option_name ] = esc_attr( self::$options[ $option_name ] );
 		}
 
 		return self::$cached_option_values[ $option_name ];
@@ -271,7 +263,7 @@ class SCP_Provider {
 	 */
 	protected static function get_option_as_integer( $option_name ) {
 		if ( ! isset( self::$cached_option_values[ $option_name ] ) ) {
-			self::$cached_option_values[ $option_name ] = absint( self::$options[ self::$prefix . $option_name ] );
+			self::$cached_option_values[ $option_name ] = absint( self::$options[ $option_name ] );
 		}
 
 		return self::$cached_option_values[ $option_name ];
@@ -287,7 +279,7 @@ class SCP_Provider {
 	 */
 	protected static function get_option_as_boolean( $option_name ) {
 		if ( ! isset( self::$cached_option_values[ $option_name ] ) ) {
-			self::$cached_option_values[ $option_name ] = absint( self::$options[ self::$prefix . $option_name ] ) === 1;
+			self::$cached_option_values[ $option_name ] = '1' === self::$options[ $option_name ];
 		}
 
 		return self::$cached_option_values[ $option_name ];

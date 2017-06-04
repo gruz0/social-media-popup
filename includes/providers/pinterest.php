@@ -52,7 +52,7 @@ class SCP_Pinterest_Provider extends SCP_Provider {
 		$content = '<div class="box">';
 
 		if ( self::get_option_as_boolean( 'setting_pinterest_show_description' ) ) {
-			$content .= '<p class="widget-description"><b>' . self::$options[ self::$prefix . 'setting_pinterest_description' ] . '</b></p>';
+			$content .= '<p class="widget-description"><b>' . self::$options['setting_pinterest_description'] . '</b></p>';
 		}
 
 		$content .= '<a data-pin-do="embedUser" '

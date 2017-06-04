@@ -58,7 +58,7 @@ class SCP_VK_Provider extends SCP_Provider {
 		$content = '<div class="box">';
 
 		if ( self::get_option_as_boolean( 'setting_vkontakte_show_description' ) ) {
-			$content .= '<p class="widget-description"><b>' . self::$options[ self::$prefix . 'setting_vkontakte_description' ] . '</b></p>';
+			$content .= '<p class="widget-description"><b>' . self::$options['setting_vkontakte_description'] . '</b></p>';
 		}
 
 		$application_id = self::get_option_as_escaped_string( 'setting_vkontakte_application_id' );

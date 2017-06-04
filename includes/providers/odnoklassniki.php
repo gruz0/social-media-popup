@@ -52,7 +52,7 @@ class SCP_Odnoklassniki_Provider extends SCP_Provider {
 		$content = '<div class="box">';
 
 		if ( self::get_option_as_boolean( 'setting_odnoklassniki_show_description' ) ) {
-			$content .= '<p class="widget-description"><b>' . self::$options[ self::$prefix . 'setting_odnoklassniki_description' ] . '</b></p>';
+			$content .= '<p class="widget-description"><b>' . self::$options['setting_odnoklassniki_description'] . '</b></p>';
 		}
 
 		$content .= '<div id="scp_ok_group_widget"></div>';

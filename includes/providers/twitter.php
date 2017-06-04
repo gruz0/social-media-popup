@@ -54,7 +54,7 @@ class SCP_Twitter_Provider extends SCP_Provider {
 	 */
 	public static function container() {
 		// Для нормального отображения/скрытия полос прокрутки нужно задавать свойство overflow
-		$twitter_chrome = self::$options[ self::$prefix . 'setting_twitter_chrome' ];
+		$twitter_chrome = self::$options['setting_twitter_chrome'];
 		$twitter_chrome = '' === $twitter_chrome ? array() : array_keys( (array) $twitter_chrome );
 		$noscrollbars   = in_array( 'noscrollbars', $twitter_chrome, true );
 		$overflow_css   = $noscrollbars ? 'hidden' : 'auto';
@@ -64,7 +64,7 @@ class SCP_Twitter_Provider extends SCP_Provider {
 		$content = '<div class="box" style="overflow:' . esc_attr( $overflow_css ) . ';height:' . esc_attr( ( $widget_height - 20 ) ) . 'px;">';
 
 		if ( self::get_option_as_boolean( 'setting_twitter_show_description' ) ) {
-			$content .= '<p class="widget-description"><b>' . self::$options[ self::$prefix . 'setting_twitter_description' ] . '</b></p>';
+			$content .= '<p class="widget-description"><b>' . self::$options['setting_twitter_description'] . '</b></p>';
 		}
 
 		// Показывать Twitter Follow Button или нет
@@ -118,7 +118,7 @@ class SCP_Twitter_Provider extends SCP_Provider {
 			function scp_followIntentToAnalytics(intentEvent) {
 				if (!intentEvent) return;';
 
-				if ( (int) self::$options[ self::$prefix . 'setting_twitter_close_window_after_join' ] ) {
+				if ( absint( self::$options['setting_twitter_close_window_after_join'] ) ) {
 					$content .= 'scp_destroyPlugin(scp.showWindowAfterReturningNDays);';
 				}
 

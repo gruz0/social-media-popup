@@ -65,7 +65,7 @@ class SCP_Facebook_Provider extends SCP_Provider {
 
 		// FIXME: Should be refactored with self::show_description() and move condition to it
 		if ( self::get_option_as_boolean( 'setting_facebook_show_description' ) ) {
-			$content .= '<p class="widget-description"><b>' . self::$options[ self::$prefix . 'setting_facebook_description' ] . '</b></p>';
+			$content .= '<p class="widget-description"><b>' . self::$options['setting_facebook_description'] . '</b></p>';
 		}
 
 		$content .= self::prepare_facebook_widget();
@@ -154,7 +154,7 @@ class SCP_Facebook_Provider extends SCP_Provider {
 		// Формирует колбэк для обработки событий при закрытии окна и подписке на группу
 		$facebook_events .= 'var scp_facebook_page_like_callback = function(url, html_element) {';
 
-		if ( (int) self::$options[ self::$prefix . 'setting_facebook_close_window_after_join' ] ) {
+		if ( absint( self::$options['setting_facebook_close_window_after_join'] ) ) {
 			$facebook_events .= 'scp_destroyPlugin(scp.showWindowAfterReturningNDays);';
 		}
 

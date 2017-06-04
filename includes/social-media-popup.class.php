@@ -4591,35 +4591,38 @@ class Social_Media_Popup {
 	 * @return string
 	 */
 	private function scp_php( $scp_prefix ) {
-		$scp_options = array();
+		$options = array();
 		$all_options = wp_load_alloptions();
+
 		foreach ( $all_options as $name => $value ) {
-			// TODO: Возможно есть смысл сделать esc_attr именно здесь, но надо проверить
-			if ( stristr( $name, $scp_prefix ) ) $scp_options[ $name ] = $value;
+			if ( stristr( $name, $scp_prefix ) ) {
+				$name = str_replace( $scp_prefix, '', $name );
+				$options[ $name ] = $value;
+			}
 		}
 
 		$events_descriptions = array(
-			'window_showed_immediately'       => $scp_options[ $scp_prefix . 'tracking_event_label_window_showed_immediately' ],
-			'window_showed_with_delay'        => $scp_options[ $scp_prefix . 'tracking_event_label_window_showed_with_delay' ],
-			'window_showed_after_click'       => $scp_options[ $scp_prefix . 'tracking_event_label_window_showed_after_click' ],
-			'window_showed_on_scrolling_down' => $scp_options[ $scp_prefix . 'tracking_event_label_window_showed_on_scrolling_down' ],
-			'window_showed_on_exit_intent'    => $scp_options[ $scp_prefix . 'tracking_event_label_window_showed_on_exit_intent' ],
-			'no_events_fired'                 => $scp_options[ $scp_prefix . 'tracking_event_label_no_events_fired' ],
-			'on_delay'                        => $scp_options[ $scp_prefix . 'tracking_event_label_on_delay' ],
-			'after_click'                     => $scp_options[ $scp_prefix . 'tracking_event_label_after_click' ],
-			'on_scrolling_down'               => $scp_options[ $scp_prefix . 'tracking_event_label_on_scrolling_down' ],
-			'on_exit_intent'                  => $scp_options[ $scp_prefix . 'tracking_event_label_on_exit_intent' ],
+			'window_showed_immediately'       => $options['tracking_event_label_window_showed_immediately'],
+			'window_showed_with_delay'        => $options['tracking_event_label_window_showed_with_delay'],
+			'window_showed_after_click'       => $options['tracking_event_label_window_showed_after_click'],
+			'window_showed_on_scrolling_down' => $options['tracking_event_label_window_showed_on_scrolling_down'],
+			'window_showed_on_exit_intent'    => $options['tracking_event_label_window_showed_on_exit_intent'],
+			'no_events_fired'                 => $options['tracking_event_label_no_events_fired'],
+			'on_delay'                        => $options['tracking_event_label_on_delay'],
+			'after_click'                     => $options['tracking_event_label_after_click'],
+			'on_scrolling_down'               => $options['tracking_event_label_on_scrolling_down'],
+			'on_exit_intent'                  => $options['tracking_event_label_on_exit_intent'],
 		);
 
-		$debug_mode = '1' === absint( $scp_options[ $scp_prefix . 'setting_debug_mode' ] );
+		$debug_mode = '1' === $options['setting_debug_mode'];
 
 		$template_options = array(
-			'use_events_tracking'                             => 1 === absint( $scp_options[ $scp_prefix . 'use_events_tracking' ] ),
-			'do_not_use_tracking_in_debug_mode'               => ( $debug_mode && 1 === absint( $scp_options[ $scp_prefix . 'do_not_use_tracking_in_debug_mode' ] ) ),
-			'push_events_to_aquisition_social_plugins'        => 1 === absint( $scp_options[ $scp_prefix . 'push_events_to_aquisition_social_plugins' ] ),
-			'push_events_when_displaying_window'              => 1 === absint( $scp_options[ $scp_prefix . 'push_events_when_displaying_window' ] ),
-			'push_events_when_subscribing_on_social_networks' => 1 === absint( $scp_options[ $scp_prefix . 'push_events_when_subscribing_on_social_networks' ] ),
-			'add_window_events_descriptions'                  => 1 === absint( $scp_options[ $scp_prefix . 'add_window_events_descriptions' ] ),
+			'use_events_tracking'                             => '1' === $options['use_events_tracking'],
+			'do_not_use_tracking_in_debug_mode'               => ( $debug_mode && '1' === $options['do_not_use_tracking_in_debug_mode'] ),
+			'push_events_to_aquisition_social_plugins'        => '1' === $options['push_events_to_aquisition_social_plugins'],
+			'push_events_when_displaying_window'              => '1' === $options['push_events_when_displaying_window'],
+			'push_events_when_subscribing_on_social_networks' => '1' === $options['push_events_when_subscribing_on_social_networks'],
+			'add_window_events_descriptions'                  => '1' === $options['add_window_events_descriptions'],
 		);
 
 		$template = new SCP_Template(
@@ -4637,7 +4640,7 @@ class Social_Media_Popup {
 		} else {
 			// Проверяем, что текущий пользователь залогинен в админку и затем проверяем его роль
 			if ( is_user_logged_in() ) {
-				switch ( $scp_options[ $scp_prefix . 'visitor_registered_and_role_equals_to' ] ) {
+				switch ( $options['visitor_registered_and_role_equals_to'] ) {
 					case 'all_registered_users':
 
 					break;
@@ -4659,18 +4662,18 @@ class Social_Media_Popup {
 			}
 		}
 
-		$show_on_mobile = '1' === $scp_options[ $scp_prefix . 'setting_show_on_mobile_devices' ];
+		$show_on_mobile = '1' === $options['setting_show_on_mobile_devices'];
 		$wp_is_mobile   = wp_is_mobile();
 
 		// Отключаем работу плагина на мобильных устройствах
 		if ( $wp_is_mobile && ! $show_on_mobile ) return;
 
-		$after_n_days                                     = (int) $scp_options[ $scp_prefix . 'setting_display_after_n_days' ];
+		$after_n_days = absint( $options['setting_display_after_n_days'] );
 
 		//
 		// Когда показывать окно
 		//
-		$when_should_the_popup_appear                     = split_string_by_comma( $scp_options[ $scp_prefix . 'when_should_the_popup_appear' ] );
+		$when_should_the_popup_appear                     = split_string_by_comma( $options['when_should_the_popup_appear'] );
 		$when_should_the_popup_appear_events              = array(
 			'after_n_seconds',
 			'after_clicking_on_element',
@@ -4678,24 +4681,24 @@ class Social_Media_Popup {
 			'on_exit_intent',
 		);
 
-		$popup_will_appear_after_n_seconds                = (int) $scp_options[ $scp_prefix . 'popup_will_appear_after_n_seconds' ];
-		$popup_will_appear_after_clicking_on_element      = $scp_options[ $scp_prefix . 'popup_will_appear_after_clicking_on_element' ];
-		$popup_will_appear_after_scrolling_down_n_percent = (int) $scp_options[ $scp_prefix . 'popup_will_appear_after_scrolling_down_n_percent' ];
-		$popup_will_appear_on_exit_intent                 = '1' === $scp_options[ $scp_prefix . 'popup_will_appear_on_exit_intent' ];
+		$popup_will_appear_after_n_seconds                = absint( $options['popup_will_appear_after_n_seconds'] );
+		$popup_will_appear_after_clicking_on_element      = $options['popup_will_appear_after_clicking_on_element'];
+		$popup_will_appear_after_scrolling_down_n_percent = absint( $options['popup_will_appear_after_scrolling_down_n_percent'] );
+		$popup_will_appear_on_exit_intent                 = '1' === $options['popup_will_appear_on_exit_intent'];
 
 		// Дополнительные события
-		$event_hide_element_after_click_on_it             = '1' === $scp_options[ $scp_prefix . 'event_hide_element_after_click_on_it' ];
-		$do_not_use_cookies_after_click_on_element        = absint( $scp_options[ $scp_prefix . 'do_not_use_cookies_after_click_on_element' ] ) === 1;
+		$event_hide_element_after_click_on_it             = '1' === $options['event_hide_element_after_click_on_it'];
+		$do_not_use_cookies_after_click_on_element        = '1' === $options['do_not_use_cookies_after_click_on_element'];
 
 		//
 		// Кому показывать окно
 		//
-		$who_should_see_the_popup                         = split_string_by_comma( $scp_options[ $scp_prefix . 'who_should_see_the_popup' ] );
+		$who_should_see_the_popup                         = split_string_by_comma( $options['who_should_see_the_popup'] );
 		$who_should_see_the_popup_events                  = array(
 			'visitor_opened_at_least_n_number_of_pages'
 		);
 
-		$visitor_opened_at_least_n_number_of_pages        = (int) $scp_options[ $scp_prefix . 'visitor_opened_at_least_n_number_of_pages' ];
+		$visitor_opened_at_least_n_number_of_pages        = absint( $options['visitor_opened_at_least_n_number_of_pages'] );
 
 		// Если true, тогда окно будет показываться с учётом событий "Каким посетителям показывать окно"
 		$who_should_see_the_popup_fired                   = false;
@@ -4727,7 +4730,7 @@ class Social_Media_Popup {
 
 				// Если существует кука просмотренных страниц — обновляем её
 				if ( isset( $_COOKIE[ $page_views_cookie ] ) ) {
-					$page_views = ( (int) $_COOKIE[ $page_views_cookie ] ) + 1;
+					$page_views = absint( $_COOKIE[ $page_views_cookie ] ) + 1;
 					setcookie( $page_views_cookie, $page_views, time() + $cookie_lifetime, '/' );
 
 					if ( $page_views > $visitor_opened_at_least_n_number_of_pages ) {
@@ -4755,26 +4758,26 @@ class Social_Media_Popup {
 		}
 
 		// Настройка плагина
-		$use_facebook               = '1' === $scp_options[ $scp_prefix . 'setting_use_facebook' ];
-		$use_vkontakte              = '1' === $scp_options[ $scp_prefix . 'setting_use_vkontakte' ];
-		$use_odnoklassniki          = '1' === $scp_options[ $scp_prefix . 'setting_use_odnoklassniki' ];
-		$use_googleplus             = '1' === $scp_options[ $scp_prefix . 'setting_use_googleplus' ];
-		$use_twitter                = '1' === $scp_options[ $scp_prefix . 'setting_use_twitter' ];
-		$use_pinterest              = '1' === $scp_options[ $scp_prefix . 'setting_use_pinterest' ];
+		$use_facebook               = '1' === $options['setting_use_facebook'];
+		$use_vkontakte              = '1' === $options['setting_use_vkontakte'];
+		$use_odnoklassniki          = '1' === $options['setting_use_odnoklassniki'];
+		$use_googleplus             = '1' === $options['setting_use_googleplus'];
+		$use_twitter                = '1' === $options['setting_use_twitter'];
+		$use_pinterest              = '1' === $options['setting_use_pinterest'];
 
-		$tabs_order                 = explode( ',', $scp_options[ $scp_prefix . 'setting_tabs_order' ] );
+		$tabs_order                 = explode( ',', $options['setting_tabs_order'] );
 
-		$container_width            = absint( $scp_options[ $scp_prefix . 'setting_container_width' ] );
-		$container_height           = absint( $scp_options[ $scp_prefix . 'setting_container_height' ] );
-		$border_radius              = absint( $scp_options[ $scp_prefix . 'setting_border_radius' ] );
-		$close_by_clicking_anywhere = '1' === $scp_options[ $scp_prefix . 'setting_close_popup_by_clicking_anywhere' ];
-		$close_when_esc_pressed     = '1' === $scp_options[ $scp_prefix . 'setting_close_popup_when_esc_pressed' ];
-		$show_close_button_in       = $scp_options[ $scp_prefix . 'setting_show_close_button_in' ];
-		$overlay_color              = $scp_options[ $scp_prefix . 'setting_overlay_color' ];
-		$overlay_opacity            = absint( $scp_options[ $scp_prefix . 'setting_overlay_opacity' ] );
-		$align_tabs_to_center       = absint( $scp_options[ $scp_prefix . 'setting_align_tabs_to_center' ] );
-		$delay_before_show_bottom_button = absint( $scp_options[ $scp_prefix . 'setting_delay_before_show_bottom_button' ] );
-		$background_image           = $scp_options[ $scp_prefix . 'setting_background_image' ];
+		$container_width            = absint( $options['setting_container_width'] );
+		$container_height           = absint( $options['setting_container_height'] );
+		$border_radius              = absint( $options['setting_border_radius'] );
+		$close_by_clicking_anywhere = '1' === $options['setting_close_popup_by_clicking_anywhere'];
+		$close_when_esc_pressed     = '1' === $options['setting_close_popup_when_esc_pressed'];
+		$show_close_button_in       = $options['setting_show_close_button_in'];
+		$overlay_color              = $options['setting_overlay_color'];
+		$overlay_opacity            = absint( $options['setting_overlay_opacity'] );
+		$align_tabs_to_center       = absint( $options['setting_align_tabs_to_center'] );
+		$delay_before_show_bottom_button = absint( $options['setting_delay_before_show_bottom_button'] );
+		$background_image           = $options['setting_background_image'];
 
 		//
 		// START RENDER
@@ -4786,7 +4789,7 @@ class Social_Media_Popup {
 
 		$active_providers = array();
 		foreach ( SCP_Provider::available_providers() as $provider_name ) {
-			$provider = SCP_Provider::create( $provider_name, $scp_prefix, $scp_options );
+			$provider = SCP_Provider::create( $provider_name, $options );
 
 			if ( $provider->is_active() ) {
 				$active_providers[ $provider_name ] = $provider;
@@ -4804,11 +4807,11 @@ class Social_Media_Popup {
 
 				$content .= '<div class="scp-close"><a href="#">&times;</a></div>';
 
-				$content .= '<div class="scp-mobile-title">' . $scp_options[ $scp_prefix . 'setting_plugin_title_on_mobile_devices' ] . '</div>';
+				$content .= '<div class="scp-mobile-title">' . $options['setting_plugin_title_on_mobile_devices'] . '</div>';
 
 				$content .= '<ul class="scp-icons">';
 
-				$icon_size = 'fa-' . $scp_options[ $scp_prefix . 'setting_icons_size_on_mobile_devices' ];
+				$icon_size = 'fa-' . $options['setting_icons_size_on_mobile_devices'];
 
 				for ( $idx = 0, $size = count( $tabs_order ); $idx < $size; $idx++ ) {
 					$provider_name = $tabs_order[ $idx ];
@@ -4854,7 +4857,7 @@ class Social_Media_Popup {
 				$popup_css .= $border_radius_css;
 				$popup_css .= $background_image_css;
 
-				$scp_plugin_title  = trim( str_replace( "\r\n", '<br />', $scp_options[ $scp_prefix . 'setting_plugin_title' ] ) );
+				$scp_plugin_title  = trim( str_replace( "\r\n", '<br />', $options['setting_plugin_title'] ) );
 				$show_plugin_title = mb_strlen( $scp_plugin_title ) > 0;
 
 				$content .= '<div id="popup" style="' . esc_attr( $popup_css ) . '">';
@@ -4875,11 +4878,11 @@ class Social_Media_Popup {
 					$content .= '<div class="plugin-title">' . $scp_plugin_title . '</div>';
 				}
 
-				if ( 1 === $active_providers_count && 1 === absint( $scp_options[ $scp_prefix . 'setting_hide_tabs_if_one_widget_is_active' ] ) ) {
+				if ( 1 === $active_providers_count && '1' === $options['setting_hide_tabs_if_one_widget_is_active'] ) {
 
 				} else {
-					$use_icons_instead_of_labels = absint( $scp_options[ $scp_prefix . 'setting_use_icons_instead_of_labels_in_tabs' ] ) === 1;
-					$icon_size = 'fa-' . $scp_options[ $scp_prefix . 'setting_icons_size_on_desktop' ];
+					$use_icons_instead_of_labels = '1' === $options['setting_use_icons_instead_of_labels_in_tabs'];
+					$icon_size = 'fa-' . $options['setting_icons_size_on_desktop'];
 
 					if ( $use_icons_instead_of_labels ) {
 						$content .= '<ul class="scp-icons scp-icons-desktop">';
@@ -4936,11 +4939,11 @@ class Social_Media_Popup {
 			$content .= '</div>';
 
 			if ( ! $wp_is_mobile ) {
-				if ( '1' === $scp_options[ $scp_prefix . 'setting_show_button_to_close_widget' ] ) {
-					$button_to_close_widget_style = $scp_options[ $scp_prefix . 'setting_button_to_close_widget_style' ];
+				if ( '1' === $options['setting_show_button_to_close_widget'] ) {
+					$button_to_close_widget_style = $options['setting_button_to_close_widget_style'];
 					$button_to_close_widget_class = 'link' === $button_to_close_widget_style ? '' : 'scp-' . $button_to_close_widget_style . '-button';
 					$content .= '<div class="dont-show-widget scp-button ' . esc_attr( $button_to_close_widget_class ) . '">';
-						$content .= '<a href="#" class="close">' . esc_attr( $scp_options[ $scp_prefix . 'setting_button_to_close_widget_title' ] ) . '</a>';
+						$content .= '<a href="#" class="close">' . esc_attr( $options['setting_button_to_close_widget_title'] ) . '</a>';
 					$content .= '</div>';
 				}
 			}
@@ -5090,7 +5093,7 @@ class Social_Media_Popup {
 		wp_register_script( SMP_PREFIX . '-cookies', SMP_ASSETS_URL . 'js/cookies.js?' . $version, array( 'jquery' ) );
 		wp_localize_script( SMP_PREFIX . '-cookies', 'scp_cookies', array(
 			'clearCookiesMessage'           => __( 'Page will be reload after clear cookies. Continue?', L10N_SCP_PREFIX ),
-			'showWindowAfterReturningNDays' => (int) get_option( $scp_prefix . 'setting_display_after_n_days' ),
+			'showWindowAfterReturningNDays' => absint( get_option( $scp_prefix . 'setting_display_after_n_days' ) ),
 		));
 		wp_enqueue_script( SMP_PREFIX . '-cookies' );
 	}
