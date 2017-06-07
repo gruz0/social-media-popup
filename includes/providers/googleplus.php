@@ -51,7 +51,7 @@ class SCP_GooglePlus_Provider extends SCP_Provider {
 	 * @return string
 	 */
 	public static function container() {
-		$content = '<div class="box">';
+		$content = '<div class="box" id="scp_googleplus_container">';
 
 		if ( self::get_option_as_boolean( 'setting_googleplus_show_description' ) ) {
 			$content .= '<p class="widget-description"><b>' . self::$options['setting_googleplus_description'] . '</b></p>';
@@ -70,8 +70,13 @@ class SCP_GooglePlus_Provider extends SCP_Provider {
 		$content .= '<!-- Place this tag after the last widget tag. -->
 			<script type="text/javascript">
 				var google_plus_initialized = 0;
+				var scp_google_plus_container_size = parseInt("' . self::get_option_as_escaped_string( 'setting_googleplus_size' ) . '");
 
 				function initialize_GooglePlus_Widgets() {
+					if (jQuery("#scp_googleplus_container div iframe").length && jQuery("#scp_googleplus_container div iframe").height() < scp_google_plus_container_size) {
+						jQuery("#scp_googleplus_container div, #scp_googleplus_container div iframe").height(scp_google_plus_container_size);
+					}
+
 					if (google_plus_initialized) return;
 
 					window.___gcfg = {lang: "' . self::get_option_as_escaped_string( 'setting_googleplus_locale' ) . '"};
@@ -87,14 +92,22 @@ class SCP_GooglePlus_Provider extends SCP_Provider {
 				}
 
 				function scp_prependGooglePlus($) {
-					$tabs            = $("' . self::$tabs_id . '");
 					$google_plus_tab = $("' . self::$tabs_id . ' .google-plus-tab");
 
-					if ($google_plus_tab.length && parseInt($google_plus_tab.data("index")) == 1) {
-						initialize_GooglePlus_Widgets();
-					} else if ($tabs.length == 0) {
-						initialize_GooglePlus_Widgets();
-					}
+					var scp_googleplus_interval = setInterval(function() {
+						var container_height_is_too_small = jQuery("#scp_googleplus_container div iframe").height() < scp_google_plus_container_size;
+
+						if (jQuery("#scp_googleplus_container div iframe").length > 0 || container_height_is_too_small) {
+							jQuery("#scp_googleplus_container div, #scp_googleplus_container div iframe").height(scp_google_plus_container_size);
+
+							container_height_is_too_small = jQuery("#scp_googleplus_container div iframe").height() < scp_google_plus_container_size;
+							if (!container_height_is_too_small) {
+								setTimeout(function() { clearInterval(scp_googleplus_interval); }, 3000);
+							}
+						}
+					}, 1000);
+
+					initialize_GooglePlus_Widgets();
 
 					$google_plus_tab.on("click", function() {
 						initialize_GooglePlus_Widgets();
