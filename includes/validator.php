@@ -185,11 +185,6 @@ class SMP_Validator {
 					$errors['VKontakte'][] = __( 'Page URL is not a valid URL', L10N_SCP_PREFIX );
 				}
 			}
-
-			// Delay before widget has been rendered
-			if ( 0 === absint( $this->options['setting_vkontakte_delay_before_render'] ) ) {
-				$errors['VKontakte'][] = __( 'I suggest you to increase the value of VK.com rendering delay before widget has been shown', L10N_SCP_PREFIX );
-			}
 		}
 
 		//

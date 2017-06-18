@@ -989,6 +989,9 @@ class Social_Media_Popup {
 			update_option( $scp_prefix . 'setting_twitter_use_timeline',                    1 );
 			delete_option( $scp_prefix . 'setting_twitter_widget_id' );
 
+			// Убираем кастомную задержку перед отрисовкой виджета ВКонтакте
+			delete_option( $scp_prefix . 'setting_vkontakte_delay_before_render' );
+
 			// Опции трекинга событий
 			update_option( $scp_prefix . 'use_events_tracking',                             1 );
 			update_option( $scp_prefix . 'do_not_use_tracking_in_debug_mode',               1 );
@@ -2423,7 +2426,6 @@ class Social_Media_Popup {
 		register_setting( $group, $scp_prefix . 'setting_vkontakte_color_text', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'setting_vkontakte_color_button', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'setting_vkontakte_close_window_after_join', 'absint' );
-		register_setting( $group, $scp_prefix . 'setting_vkontakte_delay_before_render', 'absint' );
 
 		add_settings_section(
 			$section,
@@ -2603,19 +2605,6 @@ class Social_Media_Popup {
 			$section,
 			array(
 				'field' => $scp_prefix . 'setting_vkontakte_close_window_after_join',
-			)
-		);
-
-		// Задержка в ms перед отрисовкой виджета (при проблемах в Firefox)
-		add_settings_field(
-			SMP_PREFIX . '-vkontakte-delay-before-render',
-			__( 'Delay before render widget (in ms.)', L10N_SCP_PREFIX ),
-			array( & $this, 'settings_field_input_text' ),
-			$options_page,
-			$section,
-			array(
-				'field' => $scp_prefix . 'setting_vkontakte_delay_before_render',
-				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . '500',
 			)
 		);
 	}

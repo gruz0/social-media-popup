@@ -71,11 +71,6 @@ class SCP_VK_Provider extends SCP_Provider {
 			$page_or_group_id = $default_vk_group_id;
 		}
 
-		$delay_before_render = self::get_option_as_escaped_string( 'setting_vkontakte_delay_before_render' );
-		if ( empty( $delay_before_render ) ) {
-			$delay_before_render = 0;
-		}
-
 		$content .= '<script type="text/javascript" src="//vk.com/js/api/openapi.js?105"></script>
 			<div id="scp_vk_groups" style="height:250px !important;"></div>
 			<script type="text/javascript">

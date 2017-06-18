@@ -513,6 +513,9 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( 1        === get_option( $scp_prefix . 'setting_twitter_use_timeline' ) );
 		$this->assertTrue( false    === get_option( $scp_prefix . 'setting_twitter_widget_id' ) );
 
+		// VK
+		$this->assertTrue( false === get_option( $scp_prefix . 'setting_vkontakte_delay_before_render' ) );
+
 		// Опции трекинга событий
 		$this->assertTrue( 1  === get_option( $scp_prefix . 'use_events_tracking' ) );
 		$this->assertTrue( 1  === get_option( $scp_prefix . 'do_not_use_tracking_in_debug_mode' ) );
