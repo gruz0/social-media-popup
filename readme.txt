@@ -1,9 +1,9 @@
 === Social Media Popup ===
 Contributors: gruz0
-Tags: social plugins, socials, popup, facebook, widget, vk, vkontakte, odnoklassniki, twitter, google plus, pinterest
-Donate link: http://gruz0.ru/social-community-popup/
+Tags: social plugins, social media, socials, popup, facebook, widget, vk, vkontakte, odnoklassniki, twitter, google plus, pinterest
+Donate link: http://smp-plugin.com
 Requires at least: 3.9
-Tested up to: 4.5.1
+Tested up to: 4.8
 Stable tag: trunk
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
