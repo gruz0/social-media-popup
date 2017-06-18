@@ -25,16 +25,14 @@ This section describes how to install the plugin and get it working.
 
 ## Development
 
-Install npm and gulp:
+Install npm first (for CentOS, e.g.):
 ```
 yum install nodejs npm
-npm install -g gulp
-npm install --save-dev gulp
 ```
 
-Install gulp-clean-css:
+Then install required packages (run in repository directory):
 ```
-npm install gulp-clean-css --save-dev
+npm install
 ```
 
 ## PHP CodeSniffer usage
