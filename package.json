@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^3.4.2",
+    "gulp-rename": "^1.2.2",
+    "minimatch": "^3.0.2"
+  }
+}
