@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<ruleset name="WP-Donor Project">
+    <description>A custom set of rules to check for a WPized WordPress project</description>
+
+    <rule ref="WordPress-Core">
+		<exclude name="Generic.PHP.ForbiddenFunctions" />
+		<exclude name="WordPress.DB.RestrictedFunctions" />
+		<exclude name="WordPress.WP.I18n.NonSingularStringLiteralDomain" />
+		<exclude name="Generic.WhiteSpace.ScopeIndent.IncorrectExact" />
+		<exclude name="Generic.ControlStructures.InlineControlStructure.NotAllowed" />
+		<exclude name="Generic.WhiteSpace.ScopeIndent.Incorrect" />
+		<exclude name="WordPress.XSS.EscapeOutput.UnsafePrintingFunction" />
+		<exclude name="WordPress.WhiteSpace.OperatorSpacing.SpacingBefore" />
+    </rule>
+
+    <rule ref="WordPress-Docs">
+		<exclude name="Squiz.Commenting.BlockComment.NoEmptyLineAfter" />
+		<exclude name="Squiz.Commenting.InlineComment.SpacingAfter" />
+		<exclude name="Squiz.Commenting.FileComment.WrongStyle" />
+		<exclude name="Squiz.Commenting.InlineComment.InvalidEndChar" />
+		<exclude name="Squiz.Commenting.FunctionComment.ParamCommentFullStop" />
+		<exclude name="Squiz.Commenting.FunctionComment.ThrowsNoFullStop" />
+		<exclude name="Squiz.Strings.ConcatenationSpacing.PaddingFound" />
+		<exclude name="Squiz.PHP.CommentedOutCode.Found" />
+		<exclude name="Generic.Commenting.Fixme.TaskFound" />
+    </rule>
+
+    <rule ref="WordPress-VIP">
+		<exclude name="WordPress.VIP.FileSystemWritesDisallow.FileWriteDetected" />
+		<exclude name="WordPress.XSS.EscapeOutput.OutputNotEscaped" />
+		<exclude name="WordPress.VIP.RestrictedFunctions.error_log" />
+		<exclude name="WordPress.VIP.RestrictedFunctions.prevent_path_disclosure" />
+		<exclude name="WordPress.VIP.RestrictedFunctions.runtime_configuration" />
+		<exclude name="WordPress.VIP.RestrictedFunctions.file_get_contents" />
+		<exclude name="WordPress.VIP.DirectDatabaseQuery.DirectQuery" />
+		<exclude name="WordPress.VIP.DirectDatabaseQuery.NoCaching" />
+		<exclude name="WordPress.VIP.RestrictedVariables.cache_constraints" />
+		<exclude name="WordPress.VIP.SuperGlobalInputUsage.AccessDetected" />
+		<exclude name="WordPress.VIP.RestrictedFunctions.wp_is_mobile" />
+		<exclude name="WordPress.VIP.RestrictedFunctions.cookies" />
+    </rule>
+</ruleset>

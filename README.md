@@ -1,6 +1,6 @@
 # Social Media Popup
 
-[![Build Status](https://travis-ci.org/gruz0/social-community-popup.svg?branch=master)](https://travis-ci.org/gruz0/social-community-popup)
+[![Build Status](https://travis-ci.org/gruz0/social-media-popup.svg?branch=master)](https://travis-ci.org/gruz0/social-media-popup)
 
 Plugin creates the popup window with most popular social media widgets
 
@@ -23,3 +23,23 @@ This section describes how to install the plugin and get it working.
 2. Extract files from the archive
 3. Activate the plugin through the 'Plugins' menu in WordPress
 
+## Development
+
+Install npm and gulp:
+```
+yum install nodejs npm
+npm install -g gulp
+npm install --save-dev gulp
+```
+
+Install gulp-clean-css:
+```
+npm install gulp-clean-css --save-dev
+```
+
+## PHP CodeSniffer usage
+
+In the project directory run:
+```
+phpcs --standard=phpcs.xml path/to/file.php -s
+```
