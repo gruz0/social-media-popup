@@ -70,14 +70,14 @@ class SCP_Facebook_Provider extends SCP_Provider {
 
 		$content .= self::prepare_facebook_widget();
 
-		$content .= '</div>'; // .box
-
 		$content .= '<script>function scp_prependFacebook($) {';
 
 		$content .= self::prepare_facebook_content();
 		$content .= self::prepare_facebook_events();
 
 		$content .= '}</script>'; // scp_prependFacebook()
+
+		$content .= '</div>'; // .box
 
 		return $content;
 	}
