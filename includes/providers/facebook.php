@@ -14,6 +14,13 @@
  */
 class SCP_Facebook_Provider extends SCP_Provider {
 	/**
+	 * Facebook API Version
+	 *
+	 * @since 0.7.6
+	 */
+	const API_VERSION = '2.10';
+
+	/**
 	 * Return widget is active
 	 *
 	 * @since 0.7.5
@@ -124,7 +131,7 @@ class SCP_Facebook_Provider extends SCP_Provider {
 			. 'if (d.getElementById(id)) return;'
 			. 'js = d.createElement(s); js.id = id;'
 			. 'js.src = "//connect.facebook.net/' . self::get_option_as_escaped_string( 'setting_facebook_locale' )
-			. '/sdk.js#xfbml=1&appId=' .            self::get_option_as_escaped_string( 'setting_facebook_application_id' ) . '&version=v2.5";'
+			. '/sdk.js#xfbml=1&appId=' .            self::get_option_as_escaped_string( 'setting_facebook_application_id' ) . '&version=v' . self::API_VERSION . '";'
 			. 'fjs.parentNode.insertBefore(js, fjs);'
 			. '}(document, "script", "facebook-jssdk"));</script>';
 
@@ -184,7 +191,7 @@ class SCP_Facebook_Provider extends SCP_Provider {
 				FB.init({
 					appId  : "' . self::get_option_as_escaped_string( 'setting_facebook_application_id' ) . '",
 					xfbml  : true,
-					version: "v2.5"
+					version: "v' . self::API_VERSION . '"
 				});
 
 				FB.Event.subscribe("edge.create", scp_facebook_page_like_callback);
