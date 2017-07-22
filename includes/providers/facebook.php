@@ -16,7 +16,7 @@ class SCP_Facebook_Provider extends SCP_Provider {
 	/**
 	 * Facebook API Version
 	 *
-	 * @since 0.7.6
+	 * @since 0.7.5
 	 */
 	const API_VERSION = '2.10';
 
