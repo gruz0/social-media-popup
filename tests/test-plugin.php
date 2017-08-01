@@ -554,6 +554,20 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Upgrade to 0.7.6
+	 */
+	private function upgradeTo076() {
+		self::$plugin->upgrade_to_0_7_6();
+
+		$scp_prefix = self::$plugin->get_scp_prefix();
+
+		$this->assertTrue( '0.7.6' === get_option( $scp_prefix . 'version' ) );
+
+		// Twitter
+		$this->assertTrue( 'ru' === get_option( $scp_prefix . 'setting_twitter_locale' ) );
+	}
+
+	/**
 	 * Check Debug Mode is on
 	 */
 	private function checkDebugModeIsOn() {

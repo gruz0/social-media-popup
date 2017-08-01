@@ -1062,6 +1062,9 @@ class Social_Media_Popup {
 		$version    = $scp_prefix . 'version';
 
 		if ( '0.7.6' > get_option( $version ) ) {
+			// Добавляем новое свойство "Язык" для виджетов Twitter
+			update_option( $scp_prefix . 'setting_twitter_locale', 'ru' );
+
 			// update_option( $version, '0.7.5' );
 			// self::set_scp_version( '0.7.5' );
 		}
@@ -3078,6 +3081,7 @@ class Social_Media_Popup {
 		register_setting( $group, $scp_prefix . 'setting_twitter_show_description' );
 		register_setting( $group, $scp_prefix . 'setting_twitter_description', 'wp_kses_post' );
 		register_setting( $group, $scp_prefix . 'setting_twitter_username', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_locale', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'setting_twitter_close_window_after_join', 'absint' );
 
 		add_settings_section(
@@ -3146,6 +3150,18 @@ class Social_Media_Popup {
 			array(
 				'field' => $scp_prefix . 'setting_twitter_username',
 				'placeholder' => __( 'Example: ', L10N_SCP_PREFIX ) . 'gruz0',
+			)
+		);
+
+		// Локаль, например ru или en
+		add_settings_field(
+			SMP_PREFIX . '-twitter-locale',
+			__( 'Twitter Locale', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_twitter_locale' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'setting_twitter_locale',
 			)
 		);
 
@@ -4086,6 +4102,22 @@ class Social_Media_Popup {
 		$html .= sprintf( $format, $field . '_noscrollbars', $field, 'noscrollbars', '1', checked( $value['noscrollbars'], 1, false ), $field . '_noscrollbars', __( 'No Scrollbars', L10N_SCP_PREFIX ) );
 		$html .= '<br />';
 		$html .= sprintf( $format, $field . '_transparent', $field, 'transparent', '1', checked( $value['transparent'], 1, false ), $field . '_transparent', __( 'Transparent (Removes the background color)', L10N_SCP_PREFIX ) );
+		echo $html;
+	}
+
+	/**
+	 * Callback-шаблон для формирования радио-кнопок для выбора локали Twitter
+	 *
+	 * @param array $args Options
+	 */
+	public function settings_field_twitter_locale( $args ) {
+		$field = $args['field'];
+		$value = get_option( $field );
+		$format = '<input type="radio" id="%s" name="%s" value="%s"%s />';
+		$format .= '<label for="%s">%s</label>';
+		$html = sprintf( $format, $field . '_0', $field, 'ru', checked( $value, 'ru', false ), $field . '_0', __( 'Russian', L10N_SCP_PREFIX ) );
+		$html .= '<br />';
+		$html .= sprintf( $format, $field . '_1', $field, 'en', checked( $value, 'en', false ), $field . '_1', __( 'English', L10N_SCP_PREFIX ) );
 		echo $html;
 	}
 

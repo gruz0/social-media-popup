@@ -154,6 +154,7 @@ class SCP_Twitter_Provider extends SCP_Provider {
 			. 'data-show-count="'       . scp_to_bool( self::get_option_as_escaped_string( 'setting_twitter_show_count' ) ) . '" '
 			. 'data-show-screen-name="' . scp_to_bool( self::get_option_as_escaped_string( 'setting_twitter_show_screen_name' ) ) . '" '
 			. 'data-size="'             . ( self::get_option_as_boolean( 'setting_twitter_follow_button_large_size' ) ? 'large' : '' ) . '" '
+			. 'lang="'                  . self::get_option_as_escaped_string( 'setting_twitter_locale' ) . '" '
 			. '>' . __( 'Follow', L10N_SCP_PREFIX ) . ' @' . self::get_option_as_escaped_string( 'setting_twitter_username' ) . '</a></div>';
 	}
 
@@ -179,6 +180,7 @@ class SCP_Twitter_Provider extends SCP_Provider {
 			. 'data-show-replies="'  . self::get_option_as_escaped_string( 'setting_twitter_show_replies' ) . '" '
 			. 'width="'              . self::get_option_as_integer( 'setting_twitter_width' ) . '" '
 			. 'height="'             . $widget_height . '"'
+			. 'lang="'               . self::get_option_as_escaped_string( 'setting_twitter_locale' ) . '" '
 			. ' rel="nofollow" target="_blank">' . __( 'Tweets', L10N_SCP_PREFIX ) . ' @' . self::get_option_as_escaped_string( 'setting_twitter_username' ) . '</a>';
 	}
 }
