@@ -29,11 +29,11 @@ defined( 'ABSPATH' ) or exit;
 
 		<h3 class="title">Как начать использование</h3>
 		<ol>
-			<li>Активировать "Режим отладки" на главной <a href="<?php echo admin_url( 'admin.php?page=' . SMP_PREFIX ); ?>">странице настроек плагина</a></li>
 			<li>Определиться с необходимыми социальными сетями</li>
 			<li>Активировать и настроить каждую из них в соответствующих разделах</li>
 			<li>Проверить корректность работы всех выбранных социальных сетей</li>
-			<li>Отключить "Режим отладки"</li>
+			<li>Убедиться, что в разделе <a href="<?php echo admin_url( 'admin.php?page=' . SMP_PREFIX . '_debug' ); ?>">Отладка</a> нет ошибок</li>
+			<li>Отключить "Режим отладки" на главной <a href="<?php echo admin_url( 'admin.php?page=' . SMP_PREFIX ); ?>">странице настроек плагина</a></li>
 		</ol>
 
 		<h3 class="title">Какие социальные сети поддерживаются</h3>
@@ -257,17 +257,19 @@ defined( 'ABSPATH' ) or exit;
 	<div class="box">
 		<h2 class="title">Об авторе</h2>
 		<p>Если вы купили плагин, как и все порядочные клиенты, то, вероятно, уже знаете обо мне и кто я такой. :-)<br />
-		Я — Александр Грузов, автор блога о WordPress и фрилансе: <a href="http://gruz0.ru/" target="_blank">http://gruz0.ru/</a>.</p>
+		Я — Александр Кадыров, автор блога о WordPress и фрилансе: <a href="http://gruz0.ru/" target="_blank">http://gruz0.ru/</a>.</p>
 
 		<p><b>Найти меня вы можете в социальных сетях или по почте:</b></p>
 		<ul>
-			<li><a href="https://www.facebook.com/gruz0">Facebook</a></li>
-			<li><a href="https://twitter.com/gruz0">Twitter</a></li>
-			<li><a href="mailto:support@gruz0.ru">support@gruz0.ru</a></li>
+			<li><a href="https://www.facebook.com/gruz0" target="_blank">Facebook</a></li>
+			<li><a href="https://vk.com/gruz0" target="_blank">ВКонтакте</a></li>
+			<li><a href="https://t.me/gruz0" target="_blank">Телеграм</a></li>
+			<li><a href="mailto:support@gruz0.ru?subject=Вопрос по плагину Social Media Popup" target="_blank">support@gruz0.ru</a></li>
 		</ul>
+
 		<p>Прошу не удивляться, если вдруг я попрошу вас назвать номер выставленного вам счёта для оплаты.<br />
 		Не хочу кормить пиратов, поэтому буду всячески вставлять палки в колёса подобным пользователям. ;-)</p>
-		<img src="http://gruz0.ru/wp-content/uploads/2014/01/gruz0-300x300.png" alt="Александр Грузов" title="Александр Грузов" width="300" height="300" />
+		<img src="http://gruz0.ru/wp-content/uploads/2017/07/alexander.kadyrov-300x300.jpg" alt="Александр Кадыров" title="Александр Кадыров" width="300" height="300" />
 	</div>
 
 </div>
