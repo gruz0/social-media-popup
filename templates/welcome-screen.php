@@ -1,3 +1,15 @@
+<?php
+/**
+ * Social Media Popup
+ *
+ * @package  Social_Media_Popup
+ * @author   Alexander Kadyrov
+ * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link     https://github.com/gruz0/social-media-popup
+ */
+
+defined( 'ABSPATH' ) or exit;
+?>
 <div id="scp_welcome_screen" class="wrap">
 	<h1>Social Media Popup v<?php echo $version; ?></h1>
 	<div class="about-text">Благодарю за установку плагина! Надеюсь он вам понравится :-)</div>
@@ -41,6 +53,11 @@
 
 	<div class="box">
 		<h2 class="title">История изменений</h2>
+		<h3>Версия 0.7.6 от 31.08.2017</h3>
+		<ul>
+			<li>Добавлен admin notice об активированном Режиме отладки</li>
+		</ul>
+
 		<h3>Версия 0.7.5 от 20.07.2017</h3>
 		<ul>
 			<li>Исправлены ошибки в работе виджетов Facebook, ВКонтакте и Google+ в браузере Firefox</li>

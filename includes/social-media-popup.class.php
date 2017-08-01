@@ -322,9 +322,26 @@ class Social_Media_Popup {
 		self::upgrade_to_0_7_3();
 		self::upgrade_to_0_7_4();
 		self::upgrade_to_0_7_5();
+		self::upgrade_to_0_7_6();
 
 		// Automatically set debug mode on after reactivating plugin
 		update_option( self::get_scp_prefix() . 'setting_debug_mode', 1 );
+	}
+
+	/**
+	 * Show admin notice if Debug mode is activated
+	 *
+	 * @since 0.7.6
+	 */
+	public function add_debug_mode_notice() {
+	?>
+		<div class="notice notice-warning">
+			<p><?php
+				echo __( 'Social Media Popup Debug Mode is activated!', L10N_SCP_PREFIX )
+					. ' <a href="' . admin_url( 'admin.php?page=' . SMP_PREFIX ) . '">' . __( 'Deactivate Debug Mode', L10N_SCP_PREFIX ) . '</a>';
+			?></p>
+		</div>
+	<?php
 	}
 
 	/**
@@ -1034,6 +1051,23 @@ class Social_Media_Popup {
 	}
 
 	/**
+	 * Upgrade plugin to version 0.7.6
+	 *
+	 * @uses self::get_scp_prefix()
+	 * @uses self::set_scp_version()
+	 * @used_by self::upgrade()
+	 */
+	public static function upgrade_to_0_7_6() {
+		$scp_prefix = self::get_scp_prefix();
+		$version    = $scp_prefix . 'version';
+
+		if ( '0.7.6' > get_option( $version ) ) {
+			// update_option( $version, '0.7.5' );
+			// self::set_scp_version( '0.7.5' );
+		}
+	}
+
+	/**
 	 * Подключаем локализацию к плагину
 	 */
 	public function localization() {
@@ -1047,6 +1081,11 @@ class Social_Media_Popup {
 	 */
 	public function admin_init() {
 		$this->init_settings();
+
+		$scp_prefix = self::get_scp_prefix();
+		if ( 1 === absint( get_option( $scp_prefix . 'setting_debug_mode' ) ) ) {
+			add_action( 'admin_notices', array( $this, 'add_debug_mode_notice' ) );
+		}
 
 		if ( ! get_transient( '_scp_welcome_screen' ) ) return;
 		delete_transient( '_scp_welcome_screen' );
