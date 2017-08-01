@@ -227,11 +227,13 @@ class Social_Media_Popup {
 			'setting_twitter_show_description',
 			'setting_twitter_description',
 			'setting_twitter_username',
+			'setting_twitter_locale',
 			'setting_twitter_use_follow_button',
 			'setting_twitter_show_count',
 			'setting_twitter_show_screen_name',
 			'setting_twitter_follow_button_large_size',
 			'setting_twitter_follow_button_align_by',
+			'setting_twitter_first_widget',
 			'setting_twitter_use_timeline',
 			'setting_twitter_widget_id',
 			'setting_twitter_theme',
@@ -1062,8 +1064,9 @@ class Social_Media_Popup {
 		$version    = $scp_prefix . 'version';
 
 		if ( '0.7.6' > get_option( $version ) ) {
-			// Добавляем новое свойство "Язык" для виджетов Twitter
-			update_option( $scp_prefix . 'setting_twitter_locale', 'ru' );
+			// Twitter
+			update_option( $scp_prefix . 'setting_twitter_locale',       'ru' );
+			update_option( $scp_prefix . 'setting_twitter_first_widget', 'follow_button' );
 
 			// update_option( $version, '0.7.5' );
 			// self::set_scp_version( '0.7.5' );
@@ -3082,6 +3085,7 @@ class Social_Media_Popup {
 		register_setting( $group, $scp_prefix . 'setting_twitter_description', 'wp_kses_post' );
 		register_setting( $group, $scp_prefix . 'setting_twitter_username', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'setting_twitter_locale', 'sanitize_text_field' );
+		register_setting( $group, $scp_prefix . 'setting_twitter_first_widget', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'setting_twitter_close_window_after_join', 'absint' );
 
 		add_settings_section(
@@ -3162,6 +3166,18 @@ class Social_Media_Popup {
 			$section,
 			array(
 				'field' => $scp_prefix . 'setting_twitter_locale',
+			)
+		);
+
+		// Какой виджет показывать первым
+		add_settings_field(
+			SMP_PREFIX . '-twitter-first-widget',
+			__( 'First widget', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_twitter_first_widget' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'setting_twitter_first_widget',
 			)
 		);
 
@@ -4109,6 +4125,8 @@ class Social_Media_Popup {
 	 * Callback-шаблон для формирования радио-кнопок для выбора локали Twitter
 	 *
 	 * @param array $args Options
+	 *
+	 * @since 0.7.6
 	 */
 	public function settings_field_twitter_locale( $args ) {
 		$field = $args['field'];
@@ -4162,6 +4180,24 @@ class Social_Media_Popup {
 
 		$html .= '</select>';
 
+		echo $html;
+	}
+
+	/**
+	 * Callback-шаблон для формирования радио-кнопок для выбора положения Follow Button относительно виджета Timeline
+	 *
+	 * @param array $args Options
+	 *
+	 * @since 0.7.6
+	 */
+	public function settings_field_twitter_first_widget( $args ) {
+		$field = $args['field'];
+		$value = get_option( $field );
+		$format = '<input type="radio" id="%s" name="%s" value="%s"%s />';
+		$format .= '<label for="%s">%s</label>';
+		$html = sprintf( $format, $field . '_0', $field, 'follow_button', checked( $value, 'follow_button', false ), $field . '_0', __( 'Follow Button', L10N_SCP_PREFIX ) );
+		$html .= '<br />';
+		$html .= sprintf( $format, $field . '_1', $field, 'timeline', checked( $value, 'timeline', false ), $field . '_1', __( 'Timeline', L10N_SCP_PREFIX ) );
 		echo $html;
 	}
 
