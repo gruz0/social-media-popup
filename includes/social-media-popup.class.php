@@ -4043,35 +4043,16 @@ class Social_Media_Popup {
 	 * Callback-шаблон для формирования табов с выбором типа загружаемого контента для Facebook
 	 *
 	 * @param array $args Options
+	 *
+	 * @uses Social_Media_Popup::render_checkboxes_with_hidden_field()
 	 */
 	public function settings_field_facebook_tabs( $args ) {
-		$field = $args['field'];
-		$value = get_option( $field );
-
 		$options = array();
 		$options['timeline'] = __( 'Timelime', L10N_SCP_PREFIX );
 		$options['messages'] = __( 'Messages', L10N_SCP_PREFIX );
 		$options['events']   = __( 'Events', L10N_SCP_PREFIX );
 
-		$chains = preg_split( '/,/', $value );
-
-		$format = '<input type="checkbox" id="%s" class="%s" value="%s"%s />';
-		$format .= '<label for="%s">%s</label>';
-
-		$html = '';
-		foreach ( $options as $option_name => $label ) {
-			$checked = '';
-			for ( $idx = 0, $size = count( $chains ); $idx < $size; $idx++ ) {
-				$checked = checked( $chains[ $idx ], $option_name, false );
-				if ( strlen( $checked ) ) break;
-			}
-
-			$html .= sprintf( $format, $option_name, $field, $option_name, $checked, $option_name, $label );
-			$html .= '<br />';
-		}
-
-		$html .= '<input type="hidden" id="' . $field . '" name="' . $field . '" value="' . esc_attr( $value ) . '" />';
-		echo $html;
+		echo $this->render_checkboxes_with_hidden_field( $args['field'], $options );
 	}
 
 	/**
@@ -4097,7 +4078,7 @@ class Social_Media_Popup {
 	 *
 	 * @param array $args Options
 	 *
-	 * @uses Social_Media_Popup::render_checkboxes()
+	 * @uses Social_Media_Popup::render_checkboxes_with_hidden_field()
 	 */
 	public function settings_field_twitter_chrome( $args ) {
 		$options                 = array();
@@ -4289,6 +4270,7 @@ class Social_Media_Popup {
 	 *
 	 * @since 0.7.6
 	 * @used_by Social_Media_Popup::settings_field_twitter_chrome()
+	 * @used_by Social_Media_Popup::settings_field_facebook_tabs()
 	 */
 	public function render_checkboxes_with_hidden_field( $field, $options ) {
 		$value = get_option( $field );
