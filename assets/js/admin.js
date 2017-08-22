@@ -122,6 +122,11 @@ $j(document).ready(function() {
 		prepareResultStringForEvents(className, 'setting_facebook_tabs');
 	});
 
+	$j('.' + SCP_PREFIX + 'setting_twitter_chrome').on('click', function() {
+		var className = '.' + $j(this).attr('class');
+		prepareResultStringForEvents(className, 'setting_twitter_chrome');
+	});
+
 	// Установим состояние текстовых полей и других объектов в зависимости от выбранных чекбоксов
 	setRelatedObjectStateDependsOnCheckbox('when_should_the_popup_appear', 'popup_will_appear_');
 	setRelatedObjectStateDependsOnCheckbox('who_should_see_the_popup');

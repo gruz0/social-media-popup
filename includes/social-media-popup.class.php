@@ -4096,29 +4096,18 @@ class Social_Media_Popup {
 	 * Callback-шаблон для формирования радио-кнопок для выбора свойств виджета Twitter
 	 *
 	 * @param array $args Options
+	 *
+	 * @uses Social_Media_Popup::render_checkboxes()
 	 */
 	public function settings_field_twitter_chrome( $args ) {
-		$field = $args['field'];
-		$value = get_option( $field );
+		$options                 = array();
+		$options['noheader']     = __( 'No Header', L10N_SCP_PREFIX );
+		$options['nofooter']     = __( 'No Footer', L10N_SCP_PREFIX );
+		$options['noborders']    = __( 'No Borders', L10N_SCP_PREFIX );
+		$options['noscrollbars'] = __( 'No Scrollbars', L10N_SCP_PREFIX );
+		$options['transparent']  = __( 'Transparent (Removes the background color)', L10N_SCP_PREFIX );
 
-		// Проверяем наличие всех нужных нам ключей в массиве. Если нет — инициализируем "выключенным" значением.
-		$allowed_values = array( 'noheader', 'nofooter', 'noborders', 'noscrollbars', 'transparent' );
-		for ( $idx = 0, $size = count( $allowed_values ); $idx < $size; $idx++ ) {
-			if ( ! isset( $value[ $allowed_values[ $idx ] ] ) ) $value[ $allowed_values[ $idx ] ] = 0;
-		}
-
-		$format = '<input type="checkbox" id="%s" name="%s[%s]" value="%s"%s />';
-		$format .= '<label for="%s">%s</label>';
-		$html = sprintf( $format, $field . '_noheader', $field, 'noheader', '1', checked( $value['noheader'], 1, false ), $field . '_noheader', __( 'No Header', L10N_SCP_PREFIX ) );
-		$html .= '<br />';
-		$html .= sprintf( $format, $field . '_nofooter', $field, 'nofooter', '1', checked( $value['nofooter'], 1, false ), $field . '_nofooter', __( 'No Footer', L10N_SCP_PREFIX ) );
-		$html .= '<br />';
-		$html .= sprintf( $format, $field . '_noborders', $field, 'noborders', '1', checked( $value['noborders'], 1, false ), $field . '_noborders', __( 'No Borders', L10N_SCP_PREFIX ) );
-		$html .= '<br />';
-		$html .= sprintf( $format, $field . '_noscrollbars', $field, 'noscrollbars', '1', checked( $value['noscrollbars'], 1, false ), $field . '_noscrollbars', __( 'No Scrollbars', L10N_SCP_PREFIX ) );
-		$html .= '<br />';
-		$html .= sprintf( $format, $field . '_transparent', $field, 'transparent', '1', checked( $value['transparent'], 1, false ), $field . '_transparent', __( 'Transparent (Removes the background color)', L10N_SCP_PREFIX ) );
-		echo $html;
+		echo $this->render_checkboxes_with_hidden_field( $args['field'], $options );
 	}
 
 	/**
@@ -4290,6 +4279,39 @@ class Social_Media_Popup {
 		$html .= '<br />';
 		$html .= sprintf( $format, $field . '_1', $field, 'landscape', checked( $value, 'landscape', false ), $field . '_1', __( 'Landscape', L10N_SCP_PREFIX ) );
 		echo $html;
+	}
+
+	/**
+	 * Wrapper to render checkboxes with hidden field to use as list of values
+	 *
+	 * @param string $field   Field
+	 * @param array  $options Options
+	 *
+	 * @since 0.7.6
+	 * @used_by Social_Media_Popup::settings_field_twitter_chrome()
+	 */
+	public function render_checkboxes_with_hidden_field( $field, $options ) {
+		$value = get_option( $field );
+
+		$chains = preg_split( '/,/', $value );
+
+		$format = '<input type="checkbox" id="%s" class="%s" value="%s"%s />';
+		$format .= '<label for="%s">%s</label>';
+
+		$html = '';
+		foreach ( $options as $option_name => $label ) {
+			$checked = '';
+			for ( $idx = 0, $size = count( $chains ); $idx < $size; $idx++ ) {
+				$checked = checked( $chains[ $idx ], $option_name, false );
+				if ( strlen( $checked ) ) break;
+			}
+
+			$html .= sprintf( $format, $option_name, $field, $option_name, $checked, $option_name, $label );
+			$html .= '<br />';
+		}
+
+		$html .= '<input type="hidden" id="' . $field . '" name="' . $field . '" value="' . esc_attr( $value ) . '" />';
+		return $html;
 	}
 
 	/**
