@@ -47,6 +47,13 @@ defined( 'ABSPATH' ) or exit;
 			<li>Pinterest</li>
 		</ul>
 
+		<h3 class="title">Список совместимых плагинов-минификаторов и кеширующих плагинов</h3>
+		<p>Здесь представлен список плагинов, с которыми работа плагина протестирована и работает корректно:</p>
+		<ul>
+			<li><a href="https://wordpress.org/plugins/autoptimize/" target="_blank" rel="nofollow">Autoptimize</a></li>
+			<li><a href="https://wordpress.org/plugins/bwp-minify/" target="_blank" rel="nofollow">BWP Minify</a></li>
+		</ul>
+
 		<hr />
 		<p>Если есть вопросы по работе плагина — смело задавайте мне их на <a href="mailto:support@gruz0.ru?subject=Вопрос по Social Media Popup">support@gruz0.ru</a>!</p>
 	</div>
