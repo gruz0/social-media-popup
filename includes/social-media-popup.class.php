@@ -104,6 +104,8 @@ class Social_Media_Popup {
 
 			// Десктопные настройки
 			'setting_plugin_title',
+			'setting_use_animation',
+			'setting_animation_style',
 			'setting_use_icons_instead_of_labels_in_tabs',
 			'setting_icons_size_on_desktop',
 			'setting_hide_tabs_if_one_widget_is_active',
@@ -1068,6 +1070,10 @@ class Social_Media_Popup {
 			update_option( $scp_prefix . 'setting_twitter_locale',       'ru' );
 			update_option( $scp_prefix . 'setting_twitter_first_widget', 'follow_button' );
 
+			// Animation
+			update_option( $scp_prefix . 'setting_use_animation',        1 );
+			update_option( $scp_prefix . 'setting_animation_style',      'bounce' );
+
 			// update_option( $version, '0.7.5' );
 			// self::set_scp_version( '0.7.5' );
 		}
@@ -1242,6 +1248,8 @@ class Social_Media_Popup {
 
 		// Не забывать добавлять новые опции в uninstall()
 		register_setting( $group, $scp_prefix . 'setting_plugin_title', 'wp_kses_post' );
+		register_setting( $group, $scp_prefix . 'setting_use_animation', 'absint' );
+		register_setting( $group, $scp_prefix . 'setting_animation_style', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'setting_use_icons_instead_of_labels_in_tabs', 'absint' );
 		register_setting( $group, $scp_prefix . 'setting_icons_size_on_desktop', 'sanitize_text_field' );
 		register_setting( $group, $scp_prefix . 'setting_hide_tabs_if_one_widget_is_active', 'absint' );
@@ -1274,6 +1282,30 @@ class Social_Media_Popup {
 			$section,
 			array(
 				'field' => $scp_prefix . 'setting_plugin_title',
+			)
+		);
+
+		// Использовать анимацию окна или нет
+		add_settings_field(
+			SMP_PREFIX . '-common-use-animation',
+			__( 'Use Animation', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_checkbox' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'setting_use_animation',
+			)
+		);
+
+		// Стиль анимации окна
+		add_settings_field(
+			SMP_PREFIX . '-common-animation-style',
+			__( 'Animation Style', L10N_SCP_PREFIX ),
+			array( & $this, 'settings_field_animation_style' ),
+			$options_page,
+			$section,
+			array(
+				'field' => $scp_prefix . 'setting_animation_style',
 			)
 		);
 
@@ -3926,6 +3958,124 @@ class Social_Media_Popup {
 	}
 
 	/**
+	 * Callback-шаблон для формирования комбобокса выбора стиля анимации
+	 *
+	 * @since 0.7.6
+	 *
+	 * @param array $args Options
+	 */
+	public function settings_field_animation_style( $args ) {
+		$field = $args['field'];
+		$value = get_option( $field );
+
+		$attention_seekers = array(
+			'optgroup'   => __( 'Attention Seekers', L10N_SCP_PREFIX ),
+			'bounce'     => __( 'Bounce', L10N_SCP_PREFIX ),
+			'rubberBand' => __( 'Rubber Band', L10N_SCP_PREFIX ),
+			'shake'      => __( 'Shake', L10N_SCP_PREFIX ),
+			'swing'      => __( 'Swing', L10N_SCP_PREFIX ),
+			'tada'       => __( 'TaDa', L10N_SCP_PREFIX ),
+			'wobble'     => __( 'Wobble', L10N_SCP_PREFIX ),
+			'jello'      => __( 'Jello', L10N_SCP_PREFIX ),
+		);
+
+		$bouncing_entrances = array(
+			'optgroup'      => __( 'Bouncing Entrances', L10N_SCP_PREFIX ),
+			'bounceIn'      => __( 'Bounce In', L10N_SCP_PREFIX ),
+			'bounceInUp'    => __( 'Bounce In Up', L10N_SCP_PREFIX ),
+			'bounceInRight' => __( 'Bounce In Right', L10N_SCP_PREFIX ),
+			'bounceInDown'  => __( 'Bounce In Down', L10N_SCP_PREFIX ),
+			'bounceInLeft'  => __( 'Bounce In Left', L10N_SCP_PREFIX ),
+		);
+
+		$fading_entrances = array(
+			'optgroup'    => __( 'Fading Entrances', L10N_SCP_PREFIX ),
+			'fadeIn'      => __( 'Fade In', L10N_SCP_PREFIX ),
+			'fadeInDown'  => __( 'Fade In Down', L10N_SCP_PREFIX ),
+			'fadeInLeft'  => __( 'Fade In Left', L10N_SCP_PREFIX ),
+			'fadeInRight' => __( 'Fade In Right', L10N_SCP_PREFIX ),
+			'fadeInUp'    => __( 'Fade In Up', L10N_SCP_PREFIX ),
+		);
+
+		$flippers = array(
+			'optgroup' => __( 'Flippers', L10N_SCP_PREFIX ),
+			'flip'     => __( 'Flip', L10N_SCP_PREFIX ),
+			'flipInX'  => __( 'Flip In X', L10N_SCP_PREFIX ),
+			'flipInY'  => __( 'Flip In Y', L10N_SCP_PREFIX ),
+		);
+
+		$lightspeed = array(
+			'optgroup'     => __( 'Lightspeed', L10N_SCP_PREFIX ),
+			'lightSpeedIn' => __( 'Light Speed In', L10N_SCP_PREFIX ),
+		);
+
+		$rotating_entrances = array(
+			'optgroup'          => __( 'Rotating Entrances', L10N_SCP_PREFIX ),
+			'rotateIn'          => __( 'Rotate In', L10N_SCP_PREFIX ),
+			'rotateInDownLeft'  => __( 'Rotate In Down Left', L10N_SCP_PREFIX ),
+			'rotateInDownRight' => __( 'Rotate In Down Right', L10N_SCP_PREFIX ),
+			'rotateInUpLeft'    => __( 'Rotate In Up Left', L10N_SCP_PREFIX ),
+			'rotateInUpRight'   => __( 'Rotate In Up Right', L10N_SCP_PREFIX ),
+		);
+
+		$sliding_entrances = array(
+			'optgroup'     => __( 'Sliding Entrances', L10N_SCP_PREFIX ),
+			'slideInDown'  => __( 'Slide In Down', L10N_SCP_PREFIX ),
+			'slideInLeft'  => __( 'Slide In Left', L10N_SCP_PREFIX ),
+			'slideInRight' => __( 'Slide In Right', L10N_SCP_PREFIX ),
+			'slideInUp'    => __( 'Slide In Up', L10N_SCP_PREFIX ),
+		);
+
+		$zoom_entrances = array(
+			'optgroup'    => __( 'Zoom Entrances', L10N_SCP_PREFIX ),
+			'zoomIn'      => __( 'Zoom In', L10N_SCP_PREFIX ),
+			'zoomInDown'  => __( 'Zoom In Down', L10N_SCP_PREFIX ),
+			'zoomInLeft'  => __( 'Zoom In Left', L10N_SCP_PREFIX ),
+			'zoomInRight' => __( 'Zoom In Right', L10N_SCP_PREFIX ),
+			'zoomInUp'    => __( 'Zoom In Up', L10N_SCP_PREFIX ),
+		);
+
+		$specials = array(
+			'optgroup' => __( 'Specials', L10N_SCP_PREFIX ),
+			'rollIn'   => __( 'Roll In', L10N_SCP_PREFIX ),
+		);
+
+		$styles = array(
+			$attention_seekers,
+			$bouncing_entrances,
+			$fading_entrances,
+			$flippers,
+			$lightspeed,
+			$rotating_entrances,
+			$sliding_entrances,
+			$zoom_entrances,
+			$specials,
+		);
+
+		$html   = '<select name="' . $field . '">';
+		$format = '<option value="%s"%s>%s</option>';
+
+		for ( $idx = 0; $idx < count( $styles ); $idx++ ) {
+			$options        = '';
+			$optgroup_label = '';
+
+			foreach ( $styles[ $idx ] as $key => $label ) {
+				if ( 'optgroup' === $key ) {
+					$optgroup_label = $label;
+					continue;
+				}
+
+				$options .= sprintf( $format, $key, selected( $value, $key, false ), $label );
+			}
+
+			$html .= '<optgroup label="' . $optgroup_label . '">' . $options . '</optgroup>';
+		}
+
+		$html .= '</select>';
+		echo $html;
+	}
+
+	/**
 	 * Callback-шаблон для выбора событий, при которых показывается окно
 	 *
 	 * @param array $args Options
@@ -3941,6 +4091,8 @@ class Social_Media_Popup {
 		$options['on_exit_intent']                 = __( 'Popup will appear on exit-intent (when mouse has moved out from the page)', L10N_SCP_PREFIX );
 
 		$chains = preg_split( '/,/', $value );
+
+		// FIXME: It should be refactored with render_checkboxes_with_hidden_field
 
 		$format = '<input type="checkbox" id="%s" class="%s" value="%s"%s />';
 		$format .= '<label for="%s">%s</label>';
@@ -3974,6 +4126,7 @@ class Social_Media_Popup {
 		$options['visitor_opened_at_least_n_number_of_pages'] = __( 'Visitor opened at least N number of page(s)', L10N_SCP_PREFIX );
 		$options['visitor_registered_and_role_equals_to']     = __( 'Registered Users Who Should See the Popup', L10N_SCP_PREFIX );
 
+		// FIXME: It should be refactored with render_checkboxes_with_hidden_field
 		$chains = preg_split( '/,/', $value );
 
 		$format = '<input type="checkbox" id="%s" class="%s" value="%s"%s />';
@@ -4663,6 +4816,10 @@ class Social_Media_Popup {
 		wp_enqueue_style( SMP_PREFIX . '-css' );
 
 		wp_enqueue_style( 'font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' );
+
+		if ( '1' === get_option( $scp_prefix . 'setting_use_animation' ) ) {
+			wp_enqueue_style( 'animate-css', '//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css' );
+		}
 	}
 
 	/**
@@ -4879,6 +5036,9 @@ class Social_Media_Popup {
 		$delay_before_show_bottom_button = absint( $options['setting_delay_before_show_bottom_button'] );
 		$background_image           = $options['setting_background_image'];
 
+		$use_animation = '1' === $options['setting_use_animation'];
+		$animation_style = $options['setting_animation_style'];
+
 		//
 		// START RENDER
 		//
@@ -4960,7 +5120,8 @@ class Social_Media_Popup {
 				$scp_plugin_title  = trim( str_replace( "\r\n", '<br />', $options['setting_plugin_title'] ) );
 				$show_plugin_title = mb_strlen( $scp_plugin_title ) > 0;
 
-				$content .= '<div id="popup" style="' . esc_attr( $popup_css ) . '">';
+				$animation_class = $use_animation ? ' class="animated ' . $animation_style . '"': '';
+				$content .= '<div id="popup" style="' . esc_attr( $popup_css ) . '"' . $animation_class . '>';
 
 				if ( $show_plugin_title && 'inside' === $show_close_button_in ) {
 					$content .= '<div class="top-close">';

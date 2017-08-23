@@ -566,6 +566,10 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 		// Twitter
 		$this->assertTrue( 'ru'            === get_option( $scp_prefix . 'setting_twitter_locale' ) );
 		$this->assertTrue( 'follow_button' === get_option( $scp_prefix . 'setting_twitter_first_widget' ) );
+
+		// Animation
+		$this->assertTrue( 1        === get_option( $scp_prefix . 'setting_use_animation' ) );
+		$this->assertTrue( 'bounce' === get_option( $scp_prefix . 'setting_animation_style' ) );
 	}
 
 	/**
