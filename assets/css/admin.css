@@ -28,3 +28,5 @@
 #scp_welcome_screen .box ul li {margin-left:15px;}
 
 .scp-background-image img {width:350px !important;height:350px !important;margin:10px 0 0 0;}
+
+#smp_animation {display:block;margin-top:5px;padding:10px;background-color:#fff;border-left:4px solid #46b450}

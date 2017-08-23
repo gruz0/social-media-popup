@@ -4052,7 +4052,7 @@ class Social_Media_Popup {
 			$specials,
 		);
 
-		$html   = '<select name="' . $field . '">';
+		$html   = '<select id="smp_animation_style" name="' . $field . '">';
 		$format = '<option value="%s"%s>%s</option>';
 
 		for ( $idx = 0; $idx < count( $styles ); $idx++ ) {
@@ -4072,6 +4072,9 @@ class Social_Media_Popup {
 		}
 
 		$html .= '</select>';
+
+		$html .= ' <input type="button" class="button" id="smp_play_animation" value="' . __( 'Play Animation', L10N_SCP_PREFIX ) . '">';
+		$html .= '<br /><div id="smp_animation" class="animated notice-success">Social Media Popup</div>';
 		echo $html;
 	}
 
@@ -4638,6 +4641,8 @@ class Social_Media_Popup {
 		wp_register_script( SMP_PREFIX . '-admin-js', SMP_ASSETS_URL . 'js/admin.js?' . $version,
 			array( 'jquery', 'wp-color-picker' )
 		);
+
+		wp_enqueue_style( 'animate-css', '//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css' );
 		wp_enqueue_script( SMP_PREFIX . '-admin-js' );
 	}
 
