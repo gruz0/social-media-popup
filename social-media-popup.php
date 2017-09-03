@@ -5,20 +5,22 @@
  * @package  Social_Media_Popup
  * @author   Alexander Kadyrov
  * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
- * @link     https://github.com/gruz0/social-media-popup
+ * @link     http://smp-plugin.com/
  */
 
 defined( 'ABSPATH' ) or exit;
 
-/*
-Plugin Name: Social Media Popup
-Plugin URI: http://gruz0.ru/
-Description: The plugin creates a popup window with most popular social media widgets
-Author: Alexander Kadyrov
-Author URI: http://gruz0.ru/
-Text Domain: social-community-popup
-Version: 0.7.6
-License: GPL2
+/**
+ * Plugin Name: Social Media Popup
+ * Plugin URI: http://smp-plugin.com/
+ * Description: The plugin creates a popup window with most popular social media widgets
+ * Author: Alexander Kadyrov
+ * Author URI: http://gruz0.ru/
+ * Text Domain: social-community-popup
+ * Version: 0.7.6
+ * License: GPL2
+ * Minimum PHP: 5.3
+ * Minimum WP: 3.5
 */
 
 if ( ! array_key_exists( 'social-media-popup', $GLOBALS ) ) {
