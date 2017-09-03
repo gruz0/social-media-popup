@@ -957,7 +957,7 @@ class Social_Media_Popup {
 			add_option( $scp_prefix . 'setting_facebook_close_window_after_join',           0 );
 
 			// Добавляем новое свойство "Адрес группы ВКонтакте" в виджет ВКонтакте
-			add_option( $scp_prefix . 'setting_vkontakte_page_url',                         'https://vk.com/blogsonwordpress_new' );
+			add_option( $scp_prefix . 'setting_vkontakte_page_url',                         'https://vk.com/ru_wp' );
 
 			// Добавляем новое свойство "Адрес группы Одноклассники" в виджет Одноклассников
 			add_option( $scp_prefix . 'setting_odnoklassniki_group_url',                    'https://ok.ru/group/57122812461115' );
