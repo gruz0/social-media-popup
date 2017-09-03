@@ -297,36 +297,13 @@ class SCP_Settings_Field {
 	 * @param array $args Options
 	 */
 	public function settings_field_when_should_the_popup_appear( $args ) {
-		$field = $args['field'];
-		$value = get_option( $field );
-
 		$options = array();
-		$options['after_n_seconds']           = __( 'Popup will appear after N second(s)', L10N_SCP_PREFIX );
-		$options['after_clicking_on_element'] = __( 'Popup will appear after clicking on the given CSS selector', L10N_SCP_PREFIX );
+		$options['after_n_seconds']                = __( 'Popup will appear after N second(s)', L10N_SCP_PREFIX );
+		$options['after_clicking_on_element']      = __( 'Popup will appear after clicking on the given CSS selector', L10N_SCP_PREFIX );
 		$options['after_scrolling_down_n_percent'] = __( 'Popup will appear after a visitor has scrolled on your page at least N percent', L10N_SCP_PREFIX );
 		$options['on_exit_intent']                 = __( 'Popup will appear on exit-intent (when mouse has moved out from the page)', L10N_SCP_PREFIX );
 
-		$chains = preg_split( '/,/', $value );
-
-		// FIXME: It should be refactored with render_checkboxes_with_hidden_field
-
-		$format = '<input type="checkbox" id="%s" class="%s" value="%s"%s />';
-		$format .= '<label for="%s">%s</label>';
-
-		$html = '';
-		foreach ( $options as $option_name => $label ) {
-			$checked = '';
-			for ( $idx = 0, $size = count( $chains ); $idx < $size; $idx++ ) {
-				$checked = checked( $chains[ $idx ], $option_name, false );
-				if ( strlen( $checked ) ) break;
-			}
-
-			$html .= sprintf( $format, $option_name, $field, $option_name, $checked, $option_name, $label );
-			$html .= '<br />';
-		}
-
-		$html .= '<input type="hidden" id="' . $field . '" name="' . $field . '" value="' . esc_attr( $value ) . '" />';
-		echo $html;
+		echo self::render_checkboxes_with_hidden_field( $args['field'], $options );
 	}
 
 	/**
@@ -335,33 +312,11 @@ class SCP_Settings_Field {
 	 * @param array $args Options
 	 */
 	public function settings_field_who_should_see_the_popup( $args ) {
-		$field = $args['field'];
-		$value = get_option( $field );
-
 		$options = array();
 		$options['visitor_opened_at_least_n_number_of_pages'] = __( 'Visitor opened at least N number of page(s)', L10N_SCP_PREFIX );
 		$options['visitor_registered_and_role_equals_to']     = __( 'Registered Users Who Should See the Popup', L10N_SCP_PREFIX );
 
-		// FIXME: It should be refactored with render_checkboxes_with_hidden_field
-		$chains = preg_split( '/,/', $value );
-
-		$format = '<input type="checkbox" id="%s" class="%s" value="%s"%s />';
-		$format .= '<label for="%s">%s</label>';
-
-		$html = '';
-		foreach ( $options as $option_name => $label ) {
-			$checked = '';
-			for ( $idx = 0, $size = count( $chains ); $idx < $size; $idx++ ) {
-				$checked = checked( $chains[ $idx ], $option_name, false );
-				if ( strlen( $checked ) ) break;
-			}
-
-			$html .= sprintf( $format, $option_name, $field, $option_name, $checked, $option_name, $label );
-			$html .= '<br />';
-		}
-
-		$html .= '<input type="hidden" id="' . $field . '" name="' . $field . '" value="' . esc_attr( $value ) . '" />';
-		echo $html;
+		echo self::render_checkboxes_with_hidden_field( $args['field'], $options );
 	}
 
 	/**
