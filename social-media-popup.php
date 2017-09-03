@@ -21,7 +21,52 @@ defined( 'ABSPATH' ) or exit;
  * License: GPL2
  * Minimum PHP: 5.3
  * Minimum WP: 3.5
-*/
+ */
+
+/**
+ * Create a helper function for easy SDK access.
+ */
+function smp_fs() {
+	global $smp_fs;
+
+	if ( ! isset( $smp_fs ) ) {
+		// Include Freemius SDK.
+		require_once dirname( __FILE__ ) . '/freemius/start.php';
+
+		$smp_fs = fs_dynamic_init( array(
+			'id'                  => '1336',
+			'slug'                => 'social-media-popup',
+			'type'                => 'plugin',
+			'public_key'          => 'pk_0d3379a2980288a952b63df8bfcec',
+			'is_premium'          => true,
+			// If your plugin is a serviceware, set this option to false.
+			'has_premium_version' => true,
+			'has_addons'          => false,
+			'has_paid_plans'      => true,
+			'trial'               => array(
+				'days'               => 14,
+				'is_require_payment' => true,
+			),
+			'menu'                => array(
+				'slug'           => 'social_media_popup',
+				'first-path'     => 'index.php?page=social_media_popup_about',
+				'contact'        => false,
+				'support'        => false,
+			),
+			// Set the SDK to work in a sandbox mode (for development & testing).
+			// IMPORTANT: MAKE SURE TO REMOVE SECRET KEY BEFORE DEPLOYMENT.
+			'secret_key'          => 'sk_9<-[S^=J+lNvu%j-a2B=dfl:WB:6:',
+		) );
+	}
+
+	return $smp_fs;
+}
+
+// Init Freemius.
+smp_fs();
+
+// Signal that SDK was initiated.
+do_action( 'smp_fs_loaded' );
 
 if ( ! array_key_exists( 'social-media-popup', $GLOBALS ) ) {
 	if ( ! class_exists( 'Social_Media_Popup' ) ) {
