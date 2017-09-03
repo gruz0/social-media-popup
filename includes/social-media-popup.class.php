@@ -3818,40 +3818,6 @@ class Social_Media_Popup {
 	}
 
 	/**
-	 * Wrapper to render checkboxes with hidden field to use as list of values
-	 *
-	 * @param string $field   Field
-	 * @param array  $options Options
-	 *
-	 * @since 0.7.6
-	 * @used_by Social_Media_Popup::settings_field_twitter_chrome()
-	 * @used_by Social_Media_Popup::settings_field_facebook_tabs()
-	 */
-	public function render_checkboxes_with_hidden_field( $field, $options ) {
-		$value = get_option( $field );
-
-		$chains = preg_split( '/,/', $value );
-
-		$format = '<input type="checkbox" id="%s" class="%s" value="%s"%s />';
-		$format .= '<label for="%s">%s</label>';
-
-		$html = '';
-		foreach ( $options as $option_name => $label ) {
-			$checked = '';
-			for ( $idx = 0, $size = count( $chains ); $idx < $size; $idx++ ) {
-				$checked = checked( $chains[ $idx ], $option_name, false );
-				if ( strlen( $checked ) ) break;
-			}
-
-			$html .= sprintf( $format, $option_name, $field, $option_name, $checked, $option_name, $label );
-			$html .= '<br />';
-		}
-
-		$html .= '<input type="hidden" id="' . $field . '" name="' . $field . '" value="' . esc_attr( $value ) . '" />';
-		return $html;
-	}
-
-	/**
 	 * Добавление пункта меню
 	 */
 	public function add_menu() {
