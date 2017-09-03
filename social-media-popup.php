@@ -116,19 +116,6 @@ if ( ! array_key_exists( 'social-media-popup', $GLOBALS ) ) {
 		function scp_to_bool( $variable ) {
 			return ( '1' === $variable ? 'true' : 'false' );
 		}
-
-		/**
-		 * Автообновление плагина
-		 */
-		function scp_updater() {
-			require_once( dirname( __FILE__ ) . '/updater.php' );
-
-			if ( is_admin() ) {
-				new GitHub_Updater( __FILE__, 'gruz0', 'social-media-popup' );
-			}
-		}
-
-		scp_updater();
 	}
 }
 
