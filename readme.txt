@@ -3,7 +3,8 @@ Contributors: gruz0
 Tags: social plugins, social media, socials, popup, facebook, widget, vk, vkontakte, odnoklassniki, twitter, google plus, pinterest
 Donate link: http://smp-plugin.com
 Requires at least: 3.9
-Tested up to: 4.8
+Tested up to: 4.8.1
+Requires PHP: 5.3
 Stable tag: trunk
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
