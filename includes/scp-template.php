@@ -5,7 +5,7 @@
  * @package  Social_Media_Popup
  * @author   Alexander Kadyrov
  * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
- * @link     http://smp-plugin.com/
+ * @link     https://github.com/gruz0/social-media-popup
  */
 
 /**

@@ -1,7 +1,7 @@
 === Social Media Popup ===
 Contributors: gruz0
 Tags: social plugins, social media, socials, popup, facebook, widget, vk, vkontakte, odnoklassniki, twitter, google plus, pinterest
-Donate link: http://smp-plugin.com
+Donate link: https://github.com/gruz0/social-media-popup
 Requires at least: 3.9
 Tested up to: 4.8.1
 Requires PHP: 5.3

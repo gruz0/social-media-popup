@@ -5,7 +5,7 @@
  * @package  Social_Media_Popup
  * @author   Alexander Kadyrov
  * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
- * @link     http://smp-plugin.com/
+ * @link     https://github.com/gruz0/social-media-popup
  */
 
 defined( 'ABSPATH' ) or exit;
@@ -276,6 +276,7 @@ class SMP_Validator {
 
 		foreach ( $errors as $provider => $errors_values ) {
 			if ( count( $errors_values ) ) {
+				// @codingStandardsIgnoreLine
 				$content .= '<h3>' . __( $provider, L10N_SCP_PREFIX ) . '</h3>';
 				$content .= '<ul class="ul-disc">';
 

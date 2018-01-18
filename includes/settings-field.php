@@ -5,7 +5,7 @@
  * @package    Social_Media_Popup
  * @author     Alexander Kadyrov
  * @license    http://www.gnu.org/copyleft/gpl.html GNU General Public License
- * @link       http://smp-plugin.com/
+ * @link       https://github.com/gruz0/social-media-popup
  */
 
 /**
@@ -38,7 +38,11 @@ class SCP_Settings_Field {
 	public function settings_field_checkbox( $args ) {
 		$field = esc_attr( $args['field'] );
 		$value = get_option( $field );
-		echo sprintf( '<input type="checkbox" name="%s" id="%s" value="1" %s />', $field, $field, checked( $value, 1, false ) );
+
+		$html = sprintf( '<input type="checkbox" name="%s" id="%s" value="1" %s />', $field, $field,
+		checked( $value, 1, false ) );
+
+		echo $html;
 	}
 
 	/**
