@@ -276,6 +276,7 @@ class SMP_Validator {
 
 		foreach ( $errors as $provider => $errors_values ) {
 			if ( count( $errors_values ) ) {
+				// @codingStandardsIgnoreLine
 				$content .= '<h3>' . __( $provider, L10N_SCP_PREFIX ) . '</h3>';
 				$content .= '<ul class="ul-disc">';
 

@@ -10,16 +10,18 @@
 
 defined( 'ABSPATH' ) or exit;
 
-/*
-Plugin Name: Social Media Popup
-Plugin URI: http://gruz0.ru/
-Description: The plugin creates a popup window with most popular social media widgets
-Author: Alexander Kadyrov
-Author URI: http://gruz0.ru/
-Text Domain: social-community-popup
-Version: 0.7.5
-License: GPL2
-*/
+/**
+ * Plugin Name: Social Media Popup
+ * Plugin URI: https://github.com/gruz0/social-media-popup
+ * Description: The plugin creates a popup window with most popular social media widgets
+ * Author: Alexander Kadyrov
+ * Author URI: http://gruz0.ru/
+ * Text Domain: social-community-popup
+ * Version: 0.7.6
+ * License: GPL2
+ * Minimum PHP: 5.3
+ * Minimum WP: 3.5
+ */
 
 if ( ! array_key_exists( 'social-media-popup', $GLOBALS ) ) {
 	if ( ! class_exists( 'Social_Media_Popup' ) ) {
@@ -69,19 +71,6 @@ if ( ! array_key_exists( 'social-media-popup', $GLOBALS ) ) {
 		function scp_to_bool( $variable ) {
 			return ( '1' === $variable ? 'true' : 'false' );
 		}
-
-		/**
-		 * Автообновление плагина
-		 */
-		function scp_updater() {
-			require_once( dirname( __FILE__ ) . '/updater.php' );
-
-			if ( is_admin() ) {
-				new GitHub_Updater( __FILE__, 'gruz0', 'social-media-popup' );
-			}
-		}
-
-		scp_updater();
 	}
 }
 

@@ -4,7 +4,7 @@ var cleanCSS = require('gulp-clean-css');
 var rename   = require('gulp-rename');
 
 //setup minify task
-var cssMinifyLocation = ['css/*.css', '!css/*.min.css'];
+var cssMinifyLocation = ['assets/css/*.css', '!assets/css/*.min.css'];
 
 gulp.task('minify-css', function() {
     return gulp.src(cssMinifyLocation)
@@ -15,7 +15,7 @@ gulp.task('minify-css', function() {
         .pipe(rename({
             suffix: '.min'
         }))
-        .pipe(gulp.dest('css'));
+        .pipe(gulp.dest('assets/css'));
 });
 
 // Default Task
