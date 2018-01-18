@@ -23,9 +23,6 @@ defined( 'ABSPATH' ) or exit;
  * Minimum WP: 3.5
  */
 
-// Signal that SDK was initiated.
-do_action( 'smp_fs_loaded' );
-
 if ( ! array_key_exists( 'social-media-popup', $GLOBALS ) ) {
 	if ( ! class_exists( 'Social_Media_Popup' ) ) {
 
