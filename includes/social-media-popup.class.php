@@ -1076,8 +1076,8 @@ class Social_Media_Popup {
 			update_option( $scp_prefix . 'setting_use_animation',        1 );
 			update_option( $scp_prefix . 'setting_animation_style',      'bounce' );
 
-			// update_option( $version, '0.7.5' );
-			// self::set_scp_version( '0.7.5' );
+			update_option( $version, '0.7.6' );
+			self::set_scp_version( '0.7.6' );
 		}
 	}
 
