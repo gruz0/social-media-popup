@@ -1,11 +1,20 @@
-<?php defined( 'ABSPATH' ) or exit; ?>
 <?php
-$tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'general';
-?>
+/**
+ * VK.com Settings
+ *
+ * @package    Social_Media_Popup
+ * @author     Alexander Kadyrov
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link       https://github.com/gruz0/social-media-popup
+ */
 
+defined( 'ABSPATH' ) or exit;
+
+$tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'general';
+?>
 <div class="wrap social-community-popup-settings">
 	<h2><?php _e( 'VKontakte Options', L10N_SCP_PREFIX ); ?></h2>
-	<?php echo scp_vkontakte_settings_tabs(); ?>
+	<?php echo scp_vkontakte_settings_tabs( $tab ); ?>
 	<form method="post" action="options.php">
 		<?php wp_nonce_field( 'scp-update-vkontakte-options' ); ?>
 		<?php settings_fields( SMP_PREFIX . '-group-vkontakte-' . $tab ); ?>
@@ -13,21 +22,25 @@ $tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'general';
 		<?php do_settings_sections( SMP_PREFIX . '-group-vkontakte-' . $tab ); ?>
 		<?php submit_button(); ?>
 	</form>
-	<?php require( sprintf( "%s/../copyright.php", dirname( __FILE__ ) ) ); ?>
+	<?php require( sprintf( '%s/../copyright.php', dirname( __FILE__ ) ) ); ?>
 </div>
 
 <?php
-function scp_vkontakte_settings_tabs() {
-	$current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'general';
-
+/**
+ * VK.com Tabs
+ *
+ * @param string $current_tab Current tab
+ */
+function scp_vkontakte_settings_tabs( $current_tab ) {
 	$tabs                  = array();
 	$tabs['general']       = __( 'General', L10N_SCP_PREFIX );
 	$tabs['tracking']      = __( 'Tracking', L10N_SCP_PREFIX );
 
 	echo '<h2 class="nav-tab-wrapper">';
+	$template = '<a class="nav-tab %s" href="?page=%s_vkontakte_options&tab=%s">%s</a>';
 	foreach ( $tabs as $tab_key => $tab_caption ) {
-		$active = $current_tab == $tab_key ? 'nav-tab-active' : '';
-		echo '<a class="nav-tab ' . $active . '" href="?page=' . SMP_PREFIX . '_vkontakte_options&tab=' . $tab_key . '">' . $tab_caption . '</a>';
+		$active = $current_tab === $tab_key ? 'nav-tab-active' : '';
+		echo sprintf( $template, $active, SMP_PREFIX, $tab_key, $tab_caption );
 	}
 	echo '</h2>';
 }

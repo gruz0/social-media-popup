@@ -8,6 +8,8 @@
  * @link     https://github.com/gruz0/social-media-popup
  */
 
+// @codingStandardsIgnoreFile
+
 /**
  * Social_Media_Popup_Tests
  */
@@ -484,7 +486,7 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( 0                            === get_option( $scp_prefix . 'setting_facebook_close_window_after_join' ) );
 
 		// VK
-		$this->assertTrue( 'https://vk.com/blogsonwordpress_new' === get_option( $scp_prefix . 'setting_vkontakte_page_url' ) );
+		$this->assertTrue( 'https://vk.com/ru_wp' === get_option( $scp_prefix . 'setting_vkontakte_page_url' ) );
 
 		// Odnoklassniki
 		$this->assertTrue( 'https://ok.ru/group/57122812461115' === get_option( $scp_prefix . 'setting_odnoklassniki_group_url' ) );
@@ -551,6 +553,25 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 
 		// Прочие опции
 		$this->assertTrue( 1 === get_option( $scp_prefix . 'do_not_use_cookies_after_click_on_element' ) );
+	}
+
+	/**
+	 * Upgrade to 0.7.6
+	 */
+	private function upgradeTo076() {
+		self::$plugin->upgrade_to_0_7_6();
+
+		$scp_prefix = self::$plugin->get_scp_prefix();
+
+		$this->assertTrue( '0.7.6' === get_option( $scp_prefix . 'version' ) );
+
+		// Twitter
+		$this->assertTrue( 'ru'            === get_option( $scp_prefix . 'setting_twitter_locale' ) );
+		$this->assertTrue( 'follow_button' === get_option( $scp_prefix . 'setting_twitter_first_widget' ) );
+
+		// Animation
+		$this->assertTrue( 1        === get_option( $scp_prefix . 'setting_use_animation' ) );
+		$this->assertTrue( 'bounce' === get_option( $scp_prefix . 'setting_animation_style' ) );
 	}
 
 	/**

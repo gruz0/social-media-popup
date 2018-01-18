@@ -1,12 +1,26 @@
-<?php defined( 'ABSPATH' ) or exit; ?>
 <?php
-$tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'general';
+/**
+ * Settings
+ *
+ * @package Social_Media_Popup
+ * @author  Alexander Kadyrov
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link    https://github.com/gruz0/social-media-popup
+ */
 
-$subtab = isset( $_GET['section'] ) ? $_GET['section'] : '';
+defined( 'ABSPATH' ) or exit;
+
+$available_tabs = array( 'general', 'view', 'events', 'management', 'view-mobile', 'tracking' );
+
+$tab = 'general';
+if ( ! empty( $_GET['tab'] ) && in_array( wp_unslash( $_GET['tab'] ), $available_tabs, true ) ) {
+	$tab = sanitize_text_field( wp_unslash( $_GET['tab'] ) );
+}
+
+$subtab = isset( $_GET['section'] ) ? sanitize_text_field( wp_unslash( $_GET['section'] ) ) : '';
 if ( ! empty( $subtab ) ) {
 	$tab .= '-' . $subtab;
 }
-
 ?>
 
 <div class="wrap social-community-popup-settings">
@@ -19,12 +33,15 @@ if ( ! empty( $subtab ) ) {
 		<?php do_settings_sections( SMP_PREFIX . '-group-' . $tab ); ?>
 		<?php submit_button(); ?>
 	</form>
-	<?php require( sprintf( "%s/copyright.php", dirname( __FILE__ ) ) ); ?>
+	<?php require( sprintf( '%s/copyright.php', dirname( __FILE__ ) ) ); ?>
 </div>
 
 <?php
+/**
+ * Render menu tabs
+ */
 function scp_settings_tabs() {
-	$current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'general';
+	$current_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'general';
 
 	$tabs                = array();
 	$tabs['general']     = __( 'General', L10N_SCP_PREFIX );
@@ -36,7 +53,7 @@ function scp_settings_tabs() {
 
 	echo '<h2 class="nav-tab-wrapper">';
 	foreach ( $tabs as $tab_key => $tab_caption ) {
-		$active = $current_tab == $tab_key ? 'nav-tab-active' : '';
+		$active = $current_tab === $tab_key ? 'nav-tab-active' : '';
 
 		switch ( $tab_key ) {
 			case 'tracking':
@@ -56,8 +73,17 @@ function scp_settings_tabs() {
 	}
 }
 
+/**
+ * Render tracking menu items
+ *
+ * @param string $current_tab Current tab
+ */
 function smp_tracking_menu( $current_tab ) {
-	$current_subtab = isset( $_GET['section'] ) ? $_GET['section'] : 'general';
+	$current_subtab = 'general';
+	$available_tabs = array( 'general', 'google-analytics', 'window-events', 'social-events' );
+	if ( ! empty( $_GET['section'] ) && in_array( wp_unslash( $_GET['section'] ), $available_tabs, true ) ) {
+		$current_subtab = sanitize_text_field( wp_unslash( $_GET['section'] ) );
+	}
 
 	$subtabs                     = array();
 	$subtabs['general']          = __( 'General', L10N_SCP_PREFIX );
@@ -69,7 +95,7 @@ function smp_tracking_menu( $current_tab ) {
 
 	echo '<h3 class="nav-tab-wrapper">';
 	foreach ( $subtabs as $tab_key => $tab_caption ) {
-		$active = $current_subtab == $tab_key ? 'nav-tab-active' : '';
+		$active = $current_subtab === $tab_key ? 'nav-tab-active' : '';
 		echo sprintf( $subtab_template, $active, $current_tab, $tab_key, $tab_caption );
 	}
 

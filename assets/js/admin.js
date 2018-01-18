@@ -50,6 +50,29 @@ $j(document).ready(function() {
 		$j('ul, li').disableSelection();
 	}
 
+	// Тестирование анимации
+	if ($j('#smp_animation').length) {
+		$j.fn.extend({
+			animateCss: function (animationName) {
+				var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+				this.addClass('animated ' + animationName).one(animationEnd, function() {
+					$j(this).removeClass('animated ' + animationName);
+				});
+				return this;
+			}
+		});
+
+		$j('#smp_play_animation').on('click', function() {
+			var animation = $j('#smp_animation_style').val();
+			$j('#smp_animation').animateCss(animation);
+		});
+
+		$j('#smp_animation_style').on('change', function() {
+			var animation = $j('#smp_animation_style').val();
+			$j('#smp_animation').animateCss(animation);
+		});
+	}
+
 	/**
 	 * Блокируем или разблокируем поля для ввода значений в зависимости от состояния чекбоксов
 	 * "При наступлении каких событий показывать окно плагина".
@@ -120,6 +143,11 @@ $j(document).ready(function() {
 	$j('.' + SCP_PREFIX + 'setting_facebook_tabs').on('click', function() {
 		var className = '.' + $j(this).attr('class');
 		prepareResultStringForEvents(className, 'setting_facebook_tabs');
+	});
+
+	$j('.' + SCP_PREFIX + 'setting_twitter_chrome').on('click', function() {
+		var className = '.' + $j(this).attr('class');
+		prepareResultStringForEvents(className, 'setting_twitter_chrome');
 	});
 
 	// Установим состояние текстовых полей и других объектов в зависимости от выбранных чекбоксов

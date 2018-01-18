@@ -1,3 +1,15 @@
+<?php
+/**
+ * Social Media Popup
+ *
+ * @package  Social_Media_Popup
+ * @author   Alexander Kadyrov
+ * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link     https://github.com/gruz0/social-media-popup
+ */
+
+defined( 'ABSPATH' ) or exit;
+?>
 <div id="scp_welcome_screen" class="wrap">
 	<h1>Social Media Popup v<?php echo $version; ?></h1>
 	<div class="about-text">Благодарю за установку плагина! Надеюсь он вам понравится :-)</div>
@@ -17,11 +29,11 @@
 
 		<h3 class="title">Как начать использование</h3>
 		<ol>
-			<li>Активировать "Режим отладки" на главной <a href="<?php echo admin_url( 'admin.php?page=' . SMP_PREFIX ); ?>">странице настроек плагина</a></li>
 			<li>Определиться с необходимыми социальными сетями</li>
 			<li>Активировать и настроить каждую из них в соответствующих разделах</li>
 			<li>Проверить корректность работы всех выбранных социальных сетей</li>
-			<li>Отключить "Режим отладки"</li>
+			<li>Убедиться, что в разделе <a href="<?php echo admin_url( 'admin.php?page=' . SMP_PREFIX . '_debug' ); ?>">Отладка</a> нет ошибок</li>
+			<li>Отключить "Режим отладки" на главной <a href="<?php echo admin_url( 'admin.php?page=' . SMP_PREFIX ); ?>">странице настроек плагина</a></li>
 		</ol>
 
 		<h3 class="title">Какие социальные сети поддерживаются</h3>
@@ -35,12 +47,31 @@
 			<li>Pinterest</li>
 		</ul>
 
+		<h3 class="title">Список совместимых плагинов-минификаторов и кеширующих плагинов</h3>
+		<p>Здесь представлен список плагинов, с которыми работа плагина протестирована и работает корректно:</p>
+		<ul>
+			<li><a href="https://wordpress.org/plugins/autoptimize/" target="_blank" rel="nofollow">Autoptimize</a></li>
+			<li><a href="https://wordpress.org/plugins/bwp-minify/" target="_blank" rel="nofollow">BWP Minify</a></li>
+		</ul>
+
 		<hr />
 		<p>Если есть вопросы по работе плагина — смело задавайте мне их на <a href="mailto:support@gruz0.ru?subject=Вопрос по Social Media Popup">support@gruz0.ru</a>!</p>
 	</div>
 
 	<div class="box">
 		<h2 class="title">История изменений</h2>
+		<h3>Версия 0.7.6 от 18.01.2018</h3>
+		<ul>
+			<li>Плагин полностью стал бесплатным и отправился в OpenSource</li>
+			<li>Исправлена ошибка при которой настройки виджета Твиттера не сохранялись в базу данных</li>
+			<li>Добавлен admin notice об активированном Режиме отладки</li>
+			<li>Добавлен выбор языка для виджетов Twitter</li>
+			<li>Добавлена опция выбора порядка отображения виджетов Twitter</li>
+			<li>Добавлена анимация при появлении окна (с возможностью протестировать прямо из административной панели)</li>
+			<li>Отключено автообновление плагина через GitHub, теперь обновления будут приходить с сайта WordPress</li>
+			<li>Удалена схема HTTP URI из виджета Одноклассников</li>
+		</ul>
+
 		<h3>Версия 0.7.5 от 20.07.2017</h3>
 		<ul>
 			<li>Исправлены ошибки в работе виджетов Facebook, ВКонтакте и Google+ в браузере Firefox</li>
@@ -240,17 +271,19 @@
 	<div class="box">
 		<h2 class="title">Об авторе</h2>
 		<p>Если вы купили плагин, как и все порядочные клиенты, то, вероятно, уже знаете обо мне и кто я такой. :-)<br />
-		Я — Александр Грузов, автор блога о WordPress и фрилансе: <a href="http://gruz0.ru/" target="_blank">http://gruz0.ru/</a>.</p>
+		Я — Александр Кадыров, автор блога о WordPress и фрилансе: <a href="http://gruz0.ru/" target="_blank">http://gruz0.ru/</a>.</p>
 
 		<p><b>Найти меня вы можете в социальных сетях или по почте:</b></p>
 		<ul>
-			<li><a href="https://www.facebook.com/gruz0">Facebook</a></li>
-			<li><a href="https://twitter.com/gruz0">Twitter</a></li>
-			<li><a href="mailto:support@gruz0.ru">support@gruz0.ru</a></li>
+			<li><a href="https://www.facebook.com/gruz0" target="_blank">Facebook</a></li>
+			<li><a href="https://vk.com/gruz0" target="_blank">ВКонтакте</a></li>
+			<li><a href="https://t.me/gruz0" target="_blank">Телеграм</a></li>
+			<li><a href="mailto:support@gruz0.ru?subject=Вопрос по плагину Social Media Popup" target="_blank">support@gruz0.ru</a></li>
 		</ul>
+
 		<p>Прошу не удивляться, если вдруг я попрошу вас назвать номер выставленного вам счёта для оплаты.<br />
 		Не хочу кормить пиратов, поэтому буду всячески вставлять палки в колёса подобным пользователям. ;-)</p>
-		<img src="http://gruz0.ru/wp-content/uploads/2014/01/gruz0-300x300.png" alt="Александр Грузов" title="Александр Грузов" width="300" height="300" />
+		<img src="http://gruz0.ru/wp-content/uploads/2017/07/alexander.kadyrov-300x300.jpg" alt="Александр Кадыров" title="Александр Кадыров" width="300" height="300" />
 	</div>
 
 </div>
