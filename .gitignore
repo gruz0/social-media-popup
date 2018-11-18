@@ -4,4 +4,5 @@
 .idea/*
 .DS_Store
 .php.tags
+.data
 node_modules
