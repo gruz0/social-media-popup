@@ -6,3 +6,5 @@
 .php.tags
 .data
 node_modules
+phpcs
+wpcs
