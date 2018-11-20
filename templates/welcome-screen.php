@@ -11,7 +11,7 @@
 defined( 'ABSPATH' ) or exit;
 ?>
 <div id="scp_welcome_screen" class="wrap">
-	<h1>Social Media Popup v<?php echo $version; ?></h1>
+	<h1>Social Media Popup v<?php echo esc_attr( $version ); ?></h1>
 	<div class="about-text">Благодарю за установку плагина! Надеюсь он вам понравится :-)</div>
 
 	<ul class="tabs">
@@ -32,8 +32,8 @@ defined( 'ABSPATH' ) or exit;
 			<li>Определиться с необходимыми социальными сетями</li>
 			<li>Активировать и настроить каждую из них в соответствующих разделах</li>
 			<li>Проверить корректность работы всех выбранных социальных сетей</li>
-			<li>Убедиться, что в разделе <a href="<?php echo admin_url( 'admin.php?page=' . SMP_PREFIX . '_debug' ); ?>">Отладка</a> нет ошибок</li>
-			<li>Отключить "Режим отладки" на главной <a href="<?php echo admin_url( 'admin.php?page=' . SMP_PREFIX ); ?>">странице настроек плагина</a></li>
+			<li>Убедиться, что в разделе <a href="<?php echo esc_url( admin_url( 'admin.php?page=' . SMP_PREFIX . '_debug' ) ); ?>">Отладка</a> нет ошибок</li>
+			<li>Отключить "Режим отладки" на главной <a href="<?php echo esc_url( admin_url( 'admin.php?page=' . SMP_PREFIX ) ); ?>">странице настроек плагина</a></li>
 		</ol>
 
 		<h3 class="title">Какие социальные сети поддерживаются</h3>
