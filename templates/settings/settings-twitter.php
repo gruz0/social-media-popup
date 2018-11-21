@@ -17,7 +17,7 @@ $tab            = smp_validate_and_sanitize_tab( $available_tabs );
 <div class="wrap social-community-popup-settings">
 	<h2><?php esc_attr_e( 'Twitter Options', L10N_SCP_PREFIX ); ?></h2>
 
-	<?php scp_twitter_settings_tabs(); ?>
+	<?php scp_twitter_settings_tabs( $tab ); ?>
 
 	<form method="post" action="options.php">
 		<?php wp_nonce_field( 'scp-update-twitter-options' ); ?>
@@ -32,10 +32,10 @@ $tab            = smp_validate_and_sanitize_tab( $available_tabs );
 <?php
 /**
  * Render settings tabs
+ *
+ * @param string $current_tab Current tab slug
  */
-function scp_twitter_settings_tabs() {
-	$current_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'general';
-
+function scp_twitter_settings_tabs( $current_tab ) {
 	$tabs                  = array();
 	$tabs['general']       = __( 'General', L10N_SCP_PREFIX );
 	$tabs['follow-button'] = __( 'Follow Button Widget', L10N_SCP_PREFIX );
@@ -48,14 +48,12 @@ function scp_twitter_settings_tabs() {
 	foreach ( $tabs as $tab_key => $tab_caption ) {
 		$active = $current_tab === $tab_key ? 'nav-tab-active' : '';
 
-		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		$content .= sprintf(
 			$tab_template,
 			esc_attr( $active ),
 			esc_attr( $tab_key ),
 			esc_attr( $tab_caption )
 		);
-		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 	$content .= '</h2>';
 
