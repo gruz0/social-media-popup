@@ -53,3 +53,20 @@ function is_scp_cookie_present() {
 	return ( ! empty( $_COOKIE['social-community-popup'] ) && 'true' === $_COOKIE['social-community-popup'] );
 }
 
+/**
+ * Checks if current tab in the array of available tabs
+ *
+ * @param array $available_tabs Available tabs
+ *
+ * @return string
+ */
+function smp_validate_and_sanitize_tab( $available_tabs = array() ) {
+	$tab = 'general';
+
+	if ( ! empty( $_GET['tab'] ) && in_array( wp_unslash( $_GET['tab'] ), $available_tabs, true ) ) {
+		$tab = sanitize_text_field( wp_unslash( $_GET['tab'] ) );
+	}
+
+	return $tab;
+}
+
