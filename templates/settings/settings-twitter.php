@@ -17,7 +17,7 @@ $tab            = smp_validate_and_sanitize_tab( $available_tabs );
 <div class="wrap social-community-popup-settings">
 	<h2><?php esc_attr_e( 'Twitter Options', L10N_SCP_PREFIX ); ?></h2>
 
-	<?php echo esc_html( scp_twitter_settings_tabs() ); ?>
+	<?php scp_twitter_settings_tabs(); ?>
 
 	<form method="post" action="options.php">
 		<?php wp_nonce_field( 'scp-update-twitter-options' ); ?>
@@ -44,12 +44,12 @@ function scp_twitter_settings_tabs() {
 
 	$tab_template = '<a class="nav-tab %s" href="?page=' . SMP_PREFIX . '_twitter_options&tab=%s">%s</a>';
 
-	echo '<h2 class="nav-tab-wrapper">';
+	$content = '<h2 class="nav-tab-wrapper">';
 	foreach ( $tabs as $tab_key => $tab_caption ) {
 		$active = $current_tab === $tab_key ? 'nav-tab-active' : '';
 
 		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo sprintf(
+		$content .= sprintf(
 			$tab_template,
 			esc_attr( $active ),
 			esc_attr( $tab_key ),
@@ -57,5 +57,7 @@ function scp_twitter_settings_tabs() {
 		);
 		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
-	echo '</h2>';
+	$content .= '</h2>';
+
+	echo $content; // WPCS: XSS OK.
 }
