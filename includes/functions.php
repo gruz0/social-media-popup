@@ -11,6 +11,7 @@
 defined( 'ABSPATH' ) or exit;
 
 define( 'L10N_SCP_PREFIX', 'social-community-popup' ); // textdomain
+define( 'DEFAULT_TAB_SLUG', 'general' );
 
 /**
  * Преобразуем строку в массив для событий при наступлении которых появится окно
@@ -56,17 +57,18 @@ function is_scp_cookie_present() {
 /**
  * Checks if current tab in the array of available tabs
  *
- * @param array $available_tabs Available tabs
+ * @param string $slug           Tab slug
+ * @param array  $available_tabs Available tabs
+ * @param string $default_value  Default tab slug
  *
  * @return string
  */
-function smp_validate_and_sanitize_tab( $available_tabs = array() ) {
-	$tab = 'general';
+function smp_validate_and_sanitize_tab( $slug, $available_tabs = array(), $default_value = DEFAULT_TAB_SLUG ) {
+	$slug = wp_unslash( $slug );
 
-	if ( ! empty( $_GET['tab'] ) && in_array( wp_unslash( $_GET['tab'] ), $available_tabs, true ) ) {
-		$tab = sanitize_text_field( wp_unslash( $_GET['tab'] ) );
-	}
+	if ( empty( $slug ) ) return $default_value;
+	if ( ! in_array( $slug, $available_tabs, true ) ) return $default_value;
 
-	return $tab;
+	return sanitize_key( $slug );
 }
 

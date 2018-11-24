@@ -11,7 +11,8 @@
 defined( 'ABSPATH' ) or exit;
 
 $available_tabs = array( 'general', 'tracking' );
-$tab            = smp_validate_and_sanitize_tab( $available_tabs );
+$slug           = ! empty( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : '';
+$tab            = smp_validate_and_sanitize_tab( $slug, $available_tabs );
 ?>
 
 <div class="wrap social-community-popup-settings">
@@ -55,5 +56,7 @@ function scp_facebook_settings_tabs( $current_tab ) {
 	}
 	$content .= '</h2>';
 
-	echo $content; // WPCS: XSS OK.
+	// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo $content;
+	// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 }
