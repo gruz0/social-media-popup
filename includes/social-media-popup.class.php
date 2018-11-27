@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) or exit;
 define( 'SMP_PREFIX', 'social_media_popup' );
 
 require_once( SMP_INCLUDES_DIR . 'functions.php' );
-require_once( SMP_INCLUDES_DIR . 'settings-field.php' );
+require_once( SMP_INCLUDES_DIR . 'class-scp-settings-field.php' );
 require_once( SMP_INCLUDES_DIR . 'scp-template.php' );
 require_once( SMP_INCLUDES_DIR . 'popup.php' );
 require_once( SMP_INCLUDES_DIR . 'validator.php' );
