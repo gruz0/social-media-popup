@@ -22,7 +22,7 @@ require_once( SMP_INCLUDES_DIR . 'settings-field.php' );
 require_once( SMP_INCLUDES_DIR . 'scp-template.php' );
 require_once( SMP_INCLUDES_DIR . 'popup.php' );
 require_once( SMP_INCLUDES_DIR . 'validator.php' );
-require_once( SMP_INCLUDES_DIR . 'providers/providers.php' );
+require_once( SMP_INCLUDES_DIR . 'providers/class-scp-provider.php' );
 
 /**
  * Social Media Popup class

@@ -83,32 +83,32 @@ class SCP_Provider {
 		// FIXME: Переписать на проверку провайдера в массиве available_providers()
 		switch ( $provider ) {
 			case 'facebook':
-				require_once( dirname( __FILE__ ) . '/facebook.php' );
+				require_once( dirname( __FILE__ ) . '/class-scp-facebook-provider.php' );
 				return new SCP_Facebook_Provider();
 				break;
 
 			case 'vkontakte':
-				require_once( dirname( __FILE__ ) . '/vkontakte.php' );
+				require_once( dirname( __FILE__ ) . '/class-scp-vk-provider.php' );
 				return new SCP_VK_Provider();
 				break;
 
 			case 'odnoklassniki':
-				require_once( dirname( __FILE__ ) . '/odnoklassniki.php' );
+				require_once( dirname( __FILE__ ) . '/class-scp-odnoklassniki-provider.php' );
 				return new SCP_Odnoklassniki_Provider();
 				break;
 
 			case 'googleplus':
-				require_once( dirname( __FILE__ ) . '/googleplus.php' );
+				require_once( dirname( __FILE__ ) . '/class-scp-googleplus-provider.php' );
 				return new SCP_GooglePlus_Provider();
 				break;
 
 			case 'twitter':
-				require_once( dirname( __FILE__ ) . '/twitter.php' );
+				require_once( dirname( __FILE__ ) . '/class-scp-twitter-provider.php' );
 				return new SCP_Twitter_Provider();
 				break;
 
 			case 'pinterest':
-				require_once( dirname( __FILE__ ) . '/pinterest.php' );
+				require_once( dirname( __FILE__ ) . '/class-scp-pinterest-provider.php' );
 				return new SCP_Pinterest_Provider();
 				break;
 
