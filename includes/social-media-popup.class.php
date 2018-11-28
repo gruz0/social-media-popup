@@ -20,7 +20,7 @@ define( 'SMP_PREFIX', 'social_media_popup' );
 require_once( SMP_INCLUDES_DIR . 'functions.php' );
 require_once( SMP_INCLUDES_DIR . 'class-scp-settings-field.php' );
 require_once( SMP_INCLUDES_DIR . 'class-scp-template.php' );
-require_once( SMP_INCLUDES_DIR . 'popup.php' );
+require_once( SMP_INCLUDES_DIR . 'class-scp-popup.php' );
 require_once( SMP_INCLUDES_DIR . 'class-smp-validator.php' );
 require_once( SMP_INCLUDES_DIR . 'providers/class-scp-provider.php' );
 
