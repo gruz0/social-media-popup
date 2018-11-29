@@ -7,7 +7,7 @@ NC='\033[0m'
 
 echo -e "${green}[PHP Style][Info]: Checking PHP Style${NC}"
 
-php phpcs/bin/phpcs --colors --standard=phpcs.xml --ignore=phpcs,wpcs,svn,vendor,assets -s .
+php phpcs/bin/phpcs --colors --standard=phpcs.xml -s .
 
 if [ $? -ne 0 ]; then
 echo -e "${red}[PHP Style][Error]: Fix the issues and commit again${NC}"
