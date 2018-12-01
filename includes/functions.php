@@ -72,3 +72,22 @@ function smp_validate_and_sanitize_tab( $slug, $available_tabs = array(), $defau
 	return sanitize_key( $slug );
 }
 
+// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_error_log
+// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_print_r
+if ( ! function_exists( 'write_log' ) ) {
+	/**
+	 * Write debug message to wp-content/debug.log
+	 *
+	 * @param object $log Object or array or something else
+	 * @return void
+	 */
+	function write_log( $log ) {
+		if ( is_array( $log ) || is_object( $log ) ) {
+			error_log( print_r( $log, true ) );
+		} else {
+			error_log( $log );
+		}
+	}
+}
+// phpcs:enable WordPress.PHP.DevelopmentFunctions.error_log_print_r
+// phpcs:enable WordPress.PHP.DevelopmentFunctions.error_log_error_log
