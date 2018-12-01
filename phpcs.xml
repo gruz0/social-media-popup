@@ -7,6 +7,7 @@
 
 	<exclude-pattern>*/phpcs/*</exclude-pattern>
 	<exclude-pattern>*/wpcs/*</exclude-pattern>
+	<exclude-pattern>*/wp-tests/*</exclude-pattern>
 	<exclude-pattern>*/svn/*</exclude-pattern>
 	<exclude-pattern>*/vendor/*</exclude-pattern>
 	<exclude-pattern>*/assets/*</exclude-pattern>
