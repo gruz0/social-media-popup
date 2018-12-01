@@ -29,4 +29,4 @@ before_script:
 script:
   - phpunit
   - cd wp-tests/spec && bundle exec rspec test.rb
-  - php phpcs/bin/phpcs --colors --standard=phpcs.xml --ignore=phpcs,wpcs,svn -s .
+  - cd ../../ && php phpcs/bin/phpcs --colors --standard=phpcs.xml -s .
