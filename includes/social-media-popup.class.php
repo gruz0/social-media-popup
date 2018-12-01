@@ -342,10 +342,13 @@ class Social_Media_Popup {
 	public function add_debug_mode_notice() {
 	?>
 		<div class="notice notice-warning">
-			<p><?php
-				echo __( 'Social Media Popup Debug Mode is activated!', L10N_SCP_PREFIX )
-					. ' <a href="' . admin_url( 'admin.php?page=' . SMP_PREFIX ) . '">' . __( 'Deactivate Debug Mode', L10N_SCP_PREFIX ) . '</a>';
-			?></p>
+			<p>
+			<?php
+				$url = add_query_arg( array( 'page' => SMP_PREFIX ), admin_url( 'admin.php' ) );
+				echo esc_attr( 'Social Media Popup Debug Mode is activated!', L10N_SCP_PREFIX )
+					. ' <a href="' . esc_url( $url ) . '">' . esc_attr( 'Deactivate Debug Mode', L10N_SCP_PREFIX ) . '</a>';
+			?>
+			</p>
 		</div>
 	<?php
 	}
@@ -395,6 +398,7 @@ class Social_Media_Popup {
 			update_option( $scp_prefix . 'setting_display_after_visiting_n_pages',   0 );
 			update_option( $scp_prefix . 'setting_display_after_delay_of_n_seconds', 3 );
 
+			update_option( $scp_prefix . 'setting_use_facebook',                     0 );
 			update_option( $scp_prefix . 'setting_facebook_tab_caption',             __( 'Facebook', L10N_SCP_PREFIX ) );
 			update_option( $scp_prefix . 'setting_facebook_application_id',          '277165072394537' );
 			update_option( $scp_prefix . 'setting_facebook_page_url',                'https://www.facebook.com/AlexanderGruzov' );
@@ -405,6 +409,7 @@ class Social_Media_Popup {
 			update_option( $scp_prefix . 'setting_facebook_show_faces',              1 );
 			update_option( $scp_prefix . 'setting_facebook_show_stream',             0 );
 
+			update_option( $scp_prefix . 'setting_use_vkontakte',                    0 );
 			update_option( $scp_prefix . 'setting_vkontakte_tab_caption',            __( 'VK', L10N_SCP_PREFIX ) );
 			update_option( $scp_prefix . 'setting_vkontakte_page_or_group_id',       '64088617' );
 			update_option( $scp_prefix . 'setting_vkontakte_width',                  400 );
@@ -414,6 +419,7 @@ class Social_Media_Popup {
 			update_option( $scp_prefix . 'setting_vkontakte_color_button',           '#5B7FA6' );
 			update_option( $scp_prefix . 'setting_vkontakte_close_window_after_join', 0 );
 
+			update_option( $scp_prefix . 'setting_use_odnoklassniki',                0 );
 			update_option( $scp_prefix . 'setting_odnoklassniki_tab_caption',        __( 'Odnoklassniki', L10N_SCP_PREFIX ) );
 			update_option( $scp_prefix . 'setting_odnoklassniki_group_id',           '57122812461115' );
 			update_option( $scp_prefix . 'setting_odnoklassniki_width',              400 );
@@ -472,10 +478,10 @@ class Social_Media_Popup {
 
 		if ( '0.5' > get_option( $version ) ) {
 			// Добавляем Google+ в таблицу сортировки
-			$tabs_order = get_option( $scp_prefix . 'setting_tabs_order' );
-			$tabs_order = ( $tabs_order ) ? explode( ',', $tabs_order ) : array();
+			$tabs_order   = get_option( $scp_prefix . 'setting_tabs_order' );
+			$tabs_order   = ( $tabs_order ) ? explode( ',', $tabs_order ) : array();
 			$tabs_order[] = 'googleplus';
-			$tabs_order = array_unique( $tabs_order );
+			$tabs_order   = array_unique( $tabs_order );
 
 			update_option( $scp_prefix . 'setting_tabs_order', join( ',', $tabs_order ) );
 
@@ -519,10 +525,10 @@ class Social_Media_Popup {
 
 		if ( '0.6' > get_option( $version ) ) {
 			// Добавляем Twitter в таблицу сортировки
-			$tabs_order = get_option( $scp_prefix . 'setting_tabs_order' );
-			$tabs_order = ( $tabs_order ) ? explode( ',', $tabs_order ) : array();
+			$tabs_order   = get_option( $scp_prefix . 'setting_tabs_order' );
+			$tabs_order   = ( $tabs_order ) ? explode( ',', $tabs_order ) : array();
 			$tabs_order[] = 'twitter';
-			$tabs_order = array_unique( $tabs_order );
+			$tabs_order   = array_unique( $tabs_order );
 
 			update_option( $scp_prefix . 'setting_tabs_order', join( ',', $tabs_order ) );
 
@@ -704,7 +710,8 @@ class Social_Media_Popup {
 
 		if ( '0.6.7' > get_option( $version ) ) {
 			// Надпись над табами плагина
-			update_option( $scp_prefix . 'setting_plugin_title',
+			update_option(
+				$scp_prefix . 'setting_plugin_title',
 				'<div style="text-align: center;font: bold normal 14pt/16pt Arial">'
 				. __( 'Follow Us on Social Media!', L10N_SCP_PREFIX )
 				. '</div>'
@@ -736,10 +743,10 @@ class Social_Media_Popup {
 
 		if ( '0.6.8' > get_option( $version ) ) {
 			// Добавляем Pinterest в таблицу сортировки
-			$tabs_order = get_option( $scp_prefix . 'setting_tabs_order' );
-			$tabs_order = ( $tabs_order ) ? explode( ',', $tabs_order ) : array();
+			$tabs_order   = get_option( $scp_prefix . 'setting_tabs_order' );
+			$tabs_order   = ( $tabs_order ) ? explode( ',', $tabs_order ) : array();
 			$tabs_order[] = 'pinterest';
-			$tabs_order = array_unique( $tabs_order );
+			$tabs_order   = array_unique( $tabs_order );
 
 			update_option( $scp_prefix . 'setting_tabs_order', join( ',', $tabs_order ) );
 
@@ -849,8 +856,10 @@ class Social_Media_Popup {
 				delete_option( $new_scp_prefix . $new_option_name );
 
 				if ( ! add_option( $new_scp_prefix . $new_option_name, $value ) ) {
+					// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_dump
 					var_dump( $new_scp_prefix . $new_option_name );
 					var_dump( $value );
+					// phpcs:enable WordPress.PHP.DevelopmentFunctions.error_log_var_dump
 					die();
 				}
 			}
@@ -862,8 +871,10 @@ class Social_Media_Popup {
 			delete_option( $new_scp_prefix . 'popup_will_appear_after_clicking_on_element' );
 
 			if ( ! add_option( $new_scp_prefix . 'popup_will_appear_after_clicking_on_element', ( $old_value ? $old_value : $old_value2 ) ) ) {
+				// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_dump
 				var_dump( $new_scp_prefix . 'popup_will_appear_after_clicking_on_eleme' );
 				var_dump( $value );
+				// phpcs:enable WordPress.PHP.DevelopmentFunctions.error_log_var_dump
 				die();
 			}
 
@@ -3655,35 +3666,35 @@ class Social_Media_Popup {
 	 * Описание общих настроек
 	 */
 	public function settings_section_common() {
-		_e( 'Common settings', L10N_SCP_PREFIX );
+		esc_attr_e( 'Common settings', L10N_SCP_PREFIX );
 	}
 
 	/**
 	 * Описание общих настроек (таб "Внешний вид")
 	 */
 	public function settings_section_common_view_on_desktop() {
-		_e( 'Plugin appearance on desktop devices can be set in this section', L10N_SCP_PREFIX );
+		esc_attr_e( 'Plugin appearance on desktop devices can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
 	 * Описание общих настроек (таб "Внешний вид (мобильные устройства)")
 	 */
 	public function settings_section_common_view_on_mobile_devices() {
-		_e( 'Plugin appearance on mobile devices can be set in this section', L10N_SCP_PREFIX );
+		esc_attr_e( 'Plugin appearance on mobile devices can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
 	 * Описание общих настроек (таб "События" — "Когда показывать окно")
 	 */
 	public function settings_section_when_should_the_popup_appear() {
-		_e( 'Plugin events "When should the popup will appear" can be set in this section', L10N_SCP_PREFIX );
+		esc_attr_e( 'Plugin events "When should the popup will appear" can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
 	 * Описание общих настроек (таб "События" – "Кому показывать окно")
 	 */
 	public function settings_section_who_should_see_the_popup() {
-		_e( 'Plugin events "Who should see the popup" can be set in this section', L10N_SCP_PREFIX );
+		esc_attr_e( 'Plugin events "Who should see the popup" can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
@@ -3692,7 +3703,7 @@ class Social_Media_Popup {
 	 * @since 0.7.5
 	 */
 	public function settings_section_common_events_tracking() {
-		_e( 'Events tracking can be set in this section', L10N_SCP_PREFIX );
+		esc_attr_e( 'Events tracking can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
@@ -3701,7 +3712,7 @@ class Social_Media_Popup {
 	 * @since 0.7.5
 	 */
 	public function settings_section_common_window_events_descriptions() {
-		_e( 'Window rendering uses these events when social networks are disabled.', L10N_SCP_PREFIX );
+		esc_attr_e( 'Window rendering uses these events when social networks are disabled.', L10N_SCP_PREFIX );
 	}
 
 	/**
@@ -3710,7 +3721,7 @@ class Social_Media_Popup {
 	 * @since 0.7.5
 	 */
 	public function settings_section_common_google_analytics() {
-		_e( 'Google Analytics settings.', L10N_SCP_PREFIX );
+		esc_attr_e( 'Google Analytics settings.', L10N_SCP_PREFIX );
 	}
 
 	/**
@@ -3719,21 +3730,21 @@ class Social_Media_Popup {
 	 * @since 0.7.5
 	 */
 	public function settings_section_common_multiple_events_descriptions() {
-		_e( 'This descriptions will concatenate with social networks events descriptions. Example: [Subscribe on Facebook] + [no events fired].', L10N_SCP_PREFIX );
+		esc_attr_e( 'This descriptions will concatenate with social networks events descriptions. Example: [Subscribe on Facebook] + [no events fired].', L10N_SCP_PREFIX );
 	}
 
 	/**
 	 * Описание общих настроек (таб "Управление")
 	 */
 	public function settings_section_common_management() {
-		_e( 'Management settings can be set in this section', L10N_SCP_PREFIX );
+		esc_attr_e( 'Management settings can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
 	 * Описание настроек Facebook
 	 */
 	public function settings_section_facebook() {
-		_e( 'Facebook settings can be set in this section', L10N_SCP_PREFIX );
+		esc_attr_e( 'Facebook settings can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
@@ -3742,14 +3753,14 @@ class Social_Media_Popup {
 	 * @since 0.7.5
 	 */
 	public function settings_section_facebook_tracking() {
-		_e( 'Facebook tracking settings can be set in this section', L10N_SCP_PREFIX );
+		esc_attr_e( 'Facebook tracking settings can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
 	 * Описание настроек ВКонтакте
 	 */
 	public function settings_section_vkontakte() {
-		_e( 'VK.com settings can be set in this section', L10N_SCP_PREFIX );
+		esc_attr_e( 'VK.com settings can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
@@ -3758,21 +3769,21 @@ class Social_Media_Popup {
 	 * @since 0.7.5
 	 */
 	public function settings_section_vkontakte_tracking() {
-		_e( 'VK.com tracking settings can be set in this section', L10N_SCP_PREFIX );
+		esc_attr_e( 'VK.com tracking settings can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
 	 * Описание настроек Одноклассников
 	 */
 	public function settings_section_odnoklassniki() {
-		_e( 'Odnoklassniki.ru settings can be set in this section', L10N_SCP_PREFIX );
+		esc_attr_e( 'Odnoklassniki.ru settings can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
 	 * Описание настроек Google+
 	 */
 	public function settings_section_googleplus() {
-		_e( 'Google+ settings can be set in this section', L10N_SCP_PREFIX );
+		esc_attr_e( 'Google+ settings can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
@@ -3781,7 +3792,7 @@ class Social_Media_Popup {
 	 * @since 0.6
 	 */
 	public function settings_section_twitter() {
-		_e( 'Twitter settings can be set in this section', L10N_SCP_PREFIX );
+		esc_attr_e( 'Twitter settings can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
@@ -3790,7 +3801,7 @@ class Social_Media_Popup {
 	 * @since 0.7.5
 	 */
 	public function settings_section_twitter_follow_button() {
-		_e( 'Twitter Follow Button widget settings can be set in this section', L10N_SCP_PREFIX );
+		esc_attr_e( 'Twitter Follow Button widget settings can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
@@ -3799,7 +3810,7 @@ class Social_Media_Popup {
 	 * @since 0.7.5
 	 */
 	public function settings_section_twitter_timeline() {
-		_e( 'Twitter Timeline widget settings can be set in this section', L10N_SCP_PREFIX );
+		esc_attr_e( 'Twitter Timeline widget settings can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
@@ -3808,14 +3819,14 @@ class Social_Media_Popup {
 	 * @since 0.7.5
 	 */
 	public function settings_section_twitter_tracking() {
-		_e( 'Twitter tracking settings can be set in this section', L10N_SCP_PREFIX );
+		esc_attr_e( 'Twitter tracking settings can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
 	 * Описание настроек Pinterest
 	 */
 	public function settings_section_pinterest() {
-		_e( 'Pinterest settings can be set in this section', L10N_SCP_PREFIX );
+		esc_attr_e( 'Pinterest settings can be set in this section', L10N_SCP_PREFIX );
 	}
 
 	/**
@@ -3927,12 +3938,12 @@ class Social_Media_Popup {
 		if ( absint( get_option( self::get_scp_prefix() . 'setting_show_admin_bar_menu' ) ) !== 1 ) return;
 
 		$args = array(
-			'id'     => 'scp-admin-bar',
-			'title'  => 'Social Media Popup',
+			'id'    => 'scp-admin-bar',
+			'title' => 'Social Media Popup',
 		);
 
 		if ( absint( get_option( self::get_scp_prefix() . 'setting_debug_mode' ) ) === 1 ) {
-			$args['title'] .= ' – ' . __( 'Debug Mode', L10N_SCP_PREFIX );
+			$args['title']        .= ' – ' . __( 'Debug Mode', L10N_SCP_PREFIX );
 			$args['meta']['class'] = 'smp-debug-mode';
 		}
 
@@ -3983,7 +3994,7 @@ class Social_Media_Popup {
 		if ( ! is_admin() ) return;
 
 		$scp_prefix = self::get_scp_prefix();
-		$version = get_option( $scp_prefix . 'version' );
+		$version    = get_option( $scp_prefix . 'version' );
 
 		wp_register_style( SMP_PREFIX . '-admin-css', SMP_ASSETS_URL . 'css/admin.min.css?' . $version );
 		wp_enqueue_style( SMP_PREFIX . '-admin-css' );
@@ -4004,7 +4015,9 @@ class Social_Media_Popup {
 		}
 
 		wp_enqueue_style( 'wp-color-picker' );
-		wp_register_script( SMP_PREFIX . '-admin-js', SMP_ASSETS_URL . 'js/admin.js?' . $version,
+		wp_register_script(
+			SMP_PREFIX . '-admin-js',
+			SMP_ASSETS_URL . 'js/admin.js?' . $version,
 			array( 'jquery', 'wp-color-picker' )
 		);
 
@@ -4040,7 +4053,9 @@ class Social_Media_Popup {
 			$content .= $template->render_google_analytics_tracking_code( $google_analytics_tracking_id );
 		}
 
+		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $content;
+		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -4048,11 +4063,11 @@ class Social_Media_Popup {
 	 */
 	public function plugin_welcome_screen() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( esc_attr( 'You do not have sufficient permissions to access this page.', L10N_SCP_PREFIX ) );
 		}
 
 		$scp_prefix = self::get_scp_prefix();
-		$version = get_option( $scp_prefix . 'version' );
+		$version    = get_option( $scp_prefix . 'version' );
 
 		include( SMP_TEMPLATES_DIR . 'welcome-screen.php' );
 	}
@@ -4062,7 +4077,7 @@ class Social_Media_Popup {
 	 */
 	public function plugin_settings_page() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( esc_attr( 'You do not have sufficient permissions to access this page.', L10N_SCP_PREFIX ) );
 		}
 
 		include( SMP_TEMPLATES_DIR . 'settings.php' );
@@ -4073,7 +4088,7 @@ class Social_Media_Popup {
 	 */
 	public function plugin_settings_page_facebook_options() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( esc_attr( 'You do not have sufficient permissions to access this page.', L10N_SCP_PREFIX ) );
 		}
 
 		include( SMP_TEMPLATES_DIR . 'settings/settings-facebook.php' );
@@ -4084,7 +4099,7 @@ class Social_Media_Popup {
 	 */
 	public function plugin_settings_page_vkontakte_options() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( esc_attr( 'You do not have sufficient permissions to access this page.', L10N_SCP_PREFIX ) );
 		}
 
 		include( SMP_TEMPLATES_DIR . 'settings/settings-vkontakte.php' );
@@ -4095,7 +4110,7 @@ class Social_Media_Popup {
 	 */
 	public function plugin_settings_page_odnoklassniki_options() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( esc_attr( 'You do not have sufficient permissions to access this page.', L10N_SCP_PREFIX ) );
 		}
 
 		include( SMP_TEMPLATES_DIR . 'settings/settings-odnoklassniki.php' );
@@ -4106,7 +4121,7 @@ class Social_Media_Popup {
 	 */
 	public function plugin_settings_page_googleplus_options() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( esc_attr( 'You do not have sufficient permissions to access this page.', L10N_SCP_PREFIX ) );
 		}
 
 		include( SMP_TEMPLATES_DIR . 'settings/settings-googleplus.php' );
@@ -4117,7 +4132,7 @@ class Social_Media_Popup {
 	 */
 	public function plugin_settings_page_twitter_options() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( esc_attr( 'You do not have sufficient permissions to access this page.', L10N_SCP_PREFIX ) );
 		}
 
 		include( SMP_TEMPLATES_DIR . 'settings/settings-twitter.php' );
@@ -4128,7 +4143,7 @@ class Social_Media_Popup {
 	 */
 	public function plugin_settings_page_pinterest_options() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( esc_attr( 'You do not have sufficient permissions to access this page.', L10N_SCP_PREFIX ) );
 		}
 
 		include( SMP_TEMPLATES_DIR . 'settings/settings-pinterest.php' );
@@ -4139,7 +4154,7 @@ class Social_Media_Popup {
 	 */
 	public function plugin_settings_page_debug() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( esc_attr( 'You do not have sufficient permissions to access this page.', L10N_SCP_PREFIX ) );
 		}
 
 		$content = $this->validate_settings();
@@ -4163,7 +4178,7 @@ class Social_Media_Popup {
 		}
 
 		$scp_prefix = self::get_scp_prefix();
-		$version = get_option( $scp_prefix . 'version' );
+		$version    = get_option( $scp_prefix . 'version' );
 
 		$this->add_cookies_script( $version, $scp_prefix );
 		if ( is_scp_cookie_present() ) {
@@ -4206,9 +4221,11 @@ class Social_Media_Popup {
 		$encoded_content = base64_encode( $encoded_content );
 
 		wp_register_script( SMP_PREFIX . '-js', SMP_ASSETS_URL . 'js/scripts.js?' . $version, array( 'jquery' ) );
-		wp_localize_script( SMP_PREFIX . '-js', 'scp', array(
-			'encodedContent' => htmlspecialchars( $encoded_content ),
-		));
+		wp_localize_script(
+			SMP_PREFIX . '-js',
+			'scp',
+			array( 'encodedContent' => htmlspecialchars( $encoded_content ) )
+		);
 		wp_enqueue_script( SMP_PREFIX . '-js' );
 	}
 
@@ -4222,11 +4239,13 @@ class Social_Media_Popup {
 	 * @return void
 	 */
 	private function add_cookies_script( $version, $scp_prefix ) {
-		wp_register_script( SMP_PREFIX . '-cookies', SMP_ASSETS_URL . 'js/cookies.js?' . $version, array( 'jquery' ) );
-		wp_localize_script( SMP_PREFIX . '-cookies', 'scp_cookies', array(
+		$messages = array(
 			'clearCookiesMessage'           => __( 'Page will be reload after clear cookies. Continue?', L10N_SCP_PREFIX ),
 			'showWindowAfterReturningNDays' => absint( get_option( $scp_prefix . 'setting_display_after_n_days' ) ),
-		));
+		);
+
+		wp_register_script( SMP_PREFIX . '-cookies', SMP_ASSETS_URL . 'js/cookies.js?' . $version, array( 'jquery' ) );
+		wp_localize_script( SMP_PREFIX . '-cookies', 'scp_cookies', $messages );
 		wp_enqueue_script( SMP_PREFIX . '-cookies' );
 	}
 
@@ -4253,12 +4272,12 @@ class Social_Media_Popup {
 	 */
 	private function validate_settings() {
 		$scp_prefix = self::get_scp_prefix();
-		$options = array();
+		$options    = array();
 
 		$all_options = wp_load_alloptions();
 		foreach ( $all_options as $name => $value ) {
 			if ( preg_match( '/^' . $scp_prefix . '/', $name ) ) {
-				$name = str_replace( $scp_prefix, '', $name );
+				$name             = str_replace( $scp_prefix, '', $name );
 				$options[ $name ] = $value;
 			}
 		}
