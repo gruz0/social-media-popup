@@ -21,7 +21,7 @@ class SCP_Settings_Field {
 	 *
 	 * @param array $args Options
 	 */
-	public function settings_field_input_text( $args ) {
+	public static function settings_field_input_text( $args ) {
 		$field = esc_attr( $args['field'] );
 		$value = esc_attr( get_option( $field ) );
 
@@ -39,7 +39,7 @@ class SCP_Settings_Field {
 	 *
 	 * @param array $args Options
 	 */
-	public function settings_field_checkbox( $args ) {
+	public static function settings_field_checkbox( $args ) {
 		$field = esc_attr( $args['field'] );
 		$value = esc_attr( get_option( $field ) );
 
@@ -55,7 +55,7 @@ class SCP_Settings_Field {
 	 *
 	 * @param array $args Options
 	 */
-	public function settings_field_wysiwyg( $args ) {
+	public static function settings_field_wysiwyg( $args ) {
 		$field = esc_attr( $args['field'] );
 		$value = get_option( $field );
 
@@ -110,7 +110,7 @@ class SCP_Settings_Field {
 	 *
 	 * @param array $args Options
 	 */
-	public function settings_field_animation_style( $args ) {
+	public static function settings_field_animation_style( $args ) {
 		$field = esc_attr( $args['field'] );
 		$value = esc_attr( get_option( $field ) );
 
@@ -234,7 +234,7 @@ class SCP_Settings_Field {
 	 *
 	 * @param array $args Options
 	 */
-	public function settings_field_icons_size( $args ) {
+	public static function settings_field_icons_size( $args ) {
 		$field = esc_attr( $args['field'] );
 		$value = esc_attr( get_option( $field ) );
 
@@ -264,7 +264,7 @@ class SCP_Settings_Field {
 	 *
 	 * @param array $args Options
 	 */
-	public function settings_field_show_close_button_in( $args ) {
+	public static function settings_field_show_close_button_in( $args ) {
 		$field = esc_attr( $args['field'] );
 		$value = esc_attr( get_option( $field ) );
 
@@ -287,7 +287,7 @@ class SCP_Settings_Field {
 	 *
 	 * @param array $args Options
 	 */
-	public function settings_field_button_to_close_widget_style( $args ) {
+	public static function settings_field_button_to_close_widget_style( $args ) {
 		$field = esc_attr( $args['field'] );
 		$value = esc_attr( get_option( $field ) );
 
@@ -312,7 +312,7 @@ class SCP_Settings_Field {
 	 *
 	 * @param array $args Options
 	 */
-	public function settings_field_background_image( $args ) {
+	public static function settings_field_background_image( $args ) {
 		$field = esc_attr( $args['field'] );
 		$value = esc_attr( get_option( $field ) );
 
@@ -330,7 +330,7 @@ class SCP_Settings_Field {
 	 *
 	 * @param array $args Options
 	 */
-	public function settings_field_when_should_the_popup_appear( $args ) {
+	public static function settings_field_when_should_the_popup_appear( $args ) {
 		$options                                   = array();
 		$options['after_n_seconds']                = esc_attr( 'Popup will appear after N second(s)', L10N_SCP_PREFIX );
 		$options['after_clicking_on_element']      = esc_attr( 'Popup will appear after clicking on the given CSS selector', L10N_SCP_PREFIX );
@@ -347,7 +347,7 @@ class SCP_Settings_Field {
 	 *
 	 * @param array $args Options
 	 */
-	public function settings_field_who_should_see_the_popup( $args ) {
+	public static function settings_field_who_should_see_the_popup( $args ) {
 		$options = array();
 		$options['visitor_opened_at_least_n_number_of_pages'] = esc_attr( 'Visitor opened at least N number of page(s)', L10N_SCP_PREFIX );
 		$options['visitor_registered_and_role_equals_to']     = esc_attr( 'Registered Users Who Should See the Popup', L10N_SCP_PREFIX );
@@ -362,7 +362,7 @@ class SCP_Settings_Field {
 	 *
 	 * @param array $args Options
 	 */
-	public function settings_field_visitor_registered_and_role_equals_to( $args ) {
+	public static function settings_field_visitor_registered_and_role_equals_to( $args ) {
 		$field = esc_attr( $args['field'] );
 		$value = esc_attr( get_option( $field ) );
 
@@ -392,7 +392,7 @@ class SCP_Settings_Field {
 	 *
 	 * @param array $args Options
 	 */
-	public function settings_field_facebook_locale( $args ) {
+	public static function settings_field_facebook_locale( $args ) {
 		$field = esc_attr( $args['field'] );
 		$value = esc_attr( get_option( $field ) );
 
@@ -415,7 +415,7 @@ class SCP_Settings_Field {
 	 *
 	 * @uses SCP_Settings_Field::render_checkboxes_with_hidden_field()
 	 */
-	public function settings_field_facebook_tabs( $args ) {
+	public static function settings_field_facebook_tabs( $args ) {
 		$options             = array();
 		$options['timeline'] = esc_attr( 'Timelime', L10N_SCP_PREFIX );
 		$options['messages'] = esc_attr( 'Messages', L10N_SCP_PREFIX );
@@ -431,7 +431,7 @@ class SCP_Settings_Field {
 	 *
 	 * @param array $args Options
 	 */
-	public function settings_field_vkontakte_layout( $args ) {
+	public static function settings_field_vkontakte_layout( $args ) {
 		$field = esc_attr( $args['field'] );
 		$value = esc_attr( get_option( $field ) );
 
@@ -454,7 +454,7 @@ class SCP_Settings_Field {
 	 *
 	 * @param array $args Options
 	 */
-	public function settings_field_googleplus_page_type( $args ) {
+	public static function settings_field_googleplus_page_type( $args ) {
 		$field = esc_attr( $args['field'] );
 		$value = esc_attr( get_option( $field ) );
 
@@ -477,7 +477,7 @@ class SCP_Settings_Field {
 	 *
 	 * @param array $args Options
 	 */
-	public function settings_field_googleplus_layout( $args ) {
+	public static function settings_field_googleplus_layout( $args ) {
 		$field = esc_attr( $args['field'] );
 		$value = esc_attr( get_option( $field ) );
 
@@ -498,7 +498,7 @@ class SCP_Settings_Field {
 	 *
 	 * @param array $args Options
 	 */
-	public function settings_field_googleplus_locale( $args ) {
+	public static function settings_field_googleplus_locale( $args ) {
 		$field = esc_attr( $args['field'] );
 		$value = esc_attr( get_option( $field ) );
 
@@ -519,7 +519,7 @@ class SCP_Settings_Field {
 	 *
 	 * @param array $args Options
 	 */
-	public function settings_field_googleplus_theme( $args ) {
+	public static function settings_field_googleplus_theme( $args ) {
 		$field = esc_attr( $args['field'] );
 		$value = esc_attr( get_option( $field ) );
 
@@ -542,7 +542,7 @@ class SCP_Settings_Field {
 	 *
 	 * @since 0.7.6
 	 */
-	public function settings_field_twitter_locale( $args ) {
+	public static function settings_field_twitter_locale( $args ) {
 		$field = esc_attr( $args['field'] );
 		$value = esc_attr( get_option( $field ) );
 
@@ -565,7 +565,7 @@ class SCP_Settings_Field {
 	 *
 	 * @since 0.7.6
 	 */
-	public function settings_field_twitter_first_widget( $args ) {
+	public static function settings_field_twitter_first_widget( $args ) {
 		$field = esc_attr( $args['field'] );
 		$value = esc_attr( get_option( $field ) );
 
@@ -588,7 +588,7 @@ class SCP_Settings_Field {
 	 *
 	 * @param array $args Options
 	 */
-	public function settings_field_twitter_follow_button_align_by( $args ) {
+	public static function settings_field_twitter_follow_button_align_by( $args ) {
 		$field = esc_attr( $args['field'] );
 		$value = esc_attr( get_option( $field ) );
 
@@ -616,7 +616,7 @@ class SCP_Settings_Field {
 	 *
 	 * @param array $args Options
 	 */
-	public function settings_field_twitter_theme( $args ) {
+	public static function settings_field_twitter_theme( $args ) {
 		$field = esc_attr( $args['field'] );
 		$value = esc_attr( get_option( $field ) );
 
@@ -639,7 +639,7 @@ class SCP_Settings_Field {
 	 *
 	 * @uses SCP_Settings_Field::render_checkboxes_with_hidden_field()
 	 */
-	public function settings_field_twitter_chrome( $args ) {
+	public static function settings_field_twitter_chrome( $args ) {
 		$options                 = array();
 		$options['noheader']     = esc_attr( 'No Header', L10N_SCP_PREFIX );
 		$options['nofooter']     = esc_attr( 'No Footer', L10N_SCP_PREFIX );
@@ -662,7 +662,7 @@ class SCP_Settings_Field {
 	 * @used_by SCP_Settings_Field::settings_field_twitter_chrome()
 	 * @used_by SCP_Settings_Field::settings_field_facebook_tabs()
 	 */
-	public function render_checkboxes_with_hidden_field( $field, $options ) {
+	public static function render_checkboxes_with_hidden_field( $field, $options ) {
 		$value = get_option( $field );
 
 		$chains = preg_split( '/,/', $value );
