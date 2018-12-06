@@ -21,12 +21,12 @@ class SCP_Popup {
 	 * @return string
 	 */
 	public static function render( $scp_prefix ) {
-		$options = array();
+		$options     = array();
 		$all_options = wp_load_alloptions();
 
 		foreach ( $all_options as $name => $value ) {
 			if ( stristr( $name, $scp_prefix ) ) {
-				$name = str_replace( $scp_prefix, '', $name );
+				$name             = str_replace( $scp_prefix, '', $name );
 				$options[ $name ] = $value;
 			}
 		}
@@ -46,6 +46,7 @@ class SCP_Popup {
 
 		$debug_mode = '1' === $options['setting_debug_mode'];
 
+		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 		$template_options = array(
 			'use_events_tracking'                             => '1' === $options['use_events_tracking'],
 			'do_not_use_tracking_in_debug_mode'               => ( $debug_mode && '1' === $options['do_not_use_tracking_in_debug_mode'] ),
@@ -54,6 +55,7 @@ class SCP_Popup {
 			'push_events_when_subscribing_on_social_networks' => '1' === $options['push_events_when_subscribing_on_social_networks'],
 			'add_window_events_descriptions'                  => '1' === $options['add_window_events_descriptions'],
 		);
+		// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 
 		$template = new SCP_Template(
 			$template_options,
@@ -72,22 +74,19 @@ class SCP_Popup {
 			if ( is_user_logged_in() ) {
 				switch ( $options['visitor_registered_and_role_equals_to'] ) {
 					case 'all_registered_users':
-
-					break;
+						break;
 
 					case 'exclude_administrators':
 						if ( current_user_can( 'manage_options' ) ) {
 							return;
 						}
-
-					break;
+						break;
 
 					case 'exclude_administrators_and_managers':
 						if ( current_user_can( 'publish_pages' ) || current_user_can( 'publish_posts' ) ) {
 							return;
 						}
-
-					break;
+						break;
 				}
 			}
 		}
@@ -103,8 +102,8 @@ class SCP_Popup {
 		//
 		// Когда показывать окно
 		//
-		$when_should_the_popup_appear                     = split_string_by_comma( $options['when_should_the_popup_appear'] );
-		$when_should_the_popup_appear_events              = array(
+		$when_should_the_popup_appear        = split_string_by_comma( $options['when_should_the_popup_appear'] );
+		$when_should_the_popup_appear_events = array(
 			'after_n_seconds',
 			'after_clicking_on_element',
 			'after_scrolling_down_n_percent',
@@ -117,25 +116,25 @@ class SCP_Popup {
 		$popup_will_appear_on_exit_intent                 = '1' === $options['popup_will_appear_on_exit_intent'];
 
 		// Дополнительные события
-		$event_hide_element_after_click_on_it             = '1' === $options['event_hide_element_after_click_on_it'];
-		$do_not_use_cookies_after_click_on_element        = '1' === $options['do_not_use_cookies_after_click_on_element'];
+		$event_hide_element_after_click_on_it      = '1' === $options['event_hide_element_after_click_on_it'];
+		$do_not_use_cookies_after_click_on_element = '1' === $options['do_not_use_cookies_after_click_on_element'];
 
 		//
 		// Кому показывать окно
 		//
-		$who_should_see_the_popup                         = split_string_by_comma( $options['who_should_see_the_popup'] );
-		$who_should_see_the_popup_events                  = array(
-			'visitor_opened_at_least_n_number_of_pages'
+		$who_should_see_the_popup        = split_string_by_comma( $options['who_should_see_the_popup'] );
+		$who_should_see_the_popup_events = array(
+			'visitor_opened_at_least_n_number_of_pages',
 		);
 
-		$visitor_opened_at_least_n_number_of_pages        = absint( $options['visitor_opened_at_least_n_number_of_pages'] );
+		$visitor_opened_at_least_n_number_of_pages = absint( $options['visitor_opened_at_least_n_number_of_pages'] );
 
 		// Если true, тогда окно будет показываться с учётом событий "Каким посетителям показывать окно"
-		$who_should_see_the_popup_fired                   = false;
+		$who_should_see_the_popup_fired = false;
 
 		// Используется при обработке событий "Когда показывать окно" и только вместе с $who_should_see_the_popup_fired
 		// Значение примет true только в том случае, если хотя бы одно из событий "Кому показывать окно" активно
-		$who_should_see_the_popup_present                 = false;
+		$who_should_see_the_popup_present = false;
 
 		// Обработка событий кому показывать окно плагина
 		$show_popup = false;
@@ -256,8 +255,8 @@ class SCP_Popup {
 					$width = $tab_index === $active_providers_count ? $last_tab_width : $tab_width;
 
 					$args = array(
-						'index' => $tab_index++,
-						'width' => $width,
+						'index'     => $tab_index++,
+						'width'     => $width,
 						'icon_size' => $icon_size,
 					);
 
@@ -284,7 +283,7 @@ class SCP_Popup {
 				$border_radius_css    = $border_radius > 0 ? "border-radius:{$border_radius}px !important;" : '';
 				$background_image_css = empty( $background_image ) ? '' : "background:#fff url('{$background_image}') center center no-repeat;";
 
-				$popup_css = '';
+				$popup_css  = '';
 				$popup_css .= 'width:' . ( $container_width + 40 ) . 'px !important;height:' . ( $container_height + 10 ) . 'px !important;';
 				$popup_css .= $border_radius_css;
 				$popup_css .= $background_image_css;
@@ -292,12 +291,12 @@ class SCP_Popup {
 				$scp_plugin_title  = trim( str_replace( "\r\n", '<br />', $options['setting_plugin_title'] ) );
 				$show_plugin_title = mb_strlen( $scp_plugin_title ) > 0;
 
-				$animation_class = $use_animation ? ' class="animated ' . $animation_style . '"': '';
-				$content .= '<div id="popup" style="' . esc_attr( $popup_css ) . '"' . $animation_class . '>';
+				$animation_class = $use_animation ? ' class="animated ' . $animation_style . '"' : '';
+				$content        .= '<div id="popup" style="' . esc_attr( $popup_css ) . '"' . $animation_class . '>';
 
 				if ( $show_plugin_title && 'inside' === $show_close_button_in ) {
 					$content .= '<div class="top-close">';
-						$content .= '<span class="close" title="' . __( 'Close Modal Dialog', L10N_SCP_PREFIX ) . '">&times;</span>';
+					$content .= '<span class="close" title="' . __( 'Close Modal Dialog', L10N_SCP_PREFIX ) . '">&times;</span>';
 					$content .= '</div>';
 				}
 
@@ -315,7 +314,7 @@ class SCP_Popup {
 
 				} else {
 					$use_icons_instead_of_labels = '1' === $options['setting_use_icons_instead_of_labels_in_tabs'];
-					$icon_size = 'fa-' . $options['setting_icons_size_on_desktop'];
+					$icon_size                   = 'fa-' . $options['setting_icons_size_on_desktop'];
 
 					if ( $use_icons_instead_of_labels ) {
 						$content .= '<ul class="scp-icons scp-icons-desktop">';
@@ -375,8 +374,9 @@ class SCP_Popup {
 				if ( '1' === $options['setting_show_button_to_close_widget'] ) {
 					$button_to_close_widget_style = $options['setting_button_to_close_widget_style'];
 					$button_to_close_widget_class = 'link' === $button_to_close_widget_style ? '' : 'scp-' . $button_to_close_widget_style . '-button';
+
 					$content .= '<div class="dont-show-widget scp-button ' . esc_attr( $button_to_close_widget_class ) . '">';
-						$content .= '<a href="#" class="close">' . esc_attr( $options['setting_button_to_close_widget_title'] ) . '</a>';
+					$content .= '<a href="#" class="close">' . esc_attr( $options['setting_button_to_close_widget_title'] ) . '</a>';
 					$content .= '</div>';
 				}
 			}
@@ -504,6 +504,7 @@ class SCP_Popup {
 
 					$content .= $template->render_close_widget( $close_by_clicking_anywhere, $after_n_days );
 					$content .= $template->render_close_widget_when_esc_pressed( $close_when_esc_pressed, $after_n_days );
+
 				$content .= '});
 			</script>';
 		}

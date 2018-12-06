@@ -38,7 +38,7 @@ if ( ! array_key_exists( 'social-media-popup', $GLOBALS ) ) {
 		define( 'SMP_PLUGIN_DIRNAME', dirname( plugin_basename( __FILE__ ) ) . DIRECTORY_SEPARATOR );
 		define( 'SMP_ASSETS_URL',     plugin_dir_url( __FILE__ ) . 'assets/' );
 
-		include( SMP_INCLUDES_DIR . 'social-media-popup.class.php' );
+		include( SMP_INCLUDES_DIR . 'class-social-media-popup.php' );
 
 		$social_media_popup = new Social_Media_Popup();
 

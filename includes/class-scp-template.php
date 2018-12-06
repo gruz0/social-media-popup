@@ -39,14 +39,16 @@ class SCP_Template {
 	 * @param array $events_descriptions Events descriptions
 	 */
 	public function __construct( $options = array(), $events_descriptions = array() ) {
+		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 		$default_options = array(
-			'use_events_tracking' => false,
-			'do_not_use_tracking_in_debug_mode' => true,
-			'push_events_to_aquisition_social_plugins' => true,
-			'push_events_when_displaying_window' => true,
+			'use_events_tracking'                             => false,
+			'do_not_use_tracking_in_debug_mode'               => true,
+			'push_events_to_aquisition_social_plugins'        => true,
+			'push_events_when_displaying_window'              => true,
 			'push_events_when_subscribing_on_social_networks' => true,
-			'add_window_events_descriptions' => true,
+			'add_window_events_descriptions'                  => true,
 		);
+		// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 
 		$this->_options = wp_parse_args( $options, $default_options );
 
@@ -116,6 +118,7 @@ class SCP_Template {
 	 */
 	function render_show_bottom_button( $delay_before_show_bottom_button ) {
 		$content = '';
+
 		$delay_before_show_bottom_button = absint( esc_attr( $delay_before_show_bottom_button ) );
 		if ( $delay_before_show_bottom_button > 0 ) {
 			$content = 'setTimeout(function() { jQuery(".dont-show-widget").show(); }, ' . ( $delay_before_show_bottom_button * 1000 ) . ');';
@@ -159,7 +162,7 @@ class SCP_Template {
 	 */
 	function render_close_widget_on_mobile( $after_n_days ) {
 		$selector_to_close_widget = '#scp_mobile .scp-close a';
-		$after_n_days = absint( esc_attr( $after_n_days ) );
+		$after_n_days             = absint( esc_attr( $after_n_days ) );
 
 		return 'jQuery("' . $selector_to_close_widget . '").on("click", function() {
 			scp_destroyPlugin(' . $after_n_days . ', "#scp_mobile");
@@ -181,6 +184,7 @@ class SCP_Template {
 
 		if ( $close_when_esc_pressed ) {
 			$after_n_days = absint( esc_attr( $after_n_days ) );
+
 			$content .= 'jQuery(document).on("keydown", function(e) {
 				if ( e.keyCode == 27 ) {
 					scp_destroyPlugin(' . $after_n_days . ');
@@ -311,6 +315,7 @@ class SCP_Template {
 					}
 
 					$content .= 'return false;';
+
 				$content .= '});';
 			} else {
 				$content .= 'alert("' . __( "You should to add a CSS selector in the plugin settings. Otherwise it won't be work.", L10N_SCP_PREFIX ) . '");';
@@ -421,6 +426,7 @@ class SCP_Template {
 
 					$content .= $this->render_show_window();
 					$content .= $this->render_show_bottom_button( $delay_before_show_bottom_button );
+
 				$content .= '}
 			});';
 		}
@@ -445,7 +451,7 @@ class SCP_Template {
 			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-		ga('create', '<?php echo $tracking_id; ?>', 'auto');
+		ga('create', '<?php echo esc_attr( $tracking_id ); ?>', 'auto');
 		ga('send', 'pageview');
 		</script>
 	<?php

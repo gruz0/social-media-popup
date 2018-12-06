@@ -1,6 +1,7 @@
 FROM wordpress:latest
 MAINTAINER Alexander Kadyrov <gruz0.mail@gmail.com>
 
+COPY bin/activate_debug.sh /usr/local/bin
 RUN apt-get update && \
     apt-get install -y --no-install-recommends apt-utils vim-tiny && \
     \

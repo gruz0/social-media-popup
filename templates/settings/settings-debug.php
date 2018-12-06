@@ -12,9 +12,12 @@ defined( 'ABSPATH' ) or exit;
 ?>
 
 <div class="wrap social-community-popup-settings">
-	<h2><?php _e( 'Debug', L10N_SCP_PREFIX ); ?></h2>
+	<h2><?php esc_attr_e( 'Debug', L10N_SCP_PREFIX ); ?></h2>
 
-	<?php echo $content; ?>
+	<?php
+	// FIXME: It should be sanitized
+	echo $content; // WPCS: XSS OK.
+	?>
 
 	<?php require( sprintf( '%s/../copyright.php', dirname( __FILE__ ) ) ); ?>
 </div>

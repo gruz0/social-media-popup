@@ -6,7 +6,7 @@ notifications:
   on_failure: change
 
 php:
-  - nightly # PHP 7.0
+  - nightly
   - 5.6
   - 5.5
   - 5.4
@@ -19,9 +19,14 @@ matrix:
     - php: nightly
 
 before_script:
+  # tests
   - git clone https://github.com/Seravo/wordpress-test-template wp-tests
   - bash wp-tests/bin/install-wp-tests.sh test root '' localhost $WP_VERSION
+  # linters
+  - git clone https://github.com/squizlabs/PHP_CodeSniffer.git phpcs
+  - git clone -b master https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git wpcs
 
 script:
   - phpunit
   - cd wp-tests/spec && bundle exec rspec test.rb
+  - cd ../../ && php phpcs/bin/phpcs --colors --standard=phpcs.xml -s .

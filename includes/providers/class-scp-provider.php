@@ -82,41 +82,35 @@ class SCP_Provider {
 
 		// FIXME: Переписать на проверку провайдера в массиве available_providers()
 		switch ( $provider ) {
-			case 'facebook': {
-				require_once( dirname( __FILE__ ) . '/facebook.php' );
+			case 'facebook':
+				require_once( dirname( __FILE__ ) . '/class-scp-facebook-provider.php' );
 				return new SCP_Facebook_Provider();
-			}
-			break;
+				break;
 
-			case 'vkontakte': {
-				require_once( dirname( __FILE__ ) . '/vkontakte.php' );
+			case 'vkontakte':
+				require_once( dirname( __FILE__ ) . '/class-scp-vk-provider.php' );
 				return new SCP_VK_Provider();
-			}
-			break;
+				break;
 
-			case 'odnoklassniki': {
-				require_once( dirname( __FILE__ ) . '/odnoklassniki.php' );
+			case 'odnoklassniki':
+				require_once( dirname( __FILE__ ) . '/class-scp-odnoklassniki-provider.php' );
 				return new SCP_Odnoklassniki_Provider();
-			}
-			break;
+				break;
 
-			case 'googleplus': {
-				require_once( dirname( __FILE__ ) . '/googleplus.php' );
+			case 'googleplus':
+				require_once( dirname( __FILE__ ) . '/class-scp-googleplus-provider.php' );
 				return new SCP_GooglePlus_Provider();
-			}
-			break;
+				break;
 
-			case 'twitter': {
-				require_once( dirname( __FILE__ ) . '/twitter.php' );
+			case 'twitter':
+				require_once( dirname( __FILE__ ) . '/class-scp-twitter-provider.php' );
 				return new SCP_Twitter_Provider();
-			}
-			break;
+				break;
 
-			case 'pinterest': {
-				require_once( dirname( __FILE__ ) . '/pinterest.php' );
+			case 'pinterest':
+				require_once( dirname( __FILE__ ) . '/class-scp-pinterest-provider.php' );
 				return new SCP_Pinterest_Provider();
-			}
-			break;
+				break;
 
 			default:
 				throw new Exception( "Provider {$provider} is not implemented!" );
