@@ -23,21 +23,3 @@ This section describes how to install the plugin and get it working.
 2. Extract files from the archive
 3. Activate the plugin through the 'Plugins' menu in WordPress
 
-## Development
-
-Install npm first (for CentOS, e.g.):
-```
-yum install nodejs npm
-```
-
-Then install required packages (run in repository directory):
-```
-npm install
-```
-
-## PHP CodeSniffer usage
-
-In the project directory run:
-```
-phpcs --standard=phpcs.xml path/to/file.php -s
-```
