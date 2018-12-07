@@ -102,13 +102,13 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( 3  === get_option( $scp_prefix . 'setting_display_after_delay_of_n_seconds' ) );
 
 		// Facebook
-		$this->assertTrue( __( 'Facebook', 'social-media-popup' )     === get_option( $scp_prefix . 'setting_facebook_tab_caption' ) );
-		$this->assertTrue( '277165072394537'                          === get_option( $scp_prefix . 'setting_facebook_application_id' ) );
-		$this->assertTrue( 'https://www.facebook.com/AlexanderGruzov' === get_option( $scp_prefix . 'setting_facebook_page_url' ) );
-		$this->assertTrue( 'ru_RU'                                    === get_option( $scp_prefix . 'setting_facebook_locale' ) );
-		$this->assertTrue( 400                                        === get_option( $scp_prefix . 'setting_facebook_width' ) );
-		$this->assertTrue( 300                                        === get_option( $scp_prefix . 'setting_facebook_height' ) );
-		$this->assertTrue( 1                                          === get_option( $scp_prefix . 'setting_facebook_show_faces' ) );
+		$this->assertTrue( __( 'Facebook', 'social-media-popup' ) === get_option( $scp_prefix . 'setting_facebook_tab_caption' ) );
+		$this->assertTrue( '277165072394537'                      === get_option( $scp_prefix . 'setting_facebook_application_id' ) );
+		$this->assertTrue( 'https://www.facebook.com/gruz0.ru'    === get_option( $scp_prefix . 'setting_facebook_page_url' ) );
+		$this->assertTrue( 'ru_RU'                                === get_option( $scp_prefix . 'setting_facebook_locale' ) );
+		$this->assertTrue( 400                                    === get_option( $scp_prefix . 'setting_facebook_width' ) );
+		$this->assertTrue( 300                                    === get_option( $scp_prefix . 'setting_facebook_height' ) );
+		$this->assertTrue( 1                                      === get_option( $scp_prefix . 'setting_facebook_show_faces' ) );
 
 		// VK
 		$this->assertTrue( __( 'VK', 'social-media-popup' ) === get_option( $scp_prefix . 'setting_vkontakte_tab_caption' ) );

@@ -401,7 +401,7 @@ class Social_Media_Popup {
 			update_option( $scp_prefix . 'setting_use_facebook',                     0 );
 			update_option( $scp_prefix . 'setting_facebook_tab_caption',             __( 'Facebook', 'social-media-popup' ) );
 			update_option( $scp_prefix . 'setting_facebook_application_id',          '277165072394537' );
-			update_option( $scp_prefix . 'setting_facebook_page_url',                'https://www.facebook.com/AlexanderGruzov' );
+			update_option( $scp_prefix . 'setting_facebook_page_url',                'https://www.facebook.com/gruz0.ru' );
 			update_option( $scp_prefix . 'setting_facebook_locale',                  'ru_RU' );
 			update_option( $scp_prefix . 'setting_facebook_width',                   400 );
 			update_option( $scp_prefix . 'setting_facebook_height',                  300 );
@@ -2283,7 +2283,7 @@ class Social_Media_Popup {
 			$section,
 			array(
 				'field' => $scp_prefix . 'setting_facebook_page_url',
-				'placeholder' => __( 'Example: ', 'social-media-popup' ) . 'https://www.facebook.com/AlexanderGruzov/',
+				'placeholder' => __( 'Example: ', 'social-media-popup' ) . 'https://www.facebook.com/gruz0.ru/',
 			)
 		);
 
