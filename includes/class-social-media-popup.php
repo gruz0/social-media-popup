@@ -2608,7 +2608,7 @@ class Social_Media_Popup {
 			$section,
 			array(
 				'field' => $scp_prefix . 'setting_vkontakte_page_url',
-				'placeholder' => __( 'Example: ', 'social-media-popup' ) . 'https://vk.com/blogsonwordpress_new',
+				'placeholder' => __( 'Example: ', 'social-media-popup' ) . 'https://vk.com/ru_wp',
 			)
 		);
 
