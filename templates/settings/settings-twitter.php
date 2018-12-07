@@ -16,7 +16,7 @@ $tab            = smp_validate_and_sanitize_tab( $slug, $available_tabs );
 ?>
 
 <div class="wrap social-community-popup-settings">
-	<h2><?php esc_attr_e( 'Twitter Options', L10N_SCP_PREFIX ); ?></h2>
+	<h2><?php esc_attr_e( 'Twitter Options', 'social-media-popup' ); ?></h2>
 
 	<?php scp_twitter_settings_tabs( $tab ); ?>
 
@@ -38,10 +38,10 @@ $tab            = smp_validate_and_sanitize_tab( $slug, $available_tabs );
  */
 function scp_twitter_settings_tabs( $current_tab ) {
 	$tabs                  = array();
-	$tabs['general']       = __( 'General', L10N_SCP_PREFIX );
-	$tabs['follow-button'] = __( 'Follow Button Widget', L10N_SCP_PREFIX );
-	$tabs['timeline']      = __( 'Timeline Widget', L10N_SCP_PREFIX );
-	$tabs['tracking']      = __( 'Tracking', L10N_SCP_PREFIX );
+	$tabs['general']       = __( 'General', 'social-media-popup' );
+	$tabs['follow-button'] = __( 'Follow Button Widget', 'social-media-popup' );
+	$tabs['timeline']      = __( 'Timeline Widget', 'social-media-popup' );
+	$tabs['tracking']      = __( 'Tracking', 'social-media-popup' );
 
 	$tab_template = '<a class="nav-tab %s" href="?page=' . SMP_PREFIX . '_twitter_options&tab=%s">%s</a>';
 

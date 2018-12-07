@@ -33,7 +33,7 @@ class SCP_VK_Provider extends SCP_Provider {
 	 */
 	public static function options() {
 		return array(
-			'default_tab_caption' => __( 'VK', L10N_SCP_PREFIX ),
+			'default_tab_caption' => __( 'VK', 'social-media-popup' ),
 			'tab_caption'         => self::get_option_as_escaped_string( 'setting_vkontakte_tab_caption' ),
 			'css_class'           => 'vk-tab',
 			'icon'                => 'fa-vk',

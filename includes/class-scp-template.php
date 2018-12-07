@@ -53,16 +53,16 @@ class SCP_Template {
 		$this->_options = wp_parse_args( $options, $default_options );
 
 		$default_events_descriptions = array(
-			'window_showed_immediately'       => __( 'Show immediately', L10N_SCP_PREFIX ),
-			'window_showed_with_delay'        => __( 'Show after delay before it rendered', L10N_SCP_PREFIX ),
-			'window_showed_after_click'       => __( 'Show after click on CSS-selector', L10N_SCP_PREFIX ),
-			'window_showed_on_scrolling_down' => __( 'Show after scrolling down', L10N_SCP_PREFIX ),
-			'window_showed_on_exit_intent'    => __( 'Show on exit intent', L10N_SCP_PREFIX ),
-			'no_events_fired'                 => __( '(no events fired)', L10N_SCP_PREFIX ),
-			'on_delay'                        => __( 'After delay before show widget', L10N_SCP_PREFIX ),
-			'after_click'                     => __( 'After click on CSS-selector', L10N_SCP_PREFIX ),
-			'on_scrolling_down'               => __( 'On scrolling down', L10N_SCP_PREFIX ),
-			'on_exit_intent'                  => __( 'On exit intent', L10N_SCP_PREFIX ),
+			'window_showed_immediately'       => __( 'Show immediately', 'social-media-popup' ),
+			'window_showed_with_delay'        => __( 'Show after delay before it rendered', 'social-media-popup' ),
+			'window_showed_after_click'       => __( 'Show after click on CSS-selector', 'social-media-popup' ),
+			'window_showed_on_scrolling_down' => __( 'Show after scrolling down', 'social-media-popup' ),
+			'window_showed_on_exit_intent'    => __( 'Show on exit intent', 'social-media-popup' ),
+			'no_events_fired'                 => __( '(no events fired)', 'social-media-popup' ),
+			'on_delay'                        => __( 'After delay before show widget', 'social-media-popup' ),
+			'after_click'                     => __( 'After click on CSS-selector', 'social-media-popup' ),
+			'on_scrolling_down'               => __( 'On scrolling down', 'social-media-popup' ),
+			'on_exit_intent'                  => __( 'On exit intent', 'social-media-popup' ),
 		);
 
 		$this->_events_descriptions = wp_parse_args( $events_descriptions, $default_events_descriptions );
@@ -318,7 +318,7 @@ class SCP_Template {
 
 				$content .= '});';
 			} else {
-				$content .= 'alert("' . __( "You should to add a CSS selector in the plugin settings. Otherwise it won't be work.", L10N_SCP_PREFIX ) . '");';
+				$content .= 'alert("' . __( "You should to add a CSS selector in the plugin settings. Otherwise it won't be work.", 'social-media-popup' ) . '");';
 			}
 		}
 

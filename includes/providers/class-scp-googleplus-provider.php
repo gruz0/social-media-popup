@@ -33,7 +33,7 @@ class SCP_GooglePlus_Provider extends SCP_Provider {
 	 */
 	public static function options() {
 		return array(
-			'default_tab_caption' => __( 'Google+', L10N_SCP_PREFIX ),
+			'default_tab_caption' => __( 'Google+', 'social-media-popup' ),
 			'tab_caption'         => self::get_option_as_escaped_string( 'setting_googleplus_tab_caption' ),
 			'css_class'           => 'google-plus-tab',
 			'icon'                => 'fa-google-plus',

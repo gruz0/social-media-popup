@@ -10,7 +10,6 @@
 
 defined( 'ABSPATH' ) or exit;
 
-define( 'L10N_SCP_PREFIX', 'social-community-popup' ); // textdomain
 define( 'DEFAULT_TAB_SLUG', 'general' );
 
 /**

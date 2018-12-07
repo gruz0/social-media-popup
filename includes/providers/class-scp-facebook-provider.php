@@ -40,7 +40,7 @@ class SCP_Facebook_Provider extends SCP_Provider {
 	 */
 	public static function options() {
 		return array(
-			'default_tab_caption' => __( 'Facebook', L10N_SCP_PREFIX ),
+			'default_tab_caption' => __( 'Facebook', 'social-media-popup' ),
 			'tab_caption'         => self::get_option_as_escaped_string( 'setting_facebook_tab_caption' ),
 			'css_class'           => 'facebook-tab',
 			'icon'                => 'fa-facebook',

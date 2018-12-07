@@ -16,7 +16,7 @@ $tab            = smp_validate_and_sanitize_tab( $slug, $available_tabs );
 ?>
 
 <div class="wrap social-community-popup-settings">
-	<h2><?php esc_attr_e( 'Facebook Options', L10N_SCP_PREFIX ); ?></h2>
+	<h2><?php esc_attr_e( 'Facebook Options', 'social-media-popup' ); ?></h2>
 
 	<?php scp_facebook_settings_tabs( $tab ); ?>
 
@@ -38,8 +38,8 @@ $tab            = smp_validate_and_sanitize_tab( $slug, $available_tabs );
  */
 function scp_facebook_settings_tabs( $current_tab ) {
 	$tabs             = array();
-	$tabs['general']  = __( 'General', L10N_SCP_PREFIX );
-	$tabs['tracking'] = __( 'Tracking', L10N_SCP_PREFIX );
+	$tabs['general']  = __( 'General', 'social-media-popup' );
+	$tabs['tracking'] = __( 'Tracking', 'social-media-popup' );
 
 	$tab_template = '<a class="nav-tab %s" href="?page=' . SMP_PREFIX . '_facebook_options&tab=%s">%s</a>';
 

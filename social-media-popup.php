@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) or exit;
  * Description: The plugin creates a popup window with most popular social media widgets
  * Author: Alexander Kadyrov
  * Author URI: http://gruz0.ru/
- * Text Domain: social-community-popup
+ * Text Domain: social-media-popup
  * Version: 0.7.6
  * License: GPL2
  * Minimum PHP: 5.3
@@ -53,7 +53,7 @@ if ( ! array_key_exists( 'social-media-popup', $GLOBALS ) ) {
 			 * @return array
 			 */
 			function social_media_popup_plugin_settings_link( $links ) {
-				$settings_link = '<a href="admin.php?page=social_media_popup">' . __( 'Settings', L10N_SCP_PREFIX ) . '</a>';
+				$settings_link = '<a href="admin.php?page=social_media_popup">' . __( 'Settings', 'social-media-popup' ) . '</a>';
 				array_unshift( $links, $settings_link );
 				return $links;
 			}
