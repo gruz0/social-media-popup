@@ -90,3 +90,33 @@ if ( ! function_exists( 'write_log' ) ) {
 }
 // phpcs:enable WordPress.PHP.DevelopmentFunctions.error_log_print_r
 // phpcs:enable WordPress.PHP.DevelopmentFunctions.error_log_error_log
+
+/**
+ * Helper to render settings tabs
+ *
+ * @param array  $tabs        Tabs array (key => slug, value => label)
+ * @param string $current_tab Current tab slug
+ * @param string $page_suffix Additional suffix to tab slug
+ */
+function smp_render_settings_tabs( $tabs, $current_tab, $page_suffix = '' ) {
+	$tab_template = '<a class="nav-tab %s" href="?page=%s%s&tab=%s">%s</a>';
+
+	$content = '<h2 class="nav-tab-wrapper">';
+	foreach ( $tabs as $tab_key => $tab_caption ) {
+		$active = $current_tab === $tab_key ? 'nav-tab-active' : '';
+
+		$content .= sprintf(
+			$tab_template,
+			esc_attr( $active ),
+			SMP_PREFIX,
+			$page_suffix,
+			esc_attr( $tab_key ),
+			esc_html( $tab_caption )
+		);
+	}
+	$content .= '</h2>';
+
+	// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo $content;
+	// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+}
