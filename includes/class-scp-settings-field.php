@@ -24,7 +24,7 @@ class SCP_Settings_Field {
 	public static function settings_field_input_text( $args ) {
 		$field       = $args['field'];
 		$value       = esc_attr( get_option( $field ) );
-		$placeholder = esc_attr( $args['placeholder'] );
+		$placeholder = empty( $args['placeholder'] ) ? '' : esc_attr( $args['placeholder'] );
 		$format      = '<input type="text" name="%s" id="%s" value="%s" placeholder="%s" />';
 
 		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
