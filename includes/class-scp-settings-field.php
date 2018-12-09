@@ -208,7 +208,7 @@ class SCP_Settings_Field {
 					continue;
 				}
 
-				$options .= sprintf( $format, $key, selected( $value, $key, false ), $label );
+				$options .= sprintf( $format, $key, selected( $value, $key, false ), esc_html( $label ) );
 			}
 
 			$html .= '<optgroup label="' . $optgroup_label . '">' . $options . '</optgroup>';
@@ -235,26 +235,15 @@ class SCP_Settings_Field {
 		$field = $args['field'];
 		$value = esc_attr( get_option( $field ) );
 
-		$options       = array();
-		$options['lg'] = __( 'Normal Size', 'social-media-popup' );
-		$options['2x'] = '2x';
-		$options['3x'] = '3x';
-		$options['4x'] = '4x';
-		$options['5x'] = '5x';
+		$items = array(
+			'lg' => __( 'Normal Size', 'social-media-popup' ),
+			'2x' => '2x',
+			'3x' => '3x',
+			'4x' => '4x',
+			'5x' => '5x',
+		);
 
-		// FIXME: Extract to single function (and other functions above and below)
-		$html   = '<select id="scp_icon_size" name="' . $field . '">';
-		$format = '<option value="%s"%s>%s</option>';
-
-		foreach ( $options as $option_name => $label ) {
-			$html .= sprintf( $format, $option_name, selected( $value, $option_name, false ), esc_html( $label ) );
-		}
-
-		$html .= '</select>';
-
-		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo $html;
-		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+		self::render_select_with_options( $items, $value, $field, 'scp_icon_size' );
 	}
 
 	/**
@@ -402,30 +391,13 @@ class SCP_Settings_Field {
 		$field = $args['field'];
 		$value = esc_attr( get_option( $field ) );
 
-		$options = array(
+		$items = array(
 			'all_registered_users'                => __( 'All Registered Users', 'social-media-popup' ),
 			'exclude_administrators'              => __( 'All Registered Users Exclude Administrators', 'social-media-popup' ),
 			'exclude_administrators_and_managers' => __( 'All Registered Users Exclude Administrators and Managers', 'social-media-popup' ),
 		);
 
-		// FIXME: Extract to single function (and other functions above and below)
-		$select_format = '<select name="%s" id="%s" class="%s">%s</select>';
-		$option_format = '<option value="%s"%s>%s</option>';
-
-		$options = '';
-		foreach ( $options as $key => $label ) {
-			$options .= sprintf( $option_format, $option_name, selected( $value, $option_name, false ), esc_html( $label ) );
-		}
-
-		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo sprintf(
-			$select_format,
-			$field, // Select name
-			$field, // Select ID
-			$field, // Select class
-			$options
-		);
-		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+		self::render_select_with_options( $items, $value, $field, $field );
 	}
 
 	/**
@@ -774,30 +746,13 @@ class SCP_Settings_Field {
 		$field = $args['field'];
 		$value = esc_attr( get_option( $field ) );
 
-		$options = array(
+		$items = array(
 			'left'   => __( 'Left', 'social-media-popup' ),
 			'center' => __( 'Center', 'social-media-popup' ),
 			'right'  => __( 'Right', 'social-media-popup' ),
 		);
 
-		// FIXME: Extract to single function (and other functions above and below)
-		$select_format = '<select name="%s" id="%s" class="%s">%s</select>';
-		$option_format = '<option value="%s"%s>%s</option>';
-
-		$options = '';
-		foreach ( $options as $key => $label ) {
-			$options .= sprintf( $option_format, $option_name, selected( $value, $option_name, false ), esc_html( $label ) );
-		}
-
-		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo sprintf(
-			$select_format,
-			$field, // Select name
-			$field, // Select ID
-			$field, // Select class
-			$options
-		);
-		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+		self::render_select_with_options( $items, $value, $field, $field );
 	}
 
 	/**
@@ -877,20 +832,49 @@ class SCP_Settings_Field {
 		$format .= '<br />';
 
 		$html = '';
-		foreach ( $options as $option_name => $label ) {
+		foreach ( $options as $key => $label ) {
 			$checked = '';
 			for ( $idx = 0, $size = count( $chains ); $idx < $size; $idx++ ) {
-				$checked = checked( $chains[ $idx ], $option_name, false );
+				$checked = checked( $chains[ $idx ], $key, false );
 				if ( strlen( $checked ) ) break;
 			}
 
-			$html .= sprintf( $format, $option_name, $field, $option_name, $checked, $option_name, esc_html( $label ) );
+			$html .= sprintf( $format, $key, $field, $key, $checked, $key, esc_html( $label ) );
 		}
 
 		$html .= '<input type="hidden" id="' . $field . '" name="' . $field . '" value="' . esc_attr( $value ) . '" />';
 
 		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $html;
+		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+
+	/**
+	 * Helper to render <select> with options
+	 *
+	 * @param array  $items Array of items
+	 * @param string $value Current value
+	 * @param string $name  Name attribute
+	 * @param string $id    ID attribute
+	 * @param string $class Class attribute
+	 */
+	private static function render_select_with_options( $items, $value, $name, $id, $class = '' ) {
+		$select_format = '<select name="%s" id="%s" class="%s">%s</select>';
+		$option_format = '<option value="%s"%s>%s</option>';
+
+		$options = '';
+		foreach ( $items as $key => $label ) {
+			$options .= sprintf( $option_format, $key, selected( $value, $key, false ), esc_html( $label ) );
+		}
+
+		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo sprintf(
+			$select_format,
+			$name,  // Select name
+			$id,    // Select ID
+			$class, // Select class
+			$options
+		);
 		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
