@@ -255,35 +255,13 @@ class SCP_Settings_Field {
 		$field = $args['field'];
 		$value = esc_attr( get_option( $field ) );
 
-		$options = array(
+		$items = array(
 			'inside'  => __( 'Inside Container', 'social-media-popup' ),
 			'outside' => __( 'Outside Container', 'social-media-popup' ),
 			'none'    => __( "Don't show", 'social-media-popup' ),
 		);
 
-		// FIXME: Extract to single function (and other functions above and below)
-		$format  = '<input type="radio" id="%s" name="%s" value="%s"%s />';
-		$format .= '<label for="%s">%s</label>';
-		$format .= '<br />';
-
-		$html = '';
-		foreach ( $options as $key => $label ) {
-			$input_id = "${field}_${key}";
-
-			$html .= sprintf(
-				$format,
-				$input_id,                      // Radio ID
-				$field,                         // Radio name
-				$key,                           // Radio value
-				checked( $value, $key, false ), // Radio "checked" attribute
-				$input_id,                      // Label for Radio ID
-				esc_html( $label )              // Label text
-			);
-		}
-
-		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo $html;
-		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+		self::render_radio_buttons( $items, $value, $field );
 	}
 
 	/**
@@ -295,36 +273,14 @@ class SCP_Settings_Field {
 		$field = $args['field'];
 		$value = esc_attr( get_option( $field ) );
 
-		$options = array(
+		$items = array(
 			'link'  => __( 'Link', 'social-media-popup' ),
 			'green' => __( 'Green Button', 'social-media-popup' ),
 			'blue'  => __( 'Blue Button', 'social-media-popup' ),
 			'red'   => __( 'Red Button', 'social-media-popup' ),
 		);
 
-		// FIXME: Extract to single function (and other functions above and below)
-		$format  = '<input type="radio" id="%s" name="%s" value="%s"%s />';
-		$format .= '<label for="%s">%s</label>';
-		$format .= '<br />';
-
-		$html = '';
-		foreach ( $options as $key => $label ) {
-			$input_id = "${field}_${key}";
-
-			$html .= sprintf(
-				$format,
-				$input_id,                      // Radio ID
-				$field,                         // Radio name
-				$key,                           // Radio value
-				checked( $value, $key, false ), // Radio "checked" attribute
-				$input_id,                      // Label for Radio ID
-				esc_html( $label )              // Label text
-			);
-		}
-
-		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo $html;
-		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+		self::render_radio_buttons( $items, $value, $field );
 	}
 
 	/**
@@ -409,34 +365,12 @@ class SCP_Settings_Field {
 		$field = $args['field'];
 		$value = esc_attr( get_option( $field ) );
 
-		$options = array(
+		$items = array(
 			'ru_RU' => __( 'Russian', 'social-media-popup' ),
 			'en_US' => __( 'English', 'social-media-popup' ),
 		);
 
-		// FIXME: Extract to single function (and other functions above and below)
-		$format  = '<input type="radio" id="%s" name="%s" value="%s"%s />';
-		$format .= '<label for="%s">%s</label>';
-		$format .= '<br />';
-
-		$html = '';
-		foreach ( $options as $key => $label ) {
-			$input_id = "${field}_${key}";
-
-			$html .= sprintf(
-				$format,
-				$input_id,                      // Radio ID
-				$field,                         // Radio name
-				$key,                           // Radio value
-				checked( $value, $key, false ), // Radio "checked" attribute
-				$input_id,                      // Label for Radio ID
-				esc_html( $label )              // Label text
-			);
-		}
-
-		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo $html;
-		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+		self::render_radio_buttons( $items, $value, $field );
 	}
 
 	/**
@@ -465,35 +399,13 @@ class SCP_Settings_Field {
 		$field = $args['field'];
 		$value = esc_attr( get_option( $field ) );
 
-		$options = array(
+		$items = array(
 			'0' => __( 'Members', 'social-media-popup' ),
 			'1' => __( 'Name', 'social-media-popup' ),
 			'2' => __( 'News', 'social-media-popup' ),
 		);
 
-		// FIXME: Extract to single function (and other functions above and below)
-		$format  = '<input type="radio" id="%s" name="%s" value="%s"%s />';
-		$format .= '<label for="%s">%s</label>';
-		$format .= '<br />';
-
-		$html = '';
-		foreach ( $options as $key => $label ) {
-			$input_id = "${field}_${key}";
-
-			$html .= sprintf(
-				$format,
-				$input_id,                      // Radio ID
-				$field,                         // Radio name
-				$key,                           // Radio value
-				checked( $value, $key, false ), // Radio "checked" attribute
-				$input_id,                      // Label for Radio ID
-				esc_html( $label )              // Label text
-			);
-		}
-
-		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo $html;
-		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+		self::render_radio_buttons( $items, $value, $field );
 	}
 
 	/**
@@ -505,35 +417,13 @@ class SCP_Settings_Field {
 		$field = $args['field'];
 		$value = esc_attr( get_option( $field ) );
 
-		$options = array(
+		$items = array(
 			'person'    => __( 'Google+ Person', 'social-media-popup' ),
 			'page'      => __( 'Google+ Page', 'social-media-popup' ),
 			'community' => __( 'Google+ Community', 'social-media-popup' ),
 		);
 
-		// FIXME: Extract to single function (and other functions above and below)
-		$format  = '<input type="radio" id="%s" name="%s" value="%s"%s />';
-		$format .= '<label for="%s">%s</label>';
-		$format .= '<br />';
-
-		$html = '';
-		foreach ( $options as $key => $label ) {
-			$input_id = "${field}_${key}";
-
-			$html .= sprintf(
-				$format,
-				$input_id,                      // Radio ID
-				$field,                         // Radio name
-				$key,                           // Radio value
-				checked( $value, $key, false ), // Radio "checked" attribute
-				$input_id,                      // Label for Radio ID
-				esc_html( $label )              // Label text
-			);
-		}
-
-		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo $html;
-		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+		self::render_radio_buttons( $items, $value, $field );
 	}
 
 	/**
@@ -545,34 +435,12 @@ class SCP_Settings_Field {
 		$field = $args['field'];
 		$value = esc_attr( get_option( $field ) );
 
-		$options = array(
+		$items = array(
 			'portrait'  => __( 'Portrait', 'social-media-popup' ),
 			'landscape' => __( 'Landscape', 'social-media-popup' ),
 		);
 
-		// FIXME: Extract to single function (and other functions above and below)
-		$format  = '<input type="radio" id="%s" name="%s" value="%s"%s />';
-		$format .= '<label for="%s">%s</label>';
-		$format .= '<br />';
-
-		$html = '';
-		foreach ( $options as $key => $label ) {
-			$input_id = "${field}_${key}";
-
-			$html .= sprintf(
-				$format,
-				$input_id,                      // Radio ID
-				$field,                         // Radio name
-				$key,                           // Radio value
-				checked( $value, $key, false ), // Radio "checked" attribute
-				$input_id,                      // Label for Radio ID
-				esc_html( $label )              // Label text
-			);
-		}
-
-		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo $html;
-		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+		self::render_radio_buttons( $items, $value, $field );
 	}
 
 	/**
@@ -584,34 +452,12 @@ class SCP_Settings_Field {
 		$field = $args['field'];
 		$value = esc_attr( get_option( $field ) );
 
-		$options = array(
+		$items = array(
 			'ru' => __( 'Russian', 'social-media-popup' ),
 			'en' => __( 'English', 'social-media-popup' ),
 		);
 
-		// FIXME: Extract to single function (and other functions above and below)
-		$format  = '<input type="radio" id="%s" name="%s" value="%s"%s />';
-		$format .= '<label for="%s">%s</label>';
-		$format .= '<br />';
-
-		$html = '';
-		foreach ( $options as $key => $label ) {
-			$input_id = "${field}_${key}";
-
-			$html .= sprintf(
-				$format,
-				$input_id,                      // Radio ID
-				$field,                         // Radio name
-				$key,                           // Radio value
-				checked( $value, $key, false ), // Radio "checked" attribute
-				$input_id,                      // Label for Radio ID
-				esc_html( $label )              // Label text
-			);
-		}
-
-		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo $html;
-		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+		self::render_radio_buttons( $items, $value, $field );
 	}
 
 	/**
@@ -623,34 +469,12 @@ class SCP_Settings_Field {
 		$field = $args['field'];
 		$value = esc_attr( get_option( $field ) );
 
-		$options = array(
+		$items = array(
 			'light' => __( 'Light', 'social-media-popup' ),
 			'dark'  => __( 'Dark', 'social-media-popup' ),
 		);
 
-		// FIXME: Extract to single function (and other functions above and below)
-		$format  = '<input type="radio" id="%s" name="%s" value="%s"%s />';
-		$format .= '<label for="%s">%s</label>';
-		$format .= '<br />';
-
-		$html = '';
-		foreach ( $options as $key => $label ) {
-			$input_id = "${field}_${key}";
-
-			$html .= sprintf(
-				$format,
-				$input_id,                      // Radio ID
-				$field,                         // Radio name
-				$key,                           // Radio value
-				checked( $value, $key, false ), // Radio "checked" attribute
-				$input_id,                      // Label for Radio ID
-				esc_html( $label )              // Label text
-			);
-		}
-
-		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo $html;
-		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+		self::render_radio_buttons( $items, $value, $field );
 	}
 
 	/**
@@ -664,34 +488,12 @@ class SCP_Settings_Field {
 		$field = $args['field'];
 		$value = esc_attr( get_option( $field ) );
 
-		$options = array(
+		$items = array(
 			'ru' => __( 'Russian', 'social-media-popup' ),
 			'en' => __( 'English', 'social-media-popup' ),
 		);
 
-		// FIXME: Extract to single function (and other functions above and below)
-		$format  = '<input type="radio" id="%s" name="%s" value="%s"%s />';
-		$format .= '<label for="%s">%s</label>';
-		$format .= '<br />';
-
-		$html = '';
-		foreach ( $options as $key => $label ) {
-			$input_id = "${field}_${key}";
-
-			$html .= sprintf(
-				$format,
-				$input_id,                      // Radio ID
-				$field,                         // Radio name
-				$key,                           // Radio value
-				checked( $value, $key, false ), // Radio "checked" attribute
-				$input_id,                      // Label for Radio ID
-				esc_html( $label )              // Label text
-			);
-		}
-
-		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo $html;
-		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+		self::render_radio_buttons( $items, $value, $field );
 	}
 
 	/**
@@ -705,34 +507,12 @@ class SCP_Settings_Field {
 		$field = $args['field'];
 		$value = esc_attr( get_option( $field ) );
 
-		$options = array(
+		$items = array(
 			'follow_button' => __( 'Follow Button', 'social-media-popup' ),
 			'timeline'      => __( 'Timeline', 'social-media-popup' ),
 		);
 
-		// FIXME: Extract to single function (and other functions above and below)
-		$format  = '<input type="radio" id="%s" name="%s" value="%s"%s />';
-		$format .= '<label for="%s">%s</label>';
-		$format .= '<br />';
-
-		$html = '';
-		foreach ( $options as $key => $label ) {
-			$input_id = "${field}_${key}";
-
-			$html .= sprintf(
-				$format,
-				$input_id,                      // Radio ID
-				$field,                         // Radio name
-				$key,                           // Radio value
-				checked( $value, $key, false ), // Radio "checked" attribute
-				$input_id,                      // Label for Radio ID
-				esc_html( $label )              // Label text
-			);
-		}
-
-		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo $html;
-		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+		self::render_radio_buttons( $items, $value, $field );
 	}
 
 	/**
@@ -764,33 +544,12 @@ class SCP_Settings_Field {
 		$field = $args['field'];
 		$value = esc_attr( get_option( $field ) );
 
-		$options = array(
+		$items = array(
 			'light' => __( 'Light', 'social-media-popup' ),
 			'dark'  => __( 'Dark', 'social-media-popup' ),
 		);
 
-		$format  = '<input type="radio" id="%s" name="%s" value="%s"%s />';
-		$format .= '<label for="%s">%s</label>';
-		$format .= '<br />';
-
-		$html = '';
-		foreach ( $options as $key => $label ) {
-			$input_id = "${field}_${key}";
-
-			$html .= sprintf(
-				$format,
-				$input_id,                      // Radio ID
-				$field,                         // Radio name
-				$key,                           // Radio value
-				checked( $value, $key, false ), // Radio "checked" attribute
-				$input_id,                      // Label for Radio ID
-				esc_html( $label )              // Label text
-			);
-		}
-
-		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo $html;
-		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+		self::render_radio_buttons( $items, $value, $field );
 	}
 
 	/**
@@ -843,6 +602,38 @@ class SCP_Settings_Field {
 		}
 
 		$html .= '<input type="hidden" id="' . $field . '" name="' . $field . '" value="' . esc_attr( $value ) . '" />';
+
+		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $html;
+		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+
+	/**
+	 * Helper to render radio inputs
+	 *
+	 * @param array  $items Array of items
+	 * @param string $value Current value
+	 * @param string $name  Name attribute
+	 */
+	private static function render_radio_buttons( $items, $value, $name ) {
+		$format  = '<input type="radio" id="%s" name="%s" value="%s"%s />';
+		$format .= '<label for="%s">%s</label>';
+		$format .= '<br />';
+
+		$html = '';
+		foreach ( $items as $key => $label ) {
+			$input_id = "${name}_${key}";
+
+			$html .= sprintf(
+				$format,
+				$input_id,                      // Radio ID
+				$name,                          // Radio name
+				$key,                           // Radio value
+				checked( $value, $key, false ), // Radio "checked" attribute
+				$input_id,                      // Label for Radio ID
+				esc_html( $label )              // Label text
+			);
+		}
 
 		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $html;
