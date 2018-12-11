@@ -581,7 +581,7 @@ class SCP_Settings_Field {
 	 * @used_by SCP_Settings_Field::settings_field_twitter_chrome()
 	 * @used_by SCP_Settings_Field::settings_field_facebook_tabs()
 	 */
-	public static function render_checkboxes_with_hidden_field( $field, $options ) {
+	private static function render_checkboxes_with_hidden_field( $field, $options ) {
 		$value = get_option( $field );
 
 		$chains = preg_split( '/,/', $value );

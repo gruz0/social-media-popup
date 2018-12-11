@@ -318,7 +318,7 @@ class SCP_Template {
 
 				$content .= '});';
 			} else {
-				$content .= 'alert("' . __( "You should to add a CSS selector in the plugin settings. Otherwise it won't be work.", 'social-media-popup' ) . '");';
+				$content .= 'alert("' . esc_html( 'You should to add a CSS selector in the plugin settings. Otherwise it will not be work.', 'social-media-popup' ) . '");';
 			}
 		}
 
