@@ -582,13 +582,15 @@ class SCP_Settings_Field {
 	 * @used_by SCP_Settings_Field::settings_field_facebook_tabs()
 	 */
 	private static function render_checkboxes_with_hidden_field( $field, $options ) {
-		$value = get_option( $field );
+		$value = esc_attr( get_option( $field ) );
 
 		$chains = preg_split( '/,/', $value );
 
-		$format  = '<input type="checkbox" id="%s" class="%s" value="%s"%s />';
-		$format .= '<label for="%s">%s</label>';
-		$format .= '<br />';
+		$checkbox_format  = '<input type="checkbox" id="%s" class="%s" value="%s"%s />';
+		$checkbox_format .= '<label for="%s">%s</label>';
+		$checkbox_format .= '<br />';
+
+		$hidden_field_format = '<input type="hidden" id="%s" name="%s" value="%s" />';
 
 		$html = '';
 		foreach ( $options as $key => $label ) {
@@ -598,10 +600,10 @@ class SCP_Settings_Field {
 				if ( strlen( $checked ) ) break;
 			}
 
-			$html .= sprintf( $format, $key, $field, $key, $checked, $key, esc_html( $label ) );
+			$html .= sprintf( $checkbox_format, $key, $field, $key, $checked, $key, esc_html( $label ) );
 		}
 
-		$html .= '<input type="hidden" id="' . $field . '" name="' . $field . '" value="' . esc_attr( $value ) . '" />';
+		$html .= sprintf( $hidden_field_format, $field, $field, $value );
 
 		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $html;
@@ -653,9 +655,9 @@ class SCP_Settings_Field {
 		$select_format = '<select name="%s" id="%s" class="%s">%s</select>';
 		$option_format = '<option value="%s"%s>%s</option>';
 
-		$options = '';
+		$html = '';
 		foreach ( $items as $key => $label ) {
-			$options .= sprintf( $option_format, $key, selected( $value, $key, false ), esc_html( $label ) );
+			$html .= sprintf( $option_format, $key, selected( $value, $key, false ), esc_html( $label ) );
 		}
 
 		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -664,7 +666,7 @@ class SCP_Settings_Field {
 			$name,  // Select name
 			$id,    // Select ID
 			$class, // Select class
-			$options
+			$html
 		);
 		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
