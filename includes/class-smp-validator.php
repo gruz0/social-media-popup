@@ -277,11 +277,11 @@ class SMP_Validator {
 		foreach ( $errors as $provider => $errors_values ) {
 			if ( count( $errors_values ) ) {
 				// @codingStandardsIgnoreLine
-				$content .= '<h3>' . __( $provider, 'social-media-popup' ) . '</h3>';
+				$content .= '<h3>' . esc_html( $provider, 'social-media-popup' ) . '</h3>';
 				$content .= '<ul class="ul-disc">';
 
 				for ( $idx = 0; $idx < count( $errors_values ); $idx++ ) {
-					$content .= '<li>' . $errors_values[ $idx ] . '</li>';
+					$content .= '<li>' . esc_html( $errors_values[ $idx ] ) . '</li>';
 				}
 
 				$content .= '</ul>';
@@ -289,7 +289,7 @@ class SMP_Validator {
 		}
 
 		if ( empty( $content ) ) {
-			$content = __( 'No errors occurred!', 'social-media-popup' );
+			$content = esc_html( 'No errors occurred!', 'social-media-popup' );
 		}
 
 		return $content;
