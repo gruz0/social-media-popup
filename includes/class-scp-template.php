@@ -479,6 +479,9 @@ class SCP_Template {
 			return '';
 		}
 
+		$action            = esc_html( $action );
+		$event_description = esc_html( $event_description );
+
 		$content = '';
 
 		if ( $this->_options['push_events_when_displaying_window'] ) {
@@ -528,7 +531,7 @@ class SCP_Template {
 
 		$content = 'ga("send", "event", {
 				eventCategory: "Social Media Popup",
-				eventAction:   "' . $action . '" + " " + smp_firedEventDescription
+				eventAction:   "' . esc_html( $action ) . '" + " " + smp_firedEventDescription
 			});';
 
 		return $content;
@@ -555,8 +558,8 @@ class SCP_Template {
 
 		$content = 'ga("send", {
 			hitType:       "social",
-			socialNetwork: "' . $network . '",
-			socialAction:  "' . $event_type . '",
+			socialNetwork: "' . esc_html( $network ) . '",
+			socialAction:  "' . esc_html( $event_type ) . '",
 			socialTarget:  "' . get_permalink() . '"
 		});';
 		return $content;
