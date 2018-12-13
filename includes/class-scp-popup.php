@@ -206,9 +206,9 @@ class SCP_Popup {
 		$overlay_opacity                 = absint( $options['setting_overlay_opacity'] );
 		$align_tabs_to_center            = absint( $options['setting_align_tabs_to_center'] );
 		$delay_before_show_bottom_button = absint( $options['setting_delay_before_show_bottom_button'] );
-		$background_image                = $options['setting_background_image'];
+		$background_image                = esc_url( $options['setting_background_image'] );
 		$use_animation                   = '1' === $options['setting_use_animation'];
-		$animation_style                 = $options['setting_animation_style'];
+		$animation_style                 = esc_attr( $options['setting_animation_style'] );
 
 		//
 		// START RENDER
@@ -242,7 +242,7 @@ class SCP_Popup {
 
 				$content .= '<ul class="scp-icons">';
 
-				$icon_size = 'fa-' . $options['setting_icons_size_on_mobile_devices'];
+				$icon_size = 'fa-' . esc_attr( $options['setting_icons_size_on_mobile_devices'] );
 
 				for ( $idx = 0, $size = count( $tabs_order ); $idx < $size; $idx++ ) {
 					$provider_name = $tabs_order[ $idx ];
@@ -296,12 +296,12 @@ class SCP_Popup {
 
 				if ( $show_plugin_title && 'inside' === $show_close_button_in ) {
 					$content .= '<div class="top-close">';
-					$content .= '<span class="close" title="' . __( 'Close Modal Dialog', 'social-media-popup' ) . '">&times;</span>';
+					$content .= '<span class="close" title="' . esc_attr( 'Close Modal Dialog', 'social-media-popup' ) . '">&times;</span>';
 					$content .= '</div>';
 				}
 
 				if ( 'outside' === $show_close_button_in ) {
-					$content .= '<a href="#" class="close close-outside" title="' . __( 'Close Modal Dialog', 'social-media-popup' ) . '">&times;</a>';
+					$content .= '<a href="#" class="close close-outside" title="' . esc_attr( 'Close Modal Dialog', 'social-media-popup' ) . '">&times;</a>';
 				}
 
 				$content .= '<div class="section" style="width:' . esc_attr( $container_width ) . 'px !important;height:' . esc_attr( $container_height ) . 'px !important;">';
@@ -350,7 +350,7 @@ class SCP_Popup {
 					// Не показываем кнопку закрытия в случае выбора иконок в табах
 					if ( ! $use_icons_instead_of_labels ) {
 						if ( ! $show_plugin_title && 'inside' === $show_close_button_in ) {
-							$content .= '<li class="last-item"><span class="close" title="' . __( 'Close Modal Dialog', 'social-media-popup' ) . '">&times;</span></li>';
+							$content .= '<li class="last-item"><span class="close" title="' . esc_attr( 'Close Modal Dialog', 'social-media-popup' ) . '">&times;</span></li>';
 						}
 					}
 
@@ -376,7 +376,7 @@ class SCP_Popup {
 					$button_to_close_widget_class = 'link' === $button_to_close_widget_style ? '' : 'scp-' . $button_to_close_widget_style . '-button';
 
 					$content .= '<div class="dont-show-widget scp-button ' . esc_attr( $button_to_close_widget_class ) . '">';
-					$content .= '<a href="#" class="close">' . esc_attr( $options['setting_button_to_close_widget_title'] ) . '</a>';
+					$content .= '<a href="#" class="close">' . esc_html( $options['setting_button_to_close_widget_title'] ) . '</a>';
 					$content .= '</div>';
 				}
 			}
