@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) or exit;
 ?>
 
 <div class="wrap social-community-popup-settings">
-	<h2><?php esc_attr_e( 'Pinterest Options', L10N_SCP_PREFIX ); ?></h2>
+	<h2><?php esc_html_e( 'Pinterest', 'social-media-popup' ); ?></h2>
 
 	<form method="post" action="options.php">
 		<?php wp_nonce_field( 'scp-update-pinterest-options' ); ?>

@@ -33,7 +33,7 @@ class SCP_VK_Provider extends SCP_Provider {
 	 */
 	public static function options() {
 		return array(
-			'default_tab_caption' => __( 'VK', L10N_SCP_PREFIX ),
+			'default_tab_caption' => __( 'VK', 'social-media-popup' ),
 			'tab_caption'         => self::get_option_as_escaped_string( 'setting_vkontakte_tab_caption' ),
 			'css_class'           => 'vk-tab',
 			'icon'                => 'fa-vk',
@@ -57,9 +57,7 @@ class SCP_VK_Provider extends SCP_Provider {
 
 		$content = '<div class="box">';
 
-		if ( self::get_option_as_boolean( 'setting_vkontakte_show_description' ) ) {
-			$content .= '<p class="widget-description"><b>' . self::$options['setting_vkontakte_description'] . '</b></p>';
-		}
+		$content .= self::widget_description( 'setting_vkontakte_show_description', 'setting_vkontakte_description' );
 
 		$application_id = self::get_option_as_escaped_string( 'setting_vkontakte_application_id' );
 		if ( empty( $application_id ) ) {

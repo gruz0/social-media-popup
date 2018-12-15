@@ -12,10 +12,9 @@ defined( 'ABSPATH' ) or exit;
 ?>
 
 <div class="wrap social-community-popup-settings">
-	<h2><?php esc_attr_e( 'Debug', L10N_SCP_PREFIX ); ?></h2>
+	<h2><?php esc_html_e( 'Debug', 'social-media-popup' ); ?></h2>
 
 	<?php
-	// FIXME: It should be sanitized
 	echo $content; // WPCS: XSS OK.
 	?>
 

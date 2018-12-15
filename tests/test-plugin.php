@@ -102,28 +102,28 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( 3  === get_option( $scp_prefix . 'setting_display_after_delay_of_n_seconds' ) );
 
 		// Facebook
-		$this->assertTrue( __( 'Facebook', L10N_SCP_PREFIX )          === get_option( $scp_prefix . 'setting_facebook_tab_caption' ) );
-		$this->assertTrue( '277165072394537'                          === get_option( $scp_prefix . 'setting_facebook_application_id' ) );
-		$this->assertTrue( 'https://www.facebook.com/AlexanderGruzov' === get_option( $scp_prefix . 'setting_facebook_page_url' ) );
-		$this->assertTrue( 'ru_RU'                                    === get_option( $scp_prefix . 'setting_facebook_locale' ) );
-		$this->assertTrue( 400                                        === get_option( $scp_prefix . 'setting_facebook_width' ) );
-		$this->assertTrue( 300                                        === get_option( $scp_prefix . 'setting_facebook_height' ) );
-		$this->assertTrue( 1                                          === get_option( $scp_prefix . 'setting_facebook_show_faces' ) );
+		$this->assertTrue( __( 'Facebook', 'social-media-popup' ) === get_option( $scp_prefix . 'setting_facebook_tab_caption' ) );
+		$this->assertTrue( '277165072394537'                      === get_option( $scp_prefix . 'setting_facebook_application_id' ) );
+		$this->assertTrue( 'https://www.facebook.com/gruz0.ru'    === get_option( $scp_prefix . 'setting_facebook_page_url' ) );
+		$this->assertTrue( 'ru_RU'                                === get_option( $scp_prefix . 'setting_facebook_locale' ) );
+		$this->assertTrue( 400                                    === get_option( $scp_prefix . 'setting_facebook_width' ) );
+		$this->assertTrue( 300                                    === get_option( $scp_prefix . 'setting_facebook_height' ) );
+		$this->assertTrue( 1                                      === get_option( $scp_prefix . 'setting_facebook_show_faces' ) );
 
 		// VK
-		$this->assertTrue( __( 'VK', L10N_SCP_PREFIX ) === get_option( $scp_prefix . 'setting_vkontakte_tab_caption' ) );
-		$this->assertTrue( '64088617'                  === get_option( $scp_prefix . 'setting_vkontakte_page_or_group_id' ) );
-		$this->assertTrue( 400                         === get_option( $scp_prefix . 'setting_vkontakte_width' ) );
-		$this->assertTrue( 400                         === get_option( $scp_prefix . 'setting_vkontakte_height' ) );
-		$this->assertTrue( '#FFFFFF'                   === get_option( $scp_prefix . 'setting_vkontakte_color_background' ) );
-		$this->assertTrue( '#2B587A'                   === get_option( $scp_prefix . 'setting_vkontakte_color_text' ) );
-		$this->assertTrue( '#5B7FA6'                   === get_option( $scp_prefix . 'setting_vkontakte_color_button' ) );
+		$this->assertTrue( __( 'VK', 'social-media-popup' ) === get_option( $scp_prefix . 'setting_vkontakte_tab_caption' ) );
+		$this->assertTrue( '64088617'                       === get_option( $scp_prefix . 'setting_vkontakte_page_or_group_id' ) );
+		$this->assertTrue( 400                              === get_option( $scp_prefix . 'setting_vkontakte_width' ) );
+		$this->assertTrue( 400                              === get_option( $scp_prefix . 'setting_vkontakte_height' ) );
+		$this->assertTrue( '#FFFFFF'                        === get_option( $scp_prefix . 'setting_vkontakte_color_background' ) );
+		$this->assertTrue( '#2B587A'                        === get_option( $scp_prefix . 'setting_vkontakte_color_text' ) );
+		$this->assertTrue( '#5B7FA6'                        === get_option( $scp_prefix . 'setting_vkontakte_color_button' ) );
 
 		// Odnoklassniki
-		$this->assertTrue( __( 'Odnoklassniki', L10N_SCP_PREFIX ) === get_option( $scp_prefix . 'setting_odnoklassniki_tab_caption' ) );
-		$this->assertTrue( '57122812461115'                       === get_option( $scp_prefix . 'setting_odnoklassniki_group_id' ) );
-		$this->assertTrue( 400                                    === get_option( $scp_prefix . 'setting_odnoklassniki_width' ) );
-		$this->assertTrue( 260                                    === get_option( $scp_prefix . 'setting_odnoklassniki_height' ) );
+		$this->assertTrue( __( 'Odnoklassniki', 'social-media-popup' ) === get_option( $scp_prefix . 'setting_odnoklassniki_tab_caption' ) );
+		$this->assertTrue( '57122812461115'                            === get_option( $scp_prefix . 'setting_odnoklassniki_group_id' ) );
+		$this->assertTrue( 400                                         === get_option( $scp_prefix . 'setting_odnoklassniki_width' ) );
+		$this->assertTrue( 260                                         === get_option( $scp_prefix . 'setting_odnoklassniki_height' ) );
 	}
 
 	/**
@@ -167,7 +167,7 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 
 		// Google+
 		$this->assertTrue( 0                                             === get_option( $scp_prefix . 'setting_use_googleplus' ) );
-		$this->assertTrue( __( 'Google+', L10N_SCP_PREFIX )              === get_option( $scp_prefix . 'setting_googleplus_tab_caption' ) );
+		$this->assertTrue( __( 'Google+', 'social-media-popup' )         === get_option( $scp_prefix . 'setting_googleplus_tab_caption' ) );
 		$this->assertTrue( 0                                             === get_option( $scp_prefix . 'setting_googleplus_show_description' ) );
 		$this->assertTrue( ''                                            === get_option( $scp_prefix . 'setting_googleplus_description' ) );
 		$this->assertTrue( '//plus.google.com/u/0/117676776729232885815' === get_option( $scp_prefix . 'setting_googleplus_page_url' ) );
@@ -197,19 +197,19 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( 'vkontakte,facebook,odnoklassniki,googleplus,twitter' === get_option( $scp_prefix . 'setting_tabs_order' ) );
 
 		// Twitter
-		$this->assertTrue( 0                                === get_option( $scp_prefix . 'setting_use_twitter' ) );
-		$this->assertTrue( __( 'Twitter', L10N_SCP_PREFIX ) === get_option( $scp_prefix . 'setting_twitter_tab_caption' ) );
-		$this->assertTrue( 0                                === get_option( $scp_prefix . 'setting_twitter_show_description' ) );
-		$this->assertTrue( ''                               === get_option( $scp_prefix . 'setting_twitter_description' ) );
-		$this->assertTrue( ''                               === get_option( $scp_prefix . 'setting_twitter_username' ) );
-		$this->assertTrue( ''                               === get_option( $scp_prefix . 'setting_twitter_widget_id' ) );
-		$this->assertTrue( 'light'                          === get_option( $scp_prefix . 'setting_twitter_theme' ) );
-		$this->assertTrue( '#CC0000'                        === get_option( $scp_prefix . 'setting_twitter_link_color' ) );
-		$this->assertTrue( 5                                === get_option( $scp_prefix . 'setting_twitter_tweet_limit' ) );
-		$this->assertTrue( 0                                === get_option( $scp_prefix . 'setting_twitter_show_replies' ) );
-		$this->assertTrue( 400                              === get_option( $scp_prefix . 'setting_twitter_width' ) );
-		$this->assertTrue( 400                              === get_option( $scp_prefix . 'setting_twitter_height' ) );
-		$this->assertTrue( ''                               === get_option( $scp_prefix . 'setting_twitter_chrome' ) );
+		$this->assertTrue( 0                                     === get_option( $scp_prefix . 'setting_use_twitter' ) );
+		$this->assertTrue( __( 'Twitter', 'social-media-popup' ) === get_option( $scp_prefix . 'setting_twitter_tab_caption' ) );
+		$this->assertTrue( 0                                     === get_option( $scp_prefix . 'setting_twitter_show_description' ) );
+		$this->assertTrue( ''                                    === get_option( $scp_prefix . 'setting_twitter_description' ) );
+		$this->assertTrue( ''                                    === get_option( $scp_prefix . 'setting_twitter_username' ) );
+		$this->assertTrue( ''                                    === get_option( $scp_prefix . 'setting_twitter_widget_id' ) );
+		$this->assertTrue( 'light'                               === get_option( $scp_prefix . 'setting_twitter_theme' ) );
+		$this->assertTrue( '#CC0000'                             === get_option( $scp_prefix . 'setting_twitter_link_color' ) );
+		$this->assertTrue( 5                                     === get_option( $scp_prefix . 'setting_twitter_tweet_limit' ) );
+		$this->assertTrue( 0                                     === get_option( $scp_prefix . 'setting_twitter_show_replies' ) );
+		$this->assertTrue( 400                                   === get_option( $scp_prefix . 'setting_twitter_width' ) );
+		$this->assertTrue( 400                                   === get_option( $scp_prefix . 'setting_twitter_height' ) );
+		$this->assertTrue( ''                                    === get_option( $scp_prefix . 'setting_twitter_chrome' ) );
 	}
 
 	/**
@@ -311,14 +311,14 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 
 		$this->assertTrue(
 			'<div style="text-align: center;font: bold normal 14pt/16pt Arial">'
-			. __( 'Follow Us on Social Media!', L10N_SCP_PREFIX )
+			. __( 'Follow Us on Social Media!', 'social-media-popup' )
 			. '</div>' === get_option( $scp_prefix . 'setting_plugin_title' )
 		);
 
-		$this->assertTrue( 1                                                            === get_option( $scp_prefix . 'setting_hide_tabs_if_one_widget_is_active' ) );
-		$this->assertTrue( 1                                                            === get_option( $scp_prefix . 'setting_show_button_to_close_widget' ) );
-		$this->assertTrue( __( "Thanks! Please don't show me popup.", L10N_SCP_PREFIX ) === get_option( $scp_prefix . 'setting_button_to_close_widget_title' ) );
-		$this->assertTrue( 'link'                                                       === get_option( $scp_prefix . 'setting_button_to_close_widget_style' ) );
+		$this->assertTrue( 1                                                                 === get_option( $scp_prefix . 'setting_hide_tabs_if_one_widget_is_active' ) );
+		$this->assertTrue( 1                                                                 === get_option( $scp_prefix . 'setting_show_button_to_close_widget' ) );
+		$this->assertTrue( __( "Thanks! Please don't show me popup.", 'social-media-popup' ) === get_option( $scp_prefix . 'setting_button_to_close_widget_title' ) );
+		$this->assertTrue( 'link'                                                            === get_option( $scp_prefix . 'setting_button_to_close_widget_style' ) );
 	}
 
 	/**
@@ -335,14 +335,14 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( 'vkontakte,facebook,odnoklassniki,googleplus,twitter,pinterest' === get_option( $scp_prefix . 'setting_tabs_order' ) );
 
 		// Pinterest
-		$this->assertTrue( 0                                  === get_option( $scp_prefix . 'setting_use_pinterest' ) );
-		$this->assertTrue( __( 'Pinterest', L10N_SCP_PREFIX ) === get_option( $scp_prefix . 'setting_pinterest_tab_caption' ) );
-		$this->assertTrue( 0                                  === get_option( $scp_prefix . 'setting_pinterest_show_description' ) );
-		$this->assertTrue( ''                                 === get_option( $scp_prefix . 'setting_pinterest_description' ) );
-		$this->assertTrue( 'http://ru.pinterest.com/gruz0/'   === get_option( $scp_prefix . 'setting_pinterest_profile_url' ) );
-		$this->assertTrue( 60                                 === get_option( $scp_prefix . 'setting_pinterest_image_width' ) );
-		$this->assertTrue( 380                                === get_option( $scp_prefix . 'setting_pinterest_width' ) );
-		$this->assertTrue( 300                                === get_option( $scp_prefix . 'setting_pinterest_height' ) );
+		$this->assertTrue( 0                                       === get_option( $scp_prefix . 'setting_use_pinterest' ) );
+		$this->assertTrue( __( 'Pinterest', 'social-media-popup' ) === get_option( $scp_prefix . 'setting_pinterest_tab_caption' ) );
+		$this->assertTrue( 0                                       === get_option( $scp_prefix . 'setting_pinterest_show_description' ) );
+		$this->assertTrue( ''                                      === get_option( $scp_prefix . 'setting_pinterest_description' ) );
+		$this->assertTrue( 'http://ru.pinterest.com/gruz0/'        === get_option( $scp_prefix . 'setting_pinterest_profile_url' ) );
+		$this->assertTrue( 60                                      === get_option( $scp_prefix . 'setting_pinterest_image_width' ) );
+		$this->assertTrue( 380                                     === get_option( $scp_prefix . 'setting_pinterest_width' ) );
+		$this->assertTrue( 300                                     === get_option( $scp_prefix . 'setting_pinterest_height' ) );
 	}
 
 	/**
@@ -477,10 +477,10 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( 0                            === get_option( $scp_prefix . 'setting_use_icons_instead_of_labels_in_tabs' ) );
 		$this->assertTrue( '2x'                         === get_option( $scp_prefix . 'setting_icons_size_on_desktop' ) );
 
-		$this->assertTrue( 'Follow Us on Social Media!' === get_option( $scp_prefix . 'setting_plugin_title_on_mobile_devices' ) );
-		$this->assertTrue( '2x'                         === get_option( $scp_prefix . 'setting_icons_size_on_mobile_devices' ) );
-		$this->assertTrue( 0                            === get_option( $scp_prefix . 'event_hide_element_after_click_on_it' ) );
-		$this->assertTrue( 1                            === get_option( $scp_prefix . 'setting_show_admin_bar_menu' ) );
+		$this->assertTrue( __( 'Follow Us on Social Media!', 'social-media-popup' ) === get_option( $scp_prefix . 'setting_plugin_title_on_mobile_devices' ) );
+		$this->assertTrue( '2x'                                                     === get_option( $scp_prefix . 'setting_icons_size_on_mobile_devices' ) );
+		$this->assertTrue( 0                                                        === get_option( $scp_prefix . 'event_hide_element_after_click_on_it' ) );
+		$this->assertTrue( 1                                                        === get_option( $scp_prefix . 'setting_show_admin_bar_menu' ) );
 
 		// Facebook
 		$this->assertTrue( 0                            === get_option( $scp_prefix . 'setting_facebook_close_window_after_join' ) );
@@ -529,27 +529,27 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 
 		// Трекинг событий социальных сетей
 		$this->assertTrue( 1 === get_option( $scp_prefix . 'tracking_use_twitter' ) );
-		$this->assertTrue( __( 'Follow on Twitter', L10N_SCP_PREFIX ) === get_option( $scp_prefix . 'tracking_twitter_event' ) );
+		$this->assertTrue( __( 'Follow on Twitter', 'social-media-popup' ) === get_option( $scp_prefix . 'tracking_twitter_event' ) );
 
 		$this->assertTrue( 1 === get_option( $scp_prefix . 'tracking_use_vkontakte' ) );
-		$this->assertTrue( __( 'Subscribe on VK.com', L10N_SCP_PREFIX )     === get_option( $scp_prefix . 'tracking_vkontakte_subscribe_event' ) );
-		$this->assertTrue( __( 'Unsubscribe from VK.com', L10N_SCP_PREFIX ) === get_option( $scp_prefix . 'tracking_vkontakte_unsubscribe_event' ) );
+		$this->assertTrue( __( 'Subscribe on VK.com', 'social-media-popup' )     === get_option( $scp_prefix . 'tracking_vkontakte_subscribe_event' ) );
+		$this->assertTrue( __( 'Unsubscribe from VK.com', 'social-media-popup' ) === get_option( $scp_prefix . 'tracking_vkontakte_unsubscribe_event' ) );
 
 		$this->assertTrue( 1 === get_option( $scp_prefix . 'tracking_use_facebook' ) );
-		$this->assertTrue( __( 'Subscribe on Facebook', L10N_SCP_PREFIX )     === get_option( $scp_prefix . 'tracking_facebook_subscribe_event' ) );
-		$this->assertTrue( __( 'Unsubscribe from Facebook', L10N_SCP_PREFIX ) === get_option( $scp_prefix . 'tracking_facebook_unsubscribe_event' ) );
+		$this->assertTrue( __( 'Subscribe on Facebook', 'social-media-popup' )     === get_option( $scp_prefix . 'tracking_facebook_subscribe_event' ) );
+		$this->assertTrue( __( 'Unsubscribe from Facebook', 'social-media-popup' ) === get_option( $scp_prefix . 'tracking_facebook_unsubscribe_event' ) );
 
 		// Описания событий для отправки в Google Analytics
-		$this->assertTrue( __( 'Show immediately', L10N_SCP_PREFIX )                    === get_option( $scp_prefix . 'tracking_event_label_window_showed_immediately' ) );
-		$this->assertTrue( __( 'Show after delay before it rendered', L10N_SCP_PREFIX ) === get_option( $scp_prefix . 'tracking_event_label_window_showed_with_delay' ) );
-		$this->assertTrue( __( 'Show after click on CSS-selector', L10N_SCP_PREFIX )    === get_option( $scp_prefix . 'tracking_event_label_window_showed_after_click' ) );
-		$this->assertTrue( __( 'Show after scrolling down', L10N_SCP_PREFIX )           === get_option( $scp_prefix . 'tracking_event_label_window_showed_on_scrolling_down' ) );
-		$this->assertTrue( __( 'Show on exit intent', L10N_SCP_PREFIX )                 === get_option( $scp_prefix . 'tracking_event_label_window_showed_on_exit_intent' ) );
-		$this->assertTrue( __( '(no events fired)', L10N_SCP_PREFIX )                   === get_option( $scp_prefix . 'tracking_event_label_no_events_fired' ) );
-		$this->assertTrue( __( 'After delay before show widget', L10N_SCP_PREFIX )      === get_option( $scp_prefix . 'tracking_event_label_on_delay' ) );
-		$this->assertTrue( __( 'After click on CSS-selector', L10N_SCP_PREFIX )         === get_option( $scp_prefix . 'tracking_event_label_after_click' ) );
-		$this->assertTrue( __( 'On scrolling down', L10N_SCP_PREFIX )                   === get_option( $scp_prefix . 'tracking_event_label_on_scrolling_down' ) );
-		$this->assertTrue( __( 'On exit intent', L10N_SCP_PREFIX )                      === get_option( $scp_prefix . 'tracking_event_label_on_exit_intent' ) );
+		$this->assertTrue( __( 'Show immediately', 'social-media-popup' )                    === get_option( $scp_prefix . 'tracking_event_label_window_showed_immediately' ) );
+		$this->assertTrue( __( 'Show after delay before it rendered', 'social-media-popup' ) === get_option( $scp_prefix . 'tracking_event_label_window_showed_with_delay' ) );
+		$this->assertTrue( __( 'Show after click on CSS-selector', 'social-media-popup' )    === get_option( $scp_prefix . 'tracking_event_label_window_showed_after_click' ) );
+		$this->assertTrue( __( 'Show after scrolling down', 'social-media-popup' )           === get_option( $scp_prefix . 'tracking_event_label_window_showed_on_scrolling_down' ) );
+		$this->assertTrue( __( 'Show on exit intent', 'social-media-popup' )                 === get_option( $scp_prefix . 'tracking_event_label_window_showed_on_exit_intent' ) );
+		$this->assertTrue( __( '(no events fired)', 'social-media-popup' )                   === get_option( $scp_prefix . 'tracking_event_label_no_events_fired' ) );
+		$this->assertTrue( __( 'After delay before show widget', 'social-media-popup' )      === get_option( $scp_prefix . 'tracking_event_label_on_delay' ) );
+		$this->assertTrue( __( 'After click on CSS-selector', 'social-media-popup' )         === get_option( $scp_prefix . 'tracking_event_label_after_click' ) );
+		$this->assertTrue( __( 'On scrolling down', 'social-media-popup' )                   === get_option( $scp_prefix . 'tracking_event_label_on_scrolling_down' ) );
+		$this->assertTrue( __( 'On exit intent', 'social-media-popup' )                      === get_option( $scp_prefix . 'tracking_event_label_on_exit_intent' ) );
 
 		// Прочие опции
 		$this->assertTrue( 1 === get_option( $scp_prefix . 'do_not_use_cookies_after_click_on_element' ) );

@@ -25,7 +25,7 @@ if ( ! empty( $subtab ) ) {
 ?>
 
 <div class="wrap social-community-popup-settings">
-	<h1><?php esc_attr_e( 'Social Media Popup Options', L10N_SCP_PREFIX ); ?></h1>
+	<h2>Social Media Popup</h2>
 
 	<?php scp_settings_tabs( $tab, $subtab ); ?>
 
@@ -48,14 +48,14 @@ if ( ! empty( $subtab ) ) {
  */
 function scp_settings_tabs( $current_tab, $subtab ) {
 	$tabs                = array();
-	$tabs['general']     = __( 'General', L10N_SCP_PREFIX );
-	$tabs['view']        = __( 'View (Desktop)', L10N_SCP_PREFIX );
-	$tabs['view-mobile'] = __( 'View (Mobile Devices)', L10N_SCP_PREFIX );
-	$tabs['events']      = __( 'Events', L10N_SCP_PREFIX );
-	$tabs['tracking']    = __( 'Tracking', L10N_SCP_PREFIX );
-	$tabs['management']  = __( 'Management', L10N_SCP_PREFIX );
+	$tabs['general']     = __( 'General', 'social-media-popup' );
+	$tabs['view']        = __( 'View (Desktop)', 'social-media-popup' );
+	$tabs['view-mobile'] = __( 'View (Mobile Devices)', 'social-media-popup' );
+	$tabs['events']      = __( 'Events', 'social-media-popup' );
+	$tabs['tracking']    = __( 'Tracking', 'social-media-popup' );
+	$tabs['management']  = __( 'Management', 'social-media-popup' );
 
-	$tab_template = '<a class="nav-tab %s" href="?page=' . SMP_PREFIX . '&tab=%s">%s</a>';
+	$tab_template = '<a class="nav-tab %s" href="?page=%s&tab=%s">%s</a>';
 
 	$content = '<h2 class="nav-tab-wrapper">';
 	foreach ( $tabs as $tab_key => $tab_caption ) {
@@ -70,8 +70,9 @@ function scp_settings_tabs( $current_tab, $subtab ) {
 		$content .= sprintf(
 			$tab_template,
 			esc_attr( $active ),
+			SMP_PREFIX,
 			esc_attr( $tab_key ),
-			esc_attr( $tab_caption )
+			esc_html( $tab_caption )
 		);
 	}
 
@@ -93,18 +94,20 @@ function scp_settings_tabs( $current_tab, $subtab ) {
  *
  * @param string $current_tab    Current tab
  * @param string $current_subtab Secondary tab
+ *
+ * @return string
  */
 function smp_tracking_menu( $current_tab, $current_subtab ) {
 	$available_tabs = array( 'general', 'google-analytics', 'window-events', 'social-events' );
 	$current_subtab = smp_validate_and_sanitize_tab( $current_subtab, $available_tabs );
 
 	$subtabs                     = array();
-	$subtabs['general']          = __( 'General', L10N_SCP_PREFIX );
-	$subtabs['google-analytics'] = __( 'Google Analytics', L10N_SCP_PREFIX );
-	$subtabs['window-events']    = __( 'Window Events', L10N_SCP_PREFIX );
-	$subtabs['social-events']    = __( 'Social Events', L10N_SCP_PREFIX );
+	$subtabs['general']          = __( 'General', 'social-media-popup' );
+	$subtabs['google-analytics'] = __( 'Google Analytics', 'social-media-popup' );
+	$subtabs['window-events']    = __( 'Window Events', 'social-media-popup' );
+	$subtabs['social-events']    = __( 'Social Events', 'social-media-popup' );
 
-	$subtab_template = '<a class="nav-tab %s" href="?page=' . SMP_PREFIX . '&tab=%s&section=%s">%s</a>';
+	$subtab_template = '<a class="nav-tab %s" href="?page=%s&tab=%s&section=%s">%s</a>';
 
 	$content = '<h3 class="nav-tab-wrapper">';
 	foreach ( $subtabs as $tab_key => $tab_caption ) {
@@ -113,9 +116,10 @@ function smp_tracking_menu( $current_tab, $current_subtab ) {
 		$content .= sprintf(
 			$subtab_template,
 			esc_attr( $active ),
+			SMP_PREFIX,
 			esc_attr( $current_tab ),
 			esc_attr( $tab_key ),
-			esc_attr( $tab_caption )
+			esc_html( $tab_caption )
 		);
 	}
 

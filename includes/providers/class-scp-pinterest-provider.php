@@ -33,7 +33,7 @@ class SCP_Pinterest_Provider extends SCP_Provider {
 	 */
 	public static function options() {
 		return array(
-			'default_tab_caption' => __( 'Pinterest', L10N_SCP_PREFIX ),
+			'default_tab_caption' => __( 'Pinterest', 'social-media-popup' ),
 			'tab_caption'         => self::get_option_as_escaped_string( 'setting_pinterest_tab_caption' ),
 			'css_class'           => 'pinterest-tab',
 			'icon'                => 'fa-pinterest',
@@ -51,9 +51,7 @@ class SCP_Pinterest_Provider extends SCP_Provider {
 	public static function container() {
 		$content = '<div class="box">';
 
-		if ( self::get_option_as_boolean( 'setting_pinterest_show_description' ) ) {
-			$content .= '<p class="widget-description"><b>' . self::$options['setting_pinterest_description'] . '</b></p>';
-		}
+		$content .= self::widget_description( 'setting_pinterest_show_description', 'setting_pinterest_description' );
 
 		$content .= '<a data-pin-do="embedUser" '
 			. 'href="'                  . self::get_option_as_escaped_string( 'setting_pinterest_profile_url' ) . '" '

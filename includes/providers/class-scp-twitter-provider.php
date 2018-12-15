@@ -33,7 +33,7 @@ class SCP_Twitter_Provider extends SCP_Provider {
 	 */
 	public static function options() {
 		return array(
-			'default_tab_caption' => __( 'Twitter', L10N_SCP_PREFIX ),
+			'default_tab_caption' => __( 'Twitter', 'social-media-popup' ),
 			'tab_caption'         => self::get_option_as_escaped_string( 'setting_twitter_tab_caption' ),
 			'css_class'           => 'twitter-tab',
 			'icon'                => 'fa-twitter',
@@ -62,9 +62,7 @@ class SCP_Twitter_Provider extends SCP_Provider {
 
 		$content = '<div class="box" style="height:' . esc_attr( ( $widget_height - 20 ) ) . 'px;">';
 
-		if ( self::get_option_as_boolean( 'setting_twitter_show_description' ) ) {
-			$content .= '<p class="widget-description"><b>' . self::$options['setting_twitter_description'] . '</b></p>';
-		}
+		$content .= self::widget_description( 'setting_twitter_show_description', 'setting_twitter_description' );
 
 		$use_follow_button = self::get_option_as_boolean( 'setting_twitter_use_follow_button' );
 		$use_timeline      = self::get_option_as_boolean( 'setting_twitter_use_timeline' );
@@ -166,7 +164,7 @@ class SCP_Twitter_Provider extends SCP_Provider {
 			. 'data-show-screen-name="' . scp_to_bool( self::get_option_as_escaped_string( 'setting_twitter_show_screen_name' ) ) . '" '
 			. 'data-size="'             . ( self::get_option_as_boolean( 'setting_twitter_follow_button_large_size' ) ? 'large' : '' ) . '" '
 			. 'lang="'                  . self::get_option_as_escaped_string( 'setting_twitter_locale' ) . '" '
-			. '>' . __( 'Follow', L10N_SCP_PREFIX ) . ' @' . self::get_option_as_escaped_string( 'setting_twitter_username' ) . '</a></div>';
+			. '>' . esc_html( 'Follow', 'social-media-popup' ) . ' @' . self::get_option_as_escaped_string( 'setting_twitter_username' ) . '</a></div>';
 	}
 
 	/**
@@ -182,6 +180,7 @@ class SCP_Twitter_Provider extends SCP_Provider {
 	 * @return string
 	 */
 	private static function render_timeline( $twitter_chrome, $widget_height, $overflow_css ) {
+		// NOTE: It is not needed to wrap $widget_height because of it present as integer
 		return '<div style="overflow:' . esc_attr( $overflow_css ) . ';height:' . $widget_height . 'px;">'
 			. '<a class="twitter-timeline" '
 			. 'href="//twitter.com/' . self::get_option_as_escaped_string( 'setting_twitter_username' ) . '" '
@@ -194,7 +193,7 @@ class SCP_Twitter_Provider extends SCP_Provider {
 			. 'width="'              . self::get_option_as_integer( 'setting_twitter_width' ) . '" '
 			. 'height="'             . $widget_height . '"'
 			. 'lang="'               . self::get_option_as_escaped_string( 'setting_twitter_locale' ) . '" '
-			. ' rel="nofollow" target="_blank">' . __( 'Tweets', L10N_SCP_PREFIX ) . ' @' . self::get_option_as_escaped_string( 'setting_twitter_username' ) . '</a>'
+			. ' rel="nofollow" target="_blank">' . esc_html( 'Tweets', 'social-media-popup' ) . ' @' . self::get_option_as_escaped_string( 'setting_twitter_username' ) . '</a>'
 			. '</div>';
 	}
 }
