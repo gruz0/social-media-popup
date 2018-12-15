@@ -26,7 +26,6 @@ defined( 'ABSPATH' ) or exit;
 if ( ! array_key_exists( 'social-media-popup', $GLOBALS ) ) {
 	if ( ! class_exists( 'Social_Media_Popup' ) ) {
 
-		// Хуки для активации и деактивации плагина
 		register_activation_hook( __FILE__, array( 'Social_Media_Popup', 'activate' ) );
 		register_deactivation_hook( __FILE__, array( 'Social_Media_Popup', 'deactivate' ) );
 		register_uninstall_hook( __FILE__, array( 'Social_Media_Popup', 'uninstall' ) );
@@ -47,13 +46,13 @@ if ( ! array_key_exists( 'social-media-popup', $GLOBALS ) ) {
 
 		if ( isset( $social_media_popup ) ) {
 			/**
-			 * Добавляет пункт "Настройки" в раздел плагинов в WordPress
+			 * Add Settings link to plugins list
 			 *
 			 * @param array $links Links
 			 * @return array
 			 */
 			function social_media_popup_plugin_settings_link( $links ) {
-				$settings_link = '<a href="admin.php?page=social_media_popup">' . __( 'Settings', 'social-media-popup' ) . '</a>';
+				$settings_link = '<a href="admin.php?page=social_media_popup">' . esc_html( 'Settings', 'social-media-popup' ) . '</a>';
 				array_unshift( $links, $settings_link );
 				return $links;
 			}
@@ -63,7 +62,7 @@ if ( ! array_key_exists( 'social-media-popup', $GLOBALS ) ) {
 		}
 
 		/**
-		 * Переводит текстовое значение get_option для чекбокса в булевое
+		 * Convert integer value to stringified boolean
 		 *
 		 * @param string $variable Value
 		 * @return string
