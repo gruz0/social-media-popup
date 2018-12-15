@@ -166,7 +166,7 @@ class SCP_Twitter_Provider extends SCP_Provider {
 			. 'data-show-screen-name="' . scp_to_bool( self::get_option_as_escaped_string( 'setting_twitter_show_screen_name' ) ) . '" '
 			. 'data-size="'             . ( self::get_option_as_boolean( 'setting_twitter_follow_button_large_size' ) ? 'large' : '' ) . '" '
 			. 'lang="'                  . self::get_option_as_escaped_string( 'setting_twitter_locale' ) . '" '
-			. '>' . __( 'Follow', 'social-media-popup' ) . ' @' . self::get_option_as_escaped_string( 'setting_twitter_username' ) . '</a></div>';
+			. '>' . esc_html( 'Follow', 'social-media-popup' ) . ' @' . self::get_option_as_escaped_string( 'setting_twitter_username' ) . '</a></div>';
 	}
 
 	/**
@@ -182,6 +182,7 @@ class SCP_Twitter_Provider extends SCP_Provider {
 	 * @return string
 	 */
 	private static function render_timeline( $twitter_chrome, $widget_height, $overflow_css ) {
+		// NOTE: It is not needed to wrap $widget_height because of it present as integer
 		return '<div style="overflow:' . esc_attr( $overflow_css ) . ';height:' . $widget_height . 'px;">'
 			. '<a class="twitter-timeline" '
 			. 'href="//twitter.com/' . self::get_option_as_escaped_string( 'setting_twitter_username' ) . '" '
@@ -194,7 +195,7 @@ class SCP_Twitter_Provider extends SCP_Provider {
 			. 'width="'              . self::get_option_as_integer( 'setting_twitter_width' ) . '" '
 			. 'height="'             . $widget_height . '"'
 			. 'lang="'               . self::get_option_as_escaped_string( 'setting_twitter_locale' ) . '" '
-			. ' rel="nofollow" target="_blank">' . __( 'Tweets', 'social-media-popup' ) . ' @' . self::get_option_as_escaped_string( 'setting_twitter_username' ) . '</a>'
+			. ' rel="nofollow" target="_blank">' . esc_html( 'Tweets', 'social-media-popup' ) . ' @' . self::get_option_as_escaped_string( 'setting_twitter_username' ) . '</a>'
 			. '</div>';
 	}
 }
