@@ -41,7 +41,6 @@ class Social_Media_Popup {
 	 * @since 0.7.3 Changed action to wp_enqueue_scripts to add admin scripts
 	 */
 	public function __construct() {
-		add_action( 'init', array( & $this, 'localization' ) );
 		add_action( 'admin_init', array( & $this, 'admin_init' ) );
 		add_action( 'admin_menu', array( & $this, 'add_menu' ) );
 		add_action( 'admin_bar_menu', array( & $this, 'admin_bar_menu' ), 999 );
@@ -1011,13 +1010,6 @@ class Social_Media_Popup {
 			update_option( $version, '0.7.6' );
 			self::set_scp_version( '0.7.6' );
 		}
-	}
-
-	/**
-	 * Подключаем локализацию к плагину
-	 */
-	public function localization() {
-		load_plugin_textdomain( 'social-media-popup', false, SMP_PLUGIN_DIRNAME . 'languages' );
 	}
 
 	/**
