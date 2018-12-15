@@ -80,7 +80,7 @@ class SCP_Provider {
 		self::$options = $options;
 		self::$tabs_id = self::tabs_id();
 
-		// FIXME: Переписать на проверку провайдера в массиве available_providers()
+		// FIXME: It should be rewritten with available_providers()
 		switch ( $provider ) {
 			case 'facebook':
 				require_once( dirname( __FILE__ ) . '/class-scp-facebook-provider.php' );
@@ -150,10 +150,15 @@ class SCP_Provider {
 	 * @return string
 	 */
 	public static function tab_caption( $args ) {
-		return '<li '
-			. 'data-index="' . $args['index'] . '" '
-			. 'class="' . $args['css_class'] . '" '
-			. '><span>' . ( empty( $args['tab_caption'] ) ? $args['default_tab_caption'] : $args['tab_caption'] ) . '</span></li>';
+		$format  = '<li data-index="%s" class="%s"><span>%s</span></li>';
+		$caption = empty( $args['tab_caption'] ) ? $args['default_tab_caption'] : $args['tab_caption'];
+
+		return sprintf(
+			$format,
+			esc_attr( $args['index'] ),
+			esc_attr( $args['css_class'] ),
+			esc_html( $caption )
+		);
 	}
 
 	/**
@@ -165,12 +170,17 @@ class SCP_Provider {
 	 * @return string
 	 */
 	public static function tab_caption_desktop_icons( $args ) {
-		return '<li '
-			. 'data-index="' . $args['index'] . '" '
-			. 'class="' . $args['css_class'] . '" '
-			. 'style="width:' . sprintf( '%0.2f', floatval( $args['width'] ) ) . '%;" '
-			. '><a href="#" title="' . self::clean_tab_caption( $args['tab_caption'] ) . '">'
-			. '<i class="fa ' . $args['icon'] . ' ' . $args['icon_size'] . '"></i></a></li>';
+		$format = '<li data-index="%s" class="%s" style="width:%s%%;"><a href="#" title="%s"><i class="fa %s %s"></i></a></li>';
+
+		return sprintf(
+			$format,
+			esc_attr( $args['index'] ),
+			esc_attr( $args['css_class'] ),
+			sprintf( '%0.2f', floatval( $args['width'] ) ),
+			self::clean_tab_caption( $args['tab_caption'] ),
+			esc_attr( $args['icon'] ),
+			esc_attr( $args['icon_size'] )
+		);
 	}
 
 	/**
@@ -182,11 +192,17 @@ class SCP_Provider {
 	 * @return string
 	 */
 	public static function tab_caption_mobile( $args ) {
-		return '<li '
-			. 'class="' . $args['css_class'] . '" '
-			. 'style="width:' . sprintf( '%0.2f', floatval( $args['width'] ) ) . '%;" '
-			. '><a href="' . $args['url'] . '" target="_blank" rel="nofollow" title="' . self::clean_tab_caption( $args['tab_caption'] ) . '">'
-			. '<i class="fa ' . $args['icon'] . ' ' . $args['icon_size'] . '"></i></a></li>';
+		$format = '<li class="%s" style="width:%s%%;><a href="%s" target="_blank" rel="nofollow" title="%s"><i class="fa %s %s"></i></a></li>';
+
+		return sprintf(
+			$format,
+			esc_attr( $args['css_class'] ),
+			sprintf( '%0.2f', floatval( $args['width'] ) ),
+			esc_url( $args['url'] ),
+			self::clean_tab_caption( $args['tab_caption'] ),
+			esc_attr( $args['icon'] ),
+			esc_attr( $args['icon_size'] )
+		);
 	}
 
 	/**
@@ -199,13 +215,13 @@ class SCP_Provider {
 	private static function tabs_id() {
 		if ( wp_is_mobile() ) {
 			return '#scp_mobile .scp-icons';
-		} else {
-			if ( '1' === self::$options['setting_use_icons_instead_of_labels_in_tabs'] ) {
-				return '#social-community-popup .scp-icons';
-			} else {
-				return '#social-community-popup .tabs';
-			}
 		}
+
+		if ( '1' === self::$options['setting_use_icons_instead_of_labels_in_tabs'] ) {
+			return '#social-community-popup .scp-icons';
+		}
+
+		return '#social-community-popup .tabs';
 	}
 
 	/**
