@@ -70,10 +70,7 @@ class SCP_Facebook_Provider extends SCP_Provider {
 
 		$content = '<div class="box">';
 
-		// FIXME: Should be refactored with self::show_description() and move condition to it
-		if ( self::get_option_as_boolean( 'setting_facebook_show_description' ) ) {
-			$content .= '<p class="widget-description"><b>' . self::$options['setting_facebook_description'] . '</b></p>';
-		}
+		$content .= self::widget_description( 'setting_facebook_show_description', 'setting_facebook_description' );
 
 		$content .= self::prepare_facebook_widget();
 

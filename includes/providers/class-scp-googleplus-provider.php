@@ -53,9 +53,7 @@ class SCP_GooglePlus_Provider extends SCP_Provider {
 	public static function container() {
 		$content = '<div class="box" id="scp_googleplus_container">';
 
-		if ( self::get_option_as_boolean( 'setting_googleplus_show_description' ) ) {
-			$content .= '<p class="widget-description"><b>' . self::$options['setting_googleplus_description'] . '</b></p>';
-		}
+		$content .= self::widget_description( 'setting_googleplus_show_description', 'setting_googleplus_description' );
 
 		$content .= '<div class="g-'  . self::get_option_as_escaped_string( 'setting_googleplus_page_type' ) . '" '
 			. 'data-width="'          . self::get_option_as_integer( 'setting_googleplus_size' ) . '" '

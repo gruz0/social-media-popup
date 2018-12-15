@@ -62,9 +62,7 @@ class SCP_Twitter_Provider extends SCP_Provider {
 
 		$content = '<div class="box" style="height:' . esc_attr( ( $widget_height - 20 ) ) . 'px;">';
 
-		if ( self::get_option_as_boolean( 'setting_twitter_show_description' ) ) {
-			$content .= '<p class="widget-description"><b>' . self::$options['setting_twitter_description'] . '</b></p>';
-		}
+		$content .= self::widget_description( 'setting_twitter_show_description', 'setting_twitter_description' );
 
 		$use_follow_button = self::get_option_as_boolean( 'setting_twitter_use_follow_button' );
 		$use_timeline      = self::get_option_as_boolean( 'setting_twitter_use_timeline' );

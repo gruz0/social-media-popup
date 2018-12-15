@@ -296,6 +296,24 @@ class SCP_Provider {
 	}
 
 	/**
+	 * Returns widget's description
+	 *
+	 * @since 0.7.6
+	 *
+	 * @param string $show_description_option_name Option name
+	 * @param string $description_option_name      Description
+	 *
+	 * @return string
+	 */
+	protected static function widget_description( $show_description_option_name, $description_option_name ) {
+		if ( self::get_option_as_boolean( $show_description_option_name ) ) {
+			return '<p class="widget-description"><b>' . self::$options[ $description_option_name ] . '</b></p>';
+		}
+
+		return '';
+	}
+
+	/**
 	 * Removes new lines and uneccessary chars from tab caption
 	 *
 	 * @since 0.7.4
