@@ -25,10 +25,11 @@ class SCP_Settings_Field {
 		$field       = $args['field'];
 		$value       = esc_attr( get_option( $field ) );
 		$placeholder = empty( $args['placeholder'] ) ? '' : esc_attr( $args['placeholder'] );
-		$format      = '<input type="text" name="%s" id="%s" value="%s" placeholder="%s" />';
+		$required    = empty( $args['required'] ) ? '' : ' required';
+		$format      = '<input type="text" name="%s" id="%s" value="%s" placeholder="%s"%s />';
 
 		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo sprintf( $format, $field, $field, $value, $placeholder );
+		echo sprintf( $format, $field, $field, $value, $placeholder, $required );
 		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
