@@ -1319,6 +1319,7 @@ class Social_Media_Popup {
 			array(
 				'field' => $scp_prefix . 'setting_container_width',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '400',
+				'required' => true,
 			)
 		);
 
@@ -1331,6 +1332,7 @@ class Social_Media_Popup {
 			array(
 				'field' => $scp_prefix . 'setting_container_height',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '400',
+				'required' => true,
 			)
 		);
 
@@ -1483,6 +1485,7 @@ class Social_Media_Popup {
 			array(
 				'field' => $scp_prefix . 'popup_will_appear_after_n_seconds',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '5',
+				'required' => true,
 			)
 		);
 
@@ -1495,6 +1498,7 @@ class Social_Media_Popup {
 			array(
 				'field' => $scp_prefix . 'popup_will_appear_after_clicking_on_element',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '#my-button, .entry .button',
+				'required' => true,
 			)
 		);
 
@@ -1529,6 +1533,7 @@ class Social_Media_Popup {
 			array(
 				'field' => $scp_prefix . 'popup_will_appear_after_scrolling_down_n_percent',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '70',
+				'required' => true,
 			)
 		);
 
@@ -1570,6 +1575,7 @@ class Social_Media_Popup {
 			array(
 				'field' => $scp_prefix . 'visitor_opened_at_least_n_number_of_pages',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '2',
+				'required' => true,
 			)
 		);
 
@@ -1593,6 +1599,7 @@ class Social_Media_Popup {
 			array(
 				'field' => $scp_prefix . 'setting_display_after_n_days',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '15',
+				'required' => true,
 			)
 		);
 	}
