@@ -9,9 +9,9 @@
  */
 
 /**
- * SCP_Template class
+ * SMP_Template class
  */
-class SCP_Template {
+class SMP_Template {
 	/**
 	 * Template options
 	 *
@@ -80,7 +80,7 @@ class SCP_Template {
 	}
 
 	/**
-	 * Returns JS code to show SCP window by jQuery
+	 * Returns JS code to show SMP window by jQuery
 	 *
 	 * @since 0.7.3
 	 * @since 0.7.5 Add using event tracking
@@ -135,7 +135,7 @@ class SCP_Template {
 	 * @since 0.7.3
 	 *
 	 * @param boolean $close_by_clicking_anywhere If it is equals to true then window will close by click outside container
-	 * @param string  $after_n_days Timeout to show SCP window again
+	 * @param string  $after_n_days Timeout to show SMP window again
 	 * @return string
 	 */
 	function render_close_widget( $close_by_clicking_anywhere, $after_n_days ) {
@@ -157,7 +157,7 @@ class SCP_Template {
 	 *
 	 * @since 0.7.4
 	 *
-	 * @param string $after_n_days Timeout to show SCP window again
+	 * @param string $after_n_days Timeout to show SMP window again
 	 * @return string
 	 */
 	function render_close_widget_on_mobile( $after_n_days ) {
@@ -175,8 +175,8 @@ class SCP_Template {
 	 *
 	 * @since 0.7.3
 	 *
-	 * @param boolean $close_when_esc_pressed If it is equals to true then SCP window will close by ESC pressed
-	 * @param string  $after_n_days Timeout to show SCP window again
+	 * @param boolean $close_when_esc_pressed If it is equals to true then SMP window will close by ESC pressed
+	 * @param string  $after_n_days Timeout to show SMP window again
 	 * @return string
 	 */
 	function render_close_widget_when_esc_pressed( $close_when_esc_pressed, $after_n_days ) {
@@ -513,9 +513,9 @@ class SCP_Template {
 	 *
 	 * @since 0.7.5
 	 *
-	 * @used_by SCP_Facebook_Provider::container()
-	 * @used_by SCP_VK_Provider::container()
-	 * @used_by SCP_Twitter_Provider::container()
+	 * @used_by SMP_Facebook_Provider::container()
+	 * @used_by SMP_VK_Provider::container()
+	 * @used_by SMP_Twitter_Provider::container()
 	 *
 	 * @param string $action Action to send. Example: subscribe, unsubscribe, etc.
 	 * @return string
@@ -543,9 +543,9 @@ class SCP_Template {
 	 *
 	 * @since 0.7.5
 	 *
-	 * @used_by SCP_Facebook_Provider::container()
-	 * @used_by SCP_VK_Provider::container()
-	 * @used_by SCP_Twitter_Provider::container()
+	 * @used_by SMP_Facebook_Provider::container()
+	 * @used_by SMP_VK_Provider::container()
+	 * @used_by SMP_Twitter_Provider::container()
 	 *
 	 * @param string $network Social network name (Facebook, VK, Twitter, etc.)
 	 * @param string $event_type Type description (like, unlike, etc.)

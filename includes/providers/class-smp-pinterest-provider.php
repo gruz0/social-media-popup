@@ -2,17 +2,16 @@
 /**
  * Pinterest Template
  *
- * @package    Social_Media_Popup
- * @subpackage SCP_Template
- * @author     Alexander Kadyrov
- * @license    http://www.gnu.org/copyleft/gpl.html GNU General Public License
- * @link       https://github.com/gruz0/social-media-popup
+ * @package Social_Media_Popup
+ * @author  Alexander Kadyrov
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link    https://github.com/gruz0/social-media-popup
  */
 
 /**
- * SCP_Pinterest_Provider
+ * SMP_Pinterest_Provider
  */
-class SCP_Pinterest_Provider extends SCP_Provider {
+class SMP_Pinterest_Provider extends SMP_Provider {
 	/**
 	 * Return widget is active
 	 *

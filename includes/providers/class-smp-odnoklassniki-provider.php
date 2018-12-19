@@ -2,17 +2,16 @@
 /**
  * Odnoklassniki Template
  *
- * @package    Social_Media_Popup
- * @subpackage SCP_Template
- * @author     Alexander Kadyrov
- * @license    http://www.gnu.org/copyleft/gpl.html GNU General Public License
- * @link       https://github.com/gruz0/social-media-popup
+ * @package Social_Media_Popup
+ * @author  Alexander Kadyrov
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link    https://github.com/gruz0/social-media-popup
  */
 
 /**
- * SCP_Odnoklassniki_Provider
+ * SMP_Odnoklassniki_Provider
  */
-class SCP_Odnoklassniki_Provider extends SCP_Provider {
+class SMP_Odnoklassniki_Provider extends SMP_Provider {
 	/**
 	 * Return widget is active
 	 *

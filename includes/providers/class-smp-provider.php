@@ -2,17 +2,16 @@
 /**
  * Providers base class
  *
- * @package    Social_Media_Popup
- * @subpackage SCP_Template
- * @author     Alexander Kadyrov
- * @license    http://www.gnu.org/copyleft/gpl.html GNU General Public License
- * @link       https://github.com/gruz0/social-media-popup
+ * @package Social_Media_Popup
+ * @author  Alexander Kadyrov
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link    https://github.com/gruz0/social-media-popup
  */
 
 /**
- * SCP_Provider
+ * SMP_Provider
  */
-class SCP_Provider {
+class SMP_Provider {
 	/**
 	 * Plugin options
 	 *
@@ -28,9 +27,9 @@ class SCP_Provider {
 	static $tabs_id = null;
 
 	/**
-	 * An instance of SCP_Template class
+	 * An instance of SMP_Template class
 	 *
-	 * @var SCP_Template $template
+	 * @var SMP_Template $template
 	 */
 	static $template = null;
 
@@ -74,7 +73,7 @@ class SCP_Provider {
 	 * @param string $provider Provider name (ex. facebook, vkontakte, etc.)
 	 * @param array  $options Plugin options
 	 * @throws Exception Throws Exception if the provided $provider is not exist
-	 * @return SCP_Provider
+	 * @return SMP_Provider
 	 */
 	public static function create( $provider, $options ) {
 		self::$options = $options;
@@ -83,33 +82,33 @@ class SCP_Provider {
 		// FIXME: It should be rewritten with available_providers()
 		switch ( $provider ) {
 			case 'facebook':
-				require_once( dirname( __FILE__ ) . '/class-scp-facebook-provider.php' );
-				return new SCP_Facebook_Provider();
+				require_once( dirname( __FILE__ ) . '/class-smp-facebook-provider.php' );
+				return new SMP_Facebook_Provider();
 				break;
 
 			case 'vkontakte':
-				require_once( dirname( __FILE__ ) . '/class-scp-vk-provider.php' );
-				return new SCP_VK_Provider();
+				require_once( dirname( __FILE__ ) . '/class-smp-vk-provider.php' );
+				return new SMP_VK_Provider();
 				break;
 
 			case 'odnoklassniki':
-				require_once( dirname( __FILE__ ) . '/class-scp-odnoklassniki-provider.php' );
-				return new SCP_Odnoklassniki_Provider();
+				require_once( dirname( __FILE__ ) . '/class-smp-odnoklassniki-provider.php' );
+				return new SMP_Odnoklassniki_Provider();
 				break;
 
 			case 'googleplus':
-				require_once( dirname( __FILE__ ) . '/class-scp-googleplus-provider.php' );
-				return new SCP_GooglePlus_Provider();
+				require_once( dirname( __FILE__ ) . '/class-smp-googleplus-provider.php' );
+				return new SMP_GooglePlus_Provider();
 				break;
 
 			case 'twitter':
-				require_once( dirname( __FILE__ ) . '/class-scp-twitter-provider.php' );
-				return new SCP_Twitter_Provider();
+				require_once( dirname( __FILE__ ) . '/class-smp-twitter-provider.php' );
+				return new SMP_Twitter_Provider();
 				break;
 
 			case 'pinterest':
-				require_once( dirname( __FILE__ ) . '/class-scp-pinterest-provider.php' );
-				return new SCP_Pinterest_Provider();
+				require_once( dirname( __FILE__ ) . '/class-smp-pinterest-provider.php' );
+				return new SMP_Pinterest_Provider();
 				break;
 
 			default:
@@ -237,11 +236,11 @@ class SCP_Provider {
 	}
 
 	/**
-	 * Setter for self::$template to access Events Tracker in SCP_Template
+	 * Setter for self::$template to access Events Tracker in SMP_Template
 	 *
 	 * @since 0.7.5
 	 *
-	 * @param SCP_Template $template SCP_Template instance to get access to Events Tracker
+	 * @param SMP_Template $template SMP_Template instance to get access to Events Tracker
 	 */
 	public static function set_template( $template ) {
 		self::$template = $template;

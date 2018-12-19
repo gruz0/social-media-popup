@@ -2,17 +2,16 @@
 /**
  * Facebook Template
  *
- * @package    Social_Media_Popup
- * @subpackage SCP_Template
- * @author     Alexander Kadyrov
- * @license    http://www.gnu.org/copyleft/gpl.html GNU General Public License
- * @link       https://github.com/gruz0/social-media-popup
+ * @package Social_Media_Popup
+ * @author  Alexander Kadyrov
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link    https://github.com/gruz0/social-media-popup
  */
 
 /**
- * SCP_Facebook_Provider
+ * SMP_Facebook_Provider
  */
-class SCP_Facebook_Provider extends SCP_Provider {
+class SMP_Facebook_Provider extends SMP_Provider {
 	/**
 	 * Facebook API Version
 	 *
@@ -52,14 +51,14 @@ class SCP_Facebook_Provider extends SCP_Provider {
 	 * Render widget container
 	 *
 	 * @uses scp_to_bool()
-	 * @uses SCP_Template()->use_events_tracking()
-	 * @uses SCP_Template()->push_social_media_trigger_to_google_analytics()
-	 * @uses SCP_Template()->push_social_network_and_action_to_google_analytics()
-	 * @uses SCP_Facebook_Provider::prepare_facebook_widget()
-	 * @uses SCP_Facebook_Provider::prepare_facebook_content()
-	 * @uses SCP_Facebook_Provider::prepare_facebook_events()
+	 * @uses SMP_Template()->use_events_tracking()
+	 * @uses SMP_Template()->push_social_media_trigger_to_google_analytics()
+	 * @uses SMP_Template()->push_social_network_and_action_to_google_analytics()
+	 * @uses SMP_Facebook_Provider::prepare_facebook_widget()
+	 * @uses SMP_Facebook_Provider::prepare_facebook_content()
+	 * @uses SMP_Facebook_Provider::prepare_facebook_events()
 	 *
-	 * @uses_by SCP_Facebook_Provider::container();
+	 * @uses_by SMP_Facebook_Provider::container();
 	 *
 	 * @since 0.7.5
 	 *
@@ -91,7 +90,7 @@ class SCP_Facebook_Provider extends SCP_Provider {
 	 *
 	 * @since 0.7.5
 	 *
-	 * @used_by SCP_Facebook_Provider::container();
+	 * @used_by SMP_Facebook_Provider::container();
 	 *
 	 * @return string
 	 */
@@ -115,7 +114,7 @@ class SCP_Facebook_Provider extends SCP_Provider {
 	 *
 	 * @since 0.7.5
 	 *
-	 * @used_by SCP_Facebook_Provider::container();
+	 * @used_by SMP_Facebook_Provider::container();
 	 *
 	 * @return string
 	 */
@@ -148,7 +147,7 @@ class SCP_Facebook_Provider extends SCP_Provider {
 	 *
 	 * @since 0.7.5
 	 *
-	 * @used_by SCP_Facebook_Provider::container();
+	 * @used_by SMP_Facebook_Provider::container();
 	 *
 	 * @return string
 	 */

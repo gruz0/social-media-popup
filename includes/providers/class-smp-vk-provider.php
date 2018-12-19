@@ -2,17 +2,16 @@
 /**
  * VK.com Template
  *
- * @package    Social_Media_Popup
- * @subpackage SCP_Template
- * @author     Alexander Kadyrov
- * @license    http://www.gnu.org/copyleft/gpl.html GNU General Public License
- * @link       https://github.com/gruz0/social-media-popup
+ * @package Social_Media_Popup
+ * @author  Alexander Kadyrov
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link    https://github.com/gruz0/social-media-popup
  */
 
 /**
- * SCP_VK_Provider
+ * SMP_VK_Provider
  */
-class SCP_VK_Provider extends SCP_Provider {
+class SMP_VK_Provider extends SMP_Provider {
 	/**
 	 * Return widget is active
 	 *
@@ -44,9 +43,9 @@ class SCP_VK_Provider extends SCP_Provider {
 	/**
 	 * Return widget container
 	 *
-	 * @uses SCP_Template()->use_events_tracking()
-	 * @uses SCP_Template()->push_social_media_trigger_to_google_analytics()
-	 * @uses SCP_Template()->push_social_network_and_action_to_google_analytics()
+	 * @uses SMP_Template()->use_events_tracking()
+	 * @uses SMP_Template()->push_social_media_trigger_to_google_analytics()
+	 * @uses SMP_Template()->push_social_network_and_action_to_google_analytics()
 	 *
 	 * @since 0.7.5
 	 *

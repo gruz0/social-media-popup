@@ -9,11 +9,11 @@
  */
 
 /**
- * SCP_Popup
+ * SMP_Popup
  *
  * @since 0.7.6
  */
-class SCP_Popup {
+class SMP_Popup {
 	/**
 	 * Prepare popup HTML
 	 *
@@ -57,7 +57,7 @@ class SCP_Popup {
 		);
 		// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 
-		$template = new SCP_Template(
+		$template = new SMP_Template(
 			$template_options,
 			$events_descriptions
 		);
@@ -216,11 +216,11 @@ class SCP_Popup {
 
 		$content = '';
 
-		SCP_Provider::set_template( $template );
+		SMP_Provider::set_template( $template );
 
 		$active_providers = array();
-		foreach ( SCP_Provider::available_providers() as $provider_name ) {
-			$provider = SCP_Provider::create( $provider_name, $options );
+		foreach ( SMP_Provider::available_providers() as $provider_name ) {
+			$provider = SMP_Provider::create( $provider_name, $options );
 
 			if ( $provider->is_active() ) {
 				$active_providers[ $provider_name ] = $provider;
@@ -383,8 +383,6 @@ class SCP_Popup {
 
 			$content .= '</div>';
 		}
-
-		// Окно SCP выводим только после создания его в DOM-дереве
 
 		if ( $wp_is_mobile ) {
 			$content .= '<script>

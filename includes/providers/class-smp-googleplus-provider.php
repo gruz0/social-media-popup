@@ -2,17 +2,16 @@
 /**
  * Google Plus Template
  *
- * @package    Social_Media_Popup
- * @subpackage SCP_Template
- * @author     Alexander Kadyrov
- * @license    http://www.gnu.org/copyleft/gpl.html GNU General Public License
- * @link       https://github.com/gruz0/social-media-popup
+ * @package Social_Media_Popup
+ * @author  Alexander Kadyrov
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link    https://github.com/gruz0/social-media-popup
  */
 
 /**
- * SCP_GooglePlus_Provider
+ * SMP_GooglePlus_Provider
  */
-class SCP_GooglePlus_Provider extends SCP_Provider {
+class SMP_GooglePlus_Provider extends SMP_Provider {
 	/**
 	 * Return widget is active
 	 *

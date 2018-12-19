@@ -18,11 +18,11 @@ defined( 'ABSPATH' ) or exit;
 define( 'SMP_PREFIX', 'social_media_popup' );
 
 require_once( SMP_INCLUDES_DIR . 'functions.php' );
-require_once( SMP_INCLUDES_DIR . 'class-scp-settings-field.php' );
-require_once( SMP_INCLUDES_DIR . 'class-scp-template.php' );
-require_once( SMP_INCLUDES_DIR . 'class-scp-popup.php' );
+require_once( SMP_INCLUDES_DIR . 'class-smp-settings-field.php' );
+require_once( SMP_INCLUDES_DIR . 'class-smp-template.php' );
+require_once( SMP_INCLUDES_DIR . 'class-smp-popup.php' );
 require_once( SMP_INCLUDES_DIR . 'class-smp-validator.php' );
-require_once( SMP_INCLUDES_DIR . 'providers/class-scp-provider.php' );
+require_once( SMP_INCLUDES_DIR . 'providers/class-smp-provider.php' );
 
 /**
  * Social Media Popup class
@@ -345,7 +345,7 @@ class Social_Media_Popup {
 	}
 
 	/**
-	 * Reset SCP version
+	 * Reset SMP version
 	 * Don't forget to reactivate all providers in plugin settings to prevent show PHP notices
 	 *
 	 * @since 0.7.4
@@ -1074,7 +1074,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-debug-mode',
 			esc_html( 'Debug Mode', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -1085,7 +1085,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-tabs-order',
 			esc_html( 'Tabs Order', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_tabs_order' ),
+			array( 'SMP_Settings_Field', 'settings_field_tabs_order' ),
 			$options_page,
 			$section,
 			array(
@@ -1096,7 +1096,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-close-popup-by-clicking-anywhere',
 			esc_html( 'Close the popup by clicking anywhere on the screen', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -1107,7 +1107,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-close-popup-when-esc-pressed',
 			esc_html( 'Close the popup when ESC pressed', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -1118,7 +1118,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-show-on-mobile-devices',
 			esc_html( 'Show widget on mobile devices', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -1129,7 +1129,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-show-admin-bar-menu',
 			esc_html( 'Show Plugin Menu in Admin Bar', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -1179,7 +1179,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-plugin-title',
 			esc_html( 'Widget Title', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_wysiwyg' ),
+			array( 'SMP_Settings_Field', 'settings_field_wysiwyg' ),
 			$options_page,
 			$section,
 			array(
@@ -1190,7 +1190,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-use-animation',
 			esc_html( 'Use Animation', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -1201,7 +1201,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-animation-style',
 			esc_html( 'Animation Style', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_animation_style' ),
+			array( 'SMP_Settings_Field', 'settings_field_animation_style' ),
 			$options_page,
 			$section,
 			array(
@@ -1212,7 +1212,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-use-icons-instead-of-labels-in-tabs',
 			esc_html( 'Use Icons Instead of Labels in Tabs', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -1223,7 +1223,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-icons-size-on-desktop',
 			esc_html( 'Icons Size', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_icons_size' ),
+			array( 'SMP_Settings_Field', 'settings_field_icons_size' ),
 			$options_page,
 			$section,
 			array(
@@ -1234,7 +1234,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-hide-tabs-if-one-widget-is-active',
 			esc_html( 'Hide Tabs if One Widget is Active', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -1245,7 +1245,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-align-tabs-to-center',
 			esc_html( 'Align Tabs to Center', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -1256,7 +1256,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-show-close-button-in',
 			esc_html( 'Show Close Button in Title', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_show_close_button_in' ),
+			array( 'SMP_Settings_Field', 'settings_field_show_close_button_in' ),
 			$options_page,
 			$section,
 			array(
@@ -1267,7 +1267,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-show-button-to-close-widget',
 			esc_html( 'Show Button to Close Widget', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -1278,7 +1278,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-button-to-close-widget-title',
 			esc_html( 'Button to Close Widget Title', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -1290,7 +1290,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-button-to-close-widget-style',
 			esc_html( 'Button to Close Widget Style', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_button_to_close_widget_style' ),
+			array( 'SMP_Settings_Field', 'settings_field_button_to_close_widget_style' ),
 			$options_page,
 			$section,
 			array(
@@ -1301,7 +1301,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-delay-before-show-button-to-close-widget',
 			esc_html( 'Delay Before Show Button to Close Widget (sec.)', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -1313,7 +1313,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-container-width',
 			esc_html( 'Container Width', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -1326,7 +1326,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-container-height',
 			esc_html( 'Container Height', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -1339,7 +1339,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-border-radius',
 			esc_html( 'Border Radius', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -1351,7 +1351,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-overlay-color',
 			esc_html( 'Overlay Color', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -1362,7 +1362,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-overlay-opacity',
 			esc_html( 'Overlay Opacity', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -1374,7 +1374,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-background-image',
 			esc_html( 'Widget Background Image', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_background_image' ),
+			array( 'SMP_Settings_Field', 'settings_field_background_image' ),
 			$options_page,
 			$section,
 			array(
@@ -1412,7 +1412,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-plugin-title-on-mobile-devices',
 			esc_html( 'Widget Title', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_wysiwyg' ),
+			array( 'SMP_Settings_Field', 'settings_field_wysiwyg' ),
 			$options_page,
 			$section,
 			array(
@@ -1423,7 +1423,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-icons-size-on-mobile-devices',
 			esc_html( 'Icons Size', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_icons_size' ),
+			array( 'SMP_Settings_Field', 'settings_field_icons_size' ),
 			$options_page,
 			$section,
 			array(
@@ -1468,7 +1468,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-when-should-the-popup-appear',
 			esc_html( 'Select Events for Customizing', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_when_should_the_popup_appear' ),
+			array( 'SMP_Settings_Field', 'settings_field_when_should_the_popup_appear' ),
 			$options_page,
 			$section_when_should_the_popup_appear,
 			array(
@@ -1479,7 +1479,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-popup-will-appear-after-n-seconds',
 			esc_html( 'Popup Will Appear After N Second(s)', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section_when_should_the_popup_appear,
 			array(
@@ -1492,7 +1492,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-popup-will-appear-after-clicking-on-element',
 			esc_html( 'Popup Will Appear After Clicking on the Given CSS Selector', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section_when_should_the_popup_appear,
 			array(
@@ -1505,7 +1505,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-event-hide-element-after-click-on-it',
 			esc_html( 'Hide Element After Click on It', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section_when_should_the_popup_appear,
 			array(
@@ -1516,7 +1516,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-do-not-use-cookies-after-click-on-element',
 			esc_html( 'Do not Use Cookies After Click on Element', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section_when_should_the_popup_appear,
 			array(
@@ -1527,7 +1527,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-popup-will-appear-after-scrolling-down-n-percent',
 			esc_html( 'Popup Will Appear After Scrolling Down at Least N Percent', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section_when_should_the_popup_appear,
 			array(
@@ -1540,7 +1540,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-popup-will-appear-on-exit-intent',
 			esc_html( 'Popup Will Appear On Exit-Intent', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section_when_should_the_popup_appear,
 			array(
@@ -1558,7 +1558,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-who-should-see-the-popup',
 			esc_html( 'Select Events for Customizing', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_who_should_see_the_popup' ),
+			array( 'SMP_Settings_Field', 'settings_field_who_should_see_the_popup' ),
 			$options_page,
 			$section_who_should_see_the_popup,
 			array(
@@ -1569,7 +1569,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-visitor-opened-at-least-n-number-of-pages',
 			esc_html( 'Visitor Opened at Least N Number of Pages', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section_who_should_see_the_popup,
 			array(
@@ -1582,7 +1582,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-visitor-registered-and-role-equals-to',
 			esc_html( 'Registered Users Who Should See the Popup', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_visitor_registered_and_role_equals_to' ),
+			array( 'SMP_Settings_Field', 'settings_field_visitor_registered_and_role_equals_to' ),
 			$options_page,
 			$section_who_should_see_the_popup,
 			array(
@@ -1593,7 +1593,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-display-after-n-days',
 			esc_html( 'Display After N-days', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section_who_should_see_the_popup,
 			array(
@@ -1649,7 +1649,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-use-events-tracking',
 			esc_html( 'Use Events Tracking', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -1660,7 +1660,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-do-not-use-tracking-in-debug-mode',
 			esc_html( 'Do not use tracking in Debug mode', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -1697,7 +1697,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-tracking-google-analytics-tracking-id',
 			esc_html( 'Google Analytics Tracking ID', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -1709,7 +1709,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-push-events-to-aquisition-social-plugins',
 			esc_html( 'Push events to Aquisition > Social > Plugins', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -1750,7 +1750,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-push-events-when-displaying-the-window',
 			esc_html( 'Push events when displaying the window', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -1761,7 +1761,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-tracking-event-label-window-showed-immediately',
 			esc_html( 'Window showed immediately', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -1773,7 +1773,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-tracking-event-label-window-showed-after-n-seconds',
 			esc_html( 'Window showed after N seconds', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -1785,7 +1785,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-tracking-event-label-window-showed-after-click',
 			esc_html( 'Window showed after click on CSS-selector', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -1797,7 +1797,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-tracking-event-label-window-showed-on-scrolling-down',
 			esc_html( 'Window showed on scrolling down', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -1809,7 +1809,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-tracking-event-label-window-showed-on-exit-intent',
 			esc_html( 'Window showed on exit intent', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -1852,7 +1852,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-push-events-when-subscribing-on-social-networks',
 			esc_html( 'Push events when subscribing on social networks', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -1863,7 +1863,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-use-window-events-when-subscribing-on-social-networks',
 			esc_html( 'Add window events descriptions', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -1874,7 +1874,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-tracking-event-label-no-events-fired',
 			esc_html( 'If no events fired', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -1886,7 +1886,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-tracking-event-label-after-delay-before-show-widget',
 			esc_html( 'When popup will appear after delay before show widget', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -1898,7 +1898,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-tracking-event-label-after-click-on-css-selector',
 			esc_html( 'On click on CSS-selector', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -1910,7 +1910,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-tracking-event-label-on-scrolling-down',
 			esc_html( 'On window scrolling down', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -1922,7 +1922,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-tracking-event-label-on-exit-intent',
 			esc_html( 'On exit intent', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -1954,7 +1954,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-common-remove-settings-on-uninstall',
 			esc_html( 'Remove Settings On Uninstall Plugin', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -2016,7 +2016,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-use-facebook',
 			esc_html( 'Active', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -2027,7 +2027,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-facebook-tab-caption',
 			esc_html( 'Tab Caption', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -2039,7 +2039,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-facebook-show-description',
 			esc_html( 'Show Description Above The Widget', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -2050,7 +2050,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-facebook-description',
 			esc_html( 'Description Above The Widget', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_wysiwyg' ),
+			array( 'SMP_Settings_Field', 'settings_field_wysiwyg' ),
 			$options_page,
 			$section,
 			array(
@@ -2061,7 +2061,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-facebook-application-id',
 			esc_html( 'Application ID', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -2073,7 +2073,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-facebook-page-url',
 			esc_html( 'Facebook Page URL', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -2085,7 +2085,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-facebook-locale',
 			esc_html( 'Facebook Locale', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_facebook_locale' ),
+			array( 'SMP_Settings_Field', 'settings_field_facebook_locale' ),
 			$options_page,
 			$section,
 			array(
@@ -2096,7 +2096,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-facebook-width',
 			esc_html( 'Widget Width', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -2108,7 +2108,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-facebook-height',
 			esc_html( 'Widget Height', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -2120,7 +2120,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-facebook-adapt-container-width',
 			esc_html( 'Adapt to Plugin Container Width', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -2131,7 +2131,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-facebook-use-small-header',
 			esc_html( 'Use Small Header', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -2142,7 +2142,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-facebook-hide-cover',
 			esc_html( 'Hide cover photo in the header', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -2153,7 +2153,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-facebook-show-facepile',
 			esc_html( 'Show profile photos when friends like this', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -2164,7 +2164,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-facebook-tabs',
 			esc_html( 'Show Content from Tabs', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_facebook_tabs' ),
+			array( 'SMP_Settings_Field', 'settings_field_facebook_tabs' ),
 			$options_page,
 			$section,
 			array(
@@ -2175,7 +2175,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-facebook-close-window-after-join',
 			esc_html( 'Close Plugin Window After Joining the Group', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -2213,7 +2213,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-tracking-use-facebook',
 			esc_html( 'Use Tracking', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -2224,7 +2224,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-tracking-facebook-subscribe-event',
 			esc_html( 'Subscribe Event Label', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -2236,7 +2236,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-tracking-facebook-unsubscribe-event',
 			esc_html( 'Unsubscribe Event Label', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -2298,7 +2298,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-use-vkontakte',
 			esc_html( 'Active', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -2309,7 +2309,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-vkontakte-tab-caption',
 			esc_html( 'Tab Caption', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -2321,7 +2321,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-vkontakte-show-description',
 			esc_html( 'Show Description Above The Widget', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -2332,7 +2332,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-vkontakte-description',
 			esc_html( 'Description Above The Widget', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_wysiwyg' ),
+			array( 'SMP_Settings_Field', 'settings_field_wysiwyg' ),
 			$options_page,
 			$section,
 			array(
@@ -2343,7 +2343,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-vkontakte-application-id',
 			esc_html( 'VKontakte Application ID', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -2355,7 +2355,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-vkontakte-page-or-group-id',
 			esc_html( 'VKontakte Page or Group ID', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -2367,7 +2367,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-vkontakte-page-url',
 			esc_html( 'VKontakte Page URL', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -2379,7 +2379,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-vkontakte-width',
 			esc_html( 'Widget Width', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -2391,7 +2391,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-vkontakte-height',
 			esc_html( 'Widget Height', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -2403,7 +2403,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-vkontakte-layout',
 			esc_html( 'Layout', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_vkontakte_layout' ),
+			array( 'SMP_Settings_Field', 'settings_field_vkontakte_layout' ),
 			$options_page,
 			$section,
 			array(
@@ -2414,7 +2414,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-vkontakte-color-background',
 			esc_html( 'Background Color', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -2425,7 +2425,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-vkontakte-color-text',
 			esc_html( 'Text Color', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -2436,7 +2436,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-vkontakte-color-button',
 			esc_html( 'Button Color', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -2447,7 +2447,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-vkontakte-close-window-after-join',
 			esc_html( 'Close Plugin Window After Joining the Group', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -2485,7 +2485,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-tracking-use-vkontakte',
 			esc_html( 'Use Tracking', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -2496,7 +2496,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-tracking-vkontakte-subscribe-event',
 			esc_html( 'Subscribe Event Label', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -2508,7 +2508,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-tracking-vkontakte-unsubscribe-event',
 			esc_html( 'Unsubscribe Event Label', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -2547,7 +2547,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-use-odnoklassniki',
 			esc_html( 'Active', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -2558,7 +2558,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-odnoklassniki-tab-caption',
 			esc_html( 'Tab Caption', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -2570,7 +2570,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-odnoklassniki-show-description',
 			esc_html( 'Show Description Above The Widget', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -2581,7 +2581,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-odnoklassniki-description',
 			esc_html( 'Description Above The Widget', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_wysiwyg' ),
+			array( 'SMP_Settings_Field', 'settings_field_wysiwyg' ),
 			$options_page,
 			$section,
 			array(
@@ -2592,7 +2592,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-odnoklassniki-group-id',
 			esc_html( 'Odnoklassniki Group ID', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -2604,7 +2604,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-odnoklassniki-group-url',
 			esc_html( 'Odnoklassniki Group URL', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -2616,7 +2616,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-odnoklassniki-width',
 			esc_html( 'Widget Width', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -2628,7 +2628,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-odnoklassniki-height',
 			esc_html( 'Widget Height', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -2671,7 +2671,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-use-googleplus',
 			esc_html( 'Active', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -2682,7 +2682,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-googleplus-tab-caption',
 			esc_html( 'Tab Caption', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -2694,7 +2694,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-googleplus-show-description',
 			esc_html( 'Show Description Above The Widget', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -2705,7 +2705,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-googleplus-description',
 			esc_html( 'Description Above The Widget', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_wysiwyg' ),
+			array( 'SMP_Settings_Field', 'settings_field_wysiwyg' ),
 			$options_page,
 			$section,
 			array(
@@ -2716,7 +2716,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-googleplus-page-type',
 			esc_html( 'Google+ Page Type', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_googleplus_page_type' ),
+			array( 'SMP_Settings_Field', 'settings_field_googleplus_page_type' ),
 			$options_page,
 			$section,
 			array(
@@ -2727,7 +2727,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-googleplus-page-url',
 			esc_html( 'Google+ Page URL', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -2739,7 +2739,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-googleplus-layout',
 			esc_html( 'Layout', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_googleplus_layout' ),
+			array( 'SMP_Settings_Field', 'settings_field_googleplus_layout' ),
 			$options_page,
 			$section,
 			array(
@@ -2750,7 +2750,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-googleplus-locale',
 			esc_html( 'Google+ Locale', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_googleplus_locale' ),
+			array( 'SMP_Settings_Field', 'settings_field_googleplus_locale' ),
 			$options_page,
 			$section,
 			array(
@@ -2761,7 +2761,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-googleplus-size',
 			esc_html( 'Widget Size', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -2773,7 +2773,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-googleplus-theme',
 			esc_html( 'Google+ Theme', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_googleplus_theme' ),
+			array( 'SMP_Settings_Field', 'settings_field_googleplus_theme' ),
 			$options_page,
 			$section,
 			array(
@@ -2784,7 +2784,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-googleplus-show-cover-photo',
 			esc_html( 'Show Cover Photo', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -2795,7 +2795,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-googleplus-show-tagline',
 			esc_html( 'Show Tagline', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -2853,7 +2853,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-use-twitter',
 			esc_html( 'Active', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -2864,7 +2864,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-twitter-tab-caption',
 			esc_html( 'Tab Caption', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -2876,7 +2876,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-twitter-show-description',
 			esc_html( 'Show Description Above The Widget', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -2887,7 +2887,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-twitter-description',
 			esc_html( 'Description Above The Widget', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_wysiwyg' ),
+			array( 'SMP_Settings_Field', 'settings_field_wysiwyg' ),
 			$options_page,
 			$section,
 			array(
@@ -2898,7 +2898,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-twitter-username',
 			'@username',
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -2910,7 +2910,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-twitter-locale',
 			esc_html( 'Twitter Locale', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_twitter_locale' ),
+			array( 'SMP_Settings_Field', 'settings_field_twitter_locale' ),
 			$options_page,
 			$section,
 			array(
@@ -2921,7 +2921,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-twitter-first-widget',
 			esc_html( 'First widget', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_twitter_first_widget' ),
+			array( 'SMP_Settings_Field', 'settings_field_twitter_first_widget' ),
 			$options_page,
 			$section,
 			array(
@@ -2932,7 +2932,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-twitter-close-window-after-join',
 			esc_html( 'Close Plugin Window After Joining the Group', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -2972,7 +2972,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-twitter-use-follow-button',
 			esc_html( 'Active', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -2983,7 +2983,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-twitter-show-count',
 			esc_html( 'Show Followers Count', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -2994,7 +2994,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-twitter-show-screen-name',
 			esc_html( 'Show Username', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -3005,7 +3005,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-twitter-follow-button-large-size',
 			esc_html( 'Follow Button Large Size', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -3016,7 +3016,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-twitter-follow-button-align-by',
 			esc_html( 'Follow Button Align', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_twitter_follow_button_align_by' ),
+			array( 'SMP_Settings_Field', 'settings_field_twitter_follow_button_align_by' ),
 			$options_page,
 			$section,
 			array(
@@ -3059,7 +3059,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-twitter-use-timeline',
 			esc_html( 'Active', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -3070,7 +3070,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-twitter-theme',
 			esc_html( 'Theme', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_twitter_theme' ),
+			array( 'SMP_Settings_Field', 'settings_field_twitter_theme' ),
 			$options_page,
 			$section,
 			array(
@@ -3081,7 +3081,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-twitter-link-color',
 			esc_html( 'Link Color', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -3092,7 +3092,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-twitter-tweet-limit',
 			esc_html( 'Tweet Limit', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -3104,7 +3104,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-twitter-show-replies',
 			esc_html( 'Show Replies', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -3115,7 +3115,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-twitter-width',
 			esc_html( 'Widget Width', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -3127,7 +3127,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-twitter-height',
 			esc_html( 'Widget Height', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -3139,7 +3139,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-twitter-chrome',
 			esc_html( 'Chrome', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_twitter_chrome' ),
+			array( 'SMP_Settings_Field', 'settings_field_twitter_chrome' ),
 			$options_page,
 			$section,
 			array(
@@ -3176,7 +3176,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-tracking-use-twitter',
 			esc_html( 'Use Tracking', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -3187,7 +3187,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-tracking-twitter-event',
 			esc_html( 'Event Label', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -3226,7 +3226,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-use-pinterest',
 			esc_html( 'Active', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -3237,7 +3237,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-pinterest-tab-caption',
 			esc_html( 'Tab Caption', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -3249,7 +3249,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-pinterest-show-description',
 			esc_html( 'Show Description Above The Widget', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_checkbox' ),
+			array( 'SMP_Settings_Field', 'settings_field_checkbox' ),
 			$options_page,
 			$section,
 			array(
@@ -3260,7 +3260,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-pinterest-description',
 			esc_html( 'Description Above The Widget', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_wysiwyg' ),
+			array( 'SMP_Settings_Field', 'settings_field_wysiwyg' ),
 			$options_page,
 			$section,
 			array(
@@ -3271,7 +3271,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-pinterest-profile-url',
 			esc_html( 'Profile URL', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -3283,7 +3283,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-pinterest-image-width',
 			esc_html( 'Image Width', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -3295,7 +3295,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-pinterest-width',
 			esc_html( 'Widget Width', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -3307,7 +3307,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			SMP_PREFIX . '-pinterest-height',
 			esc_html( 'Widget Height', 'social-media-popup' ),
-			array( 'SCP_Settings_Field', 'settings_field_input_text' ),
+			array( 'SMP_Settings_Field', 'settings_field_input_text' ),
 			$options_page,
 			$section,
 			array(
@@ -3679,7 +3679,7 @@ class Social_Media_Popup {
 	 * @since 0.7.5
 	 *
 	 * @uses Social_Media_Popup::get_scp_prefix()
-	 * @uses SCP_Template::render_google_analytics_tracking_code()
+	 * @uses SMP_Template::render_google_analytics_tracking_code()
 	 *
 	 * @return mixed
 	 */
@@ -3695,7 +3695,7 @@ class Social_Media_Popup {
 
 		$content = '';
 
-		$template = new SCP_Template();
+		$template = new SMP_Template();
 
 		if ( ! empty( $google_analytics_tracking_id ) ) {
 			$content .= $template->render_google_analytics_tracking_code( $google_analytics_tracking_id );
@@ -3863,7 +3863,7 @@ class Social_Media_Popup {
 	 * @param string $scp_prefix Plugin prefix
 	 */
 	private function render_popup_window( $version, $scp_prefix ) {
-		$content = SCP_Popup::render( $scp_prefix );
+		$content = SMP_Popup::render( $scp_prefix );
 
 		$encoded_content = preg_replace( "~[\n\r\t]~", '', $content );
 		$encoded_content = base64_encode( $encoded_content );
