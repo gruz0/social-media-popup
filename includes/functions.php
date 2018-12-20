@@ -120,3 +120,13 @@ function smp_render_settings_tabs( $tabs, $current_tab, $page_suffix = '' ) {
 	echo $content;
 	// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 }
+
+/**
+ * Convert integer value to stringified boolean
+ *
+ * @param string $variable Value
+ * @return string
+ */
+function smp_stringify_boolean( $variable ) {
+	return ( '1' === $variable ? 'true' : 'false' );
+}

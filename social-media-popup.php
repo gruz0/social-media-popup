@@ -60,16 +60,6 @@ if ( ! array_key_exists( 'social-media-popup', $GLOBALS ) ) {
 			$plugin = plugin_basename( __FILE__ );
 			add_filter( 'plugin_action_links_' . $plugin, 'social_media_popup_plugin_settings_link' );
 		}
-
-		/**
-		 * Convert integer value to stringified boolean
-		 *
-		 * @param string $variable Value
-		 * @return string
-		 */
-		function scp_to_bool( $variable ) {
-			return ( '1' === $variable ? 'true' : 'false' );
-		}
 	}
 }
 

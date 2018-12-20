@@ -148,7 +148,7 @@ class SMP_Twitter_Provider extends SMP_Provider {
 	/**
 	 * Return Follow Button container
 	 *
-	 * @uses scp_to_bool()
+	 * @uses smp_stringify_boolean()
 	 * @used_by self::container()
 	 *
 	 * @since 0.7.5
@@ -159,8 +159,8 @@ class SMP_Twitter_Provider extends SMP_Provider {
 		return '<div style="text-align:' . self::get_option_as_escaped_string( 'setting_twitter_follow_button_align_by' ) . ';padding-top:10px;">'
 			. '<a class="twitter-follow-button" '
 			. 'href="//twitter.com/'    . self::get_option_as_escaped_string( 'setting_twitter_username' ) . '" '
-			. 'data-show-count="'       . scp_to_bool( self::get_option_as_escaped_string( 'setting_twitter_show_count' ) ) . '" '
-			. 'data-show-screen-name="' . scp_to_bool( self::get_option_as_escaped_string( 'setting_twitter_show_screen_name' ) ) . '" '
+			. 'data-show-count="'       . smp_stringify_boolean( self::get_option_as_escaped_string( 'setting_twitter_show_count' ) ) . '" '
+			. 'data-show-screen-name="' . smp_stringify_boolean( self::get_option_as_escaped_string( 'setting_twitter_show_screen_name' ) ) . '" '
 			. 'data-size="'             . ( self::get_option_as_boolean( 'setting_twitter_follow_button_large_size' ) ? 'large' : '' ) . '" '
 			. 'lang="'                  . self::get_option_as_escaped_string( 'setting_twitter_locale' ) . '" '
 			. '>' . esc_html( 'Follow', 'social-media-popup' ) . ' @' . self::get_option_as_escaped_string( 'setting_twitter_username' ) . '</a></div>';

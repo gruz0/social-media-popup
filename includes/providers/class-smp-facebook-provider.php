@@ -50,7 +50,7 @@ class SMP_Facebook_Provider extends SMP_Provider {
 	/**
 	 * Render widget container
 	 *
-	 * @uses scp_to_bool()
+	 * @uses smp_stringify_boolean()
 	 * @uses SMP_Template()->use_events_tracking()
 	 * @uses SMP_Template()->push_social_media_trigger_to_google_analytics()
 	 * @uses SMP_Template()->push_social_network_and_action_to_google_analytics()
@@ -101,10 +101,10 @@ class SMP_Facebook_Provider extends SMP_Provider {
 			. 'width="'                      . self::get_option_as_integer( 'setting_facebook_width' ) . '" '
 			. 'data-height="'                . self::get_option_as_integer( 'setting_facebook_height' ) . '" '
 			. 'height="'                     . self::get_option_as_integer( 'setting_facebook_height' ) . '" '
-			. 'data-hide-cover="'            . scp_to_bool( self::get_option_as_escaped_string( 'setting_facebook_hide_cover' ) ) . '" '
-			. 'data-show-facepile="'         . scp_to_bool( self::get_option_as_escaped_string( 'setting_facebook_show_facepile' ) ) . '" '
-			. 'data-adapt-container-width="' . scp_to_bool( self::get_option_as_escaped_string( 'setting_facebook_adapt_container_width' ) ) . '" '
-			. 'data-small-header="'          . scp_to_bool( self::get_option_as_escaped_string( 'setting_facebook_use_small_header' ) ) . '" '
+			. 'data-hide-cover="'            . smp_stringify_boolean( self::get_option_as_escaped_string( 'setting_facebook_hide_cover' ) ) . '" '
+			. 'data-show-facepile="'         . smp_stringify_boolean( self::get_option_as_escaped_string( 'setting_facebook_show_facepile' ) ) . '" '
+			. 'data-adapt-container-width="' . smp_stringify_boolean( self::get_option_as_escaped_string( 'setting_facebook_adapt_container_width' ) ) . '" '
+			. 'data-small-header="'          . smp_stringify_boolean( self::get_option_as_escaped_string( 'setting_facebook_use_small_header' ) ) . '" '
 			. 'data-tabs="'                  . self::get_option_as_escaped_string( 'setting_facebook_tabs' ) . '" '
 			. '></div>';
 	}
