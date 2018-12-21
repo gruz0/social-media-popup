@@ -74,7 +74,7 @@ class SMP_Settings_Field {
 	 *
 	 * @param array $args Options
 	 *
-	 * @uses Social_Media_Popup::get_scp_prefix()
+	 * @uses Social_Media_Popup::get_prefix()
 	 */
 	public static function settings_field_tabs_order( $args ) {
 		$field = $args['field'];
@@ -82,7 +82,7 @@ class SMP_Settings_Field {
 
 		$values = ( $value ) ? explode( ',', $value ) : array();
 
-		$scp_prefix = Social_Media_Popup::get_scp_prefix();
+		$scp_prefix = Social_Media_Popup::get_prefix();
 
 		$html = '<ul id="scp-sortable">';
 		foreach ( $values as $key ) {

@@ -73,7 +73,7 @@ class Social_Media_Popup {
 	 * Деинсталляция плагина
 	 */
 	public static function uninstall() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 
 		if ( ! current_user_can( 'activate_plugins' ) ) return;
 		if ( ! get_option( $scp_prefix . 'setting_remove_settings_on_uninstall' ) ) return;
@@ -272,7 +272,7 @@ class Social_Media_Popup {
 	 *
 	 * @return string
 	 */
-	public static function get_scp_prefix() {
+	public static function get_prefix() {
 		if ( empty( self::$smp_version ) ) {
 			$version = get_option( 'scp-version' );
 			if ( empty( $version ) ) {
@@ -322,7 +322,7 @@ class Social_Media_Popup {
 		self::upgrade_to_0_7_6();
 
 		// Automatically set debug mode on after reactivating plugin
-		update_option( self::get_scp_prefix() . 'setting_debug_mode', 1 );
+		update_option( self::get_prefix() . 'setting_debug_mode', 1 );
 	}
 
 	/**
@@ -358,12 +358,12 @@ class Social_Media_Popup {
 	/**
 	 * Upgrade plugin to version 0.1
 	 *
-	 * @uses self::get_scp_prefix()
+	 * @uses self::get_prefix()
 	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_1() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 		$version    = $scp_prefix . 'version';
 
 		if ( ! get_option( $version ) ) {
@@ -375,12 +375,12 @@ class Social_Media_Popup {
 	/**
 	 * Upgrade plugin to version 0.2
 	 *
-	 * @uses self::get_scp_prefix()
+	 * @uses self::get_prefix()
 	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_2() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 		$version    = $scp_prefix . 'version';
 
 		if ( '0.2' > get_option( $version ) ) {
@@ -423,12 +423,12 @@ class Social_Media_Popup {
 	/**
 	 * Upgrade plugin to version 0.3
 	 *
-	 * @uses self::get_scp_prefix()
+	 * @uses self::get_prefix()
 	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_3() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 		$version    = $scp_prefix . 'version';
 
 		if ( '0.3' > get_option( $version ) ) {
@@ -441,12 +441,12 @@ class Social_Media_Popup {
 	/**
 	 * Upgrade plugin to version 0.4
 	 *
-	 * @uses self::get_scp_prefix()
+	 * @uses self::get_prefix()
 	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_4() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 		$version    = $scp_prefix . 'version';
 
 		if ( '0.4' > get_option( $version ) ) {
@@ -458,12 +458,12 @@ class Social_Media_Popup {
 	/**
 	 * Upgrade plugin to version 0.5
 	 *
-	 * @uses self::get_scp_prefix()
+	 * @uses self::get_prefix()
 	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_5() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 		$version    = $scp_prefix . 'version';
 
 		if ( '0.5' > get_option( $version ) ) {
@@ -501,12 +501,12 @@ class Social_Media_Popup {
 	/**
 	 * Upgrade plugin to version 0.6
 	 *
-	 * @uses self::get_scp_prefix()
+	 * @uses self::get_prefix()
 	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_6() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 		$version    = $scp_prefix . 'version';
 
 		if ( '0.6' > get_option( $version ) ) {
@@ -539,12 +539,12 @@ class Social_Media_Popup {
 	/**
 	 * Upgrade plugin to version 0.6.1
 	 *
-	 * @uses self::get_scp_prefix()
+	 * @uses self::get_prefix()
 	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_6_1() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 		$version    = $scp_prefix . 'version';
 
 		if ( '0.6.1' > get_option( $version ) ) {
@@ -558,12 +558,12 @@ class Social_Media_Popup {
 	/**
 	 * Upgrade plugin to version 0.6.2
 	 *
-	 * @uses self::get_scp_prefix()
+	 * @uses self::get_prefix()
 	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_6_2() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 		$version    = $scp_prefix . 'version';
 
 		if ( '0.6.2' > get_option( $version ) ) {
@@ -578,12 +578,12 @@ class Social_Media_Popup {
 	/**
 	 * Upgrade plugin to version 0.6.3
 	 *
-	 * @uses self::get_scp_prefix()
+	 * @uses self::get_prefix()
 	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_6_3() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 		$version    = $scp_prefix . 'version';
 
 		if ( '0.6.3' > get_option( $version ) ) {
@@ -620,12 +620,12 @@ class Social_Media_Popup {
 	/**
 	 * Upgrade plugin to version 0.6.4
 	 *
-	 * @uses self::get_scp_prefix()
+	 * @uses self::get_prefix()
 	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_6_4() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 		$version    = $scp_prefix . 'version';
 
 		if ( '0.6.4' > get_option( $version ) ) {
@@ -637,12 +637,12 @@ class Social_Media_Popup {
 	/**
 	 * Upgrade plugin to version 0.6.5
 	 *
-	 * @uses self::get_scp_prefix()
+	 * @uses self::get_prefix()
 	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_6_5() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 		$version    = $scp_prefix . 'version';
 
 		if ( '0.6.5' > get_option( $version ) ) {
@@ -656,12 +656,12 @@ class Social_Media_Popup {
 	/**
 	 * Upgrade plugin to version 0.6.6
 	 *
-	 * @uses self::get_scp_prefix()
+	 * @uses self::get_prefix()
 	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_6_6() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 		$version    = $scp_prefix . 'version';
 
 		if ( '0.6.6' > get_option( $version ) ) {
@@ -676,12 +676,12 @@ class Social_Media_Popup {
 	/**
 	 * Upgrade plugin to version 0.6.7
 	 *
-	 * @uses self::get_scp_prefix()
+	 * @uses self::get_prefix()
 	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_6_7() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 		$version    = $scp_prefix . 'version';
 
 		if ( '0.6.7' > get_option( $version ) ) {
@@ -706,12 +706,12 @@ class Social_Media_Popup {
 	/**
 	 * Upgrade plugin to version 0.6.8
 	 *
-	 * @uses self::get_scp_prefix()
+	 * @uses self::get_prefix()
 	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_6_8() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 		$version    = $scp_prefix . 'version';
 
 		if ( '0.6.8' > get_option( $version ) ) {
@@ -739,12 +739,12 @@ class Social_Media_Popup {
 	/**
 	 * Upgrade plugin to version 0.6.9
 	 *
-	 * @uses self::get_scp_prefix()
+	 * @uses self::get_prefix()
 	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_6_9() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 		$version    = $scp_prefix . 'version';
 
 		if ( '0.6.9' > get_option( $version ) ) {
@@ -763,12 +763,12 @@ class Social_Media_Popup {
 	/**
 	 * Upgrade plugin to version 0.7.0
 	 *
-	 * @uses self::get_scp_prefix()
+	 * @uses self::get_prefix()
 	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_7_0() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 		$version    = $scp_prefix . 'version';
 
 		if ( '0.7.0' > get_option( $version ) ) {
@@ -788,12 +788,12 @@ class Social_Media_Popup {
 	/**
 	 * Upgrade plugin to version 0.7.1
 	 *
-	 * @uses self::get_scp_prefix()
+	 * @uses self::get_prefix()
 	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_7_1() {
-		$old_scp_prefix = self::get_scp_prefix();
+		$old_scp_prefix = self::get_prefix();
 		$old_version    = $old_scp_prefix . 'version';
 		$new_scp_prefix = 'scp-';
 
@@ -850,12 +850,12 @@ class Social_Media_Popup {
 	/**
 	 * Upgrade plugin to version 0.7.2
 	 *
-	 * @uses self::get_scp_prefix()
+	 * @uses self::get_prefix()
 	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_7_2() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 		$version    = $scp_prefix . 'version';
 
 		if ( '0.7.2' > get_option( $version ) ) {
@@ -876,12 +876,12 @@ class Social_Media_Popup {
 	/**
 	 * Upgrade plugin to version 0.7.3
 	 *
-	 * @uses self::get_scp_prefix()
+	 * @uses self::get_prefix()
 	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_7_3() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 		$version    = $scp_prefix . 'version';
 
 		if ( '0.7.3' > get_option( $version ) ) {
@@ -896,12 +896,12 @@ class Social_Media_Popup {
 	/**
 	 * Upgrade plugin to version 0.7.4
 	 *
-	 * @uses self::get_scp_prefix()
+	 * @uses self::get_prefix()
 	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_7_4() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 		$version    = $scp_prefix . 'version';
 
 		if ( '0.7.4' > get_option( $version ) ) {
@@ -924,12 +924,12 @@ class Social_Media_Popup {
 	/**
 	 * Upgrade plugin to version 0.7.5
 	 *
-	 * @uses self::get_scp_prefix()
+	 * @uses self::get_prefix()
 	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_7_5() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 		$version    = $scp_prefix . 'version';
 
 		if ( '0.7.5' > get_option( $version ) ) {
@@ -987,12 +987,12 @@ class Social_Media_Popup {
 	/**
 	 * Upgrade plugin to version 0.7.6
 	 *
-	 * @uses self::get_scp_prefix()
+	 * @uses self::get_prefix()
 	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_7_6() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 		$version    = $scp_prefix . 'version';
 
 		if ( '0.7.6' > get_option( $version ) ) {
@@ -1015,7 +1015,7 @@ class Social_Media_Popup {
 	public function admin_init() {
 		$this->init_settings();
 
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 		if ( 1 === absint( get_option( $scp_prefix . 'setting_debug_mode' ) ) ) {
 			add_action( 'admin_notices', array( $this, 'add_debug_mode_notice' ) );
 		}
@@ -1048,10 +1048,10 @@ class Social_Media_Popup {
 	/**
 	 * Общие настройки
 	 *
-	 * @uses self::get_scp_prefix()
+	 * @uses self::get_prefix()
 	 */
 	public function init_settings_common() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 
 		$group        = SMP_PREFIX . '-group-general';
 		$options_page = SMP_PREFIX . '-group-general';
@@ -1141,10 +1141,10 @@ class Social_Media_Popup {
 	/**
 	 * Общие настройки (вкладка "Внешний вид")
 	 *
-	 * @uses self::get_scp_prefix()
+	 * @uses self::get_prefix()
 	 */
 	public function init_settings_common_view_on_deskop() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 
 		$group        = SMP_PREFIX . '-group-view';
 		$options_page = SMP_PREFIX . '-group-view';
@@ -1388,12 +1388,12 @@ class Social_Media_Popup {
 	 *
 	 * @since 0.7.4
 	 *
-	 * @uses self::get_scp_prefix()
+	 * @uses self::get_prefix()
 	 *
 	 * @return void
 	 */
 	public function init_settings_common_view_on_mobile_devices() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 
 		$group        = SMP_PREFIX . '-group-view-mobile';
 		$options_page = SMP_PREFIX . '-group-view-mobile';
@@ -1435,10 +1435,10 @@ class Social_Media_Popup {
 	/**
 	 * Общие настройки (вкладка "События")
 	 *
-	 * @uses self::get_scp_prefix()
+	 * @uses self::get_prefix()
 	 */
 	public function init_settings_common_events() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 
 		$group        = SMP_PREFIX . '-group-events';
 		$options_page = SMP_PREFIX . '-group-events';
@@ -1624,13 +1624,13 @@ class Social_Media_Popup {
 	/**
 	 * Events tracking – General
 	 *
-	 * @uses Social_Media_Popup::get_scp_prefix()
+	 * @uses Social_Media_Popup::get_prefix()
 	 * @used_by Social_Media_Popup::init_settings_common_tracking()
 	 *
 	 * @since 0.7.5
 	 */
 	public function init_settings_common_tracking_general() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 
 		$group        = SMP_PREFIX . '-group-tracking-general';
 		$options_page = SMP_PREFIX . '-group-tracking-general';
@@ -1672,13 +1672,13 @@ class Social_Media_Popup {
 	/**
 	 * Events tracking – Google Analytics
 	 *
-	 * @uses Social_Media_Popup::get_scp_prefix()
+	 * @uses Social_Media_Popup::get_prefix()
 	 * @used_by Social_Media_Popup::init_settings_common_tracking()
 	 *
 	 * @since 0.7.5
 	 */
 	public function init_settings_common_tracking_google_analytics() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 
 		$group        = SMP_PREFIX . '-group-tracking-google-analytics';
 		$options_page = SMP_PREFIX . '-group-tracking-google-analytics';
@@ -1721,13 +1721,13 @@ class Social_Media_Popup {
 	/**
 	 * Events tracking – Windows Events
 	 *
-	 * @uses Social_Media_Popup::get_scp_prefix()
+	 * @uses Social_Media_Popup::get_prefix()
 	 * @used_by Social_Media_Popup::init_settings_common_tracking()
 	 *
 	 * @since 0.7.5
 	 */
 	public function init_settings_common_tracking_window_events() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 
 		$group        = SMP_PREFIX . '-group-tracking-window-events';
 		$options_page = SMP_PREFIX . '-group-tracking-window-events';
@@ -1822,13 +1822,13 @@ class Social_Media_Popup {
 	/**
 	 * Events tracking – Social Events
 	 *
-	 * @uses Social_Media_Popup::get_scp_prefix()
+	 * @uses Social_Media_Popup::get_prefix()
 	 * @used_by Social_Media_Popup::init_settings_common_tracking()
 	 *
 	 * @since 0.7.5
 	 */
 	public function init_settings_common_tracking_social_events() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 
 		$group        = SMP_PREFIX . '-group-tracking-social-events';
 		$options_page = SMP_PREFIX . '-group-tracking-social-events';
@@ -1936,7 +1936,7 @@ class Social_Media_Popup {
 	 * Общие настройки (вкладка "Управление")
 	 */
 	public function init_settings_common_management() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 
 		$group        = SMP_PREFIX . '-group-management';
 		$options_page = SMP_PREFIX . '-group-management';
@@ -1984,7 +1984,7 @@ class Social_Media_Popup {
 	 * @return void
 	 */
 	private function init_settings_facebook_general() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 
 		$group        = SMP_PREFIX . '-group-facebook-general';
 		$options_page = SMP_PREFIX . '-group-facebook-general';
@@ -2187,13 +2187,13 @@ class Social_Media_Popup {
 	/**
 	 * Facebook Tracking settings
 	 *
-	 * @uses Social_Media_Popup::get_scp_prefix()
+	 * @uses Social_Media_Popup::get_prefix()
 	 * @used_by $this->init_settings_facebook()
 	 *
 	 * @since 0.7.5
 	 */
 	private function init_settings_facebook_tracking() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 
 		$group        = SMP_PREFIX . '-group-facebook-tracking';
 		$options_page = SMP_PREFIX . '-group-facebook-tracking';
@@ -2267,7 +2267,7 @@ class Social_Media_Popup {
 	 * @return void
 	 */
 	private function init_settings_vkontakte_general() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 
 		$group        = SMP_PREFIX . '-group-vkontakte-general';
 		$options_page = SMP_PREFIX . '-group-vkontakte-general';
@@ -2459,13 +2459,13 @@ class Social_Media_Popup {
 	/**
 	 * VK.com Tracking settings
 	 *
-	 * @uses Social_Media_Popup::get_scp_prefix()
+	 * @uses Social_Media_Popup::get_prefix()
 	 * @used_by $this->init_settings_vkontakte()
 	 *
 	 * @since 0.7.5
 	 */
 	private function init_settings_vkontakte_tracking() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 
 		$group        = SMP_PREFIX . '-group-vkontakte-tracking';
 		$options_page = SMP_PREFIX . '-group-vkontakte-tracking';
@@ -2522,7 +2522,7 @@ class Social_Media_Popup {
 	 * Настройки Одноклассников
 	 */
 	private function init_settings_odnoklassniki() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 
 		$group        = SMP_PREFIX . '-group-odnoklassniki';
 		$options_page = SMP_PREFIX . '_odnoklassniki_options';
@@ -2642,7 +2642,7 @@ class Social_Media_Popup {
 	 * Настройки Google+
 	 */
 	private function init_settings_googleplus() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 
 		$group        = SMP_PREFIX . '-group-googleplus';
 		$options_page = SMP_PREFIX . '_googleplus_options';
@@ -2823,12 +2823,12 @@ class Social_Media_Popup {
 	/**
 	 * Twitter general settings
 	 *
-	 * @uses Social_Media_Popup::get_scp_prefix()
+	 * @uses Social_Media_Popup::get_prefix()
 	 *
 	 * @since 0.7.5
 	 */
 	private function init_settings_twitter_general() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 
 		$group        = SMP_PREFIX . '-group-twitter-general';
 		$options_page = SMP_PREFIX . '-group-twitter-general';
@@ -2944,13 +2944,13 @@ class Social_Media_Popup {
 	/**
 	 * Twitter Follow Button settings
 	 *
-	 * @uses Social_Media_Popup::get_scp_prefix()
+	 * @uses Social_Media_Popup::get_prefix()
 	 * @used_by Social_Media_Popup::init_settings_twitter()
 	 *
 	 * @since 0.7.5
 	 */
 	private function init_settings_twitter_follow_button() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 
 		$group        = SMP_PREFIX . '-group-twitter-follow-button';
 		$options_page = SMP_PREFIX . '-group-twitter-follow-button';
@@ -3028,13 +3028,13 @@ class Social_Media_Popup {
 	/**
 	 * Twitter Timeline settings
 	 *
-	 * @uses Social_Media_Popup::get_scp_prefix()
+	 * @uses Social_Media_Popup::get_prefix()
 	 * @used_by Social_Media_Popup::init_settings_twitter()
 	 *
 	 * @since 0.7.5
 	 */
 	private function init_settings_twitter_timeline() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 
 		$group        = SMP_PREFIX . '-group-twitter-timeline';
 		$options_page = SMP_PREFIX . '-group-twitter-timeline';
@@ -3151,13 +3151,13 @@ class Social_Media_Popup {
 	/**
 	 * Twitter Tracking settings
 	 *
-	 * @uses Social_Media_Popup::get_scp_prefix()
+	 * @uses Social_Media_Popup::get_prefix()
 	 * @used_by Social_Media_Popup::init_settings_twitter()
 	 *
 	 * @since 0.7.5
 	 */
 	private function init_settings_twitter_tracking() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 
 		$group        = SMP_PREFIX . '-group-twitter-tracking';
 		$options_page = SMP_PREFIX . '-group-twitter-tracking';
@@ -3201,7 +3201,7 @@ class Social_Media_Popup {
 	 * Настройки Pinterest
 	 */
 	private function init_settings_pinterest() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 
 		$group        = SMP_PREFIX . '-group-pinterest';
 		$options_page = SMP_PREFIX . '_pinterest_options';
@@ -3583,14 +3583,14 @@ class Social_Media_Popup {
 		if ( ! ( $user instanceof WP_User ) ) return;
 		if ( ! current_user_can( 'activate_plugins' ) ) return;
 
-		if ( absint( get_option( self::get_scp_prefix() . 'setting_show_admin_bar_menu' ) ) !== 1 ) return;
+		if ( absint( get_option( self::get_prefix() . 'setting_show_admin_bar_menu' ) ) !== 1 ) return;
 
 		$args = array(
 			'id'    => 'scp-admin-bar',
 			'title' => 'Social Media Popup',
 		);
 
-		if ( absint( get_option( self::get_scp_prefix() . 'setting_debug_mode' ) ) === 1 ) {
+		if ( absint( get_option( self::get_prefix() . 'setting_debug_mode' ) ) === 1 ) {
 			$args['title']        .= ' – ' . esc_html( 'Debug Mode', 'social-media-popup' );
 			$args['meta']['class'] = 'smp-debug-mode';
 		}
@@ -3631,7 +3631,7 @@ class Social_Media_Popup {
 	 * @since 0.7.3 Added WP Color Picker script
 	 * @since 0.7.5 Added custom CSS for quick-access menu
 	 *
-	 * @uses Social_Media_Popup::get_scp_prefix()
+	 * @uses Social_Media_Popup::get_prefix()
 	 * @uses $this->add_cookies_script()
 	 *
 	 * @return void
@@ -3641,7 +3641,7 @@ class Social_Media_Popup {
 
 		if ( ! is_admin() ) return;
 
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 		$version    = get_option( $scp_prefix . 'version' );
 
 		wp_register_style( SMP_PREFIX . '-admin-css', SMP_ASSETS_URL . 'css/admin.min.css?' . $version );
@@ -3678,13 +3678,13 @@ class Social_Media_Popup {
 	 *
 	 * @since 0.7.5
 	 *
-	 * @uses Social_Media_Popup::get_scp_prefix()
+	 * @uses Social_Media_Popup::get_prefix()
 	 * @uses SMP_Template::render_google_analytics_tracking_code()
 	 *
 	 * @return mixed
 	 */
 	public function add_events_tracking_code() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 
 		$use_events_tracking          = esc_attr( get_option( $scp_prefix . 'use_events_tracking' ) ) === '1';
 		$google_analytics_tracking_id = esc_attr( get_option( $scp_prefix . 'google_analytics_tracking_id' ) );
@@ -3714,7 +3714,7 @@ class Social_Media_Popup {
 			wp_die( esc_html( 'You do not have sufficient permissions to access this page.', 'social-media-popup' ) );
 		}
 
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 		$version    = get_option( $scp_prefix . 'version' );
 
 		include( SMP_TEMPLATES_DIR . 'welcome-screen.php' );
@@ -3815,7 +3815,7 @@ class Social_Media_Popup {
 	 * @since 0.7.3 Added add_cookies_script()
 	 * @since 0.7.5 Added custom CSS for quick-access menu
 	 *
-	 * @uses Social_Media_Popup::get_scp_prefix()
+	 * @uses Social_Media_Popup::get_prefix()
 	 * @uses $this->add_cookies_script()
 	 *
 	 * @return void
@@ -3825,7 +3825,7 @@ class Social_Media_Popup {
 			$this->add_custom_css();
 		}
 
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 		$version    = get_option( $scp_prefix . 'version' );
 
 		$this->add_cookies_script( $version, $scp_prefix );
@@ -3919,7 +3919,7 @@ class Social_Media_Popup {
 	 * @return string
 	 */
 	private function validate_settings() {
-		$scp_prefix = self::get_scp_prefix();
+		$scp_prefix = self::get_prefix();
 		$options    = array();
 
 		$all_options = wp_load_alloptions();

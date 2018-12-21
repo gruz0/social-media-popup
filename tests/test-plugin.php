@@ -83,7 +83,7 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 	private function upgradeTo01() {
 		self::$plugin->upgrade_to_0_1();
 
-		$this->assertTrue( '0.1' === get_option( self::$plugin->get_scp_prefix() . 'version' ) );
+		$this->assertTrue( '0.1' === get_option( self::$plugin->get_prefix() . 'version' ) );
 	}
 
 	/**
@@ -92,7 +92,7 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 	private function upgradeTo02() {
 		self::$plugin->upgrade_to_0_2();
 
-		$scp_prefix = self::$plugin->get_scp_prefix();
+		$scp_prefix = self::$plugin->get_prefix();
 
 		$this->assertTrue( '0.2' === get_option( $scp_prefix . 'version' ) );
 
@@ -132,7 +132,7 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 	private function upgradeTo03() {
 		self::$plugin->upgrade_to_0_3();
 
-		$scp_prefix = self::$plugin->get_scp_prefix();
+		$scp_prefix = self::$plugin->get_prefix();
 
 		$this->assertTrue( '0.3'                              === get_option( $scp_prefix . 'version' ) );
 		$this->assertTrue( 'vkontakte,facebook,odnoklassniki' === get_option( $scp_prefix . 'setting_tabs_order' ) );
@@ -144,7 +144,7 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 	private function upgradeTo04() {
 		self::$plugin->upgrade_to_0_4();
 
-		$scp_prefix = self::$plugin->get_scp_prefix();
+		$scp_prefix = self::$plugin->get_prefix();
 
 		$this->assertTrue( '0.4' === get_option( $scp_prefix . 'version' ) );
 	}
@@ -155,7 +155,7 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 	private function upgradeTo05() {
 		self::$plugin->upgrade_to_0_5();
 
-		$scp_prefix = self::$plugin->get_scp_prefix();
+		$scp_prefix = self::$plugin->get_prefix();
 
 		$this->assertTrue( '0.5' === get_option( $scp_prefix . 'version' ) );
 
@@ -189,7 +189,7 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 	private function upgradeTo06() {
 		self::$plugin->upgrade_to_0_6();
 
-		$scp_prefix = self::$plugin->get_scp_prefix();
+		$scp_prefix = self::$plugin->get_prefix();
 
 		$this->assertTrue( '0.6' === get_option( $scp_prefix . 'version' ) );
 
@@ -218,7 +218,7 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 	private function upgradeTo061() {
 		self::$plugin->upgrade_to_0_6_1();
 
-		$scp_prefix = self::$plugin->get_scp_prefix();
+		$scp_prefix = self::$plugin->get_prefix();
 
 		$this->assertTrue( '0.6.1' === get_option( $scp_prefix . 'version' ) );
 		$this->assertTrue( 10      === get_option( $scp_prefix . 'setting_border_radius' ) );
@@ -230,7 +230,7 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 	private function upgradeTo062() {
 		self::$plugin->upgrade_to_0_6_2();
 
-		$scp_prefix = self::$plugin->get_scp_prefix();
+		$scp_prefix = self::$plugin->get_prefix();
 
 		$this->assertTrue( '0.6.2' === get_option( $scp_prefix . 'version' ) );
 		$this->assertTrue( 0       === get_option( $scp_prefix . 'setting_close_popup_by_clicking_anywhere' ) );
@@ -241,7 +241,7 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 	 * Upgrade to 0.6.3
 	 */
 	private function upgradeTo063() {
-		$scp_prefix = self::$plugin->get_scp_prefix();
+		$scp_prefix = self::$plugin->get_prefix();
 
 		// Предварительно сохраним значения тех полей, которые надо будет проверять при обновлении новых полей
 		$facebook_show_header = get_option( $scp_prefix . 'setting_facebook_show_header' );
@@ -269,7 +269,7 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 	private function upgradeTo064() {
 		self::$plugin->upgrade_to_0_6_4();
 
-		$scp_prefix = self::$plugin->get_scp_prefix();
+		$scp_prefix = self::$plugin->get_prefix();
 
 		$this->assertTrue( '0.6.4' === get_option( $scp_prefix . 'version' ) );
 	}
@@ -280,7 +280,7 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 	private function upgradeTo065() {
 		self::$plugin->upgrade_to_0_6_5();
 
-		$scp_prefix = self::$plugin->get_scp_prefix();
+		$scp_prefix = self::$plugin->get_prefix();
 
 		$this->assertTrue( '0.6.5' === get_option( $scp_prefix . 'version' ) );
 		$this->assertTrue( 'person' === get_option( $scp_prefix . 'setting_googleplus_page_type' ) );
@@ -292,7 +292,7 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 	private function upgradeTo066() {
 		self::$plugin->upgrade_to_0_6_6();
 
-		$scp_prefix = self::$plugin->get_scp_prefix();
+		$scp_prefix = self::$plugin->get_prefix();
 
 		$this->assertTrue( '0.6.6' === get_option( $scp_prefix . 'version' ) );
 		$this->assertTrue( 0       === get_option( $scp_prefix . 'setting_close_popup_when_esc_pressed' ) );
@@ -305,7 +305,7 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 	private function upgradeTo067() {
 		self::$plugin->upgrade_to_0_6_7();
 
-		$scp_prefix = self::$plugin->get_scp_prefix();
+		$scp_prefix = self::$plugin->get_prefix();
 
 		$this->assertTrue( '0.6.7' === get_option( $scp_prefix . 'version' ) );
 
@@ -327,7 +327,7 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 	private function upgradeTo068() {
 		self::$plugin->upgrade_to_0_6_8();
 
-		$scp_prefix = self::$plugin->get_scp_prefix();
+		$scp_prefix = self::$plugin->get_prefix();
 
 		$this->assertTrue( '0.6.8' === get_option( $scp_prefix . 'version' ) );
 
@@ -351,7 +351,7 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 	private function upgradeTo069() {
 		self::$plugin->upgrade_to_0_6_9();
 
-		$scp_prefix = self::$plugin->get_scp_prefix();
+		$scp_prefix = self::$plugin->get_prefix();
 
 		$this->assertTrue( '0.6.9' === get_option( $scp_prefix . 'version' ) );
 
@@ -368,7 +368,7 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 	 * Upgrade to 0.7.0
 	 */
 	private function upgradeTo070() {
-		$scp_prefix = self::$plugin->get_scp_prefix();
+		$scp_prefix = self::$plugin->get_prefix();
 
 		// Предварительно сохраним значения тех полей, которые надо будет проверять при обновлении новых полей
 		$display_after_delay_of_n_seconds = get_option( $scp_prefix . 'setting_display_after_delay_of_n_seconds' );
@@ -389,14 +389,14 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 	 * Upgrade to 0.7.1
 	 */
 	private function upgradeTo071() {
-		$old_scp_prefix = self::$plugin->get_scp_prefix();
+		$old_scp_prefix = self::$plugin->get_prefix();
 
 		// Предварительно сохраним значения тех полей, которые надо будет проверять при обновлении новых полей
 		$display_after_visiting_n_pages = get_option( $old_scp_prefix . 'setting_display_after_visiting_n_pages' );
 
 		self::$plugin->upgrade_to_0_7_1();
 
-		$scp_prefix = self::$plugin->get_scp_prefix();
+		$scp_prefix = self::$plugin->get_prefix();
 
 		$this->assertTrue( '0.7.1' === get_option( $scp_prefix . 'version' ) );
 
@@ -429,14 +429,14 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 	 * Upgrade to 0.7.2
 	 */
 	private function upgradeTo072() {
-		$old_scp_prefix = self::$plugin->get_scp_prefix();
+		$old_scp_prefix = self::$plugin->get_prefix();
 
 		// Предварительно сохраним значения тех полей, которые надо будет проверять при обновлении новых полей
 		$facebook_show_posts = get_option( $old_scp_prefix . 'setting_facebook_show_posts' );
 
 		self::$plugin->upgrade_to_0_7_2();
 
-		$scp_prefix = self::$plugin->get_scp_prefix();
+		$scp_prefix = self::$plugin->get_prefix();
 
 		$this->assertTrue( '0.7.2' === get_option( $scp_prefix . 'version' ) );
 
@@ -453,7 +453,7 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 	private function upgradeTo073() {
 		self::$plugin->upgrade_to_0_7_3();
 
-		$scp_prefix = self::$plugin->get_scp_prefix();
+		$scp_prefix = self::$plugin->get_prefix();
 
 		$this->assertTrue( '0.7.3' === get_option( $scp_prefix . 'version' ) );
 
@@ -468,7 +468,7 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 	private function upgradeTo074() {
 		self::$plugin->upgrade_to_0_7_4();
 
-		$scp_prefix = self::$plugin->get_scp_prefix();
+		$scp_prefix = self::$plugin->get_prefix();
 
 		$this->assertTrue( '0.7.4' === get_option( $scp_prefix . 'version' ) );
 
@@ -498,7 +498,7 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 	private function upgradeTo075() {
 		self::$plugin->upgrade_to_0_7_5();
 
-		$scp_prefix = self::$plugin->get_scp_prefix();
+		$scp_prefix = self::$plugin->get_prefix();
 
 		$this->assertTrue( '0.7.5' === get_option( $scp_prefix . 'version' ) );
 
@@ -561,7 +561,7 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 	private function upgradeTo076() {
 		self::$plugin->upgrade_to_0_7_6();
 
-		$scp_prefix = self::$plugin->get_scp_prefix();
+		$scp_prefix = self::$plugin->get_prefix();
 
 		$this->assertTrue( '0.7.6' === get_option( $scp_prefix . 'version' ) );
 
@@ -578,7 +578,7 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 	 * Check Debug Mode is on
 	 */
 	private function checkDebugModeIsOn() {
-		$scp_prefix = self::$plugin->get_scp_prefix();
+		$scp_prefix = self::$plugin->get_prefix();
 		$this->assertTrue( 1 === get_option( $scp_prefix . 'setting_debug_mode' ) );
 	}
 }
