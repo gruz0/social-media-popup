@@ -31,9 +31,9 @@ class Social_Media_Popup {
 	/**
 	 * Plugin version
 	 *
-	 * @var string $scp_version
+	 * @var string $smp_version
 	 */
-	protected static $scp_version;
+	protected static $smp_version;
 
 	/**
 	 * Конструктор
@@ -263,8 +263,8 @@ class Social_Media_Popup {
 	 *
 	 * @param string $version Plugin version
 	 */
-	public static function set_scp_version( $version ) {
-		self::$scp_version = $version;
+	public static function set_version( $version ) {
+		self::$smp_version = $version;
 	}
 
 	/**
@@ -273,21 +273,21 @@ class Social_Media_Popup {
 	 * @return string
 	 */
 	public static function get_scp_prefix() {
-		if ( empty( self::$scp_version ) ) {
+		if ( empty( self::$smp_version ) ) {
 			$version = get_option( 'scp-version' );
 			if ( empty( $version ) ) {
 				$version = get_option( 'social-community-popup-version' );
 				if ( empty( $version ) ) {
-					self::set_scp_version( '0.1' );
+					self::set_version( '0.1' );
 				} else {
-					self::set_scp_version( $version );
+					self::set_version( $version );
 				}
 			} else {
-				self::set_scp_version( $version );
+				self::set_version( $version );
 			}
 		}
 
-		if ( version_compare( self::$scp_version, '0.7.1', '>=' ) ) {
+		if ( version_compare( self::$smp_version, '0.7.1', '>=' ) ) {
 			return 'scp-';
 		} else {
 			return 'social-community-popup-';
@@ -350,7 +350,7 @@ class Social_Media_Popup {
 	 *
 	 * @since 0.7.4
 	 */
-	private static function reset_scp_version() {
+	private static function reset_version() {
 		update_option( 'scp-version', '' );
 		update_option( 'social-community-popup-version', '' );
 	}
@@ -359,7 +359,7 @@ class Social_Media_Popup {
 	 * Upgrade plugin to version 0.1
 	 *
 	 * @uses self::get_scp_prefix()
-	 * @uses self::set_scp_version()
+	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_1() {
@@ -368,7 +368,7 @@ class Social_Media_Popup {
 
 		if ( ! get_option( $version ) ) {
 			update_option( $version, '0.1' );
-			self::set_scp_version( '0.1' );
+			self::set_version( '0.1' );
 		}
 	}
 
@@ -376,7 +376,7 @@ class Social_Media_Popup {
 	 * Upgrade plugin to version 0.2
 	 *
 	 * @uses self::get_scp_prefix()
-	 * @uses self::set_scp_version()
+	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_2() {
@@ -416,7 +416,7 @@ class Social_Media_Popup {
 			update_option( $scp_prefix . 'setting_odnoklassniki_height',             260 );
 
 			update_option( $version, '0.2' );
-			self::set_scp_version( '0.2' );
+			self::set_version( '0.2' );
 		}
 	}
 
@@ -424,7 +424,7 @@ class Social_Media_Popup {
 	 * Upgrade plugin to version 0.3
 	 *
 	 * @uses self::get_scp_prefix()
-	 * @uses self::set_scp_version()
+	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_3() {
@@ -434,7 +434,7 @@ class Social_Media_Popup {
 		if ( '0.3' > get_option( $version ) ) {
 			update_option( $scp_prefix . 'setting_tabs_order', 'vkontakte,facebook,odnoklassniki' );
 			update_option( $version, '0.3' );
-			self::set_scp_version( '0.3' );
+			self::set_version( '0.3' );
 		}
 	}
 
@@ -442,7 +442,7 @@ class Social_Media_Popup {
 	 * Upgrade plugin to version 0.4
 	 *
 	 * @uses self::get_scp_prefix()
-	 * @uses self::set_scp_version()
+	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_4() {
@@ -451,7 +451,7 @@ class Social_Media_Popup {
 
 		if ( '0.4' > get_option( $version ) ) {
 			update_option( $version, '0.4' );
-			self::set_scp_version( '0.4' );
+			self::set_version( '0.4' );
 		}
 	}
 
@@ -459,7 +459,7 @@ class Social_Media_Popup {
 	 * Upgrade plugin to version 0.5
 	 *
 	 * @uses self::get_scp_prefix()
-	 * @uses self::set_scp_version()
+	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_5() {
@@ -494,7 +494,7 @@ class Social_Media_Popup {
 			update_option( $scp_prefix . 'setting_odnoklassniki_height',             400 );
 
 			update_option( $version, '0.5' );
-			self::set_scp_version( '0.5' );
+			self::set_version( '0.5' );
 		}
 	}
 
@@ -502,7 +502,7 @@ class Social_Media_Popup {
 	 * Upgrade plugin to version 0.6
 	 *
 	 * @uses self::get_scp_prefix()
-	 * @uses self::set_scp_version()
+	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_6() {
@@ -532,7 +532,7 @@ class Social_Media_Popup {
 			update_option( $scp_prefix . 'setting_twitter_chrome',                    '' );
 
 			update_option( $version, '0.6' );
-			self::set_scp_version( '0.6' );
+			self::set_version( '0.6' );
 		}
 	}
 
@@ -540,7 +540,7 @@ class Social_Media_Popup {
 	 * Upgrade plugin to version 0.6.1
 	 *
 	 * @uses self::get_scp_prefix()
-	 * @uses self::set_scp_version()
+	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_6_1() {
@@ -551,7 +551,7 @@ class Social_Media_Popup {
 			update_option( $scp_prefix . 'setting_border_radius',                     10 );
 
 			update_option( $version, '0.6.1' );
-			self::set_scp_version( '0.6.1' );
+			self::set_version( '0.6.1' );
 		}
 	}
 
@@ -559,7 +559,7 @@ class Social_Media_Popup {
 	 * Upgrade plugin to version 0.6.2
 	 *
 	 * @uses self::get_scp_prefix()
-	 * @uses self::set_scp_version()
+	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_6_2() {
@@ -571,7 +571,7 @@ class Social_Media_Popup {
 			update_option( $scp_prefix . 'setting_show_on_mobile_devices',            0 );
 
 			update_option( $version, '0.6.2' );
-			self::set_scp_version( '0.6.2' );
+			self::set_version( '0.6.2' );
 		}
 	}
 
@@ -579,7 +579,7 @@ class Social_Media_Popup {
 	 * Upgrade plugin to version 0.6.3
 	 *
 	 * @uses self::get_scp_prefix()
-	 * @uses self::set_scp_version()
+	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_6_3() {
@@ -613,7 +613,7 @@ class Social_Media_Popup {
 			unset( $facebook_remove_options );
 
 			update_option( $version, '0.6.3' );
-			self::set_scp_version( '0.6.3' );
+			self::set_version( '0.6.3' );
 		}
 	}
 
@@ -621,7 +621,7 @@ class Social_Media_Popup {
 	 * Upgrade plugin to version 0.6.4
 	 *
 	 * @uses self::get_scp_prefix()
-	 * @uses self::set_scp_version()
+	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_6_4() {
@@ -630,7 +630,7 @@ class Social_Media_Popup {
 
 		if ( '0.6.4' > get_option( $version ) ) {
 			update_option( $version, '0.6.4' );
-			self::set_scp_version( '0.6.4' );
+			self::set_version( '0.6.4' );
 		}
 	}
 
@@ -638,7 +638,7 @@ class Social_Media_Popup {
 	 * Upgrade plugin to version 0.6.5
 	 *
 	 * @uses self::get_scp_prefix()
-	 * @uses self::set_scp_version()
+	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_6_5() {
@@ -649,7 +649,7 @@ class Social_Media_Popup {
 			update_option( $scp_prefix . 'setting_googleplus_page_type',              'person' );
 
 			update_option( $version, '0.6.5' );
-			self::set_scp_version( '0.6.5' );
+			self::set_version( '0.6.5' );
 		}
 	}
 
@@ -657,7 +657,7 @@ class Social_Media_Popup {
 	 * Upgrade plugin to version 0.6.6
 	 *
 	 * @uses self::get_scp_prefix()
-	 * @uses self::set_scp_version()
+	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_6_6() {
@@ -669,7 +669,7 @@ class Social_Media_Popup {
 			update_option( $scp_prefix . 'setting_vkontakte_delay_before_render',     500 );
 
 			update_option( $version, '0.6.6' );
-			self::set_scp_version( '0.6.6' );
+			self::set_version( '0.6.6' );
 		}
 	}
 
@@ -677,7 +677,7 @@ class Social_Media_Popup {
 	 * Upgrade plugin to version 0.6.7
 	 *
 	 * @uses self::get_scp_prefix()
-	 * @uses self::set_scp_version()
+	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_6_7() {
@@ -699,7 +699,7 @@ class Social_Media_Popup {
 			update_option( $scp_prefix . 'setting_button_to_close_widget_style',       'link' );
 
 			update_option( $version, '0.6.7' );
-			self::set_scp_version( '0.6.7' );
+			self::set_version( '0.6.7' );
 		}
 	}
 
@@ -707,7 +707,7 @@ class Social_Media_Popup {
 	 * Upgrade plugin to version 0.6.8
 	 *
 	 * @uses self::get_scp_prefix()
-	 * @uses self::set_scp_version()
+	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_6_8() {
@@ -732,7 +732,7 @@ class Social_Media_Popup {
 			update_option( $scp_prefix . 'setting_pinterest_height',                   300 );
 
 			update_option( $version, '0.6.8' );
-			self::set_scp_version( '0.6.8' );
+			self::set_version( '0.6.8' );
 		}
 	}
 
@@ -740,7 +740,7 @@ class Social_Media_Popup {
 	 * Upgrade plugin to version 0.6.9
 	 *
 	 * @uses self::get_scp_prefix()
-	 * @uses self::set_scp_version()
+	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_6_9() {
@@ -756,7 +756,7 @@ class Social_Media_Popup {
 			update_option( $scp_prefix . 'setting_background_image',                   '' );
 
 			update_option( $version, '0.6.9' );
-			self::set_scp_version( '0.6.9' );
+			self::set_version( '0.6.9' );
 		}
 	}
 
@@ -764,7 +764,7 @@ class Social_Media_Popup {
 	 * Upgrade plugin to version 0.7.0
 	 *
 	 * @uses self::get_scp_prefix()
-	 * @uses self::set_scp_version()
+	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_7_0() {
@@ -781,7 +781,7 @@ class Social_Media_Popup {
 			add_option( $scp_prefix . 'popup_will_appear_after_clicking_on_element', '' );
 
 			update_option( $version, '0.7.0' );
-			self::set_scp_version( '0.7.0' );
+			self::set_version( '0.7.0' );
 		}
 	}
 
@@ -789,7 +789,7 @@ class Social_Media_Popup {
 	 * Upgrade plugin to version 0.7.1
 	 *
 	 * @uses self::get_scp_prefix()
-	 * @uses self::set_scp_version()
+	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_7_1() {
@@ -843,7 +843,7 @@ class Social_Media_Popup {
 			add_option( $new_scp_prefix . 'visitor_opened_at_least_n_number_of_pages',          $old_value );
 
 			update_option( $new_scp_prefix . 'version', '0.7.1' );
-			self::set_scp_version( '0.7.1' );
+			self::set_version( '0.7.1' );
 		}
 	}
 
@@ -851,7 +851,7 @@ class Social_Media_Popup {
 	 * Upgrade plugin to version 0.7.2
 	 *
 	 * @uses self::get_scp_prefix()
-	 * @uses self::set_scp_version()
+	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_7_2() {
@@ -869,7 +869,7 @@ class Social_Media_Popup {
 			add_option( $scp_prefix . 'setting_facebook_tabs',                             $new_value );
 
 			update_option( $version, '0.7.2' );
-			self::set_scp_version( '0.7.2' );
+			self::set_version( '0.7.2' );
 		}
 	}
 
@@ -877,7 +877,7 @@ class Social_Media_Popup {
 	 * Upgrade plugin to version 0.7.3
 	 *
 	 * @uses self::get_scp_prefix()
-	 * @uses self::set_scp_version()
+	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_7_3() {
@@ -889,7 +889,7 @@ class Social_Media_Popup {
 			add_option( $scp_prefix . 'setting_vkontakte_close_window_after_join',         0 );
 
 			update_option( $version, '0.7.3' );
-			self::set_scp_version( '0.7.3' );
+			self::set_version( '0.7.3' );
 		}
 	}
 
@@ -897,7 +897,7 @@ class Social_Media_Popup {
 	 * Upgrade plugin to version 0.7.4
 	 *
 	 * @uses self::get_scp_prefix()
-	 * @uses self::set_scp_version()
+	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_7_4() {
@@ -917,7 +917,7 @@ class Social_Media_Popup {
 			add_option( $scp_prefix . 'setting_icons_size_on_desktop',                      '2x' );
 
 			update_option( $version, '0.7.4' );
-			self::set_scp_version( '0.7.4' );
+			self::set_version( '0.7.4' );
 		}
 	}
 
@@ -925,7 +925,7 @@ class Social_Media_Popup {
 	 * Upgrade plugin to version 0.7.5
 	 *
 	 * @uses self::get_scp_prefix()
-	 * @uses self::set_scp_version()
+	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_7_5() {
@@ -980,7 +980,7 @@ class Social_Media_Popup {
 			update_option( $scp_prefix . 'do_not_use_cookies_after_click_on_element',            1 );
 
 			update_option( $version, '0.7.5' );
-			self::set_scp_version( '0.7.5' );
+			self::set_version( '0.7.5' );
 		}
 	}
 
@@ -988,7 +988,7 @@ class Social_Media_Popup {
 	 * Upgrade plugin to version 0.7.6
 	 *
 	 * @uses self::get_scp_prefix()
-	 * @uses self::set_scp_version()
+	 * @uses self::set_version()
 	 * @used_by self::upgrade()
 	 */
 	public static function upgrade_to_0_7_6() {
@@ -1003,7 +1003,7 @@ class Social_Media_Popup {
 			update_option( $scp_prefix . 'setting_animation_style',      'bounce' );
 
 			update_option( $version, '0.7.6' );
-			self::set_scp_version( '0.7.6' );
+			self::set_version( '0.7.6' );
 		}
 	}
 
