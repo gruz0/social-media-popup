@@ -82,11 +82,11 @@ class SMP_Settings_Field {
 
 		$values = ( $value ) ? explode( ',', $value ) : array();
 
-		$scp_prefix = Social_Media_Popup::get_prefix();
+		$prefix = Social_Media_Popup::get_prefix();
 
 		$html = '<ul id="scp-sortable">';
 		foreach ( $values as $key ) {
-			$setting_value = get_option( $scp_prefix . 'setting_use_' . $key );
+			$setting_value = get_option( $prefix . 'setting_use_' . $key );
 			$class         = $setting_value ? '' : ' disabled';
 
 			$html .= '<li class="ui-state-default' . $class . '">' . esc_html( $key ) . '</li>';

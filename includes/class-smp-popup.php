@@ -17,16 +17,16 @@ class SMP_Popup {
 	/**
 	 * Prepare popup HTML
 	 *
-	 * @param string $scp_prefix Plugin prefix
+	 * @param string $prefix Plugin prefix
 	 * @return string
 	 */
-	public static function render( $scp_prefix ) {
+	public static function render( $prefix ) {
 		$options     = array();
 		$all_options = wp_load_alloptions();
 
 		foreach ( $all_options as $name => $value ) {
-			if ( stristr( $name, $scp_prefix ) ) {
-				$name             = str_replace( $scp_prefix, '', $name );
+			if ( stristr( $name, $prefix ) ) {
+				$name             = str_replace( $prefix, '', $name );
 				$options[ $name ] = $value;
 			}
 		}
