@@ -155,7 +155,7 @@ class SMP_Popup {
 
 			// Пользователь просмотрел больше N страниц сайта
 			if ( who_should_see_the_popup_has_event( $who_should_see_the_popup, 'visitor_opened_at_least_n_number_of_pages' ) ) {
-				$page_views_cookie = 'scp-page-views';
+				$page_views_cookie = 'smp-page-views';
 
 				// Если существует кука просмотренных страниц — обновляем её
 				if ( isset( $_COOKIE[ $page_views_cookie ] ) ) {

@@ -22,7 +22,7 @@ function is_scp_cookie_present() {
 function scp_destroyPlugin(after_n_days, container_id) {
 	var date = new Date( new Date().getTime() + (1000 * 60 * 60 * 24 * after_n_days) );
 	scp_setCookie("social-community-popup", "true", { "expires": date, "path": "/" } );
-	scp_deleteCookie('scp-page-views');
+	scp_deleteCookie('smp-page-views');
 	jQuery(container_id || '#social-community-popup').hide();
 }
 

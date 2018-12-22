@@ -8,7 +8,7 @@ function scp_setCookie(name, value, options) {
 		expires = options.expires = d;
 	}
 
-	if (expires && expires.toUTCString) { 
+	if (expires && expires.toUTCString) {
 		options.expires = expires.toUTCString();
 	}
 
@@ -17,8 +17,8 @@ function scp_setCookie(name, value, options) {
 
 	for(var propName in options) {
 		updatedCookie += "; " + propName;
-		var propValue = options[propName];    
-		if (propValue !== true) { 
+		var propValue = options[propName];
+		if (propValue !== true) {
 			updatedCookie += "=" + propValue;
 		}
 	}
@@ -47,7 +47,7 @@ function scp_deleteCookie(name) {
 function scp_clearAllPluginCookies() {
 	if (window.confirm(window.scp_cookies.clearCookiesMessage)) {
 		scp_deleteCookie('social-community-popup');
-		scp_deleteCookie('scp-page-views');
+		scp_deleteCookie('smp-page-views');
 		document.location.reload(true);
 	}
 }
