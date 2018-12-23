@@ -3611,7 +3611,7 @@ class Social_Media_Popup {
 			'title'  => esc_html( 'Clear Cookies', 'social-media-popup' ),
 			'href'   => '#',
 			'meta'   => array(
-				'onclick' => 'scp_clearAllPluginCookies();return false;',
+				'onclick' => 'smp_clearAllPluginCookies();return false;',
 			),
 		);
 		$wp_admin_bar->add_node( $menu_clear_cookies );
@@ -3871,7 +3871,7 @@ class Social_Media_Popup {
 		wp_register_script( SMP_PREFIX . '-js', SMP_ASSETS_URL . 'js/scripts.js?' . $version, array( 'jquery' ) );
 		wp_localize_script(
 			SMP_PREFIX . '-js',
-			'scp',
+			'smp',
 			array( 'encodedContent' => htmlspecialchars( $encoded_content ) )
 		);
 		wp_enqueue_script( SMP_PREFIX . '-js' );
@@ -3893,7 +3893,7 @@ class Social_Media_Popup {
 		);
 
 		wp_register_script( SMP_PREFIX . '-cookies', SMP_ASSETS_URL . 'js/cookies.js?' . $version, array( 'jquery' ) );
-		wp_localize_script( SMP_PREFIX . '-cookies', 'scp_cookies', $messages );
+		wp_localize_script( SMP_PREFIX . '-cookies', 'smp_cookies', $messages );
 		wp_enqueue_script( SMP_PREFIX . '-cookies' );
 	}
 

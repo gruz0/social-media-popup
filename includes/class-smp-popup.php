@@ -387,7 +387,7 @@ class SMP_Popup {
 		if ( $wp_is_mobile ) {
 			$content .= '<script>
 				jQuery(document).ready(function($) {
-					if (is_scp_cookie_present()) return;';
+					if (is_smp_cookie_present()) return;';
 
 					$any_event_active = false;
 
@@ -436,10 +436,10 @@ class SMP_Popup {
 					// Проверяем событие "Не учитывать куки при клике на CSS-селектор"
 					if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'after_clicking_on_element' ) ) {
 						if ( empty( $popup_will_appear_after_clicking_on_element ) || ! $do_not_use_cookies_after_click_on_element ) {
-							$content .= 'if (is_scp_cookie_present()) return;';
+							$content .= 'if (is_smp_cookie_present()) return;';
 						}
 					} else {
-						$content .= 'if (is_scp_cookie_present()) return;';
+						$content .= 'if (is_smp_cookie_present()) return;';
 					}
 
 					if ( $use_facebook ) {

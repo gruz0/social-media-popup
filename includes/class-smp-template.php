@@ -147,7 +147,7 @@ class SMP_Template {
 
 		$after_n_days = absint( esc_attr( $after_n_days ) );
 		return 'jQuery("' . $selector_to_close_widget . '").on("click", function() {
-			scp_destroyPlugin(' . $after_n_days . ');
+			smp_destroyPlugin(' . $after_n_days . ');
 			return false;
 		});';
 	}
@@ -165,7 +165,7 @@ class SMP_Template {
 		$after_n_days             = absint( esc_attr( $after_n_days ) );
 
 		return 'jQuery("' . $selector_to_close_widget . '").on("click", function() {
-			scp_destroyPlugin(' . $after_n_days . ', "#scp_mobile");
+			smp_destroyPlugin(' . $after_n_days . ', "#scp_mobile");
 			return false;
 		});';
 	}
@@ -187,7 +187,7 @@ class SMP_Template {
 
 			$content .= 'jQuery(document).on("keydown", function(e) {
 				if ( e.keyCode == 27 ) {
-					scp_destroyPlugin(' . $after_n_days . ');
+					smp_destroyPlugin(' . $after_n_days . ');
 				}
 			});';
 		}
@@ -229,7 +229,7 @@ class SMP_Template {
 			$calculated_delay = ( $popup_will_appear_after_n_seconds > 0 ? $popup_will_appear_after_n_seconds * 1000 : 1000 );
 
 			$content .= 'setTimeout(function() {
-				if (is_scp_cookie_present()) return false;';
+				if (is_smp_cookie_present()) return false;';
 
 				if ( $this->_options['use_events_tracking'] ) {
 					$content .= $this->push_google_analytics_event_on_show_window(
@@ -291,7 +291,7 @@ class SMP_Template {
 				$content .= 'jQuery("' . $popup_will_appear_after_clicking_on_element . '").on("click", function() {';
 
 					if ( ! $do_not_use_cookies_after_click_on_element ) {
-						$content .= 'if (is_scp_cookie_present()) return false;';
+						$content .= 'if (is_smp_cookie_present()) return false;';
 					}
 
 					if ( $this->_options['use_events_tracking'] ) {
@@ -357,9 +357,9 @@ class SMP_Template {
 
 			$content .= 'var showWindowAgain = true;
 			jQuery(window).scroll(function() {
-				if (is_scp_cookie_present()) return false;
+				if (is_smp_cookie_present()) return false;
 
-				if (showWindowAgain && scp_getScrollPercentage() >= ' . $popup_will_appear_after_scrolling_down_n_percent . ') {';
+				if (showWindowAgain && smp_getScrollPercentage() >= ' . $popup_will_appear_after_scrolling_down_n_percent . ') {';
 
 					if ( $this->_options['use_events_tracking'] ) {
 						$content .= $this->push_google_analytics_event_on_show_window(
@@ -413,7 +413,7 @@ class SMP_Template {
 			$any_event_active = true;
 
 			$content .= 'jQuery(document).on("mouseleave", function(e) {
-				if (is_scp_cookie_present()) return;
+				if (is_smp_cookie_present()) return;
 
 				var scroll = window.pageYOffset || document.documentElement.scrollTop;
 				if((e.pageY - scroll) < 7) {';
