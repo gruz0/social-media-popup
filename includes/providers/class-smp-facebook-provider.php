@@ -158,7 +158,7 @@ class SMP_Facebook_Provider extends SMP_Provider {
 		$facebook_events .= 'var scp_facebook_page_like_callback = function(url, html_element) {';
 
 		if ( absint( self::$options['setting_facebook_close_window_after_join'] ) ) {
-			$facebook_events .= 'smp_destroyPlugin(scp.showWindowAfterReturningNDays);';
+			$facebook_events .= 'smp_destroyPlugin(smp_cookies.showWindowAfterReturningNDays);';
 		}
 
 		// FIXME: Should be refactored with self::use_widget() and move second condition to it

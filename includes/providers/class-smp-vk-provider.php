@@ -87,7 +87,7 @@ class SMP_VK_Provider extends SMP_Provider {
 						VK.Observer.subscribe("widgets.groups.joined", function f() {';
 
 							if ( self::get_option_as_boolean( 'setting_vkontakte_close_window_after_join' ) ) {
-								$content .= 'smp_destroyPlugin(scp.showWindowAfterReturningNDays);';
+								$content .= 'smp_destroyPlugin(smp_cookies.showWindowAfterReturningNDays);';
 							}
 
 							if ( self::$template->use_events_tracking() && self::get_option_as_boolean( 'tracking_use_vkontakte' ) ) {

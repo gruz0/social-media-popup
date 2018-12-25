@@ -127,7 +127,7 @@ class SMP_Twitter_Provider extends SMP_Provider {
 				if (!intentEvent) return;';
 
 				if ( absint( self::$options['setting_twitter_close_window_after_join'] ) ) {
-					$content .= 'smp_destroyPlugin(scp.showWindowAfterReturningNDays);';
+					$content .= 'smp_destroyPlugin(smp_cookies.showWindowAfterReturningNDays);';
 				}
 
 				if ( self::$template->use_events_tracking() && self::get_option_as_boolean( 'tracking_use_twitter' ) ) {
