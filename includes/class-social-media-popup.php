@@ -3829,7 +3829,7 @@ class Social_Media_Popup {
 		$version = get_option( $prefix . 'version' );
 
 		$this->add_cookies_script( $version, $prefix );
-		if ( is_scp_cookie_present() ) {
+		if ( is_smp_cookie_present() ) {
 			$when_should_the_popup_appear = split_string_by_comma( get_option( $prefix . 'when_should_the_popup_appear' ) );
 
 			if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'after_clicking_on_element' ) ) {
