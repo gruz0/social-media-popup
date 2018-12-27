@@ -57,7 +57,7 @@ class Social_Media_Popup {
 	public static function activate() {
 		if ( ! current_user_can( 'activate_plugins' ) ) return;
 
-		set_transient( '_scp_welcome_screen', true, 30 );
+		set_transient( '_smp_welcome_screen', true, 30 );
 
 		self::upgrade();
 	}
@@ -1020,8 +1020,8 @@ class Social_Media_Popup {
 			add_action( 'admin_notices', array( $this, 'add_debug_mode_notice' ) );
 		}
 
-		if ( ! get_transient( '_scp_welcome_screen' ) ) return;
-		delete_transient( '_scp_welcome_screen' );
+		if ( ! get_transient( '_smp_welcome_screen' ) ) return;
+		delete_transient( '_smp_welcome_screen' );
 		if ( is_network_admin() || isset( $_GET['activate-multi'] ) ) return;
 		wp_safe_redirect( add_query_arg( array( 'page' => SMP_PREFIX . '_about' ), admin_url( 'index.php' ) ) );
 	}
