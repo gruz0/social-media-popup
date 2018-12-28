@@ -10,7 +10,7 @@
 
 defined( 'ABSPATH' ) or exit;
 ?>
-<div id="scp_welcome_screen" class="wrap">
+<div id="smp_welcome_screen" class="wrap">
 	<h1>Social Media Popup v<?php echo esc_attr( $version ); ?></h1>
 	<div class="about-text">Благодарю за установку плагина! Надеюсь он вам понравится :-)</div>
 
