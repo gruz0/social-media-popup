@@ -14,4 +14,13 @@ echo -e "${red}[PHP Style][Error]: Fix the issues and commit again${NC}"
 exit 1
 fi
 
+echo -e "${green}[Assets][Info]: Checking Assets Style${NC}"
+
+gulp
+
+if [ $? -ne 0 ]; then
+echo -e "${red}[Assets][Error]: Fix the issues and commit again${NC}"
+exit 1
+fi
+
 exit 0

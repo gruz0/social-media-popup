@@ -1,20 +1,19 @@
 'use strict';
 
-var gulp   = require('gulp');
-var jshint = require('gulp-jshint');
-var minify = require('gulp-minify');
+let gulp   = require('gulp');
+let jshint = require('gulp-jshint');
+let minify = require('gulp-minify');
 
 function minify_js(cb) {
-	gulp.src('assets/js/*.js')
+	gulp
+		.src([
+			'assets/js/*.js',
+			'!assets/js/*-min.js'
+		])
 		.pipe(jshint())
 		.pipe(jshint.reporter('default'))
-		.pipe(minify({
-			ext: {
-				min: '.min.js'
-			},
-			ignoreFiles: ['*.min.js']
-		}))
-		.pipe(gulp.dest('assets/js'));
+		.pipe(minify())
+		.pipe(gulp.dest('assets/js/'));
 
 	cb();
 }
