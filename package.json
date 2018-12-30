@@ -26,9 +26,11 @@
   "homepage": "https://github.com/gruz0/social-media-popup#readme",
   "devDependencies": {
     "gulp": "^4.0.0",
+    "gulp-clean-css": "^4.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-jshint": "^2.1.0",
     "gulp-minify": "^3.1.0",
+    "gulp-rename": "^1.4.0",
     "jshint": "^2.9.7"
   }
 }
