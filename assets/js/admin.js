@@ -4,9 +4,9 @@ $j(document).ready(function() {
 	var SCP_PREFIX = 'scp-';
 
 	// Клик по табу и открытие соответствующей вкладки
-	$j('#scp_welcome_screen ul.tabs').on('click', 'li:not(.current)', function() {
+	$j('#smp_welcome_screen ul.tabs').on('click', 'li:not(.current)', function() {
 		$j(this).addClass('current').siblings().removeClass('current')
-		.parents('#scp_welcome_screen').find('div.box').eq($j(this).index()).fadeIn(150).siblings('div.box').hide();
+		.parents('#smp_welcome_screen').find('div.box').eq($j(this).index()).fadeIn(150).siblings('div.box').hide();
 	});
 
 	// Add Color Picker
