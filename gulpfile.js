@@ -10,11 +10,15 @@ function minify_js(cb) {
 	gulp
 		.src([
 			'assets/js/*.js',
-			'!assets/js/*-min.js'
+			'!assets/js/*.min.js'
 		])
 		.pipe(jshint())
 		.pipe(jshint.reporter('default'))
-		.pipe(minifyJS())
+		.pipe(minifyJS({
+			ext:{
+				min:'.min.js'
+			}
+		}))
 		.pipe(gulp.dest('assets/js/'));
 
 	cb();
