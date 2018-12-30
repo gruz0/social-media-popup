@@ -9,10 +9,10 @@ Stable tag: trunk
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Plugin creates the popup window with most popular social media widgets
+The plugin creates a pop-up window with the most popular social media widgets
 
 == Description ==
-Plugin creates popup window with most popular social media widget.
+The plugin creates a pop-up window with the most popular social media widgets.
 
 Available widgets:
 * Facebook Page Plugin

@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) or exit;
 /**
  * Plugin Name: Social Media Popup
  * Plugin URI: https://github.com/gruz0/social-media-popup
- * Description: The plugin creates a popup window with most popular social media widgets
+ * Description: The plugin creates a pop-up window with the most popular social media widgets
  * Author: Alexander Kadyrov
  * Author URI: http://gruz0.ru/
  * Text Domain: social-media-popup
