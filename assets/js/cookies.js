@@ -41,7 +41,7 @@ function smp_getCookie(name) {
 
 function smp_deleteCookie(name) {
 	var date = new Date().getTime();
-	smp_setCookie(name, '', { expires: date - 3600, path: '/' })
+	smp_setCookie(name, '', { expires: date - 3600, path: '/' });
 }
 
 function smp_clearAllPluginCookies() {

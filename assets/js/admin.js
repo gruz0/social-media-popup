@@ -10,7 +10,7 @@ $j(document).ready(function() {
 	});
 
 	// Add Color Picker
-	colorFields = new Array();
+	colorFields = [];
 	colorFields.push('#scp-setting_overlay_color');
 	colorFields.push('#scp-setting_vkontakte_color_background');
 	colorFields.push('#scp-setting_vkontakte_color_text');
@@ -30,7 +30,7 @@ $j(document).ready(function() {
 			tb_remove();
 
 			window.send_to_editor = window.scp_restore_send_to_editor;
-		}
+		};
 
 		return false;
 	});
