@@ -84,7 +84,7 @@ class SMP_Settings_Field {
 
 		$prefix = Social_Media_Popup::get_prefix();
 
-		$html = '<ul id="scp-sortable">';
+		$html = '<ul id="smp-sortable">';
 		foreach ( $values as $key ) {
 			$setting_value = get_option( $prefix . 'setting_use_' . $key );
 			$class         = $setting_value ? '' : ' disabled';
@@ -293,11 +293,11 @@ class SMP_Settings_Field {
 		$field = $args['field'];
 		$value = esc_attr( get_option( $field ) );
 
-		$html  = '<input type="text" id="scp_background_image" name="' . $field . '" value="' . $value . '" />';
-		$html .= '<input id="scp_upload_background_image" type="button" class="button" value="' . esc_attr( 'Upload Image', 'social-media-popup' ) . '" /><br />';
+		$html  = '<input type="text" id="smp_background_image" name="' . $field . '" value="' . $value . '" />';
+		$html .= '<input id="smp_upload_background_image" type="button" class="button" value="' . esc_attr( 'Upload Image', 'social-media-popup' ) . '" /><br />';
 
 		if ( ! empty( $value ) ) {
-			$html .= '<div class="scp-background-image"><img src="' . $value . '" /></div>';
+			$html .= '<div class="smp-background-image"><img src="' . $value . '" /></div>';
 		}
 
 		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped

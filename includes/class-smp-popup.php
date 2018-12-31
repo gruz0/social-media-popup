@@ -234,13 +234,13 @@ class SMP_Popup {
 			$last_tab_width         = 100 - $tab_width * ( $active_providers_count - 1 );
 
 			if ( $wp_is_mobile ) {
-				$content .= '<div id="scp_mobile">';
+				$content .= '<div id="smp_mobile">';
 
-				$content .= '<div class="scp-close"><a href="#">&times;</a></div>';
+				$content .= '<div class="smp-close"><a href="#">&times;</a></div>';
 
-				$content .= '<div class="scp-mobile-title">' . $options['setting_plugin_title_on_mobile_devices'] . '</div>';
+				$content .= '<div class="smp-mobile-title">' . $options['setting_plugin_title_on_mobile_devices'] . '</div>';
 
-				$content .= '<ul class="scp-icons">';
+				$content .= '<ul class="smp-icons">';
 
 				$icon_size = 'fa-' . esc_attr( $options['setting_icons_size_on_mobile_devices'] );
 
@@ -317,7 +317,7 @@ class SMP_Popup {
 					$icon_size                   = 'fa-' . $options['setting_icons_size_on_desktop'];
 
 					if ( $use_icons_instead_of_labels ) {
-						$content .= '<ul class="scp-icons scp-icons-desktop">';
+						$content .= '<ul class="smp-icons smp-icons-desktop">';
 					} else {
 						$content .= '<ul class="tabs"' . ( $align_tabs_to_center ? 'style="text-align:center;"' : '' ) . '>';
 					}
@@ -373,9 +373,9 @@ class SMP_Popup {
 			if ( ! $wp_is_mobile ) {
 				if ( '1' === $options['setting_show_button_to_close_widget'] ) {
 					$button_to_close_widget_style = $options['setting_button_to_close_widget_style'];
-					$button_to_close_widget_class = 'link' === $button_to_close_widget_style ? '' : 'scp-' . $button_to_close_widget_style . '-button';
+					$button_to_close_widget_class = 'link' === $button_to_close_widget_style ? '' : 'smp-' . $button_to_close_widget_style . '-button';
 
-					$content .= '<div class="dont-show-widget scp-button ' . esc_attr( $button_to_close_widget_class ) . '">';
+					$content .= '<div class="dont-show-widget smp-button ' . esc_attr( $button_to_close_widget_class ) . '">';
 					$content .= '<a href="#" class="close">' . esc_html( $options['setting_button_to_close_widget_title'] ) . '</a>';
 					$content .= '</div>';
 				}

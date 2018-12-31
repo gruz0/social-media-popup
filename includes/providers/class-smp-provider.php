@@ -213,11 +213,11 @@ class SMP_Provider {
 	 */
 	private static function tabs_id() {
 		if ( wp_is_mobile() ) {
-			return '#scp_mobile .scp-icons';
+			return '#smp_mobile .smp-icons';
 		}
 
 		if ( '1' === self::$options['setting_use_icons_instead_of_labels_in_tabs'] ) {
-			return '#social-community-popup .scp-icons';
+			return '#social-community-popup .smp-icons';
 		}
 
 		return '#social-community-popup .tabs';

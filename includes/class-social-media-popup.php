@@ -3665,7 +3665,7 @@ class Social_Media_Popup {
 		wp_enqueue_style( 'wp-color-picker' );
 		wp_register_script(
 			SMP_PREFIX . '-admin-js',
-			SMP_ASSETS_URL . 'js/admin.js?' . $version,
+			SMP_ASSETS_URL . 'js/admin.min.js?' . $version,
 			array( 'jquery', 'wp-color-picker' )
 		);
 
@@ -3868,7 +3868,7 @@ class Social_Media_Popup {
 		$encoded_content = preg_replace( "~[\n\r\t]~", '', $content );
 		$encoded_content = base64_encode( $encoded_content );
 
-		wp_register_script( SMP_PREFIX . '-js', SMP_ASSETS_URL . 'js/scripts.js?' . $version, array( 'jquery' ) );
+		wp_register_script( SMP_PREFIX . '-js', SMP_ASSETS_URL . 'js/scripts.min.js?' . $version, array( 'jquery' ) );
 		wp_localize_script(
 			SMP_PREFIX . '-js',
 			'smp',
@@ -3892,7 +3892,7 @@ class Social_Media_Popup {
 			'showWindowAfterReturningNDays' => absint( get_option( $prefix . 'setting_display_after_n_days' ) ),
 		);
 
-		wp_register_script( SMP_PREFIX . '-cookies', SMP_ASSETS_URL . 'js/cookies.js?' . $version, array( 'jquery' ) );
+		wp_register_script( SMP_PREFIX . '-cookies', SMP_ASSETS_URL . 'js/cookies.min.js?' . $version, array( 'jquery' ) );
 		wp_localize_script( SMP_PREFIX . '-cookies', 'smp_cookies', $messages );
 		wp_enqueue_script( SMP_PREFIX . '-cookies' );
 	}

@@ -8,12 +8,12 @@ var smp_Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012
 jQuery(document).ready(function($){
 	smp_renderPopup();
 
-	$('#social-community-popup ul.tabs, #social-community-popup ul.scp-icons').on('click', 'li:not(.current)', function() {
+	$('#social-community-popup ul.tabs, #social-community-popup ul.smp-icons').on('click', 'li:not(.current)', function() {
 		$(this).addClass('current').siblings().removeClass('current')
 			.parents('div.section').find('div.box').eq($(this).index()).fadeIn(150).siblings('div.box').hide();
 	});
 
-	$('#social-community-popup ul.tabs li:first, #social-community-popup ul.scp-icons li:first').addClass('current');
+	$('#social-community-popup ul.tabs li:first, #social-community-popup ul.smp-icons li:first').addClass('current');
 	$('#social-community-popup .section .box:first').addClass('visible');
 });
 
