@@ -3633,6 +3633,7 @@ class Social_Media_Popup {
 	 *
 	 * @uses Social_Media_Popup::get_prefix()
 	 * @uses $this->add_cookies_script()
+	 * @uses $this->js_asset_filename()
 	 *
 	 * @return void
 	 */
@@ -3665,7 +3666,7 @@ class Social_Media_Popup {
 		wp_enqueue_style( 'wp-color-picker' );
 		wp_register_script(
 			SMP_PREFIX . '-admin-js',
-			SMP_ASSETS_URL . 'js/admin.min.js?' . $version,
+			$this->js_asset_filename( 'admin', $version ),
 			array( 'jquery', 'wp-color-picker' )
 		);
 
@@ -3859,6 +3860,8 @@ class Social_Media_Popup {
 	/**
 	 * Render popup
 	 *
+	 * @uses $this->js_asset_filename()
+	 *
 	 * @param string $version Plugin version
 	 * @param string $prefix Plugin prefix
 	 */
@@ -3868,7 +3871,7 @@ class Social_Media_Popup {
 		$encoded_content = preg_replace( "~[\n\r\t]~", '', $content );
 		$encoded_content = base64_encode( $encoded_content );
 
-		wp_register_script( SMP_PREFIX . '-js', SMP_ASSETS_URL . 'js/scripts.min.js?' . $version, array( 'jquery' ) );
+		wp_register_script( SMP_PREFIX . '-js', $this->js_asset_filename( 'scripts', $version ), array( 'jquery' ) );
 		wp_localize_script(
 			SMP_PREFIX . '-js',
 			'smp',
@@ -3879,6 +3882,8 @@ class Social_Media_Popup {
 
 	/**
 	 * Adds cookies script
+	 *
+	 * @uses $this->js_asset_filename()
 	 *
 	 * @since 0.7.3
 	 *
@@ -3892,7 +3897,7 @@ class Social_Media_Popup {
 			'showWindowAfterReturningNDays' => absint( get_option( $prefix . 'setting_display_after_n_days' ) ),
 		);
 
-		wp_register_script( SMP_PREFIX . '-cookies', SMP_ASSETS_URL . 'js/cookies.min.js?' . $version, array( 'jquery' ) );
+		wp_register_script( SMP_PREFIX . '-cookies', $this->js_asset_filename( 'cookies', $version ), array( 'jquery' ) );
 		wp_localize_script( SMP_PREFIX . '-cookies', 'smp_cookies', $messages );
 		wp_enqueue_script( SMP_PREFIX . '-cookies' );
 	}
@@ -3932,5 +3937,23 @@ class Social_Media_Popup {
 
 		$validator = new SMP_Validator( $options );
 		return $validator->validate();
+	}
+
+	/**
+	 * Generate JS filename
+	 *
+	 * @used_by $this->add_cookies_script()
+	 * @used_by $this->render_popup_window()
+	 * @used_by $this->admin_enqueue_scripts()
+	 *
+	 * @since 0.7.6
+	 *
+	 * @param string $part    Filename's part (eg. admin, cookies, etc.)
+	 * @param string $version Plugin's version
+	 *
+	 * @return string
+	 */
+	private function js_asset_filename( $part, $version ) {
+		return SMP_ASSETS_URL . "js/${part}.min.js?" . $version;
 	}
 }
