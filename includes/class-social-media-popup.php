@@ -3634,6 +3634,7 @@ class Social_Media_Popup {
 	 * @uses Social_Media_Popup::get_prefix()
 	 * @uses $this->add_cookies_script()
 	 * @uses $this->js_asset_filename()
+	 * @uses $this->css_asset_filename()
 	 *
 	 * @return void
 	 */
@@ -3645,7 +3646,7 @@ class Social_Media_Popup {
 		$prefix  = self::get_prefix();
 		$version = get_option( $prefix . 'version' );
 
-		wp_register_style( SMP_PREFIX . '-admin-css', SMP_ASSETS_URL . 'css/admin.min.css?' . $version );
+		wp_register_style( SMP_PREFIX . '-admin-css', $this->css_asset_filename( 'admin', $version ) );
 		wp_enqueue_style( SMP_PREFIX . '-admin-css' );
 
 		wp_register_style( 'jquery-ui-css', '//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css' );
@@ -3818,6 +3819,7 @@ class Social_Media_Popup {
 	 *
 	 * @uses Social_Media_Popup::get_prefix()
 	 * @uses $this->add_cookies_script()
+	 * @uses $this->css_asset_filename()
 	 *
 	 * @return void
 	 */
@@ -3847,7 +3849,7 @@ class Social_Media_Popup {
 
 		$this->render_popup_window( $version, $prefix );
 
-		wp_register_style( SMP_PREFIX . '-css', SMP_ASSETS_URL . 'css/styles.min.css?' . $version );
+		wp_register_style( SMP_PREFIX . '-css', $this->css_asset_filename( 'styles', $version ) );
 		wp_enqueue_style( SMP_PREFIX . '-css' );
 
 		wp_enqueue_style( 'font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' );
@@ -3955,5 +3957,22 @@ class Social_Media_Popup {
 	 */
 	private function js_asset_filename( $part, $version ) {
 		return SMP_ASSETS_URL . "js/${part}.min.js?" . $version;
+	}
+
+	/**
+	 * Generate CSS filename
+	 *
+	 * @used_by $this->enqueue_scripts()
+	 * @used_by $this->admin_enqueue_scripts()
+	 *
+	 * @since 0.7.6
+	 *
+	 * @param string $part    Filename's part (eg. admin, styles, etc.)
+	 * @param string $version Plugin's version
+	 *
+	 * @return string
+	 */
+	private function css_asset_filename( $part, $version ) {
+		return SMP_ASSETS_URL . "css/${part}.min.css?" . $version;
 	}
 }
