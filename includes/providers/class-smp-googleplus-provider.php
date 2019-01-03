@@ -50,7 +50,7 @@ class SMP_GooglePlus_Provider extends SMP_Provider {
 	 * @return string
 	 */
 	public static function container() {
-		$content = '<div class="box" id="scp_googleplus_container">';
+		$content = '<div class="box" id="smp_googleplus_container">';
 
 		$content .= self::widget_description( 'setting_googleplus_show_description', 'setting_googleplus_description' );
 
@@ -67,11 +67,11 @@ class SMP_GooglePlus_Provider extends SMP_Provider {
 		$content .= '<!-- Place this tag after the last widget tag. -->
 			<script type="text/javascript">
 				var google_plus_initialized = 0;
-				var scp_google_plus_container_size = parseInt("' . self::get_option_as_escaped_string( 'setting_googleplus_size' ) . '");
+				var smp_googleplus_container_size = parseInt("' . self::get_option_as_escaped_string( 'setting_googleplus_size' ) . '");
 
 				function initialize_GooglePlus_Widgets() {
-					if (jQuery("#scp_googleplus_container div iframe").length && jQuery("#scp_googleplus_container div iframe").height() < scp_google_plus_container_size) {
-						jQuery("#scp_googleplus_container div, #scp_googleplus_container div iframe").height(scp_google_plus_container_size);
+					if (jQuery("#smp_googleplus_container div iframe").length && jQuery("#smp_googleplus_container div iframe").height() < smp_googleplus_container_size) {
+						jQuery("#smp_googleplus_container div, #smp_googleplus_container div iframe").height(smp_googleplus_container_size);
 					}
 
 					if (google_plus_initialized) return;
@@ -91,15 +91,15 @@ class SMP_GooglePlus_Provider extends SMP_Provider {
 				function smp_prependGooglePlus($) {
 					$google_plus_tab = $("' . self::$tabs_id . ' .google-plus-tab");
 
-					var scp_googleplus_interval = setInterval(function() {
-						var container_height_is_too_small = jQuery("#scp_googleplus_container div iframe").height() < scp_google_plus_container_size;
+					var smp_googleplus_interval = setInterval(function() {
+						var container_height_is_too_small = jQuery("#smp_googleplus_container div iframe").height() < smp_googleplus_container_size;
 
-						if (jQuery("#scp_googleplus_container div iframe").length > 0 || container_height_is_too_small) {
-							jQuery("#scp_googleplus_container div, #scp_googleplus_container div iframe").height(scp_google_plus_container_size);
+						if (jQuery("#smp_googleplus_container div iframe").length > 0 || container_height_is_too_small) {
+							jQuery("#smp_googleplus_container div, #smp_googleplus_container div iframe").height(smp_googleplus_container_size);
 
-							container_height_is_too_small = jQuery("#scp_googleplus_container div iframe").height() < scp_google_plus_container_size;
+							container_height_is_too_small = jQuery("#smp_googleplus_container div iframe").height() < smp_googleplus_container_size;
 							if (!container_height_is_too_small) {
-								setTimeout(function() { clearInterval(scp_googleplus_interval); }, 3000);
+								setTimeout(function() { clearInterval(smp_googleplus_interval); }, 3000);
 							}
 						}
 					}, 1000);

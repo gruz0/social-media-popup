@@ -401,14 +401,14 @@ class Social_Media_Popup_Tests extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( '0.7.1' === get_option( $prefix . 'version' ) );
 
 		// Загрузим все существующие опции и найдём только те, которые уже с новым префиксом плагина
-		$scp_options = array();
+		$smp_options = array();
 		$all_options = wp_load_alloptions();
 		foreach ( $all_options as $name => $value ) {
-			if ( preg_match( '/^' . $prefix . '/', $name ) ) $scp_options[ $name ] = $value;
+			if ( preg_match( '/^' . $prefix . '/', $name ) ) $smp_options[ $name ] = $value;
 		}
 
 		// Проверим, что все опции со старым префиксом не существуют
-		foreach ( $scp_options as $option_name => $value ) {
+		foreach ( $smp_options as $option_name => $value ) {
 			$old_option_name = preg_replace( '/^' . $prefix . '/', '', $option_name );
 			$this->assertTrue( null == get_option( $old_prefix . $old_option_name ) );
 		}

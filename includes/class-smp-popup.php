@@ -288,8 +288,8 @@ class SMP_Popup {
 				$popup_css .= $border_radius_css;
 				$popup_css .= $background_image_css;
 
-				$scp_plugin_title  = trim( str_replace( "\r\n", '<br />', $options['setting_plugin_title'] ) );
-				$show_plugin_title = mb_strlen( $scp_plugin_title ) > 0;
+				$smp_plugin_title  = trim( str_replace( "\r\n", '<br />', $options['setting_plugin_title'] ) );
+				$show_plugin_title = mb_strlen( $smp_plugin_title ) > 0;
 
 				$animation_class = $use_animation ? ' class="animated ' . $animation_style . '"' : '';
 				$content        .= '<div id="popup" style="' . esc_attr( $popup_css ) . '"' . $animation_class . '>';
@@ -307,7 +307,7 @@ class SMP_Popup {
 				$content .= '<div class="section" style="width:' . esc_attr( $container_width ) . 'px !important;height:' . esc_attr( $container_height ) . 'px !important;">';
 
 				if ( $show_plugin_title ) {
-					$content .= '<div class="plugin-title">' . $scp_plugin_title . '</div>';
+					$content .= '<div class="plugin-title">' . $smp_plugin_title . '</div>';
 				}
 
 				if ( 1 === $active_providers_count && '1' === $options['setting_hide_tabs_if_one_widget_is_active'] ) {

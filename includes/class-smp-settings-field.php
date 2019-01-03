@@ -244,7 +244,7 @@ class SMP_Settings_Field {
 			'5x' => '5x',
 		);
 
-		self::render_select_with_options( $items, $value, $field, 'scp_icon_size' );
+		self::render_select_with_options( $items, $value, $field, $field );
 	}
 
 	/**
@@ -650,10 +650,9 @@ class SMP_Settings_Field {
 	 * @param string $value Current value
 	 * @param string $name  Name attribute
 	 * @param string $id    ID attribute
-	 * @param string $class Class attribute
 	 */
-	private static function render_select_with_options( $items, $value, $name, $id, $class = '' ) {
-		$select_format = '<select name="%s" id="%s" class="%s">%s</select>';
+	private static function render_select_with_options( $items, $value, $name, $id ) {
+		$select_format = '<select name="%s" id="%s">%s</select>';
 		$option_format = '<option value="%s"%s>%s</option>';
 
 		$html = '';
@@ -666,7 +665,6 @@ class SMP_Settings_Field {
 			$select_format,
 			$name,  // Select name
 			$id,    // Select ID
-			$class, // Select class
 			$html
 		);
 		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped

@@ -121,9 +121,7 @@ class SMP_Twitter_Provider extends SMP_Provider {
 			return t;
 			}(document, "script", "twitter-wjs"));
 
-			var scp_Twitter_closeWindowAfterJoiningGroup = ' . self::get_option_as_integer( 'setting_twitter_close_window_after_join' ) . ';
-
-			function scp_followIntentToAnalytics(intentEvent) {
+			function smp_followIntentToAnalytics(intentEvent) {
 				if (!intentEvent) return;';
 
 				if ( absint( self::$options['setting_twitter_close_window_after_join'] ) ) {
@@ -138,7 +136,7 @@ class SMP_Twitter_Provider extends SMP_Provider {
 			$content .= '}
 
 			twttr.ready(function(twttr) {
-				twttr.events.bind("follow", scp_followIntentToAnalytics);
+				twttr.events.bind("follow", smp_followIntentToAnalytics);
 			});
 		</script>';
 

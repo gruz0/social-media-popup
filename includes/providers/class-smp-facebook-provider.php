@@ -65,8 +65,6 @@ class SMP_Facebook_Provider extends SMP_Provider {
 	 * @return string
 	 */
 	public static function container() {
-		$close_window_after_join = self::get_option_as_boolean( 'setting_facebook_close_window_after_join' );
-
 		$content = '<div class="box">';
 
 		$content .= self::widget_description( 'setting_facebook_show_description', 'setting_facebook_description' );
@@ -155,7 +153,7 @@ class SMP_Facebook_Provider extends SMP_Provider {
 		$facebook_events = '<script>';
 
 		// Формирует колбэк для обработки событий при закрытии окна и подписке на группу
-		$facebook_events .= 'var scp_facebook_page_like_callback = function(url, html_element) {';
+		$facebook_events .= 'var smp_facebook_page_like_callback = function(url, html_element) {';
 
 		if ( absint( self::$options['setting_facebook_close_window_after_join'] ) ) {
 			$facebook_events .= 'smp_destroyPlugin(smp_cookies.showWindowAfterReturningNDays);';
@@ -170,7 +168,7 @@ class SMP_Facebook_Provider extends SMP_Provider {
 		$facebook_events .= '};';
 
 		// Формирует колбэк для обработки событий при отписке от группы
-		$facebook_events .= 'var scp_facebook_page_unlike_callback = function(url, html_element) {';
+		$facebook_events .= 'var smp_facebook_page_unlike_callback = function(url, html_element) {';
 
 		// FIXME: Should be refactored with self::use_widget() and move second condition to it
 		if ( self::$template->use_events_tracking() && self::get_option_as_boolean( 'tracking_use_facebook' ) ) {
@@ -190,14 +188,14 @@ class SMP_Facebook_Provider extends SMP_Provider {
 					version: "v' . self::API_VERSION . '"
 				});
 
-				FB.Event.subscribe("edge.create", scp_facebook_page_like_callback);
-				FB.Event.subscribe("edge.remove", scp_facebook_page_unlike_callback);
+				FB.Event.subscribe("edge.create", smp_facebook_page_like_callback);
+				FB.Event.subscribe("edge.remove", smp_facebook_page_unlike_callback);
 			};
 		} else {
 			smp_facebookInterval = setInterval(function() {
 				if ( typeof FB === "object" ) {
-					FB.Event.subscribe("edge.create", scp_facebook_page_like_callback);
-					FB.Event.subscribe("edge.remove", scp_facebook_page_unlike_callback);
+					FB.Event.subscribe("edge.create", smp_facebook_page_like_callback);
+					FB.Event.subscribe("edge.remove", smp_facebook_page_unlike_callback);
 					clearInterval(smp_facebookInterval);
 				}
 			}, 1000);

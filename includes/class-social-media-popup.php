@@ -798,14 +798,14 @@ class Social_Media_Popup {
 		$new_prefix  = 'scp-';
 
 		if ( '0.7.1' > get_option( $old_version ) ) {
-			$scp_options = array();
+			$smp_options = array();
 
 			$all_options = wp_load_alloptions();
 			foreach ( $all_options as $name => $value ) {
-				if ( preg_match( '/^' . $old_prefix . '/', $name ) ) $scp_options[ $name ] = $value;
+				if ( preg_match( '/^' . $old_prefix . '/', $name ) ) $smp_options[ $name ] = $value;
 			}
 
-			foreach ( $scp_options as $option_name => $value ) {
+			foreach ( $smp_options as $option_name => $value ) {
 				$new_option_name = preg_replace( '/^' . $old_prefix . '/', '', $option_name );
 
 				delete_option( $option_name );
@@ -3586,7 +3586,7 @@ class Social_Media_Popup {
 		if ( absint( get_option( self::get_prefix() . 'setting_show_admin_bar_menu' ) ) !== 1 ) return;
 
 		$args = array(
-			'id'    => 'scp-admin-bar',
+			'id'    => 'smp-admin-bar',
 			'title' => 'Social Media Popup',
 		);
 
@@ -3597,17 +3597,17 @@ class Social_Media_Popup {
 
 		$wp_admin_bar->add_node( $args );
 
-		$menu_scp_settings = array(
-			'parent' => 'scp-admin-bar',
-			'id'     => 'scp-settings',
+		$menu_smp_settings = array(
+			'parent' => 'smp-admin-bar',
+			'id'     => 'smp-settings',
 			'title'  => esc_html( 'Settings', 'social-media-popup' ),
 			'href'   => admin_url( 'admin.php?page=' . SMP_PREFIX ),
 		);
-		$wp_admin_bar->add_node( $menu_scp_settings );
+		$wp_admin_bar->add_node( $menu_smp_settings );
 
 		$menu_clear_cookies = array(
-			'parent' => 'scp-admin-bar',
-			'id'     => 'scp-clear-cookies',
+			'parent' => 'smp-admin-bar',
+			'id'     => 'smp-clear-cookies',
 			'title'  => esc_html( 'Clear Cookies', 'social-media-popup' ),
 			'href'   => '#',
 			'meta'   => array(
