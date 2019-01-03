@@ -73,7 +73,7 @@ class SMP_Facebook_Provider extends SMP_Provider {
 
 		$content .= self::prepare_facebook_widget();
 
-		$content .= '<script>function scp_prependFacebook($) {';
+		$content .= '<script>function smp_prependFacebook($) {';
 
 		$content .= self::prepare_facebook_content();
 		$content .= self::prepare_facebook_events();

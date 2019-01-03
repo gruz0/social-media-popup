@@ -75,7 +75,7 @@ class SMP_Pinterest_Provider extends SMP_Provider {
 				pinterest_initialized = 1;
 			}
 
-			function scp_prependPinterest($) {
+			function smp_prependPinterest($) {
 				$tabs          = $("' . self::$tabs_id . '");
 				$pinterest_tab = $("' . self::$tabs_id . ' .pinterest-tab");
 

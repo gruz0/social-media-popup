@@ -119,7 +119,7 @@ class SMP_VK_Provider extends SMP_Provider {
 					});
 				}
 
-				function scp_prependVK($) {
+				function smp_prependVK($) {
 					$vk_tab = $("' . self::$tabs_id . ' .vk-tab");
 
 					var scp_vk_interval = setInterval(function() {

@@ -443,19 +443,19 @@ class SMP_Popup {
 					}
 
 					if ( $use_facebook ) {
-						$content .= 'scp_prependFacebook($);';
+						$content .= 'smp_prependFacebook($);';
 					}
 
 					if ( $use_vkontakte ) {
-						$content .= 'scp_prependVK($);';
+						$content .= 'smp_prependVK($);';
 					}
 
 					if ( $use_googleplus ) {
-						$content .= 'scp_prependGooglePlus($);';
+						$content .= 'smp_prependGooglePlus($);';
 					}
 
 					if ( $use_pinterest ) {
-						$content .= 'scp_prependPinterest($);';
+						$content .= 'smp_prependPinterest($);';
 					}
 
 					$any_event_active = false;

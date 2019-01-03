@@ -88,7 +88,7 @@ class SMP_GooglePlus_Provider extends SMP_Provider {
 					google_plus_initialized = 1;
 				}
 
-				function scp_prependGooglePlus($) {
+				function smp_prependGooglePlus($) {
 					$google_plus_tab = $("' . self::$tabs_id . ' .google-plus-tab");
 
 					var scp_googleplus_interval = setInterval(function() {
