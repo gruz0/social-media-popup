@@ -18,10 +18,10 @@ $tab            = smp_validate_and_sanitize_tab( $slug, $available_tabs );
 <div class="wrap social-community-popup-settings">
 	<h2><?php esc_html_e( 'Facebook', 'social-media-popup' ); ?></h2>
 
-	<?php scp_facebook_settings_tabs( $tab ); ?>
+	<?php smp_facebook_settings_tabs( $tab ); ?>
 
 	<form method="post" action="options.php">
-		<?php wp_nonce_field( 'scp-update-facebook-options' ); ?>
+		<?php wp_nonce_field( 'smp-update-facebook-options' ); ?>
 		<?php settings_fields( SMP_PREFIX . '-group-facebook-' . $tab ); ?>
 		<?php do_settings_fields( SMP_PREFIX . '-group-facebook-' . $tab, SMP_PREFIX . '-group-facebook-' . $tab ); ?>
 		<?php do_settings_sections( SMP_PREFIX . '-group-facebook-' . $tab ); ?>
@@ -36,7 +36,7 @@ $tab            = smp_validate_and_sanitize_tab( $slug, $available_tabs );
  *
  * @param string $current_tab Current tab slug
  */
-function scp_facebook_settings_tabs( $current_tab ) {
+function smp_facebook_settings_tabs( $current_tab ) {
 	$tabs             = array();
 	$tabs['general']  = __( 'General', 'social-media-popup' );
 	$tabs['tracking'] = __( 'Tracking', 'social-media-popup' );

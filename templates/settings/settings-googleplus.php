@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) or exit;
 	<h2><?php esc_html_e( 'Google+', 'social-media-popup' ); ?></h2>
 
 	<form method="post" action="options.php">
-		<?php wp_nonce_field( 'scp-update-googleplus-options' ); ?>
+		<?php wp_nonce_field( 'smp-update-googleplus-options' ); ?>
 		<?php settings_fields( SMP_PREFIX . '-group-googleplus' ); ?>
 		<?php do_settings_fields( SMP_PREFIX . '-group-googleplus', SMP_PREFIX . '-group-googleplus' ); ?>
 		<?php do_settings_sections( SMP_PREFIX . '_googleplus_options' ); ?>

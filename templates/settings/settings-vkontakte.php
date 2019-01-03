@@ -18,10 +18,10 @@ $tab            = smp_validate_and_sanitize_tab( $slug, $available_tabs );
 <div class="wrap social-community-popup-settings">
 	<h2><?php esc_html_e( 'VKontakte', 'social-media-popup' ); ?></h2>
 
-	<?php scp_vkontakte_settings_tabs( $tab ); ?>
+	<?php smp_vkontakte_settings_tabs( $tab ); ?>
 
 	<form method="post" action="options.php">
-		<?php wp_nonce_field( 'scp-update-vkontakte-options' ); ?>
+		<?php wp_nonce_field( 'smp-update-vkontakte-options' ); ?>
 		<?php settings_fields( SMP_PREFIX . '-group-vkontakte-' . $tab ); ?>
 		<?php do_settings_fields( SMP_PREFIX . '-group-vkontakte-' . $tab, SMP_PREFIX . '-group-vkontakte-' . $tab ); ?>
 		<?php do_settings_sections( SMP_PREFIX . '-group-vkontakte-' . $tab ); ?>
@@ -36,7 +36,7 @@ $tab            = smp_validate_and_sanitize_tab( $slug, $available_tabs );
  *
  * @param string $current_tab Current tab
  */
-function scp_vkontakte_settings_tabs( $current_tab ) {
+function smp_vkontakte_settings_tabs( $current_tab ) {
 	$tabs             = array();
 	$tabs['general']  = __( 'General', 'social-media-popup' );
 	$tabs['tracking'] = __( 'Tracking', 'social-media-popup' );
