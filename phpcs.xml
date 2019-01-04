@@ -37,22 +37,4 @@
 		<exclude name="Squiz.Strings.ConcatenationSpacing.PaddingFound" />
 		<exclude name="Generic.Commenting.Fixme.TaskFound" />
 	</rule>
-
-	<rule ref="WordPress-VIP">
-		<exclude name="WordPress.VIP.FileSystemWritesDisallow.FileWriteDetected" />
-		<exclude name="WordPress.XSS.EscapeOutput.OutputNotEscaped" />
-		<exclude name="WordPress.VIP.RestrictedFunctions.error_log" />
-		<exclude name="WordPress.VIP.RestrictedFunctions.prevent_path_disclosure" />
-		<exclude name="WordPress.VIP.RestrictedFunctions.runtime_configuration" />
-		<exclude name="WordPress.VIP.RestrictedFunctions.file_get_contents" />
-		<exclude name="WordPress.VIP.DirectDatabaseQuery.DirectQuery" />
-		<exclude name="WordPress.VIP.DirectDatabaseQuery.NoCaching" />
-		<exclude name="WordPress.VIP.RestrictedVariables.cache_constraints" />
-		<exclude name="WordPress.VIP.SuperGlobalInputUsage.AccessDetected" />
-		<exclude name="WordPress.VIP.RestrictedFunctions.wp_is_mobile" />
-		<exclude name="WordPress.VIP.RestrictedFunctions.cookies" />
-		<exclude name="WordPress.VIP.RestrictedFunctions.cookies_setcookie" />
-		<exclude name="WordPress.VIP.RestrictedVariables.cache_constraints___COOKIE" />
-		<exclude name="WordPress.VIP.RestrictedFunctions.wp_is_mobile_wp_is_mobile" />
-	</rule>
 </ruleset>
