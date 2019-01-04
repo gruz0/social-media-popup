@@ -25,8 +25,12 @@ before_script:
   # linters
   - git clone https://github.com/squizlabs/PHP_CodeSniffer.git phpcs
   - git clone -b master https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git wpcs
+  # npm
+  - npm i -g npm
+  - npm install
 
 script:
   - phpunit
   - cd wp-tests/spec && bundle exec rspec test.rb && cd ../../
   - php phpcs/bin/phpcs --colors --standard=phpcs.xml -s .
+  - npm test
