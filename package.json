@@ -1,0 +1,37 @@
+{
+  "name": "social-media-popup",
+  "version": "1.0.0",
+  "description": "The plugin creates a pop-up window with the most popular social media widgets",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "gulp lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gruz0/social-media-popup.git"
+  },
+  "keywords": [
+    "social",
+    "media",
+    "popup"
+  ],
+  "author": "Alexander Kadyrov",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/gruz0/social-media-popup/issues"
+  },
+  "homepage": "https://github.com/gruz0/social-media-popup#readme",
+  "devDependencies": {
+    "gulp": "^4.0.0",
+    "gulp-clean-css": "^4.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-jshint": "^2.1.0",
+    "gulp-minify": "^3.1.0",
+    "gulp-rename": "^1.4.0",
+    "jshint": "^2.9.7",
+    "jshint-stylish": "^2.2.1"
+  }
+}

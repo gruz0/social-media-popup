@@ -27,10 +27,10 @@ if ( ! empty( $subtab ) ) {
 <div class="wrap social-community-popup-settings">
 	<h2>Social Media Popup</h2>
 
-	<?php scp_settings_tabs( $tab, $subtab ); ?>
+	<?php smp_settings_tabs( $tab, $subtab ); ?>
 
 	<form method="post" action="options.php">
-		<?php wp_nonce_field( 'scp-update-options' ); ?>
+		<?php wp_nonce_field( 'smp-update-options' ); ?>
 		<?php settings_fields( SMP_PREFIX . '-group-' . $render_tab ); ?>
 		<?php do_settings_fields( SMP_PREFIX . '-group-' . $render_tab, SMP_PREFIX . '-group-' . $render_tab ); ?>
 		<?php do_settings_sections( SMP_PREFIX . '-group-' . $render_tab ); ?>
@@ -46,7 +46,7 @@ if ( ! empty( $subtab ) ) {
  * @param string $current_tab Primary tab slug
  * @param string $subtab      Secondary tab slug
  */
-function scp_settings_tabs( $current_tab, $subtab ) {
+function smp_settings_tabs( $current_tab, $subtab ) {
 	$tabs                = array();
 	$tabs['general']     = __( 'General', 'social-media-popup' );
 	$tabs['view']        = __( 'View (Desktop)', 'social-media-popup' );

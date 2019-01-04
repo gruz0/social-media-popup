@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) or exit;
 /**
  * Plugin Name: Social Media Popup
  * Plugin URI: https://github.com/gruz0/social-media-popup
- * Description: The plugin creates a popup window with most popular social media widgets
+ * Description: The plugin creates a pop-up window with the most popular social media widgets
  * Author: Alexander Kadyrov
  * Author URI: http://gruz0.ru/
  * Text Domain: social-media-popup
@@ -59,16 +59,6 @@ if ( ! array_key_exists( 'social-media-popup', $GLOBALS ) ) {
 
 			$plugin = plugin_basename( __FILE__ );
 			add_filter( 'plugin_action_links_' . $plugin, 'social_media_popup_plugin_settings_link' );
-		}
-
-		/**
-		 * Convert integer value to stringified boolean
-		 *
-		 * @param string $variable Value
-		 * @return string
-		 */
-		function scp_to_bool( $variable ) {
-			return ( '1' === $variable ? 'true' : 'false' );
 		}
 	}
 }

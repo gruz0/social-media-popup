@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) or exit;
 	<h2><?php esc_html_e( 'Odnoklassniki', 'social-media-popup' ); ?></h2>
 
 	<form method="post" action="options.php">
-		<?php wp_nonce_field( 'scp-update-odnoklassniki-options' ); ?>
+		<?php wp_nonce_field( 'smp-update-odnoklassniki-options' ); ?>
 		<?php settings_fields( SMP_PREFIX . '-group-odnoklassniki' ); ?>
 		<?php do_settings_fields( SMP_PREFIX . '-group-odnoklassniki', SMP_PREFIX . '-group-odnoklassniki' ); ?>
 		<?php do_settings_sections( SMP_PREFIX . '_odnoklassniki_options' ); ?>

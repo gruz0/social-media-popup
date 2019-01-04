@@ -4,13 +4,13 @@ $j(document).ready(function() {
 	var SCP_PREFIX = 'scp-';
 
 	// Клик по табу и открытие соответствующей вкладки
-	$j('#scp_welcome_screen ul.tabs').on('click', 'li:not(.current)', function() {
+	$j('#smp_welcome_screen ul.tabs').on('click', 'li:not(.current)', function() {
 		$j(this).addClass('current').siblings().removeClass('current')
-		.parents('#scp_welcome_screen').find('div.box').eq($j(this).index()).fadeIn(150).siblings('div.box').hide();
+		.parents('#smp_welcome_screen').find('div.box').eq($j(this).index()).fadeIn(150).siblings('div.box').hide();
 	});
 
 	// Add Color Picker
-	colorFields = new Array();
+	colorFields = [];
 	colorFields.push('#scp-setting_overlay_color');
 	colorFields.push('#scp-setting_vkontakte_color_background');
 	colorFields.push('#scp-setting_vkontakte_color_text');
@@ -19,29 +19,29 @@ $j(document).ready(function() {
 
 	$j(colorFields.join(',')).wpColorPicker();
 
-	$j('#scp_upload_background_image').click(function() {
+	$j('#smp_upload_background_image').click(function() {
 		tb_show('Upload a background image', 'media-upload.php?referer=social_media_popup&type=image&TB_iframe=true&post_id=0', false);
 
-		window.scp_restore_send_to_editor = window.send_to_editor;
+		window.smp_restore_send_to_editor = window.send_to_editor;
 		window.send_to_editor = function(html) {
-			$j('.scp-background-image').html(html);
-			var image_src = $j('.scp-background-image img').attr('src');
-			$j('#scp_background_image').val(image_src);
+			$j('.smp-background-image').html(html);
+			var image_src = $j('.smp-background-image img').attr('src');
+			$j('#smp_background_image').val(image_src);
 			tb_remove();
 
-			window.send_to_editor = window.scp_restore_send_to_editor;
-		}
+			window.send_to_editor = window.smp_restore_send_to_editor;
+		};
 
 		return false;
 	});
 
 	// Сортировка табов соц. сетей
-	if ($j('#scp-sortable').length) {
-		$j('#scp-sortable').sortable({
+	if ($j('#smp-sortable').length) {
+		$j('#smp-sortable').sortable({
 			revert: true,
 			update: function(event, ui) {
 				var networks = [];
-				$j('#scp-sortable li').each(function() {
+				$j('#smp-sortable li').each(function() {
 					networks.push($j(this).text());
 				});
 				$j('#scp-setting_tabs_order').val(networks.join(','));

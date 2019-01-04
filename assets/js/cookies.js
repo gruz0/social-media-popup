@@ -1,4 +1,4 @@
-function scp_setCookie(name, value, options) {
+function smp_setCookie(name, value, options) {
 	options = options || {};
 	var expires = options.expires;
 
@@ -8,7 +8,7 @@ function scp_setCookie(name, value, options) {
 		expires = options.expires = d;
 	}
 
-	if (expires && expires.toUTCString) { 
+	if (expires && expires.toUTCString) {
 		options.expires = expires.toUTCString();
 	}
 
@@ -17,8 +17,8 @@ function scp_setCookie(name, value, options) {
 
 	for(var propName in options) {
 		updatedCookie += "; " + propName;
-		var propValue = options[propName];    
-		if (propValue !== true) { 
+		var propValue = options[propName];
+		if (propValue !== true) {
 			updatedCookie += "=" + propValue;
 		}
 	}
@@ -26,7 +26,7 @@ function scp_setCookie(name, value, options) {
 	document.cookie = updatedCookie;
 }
 
-function scp_getCookie(name) {
+function smp_getCookie(name) {
 	var nameEQ = name + "=";
 	var ca = document.cookie.split(';');
 
@@ -39,15 +39,15 @@ function scp_getCookie(name) {
 	return null;
 }
 
-function scp_deleteCookie(name) {
+function smp_deleteCookie(name) {
 	var date = new Date().getTime();
-	scp_setCookie(name, '', { expires: date - 3600, path: '/' })
+	smp_setCookie(name, '', { expires: date - 3600, path: '/' });
 }
 
-function scp_clearAllPluginCookies() {
-	if (window.confirm(window.scp_cookies.clearCookiesMessage)) {
-		scp_deleteCookie('social-community-popup');
-		scp_deleteCookie('scp-page-views');
+function smp_clearAllPluginCookies() {
+	if (window.confirm(window.smp_cookies.clearCookiesMessage)) {
+		smp_deleteCookie('social-community-popup');
+		smp_deleteCookie('smp-page-views');
 		document.location.reload(true);
 	}
 }

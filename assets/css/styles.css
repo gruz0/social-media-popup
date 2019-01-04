@@ -96,7 +96,7 @@
 			}
 			#social-community-popup .section .tabs li:hover span,
 			#social-community-popup .section .tabs li.current span {
-				border-bottom:1px dashed #fff; 
+				border-bottom:1px dashed #fff;
 			}
 			#social-community-popup .section .tabs .current {color:#c00 !important;font-weight:bold;}
 
@@ -137,32 +137,32 @@
 			text-decoration:none;
 		}
 
-		#social-community-popup .dont-show-widget.scp-button a {
+		#social-community-popup .dont-show-widget.smp-button a {
 			padding:5px 10px;
 			border-radius:3px;
 			color:#ddd !important;
 		}
 
-		#social-community-popup .dont-show-widget.scp-green-button a,
-		#social-community-popup .dont-show-widget.scp-green-button a:link,
-		#social-community-popup .dont-show-widget.scp-green-button a:active,
-		#social-community-popup .dont-show-widget.scp-green.button a:visited {
+		#social-community-popup .dont-show-widget.smp-green-button a,
+		#social-community-popup .dont-show-widget.smp-green-button a:link,
+		#social-community-popup .dont-show-widget.smp-green-button a:active,
+		#social-community-popup .dont-show-widget.smp-green.button a:visited {
 			background-color:#8c8;
 			color:#111 !important;
 		}
 
-		#social-community-popup .dont-show-widget.scp-red-button a,
-		#social-community-popup .dont-show-widget.scp-red-button a:link,
-		#social-community-popup .dont-show-widget.scp-red-button a:active,
-		#social-community-popup .dont-show-widget.scp-red.button a:visited {
+		#social-community-popup .dont-show-widget.smp-red-button a,
+		#social-community-popup .dont-show-widget.smp-red-button a:link,
+		#social-community-popup .dont-show-widget.smp-red-button a:active,
+		#social-community-popup .dont-show-widget.smp-red.button a:visited {
 			background-color:#f99;
 			color:#111 !important;
 		}
 
-		#social-community-popup .dont-show-widget.scp-blue-button a,
-		#social-community-popup .dont-show-widget.scp-blue-button a:link,
-		#social-community-popup .dont-show-widget.scp-blue-button a:active,
-		#social-community-popup .dont-show-widget.scp-blue.button a:visited {
+		#social-community-popup .dont-show-widget.smp-blue-button a,
+		#social-community-popup .dont-show-widget.smp-blue-button a:link,
+		#social-community-popup .dont-show-widget.smp-blue-button a:active,
+		#social-community-popup .dont-show-widget.smp-blue.button a:visited {
 			background-color:#77e;
 			color:#fff !important;
 		}
@@ -177,7 +177,7 @@
 .smp-debug-mode {background: rgba(159, 0, 0, 1) !important;}
 
 /* Мобильная версия плагина */
-#scp_mobile {
+#smp_mobile {
 	min-height:35px;
 	width: 100%;
 	display:none;
@@ -191,7 +191,7 @@
 	z-index:9999;
 }
 
-	.scp-close {
+	.smp-close {
 		padding:3px 7px 0 7px;
 		text-align:right;
 		font:bold normal 10pt/10pt Arial;
@@ -200,7 +200,7 @@
 		border-top:3px solid #7DB4B5;
 	}
 
-	.scp-mobile-title {
+	.smp-mobile-title {
 		padding:0 10px 10px 10px;
 		text-align:center;
 		font:bold normal 12pt/14pt Arial;
@@ -209,14 +209,14 @@
 	}
 
 /* Иконки соц. сетей */
-.scp-icons {
+.smp-icons {
 	padding:0;
 	margin:0;
 	display:block;
 	list-style:none;
 }
 
-	.scp-icons li {
+	.smp-icons li {
 		padding:5px 0;
 		margin:0;
 		outline:1px solid #fff;
@@ -225,16 +225,16 @@
 		text-align:center;
 		color:#fff;
 	}
-	.scp-icons li:last-child {clear:right;}
+	.smp-icons li:last-child {clear:right;}
 
-	.scp-icons li.facebook-tab {background-color:#3b5998;}
-	.scp-icons li.vk-tab {background-color:#45668e;}
-	.scp-icons li.google-plus-tab {background-color:#dd4b39;}
-	.scp-icons li.twitter-tab {background-color:#00aced;}
-	.scp-icons li.pinterest-tab {background-color:#cb2027;}
-	.scp-icons li.odnoklassniki-tab {background-color:#ee8208;}
+	.smp-icons li.facebook-tab {background-color:#3b5998;}
+	.smp-icons li.vk-tab {background-color:#45668e;}
+	.smp-icons li.google-plus-tab {background-color:#dd4b39;}
+	.smp-icons li.twitter-tab {background-color:#00aced;}
+	.smp-icons li.pinterest-tab {background-color:#cb2027;}
+	.smp-icons li.odnoklassniki-tab {background-color:#ee8208;}
 
-	.scp-icons a, .scp-icons a:link, .scp-icons a:active, .scp-icons a:visited {color:#fff;text-decoration:none;}
-	.scp-icons a:hover {color:#ffc;text-decoration:none;}
+	.smp-icons a, .smp-icons a:link, .smp-icons a:active, .smp-icons a:visited {color:#fff;text-decoration:none;}
+	.smp-icons a:hover {color:#ffc;text-decoration:none;}
 
-.scp-icons-desktop li {margin-bottom:2px !important;}
+.smp-icons-desktop li {margin-bottom:2px !important;}

@@ -9,24 +9,24 @@
  */
 
 /**
- * SCP_Popup
+ * SMP_Popup
  *
  * @since 0.7.6
  */
-class SCP_Popup {
+class SMP_Popup {
 	/**
 	 * Prepare popup HTML
 	 *
-	 * @param string $scp_prefix Plugin prefix
+	 * @param string $prefix Plugin prefix
 	 * @return string
 	 */
-	public static function render( $scp_prefix ) {
+	public static function render( $prefix ) {
 		$options     = array();
 		$all_options = wp_load_alloptions();
 
 		foreach ( $all_options as $name => $value ) {
-			if ( stristr( $name, $scp_prefix ) ) {
-				$name             = str_replace( $scp_prefix, '', $name );
+			if ( stristr( $name, $prefix ) ) {
+				$name             = str_replace( $prefix, '', $name );
 				$options[ $name ] = $value;
 			}
 		}
@@ -57,7 +57,7 @@ class SCP_Popup {
 		);
 		// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 
-		$template = new SCP_Template(
+		$template = new SMP_Template(
 			$template_options,
 			$events_descriptions
 		);
@@ -155,7 +155,7 @@ class SCP_Popup {
 
 			// Пользователь просмотрел больше N страниц сайта
 			if ( who_should_see_the_popup_has_event( $who_should_see_the_popup, 'visitor_opened_at_least_n_number_of_pages' ) ) {
-				$page_views_cookie = 'scp-page-views';
+				$page_views_cookie = 'smp-page-views';
 
 				// Если существует кука просмотренных страниц — обновляем её
 				if ( isset( $_COOKIE[ $page_views_cookie ] ) ) {
@@ -216,11 +216,11 @@ class SCP_Popup {
 
 		$content = '';
 
-		SCP_Provider::set_template( $template );
+		SMP_Provider::set_template( $template );
 
 		$active_providers = array();
-		foreach ( SCP_Provider::available_providers() as $provider_name ) {
-			$provider = SCP_Provider::create( $provider_name, $options );
+		foreach ( SMP_Provider::available_providers() as $provider_name ) {
+			$provider = SMP_Provider::create( $provider_name, $options );
 
 			if ( $provider->is_active() ) {
 				$active_providers[ $provider_name ] = $provider;
@@ -234,13 +234,13 @@ class SCP_Popup {
 			$last_tab_width         = 100 - $tab_width * ( $active_providers_count - 1 );
 
 			if ( $wp_is_mobile ) {
-				$content .= '<div id="scp_mobile">';
+				$content .= '<div id="smp_mobile">';
 
-				$content .= '<div class="scp-close"><a href="#">&times;</a></div>';
+				$content .= '<div class="smp-close"><a href="#">&times;</a></div>';
 
-				$content .= '<div class="scp-mobile-title">' . $options['setting_plugin_title_on_mobile_devices'] . '</div>';
+				$content .= '<div class="smp-mobile-title">' . $options['setting_plugin_title_on_mobile_devices'] . '</div>';
 
-				$content .= '<ul class="scp-icons">';
+				$content .= '<ul class="smp-icons">';
 
 				$icon_size = 'fa-' . esc_attr( $options['setting_icons_size_on_mobile_devices'] );
 
@@ -288,8 +288,8 @@ class SCP_Popup {
 				$popup_css .= $border_radius_css;
 				$popup_css .= $background_image_css;
 
-				$scp_plugin_title  = trim( str_replace( "\r\n", '<br />', $options['setting_plugin_title'] ) );
-				$show_plugin_title = mb_strlen( $scp_plugin_title ) > 0;
+				$smp_plugin_title  = trim( str_replace( "\r\n", '<br />', $options['setting_plugin_title'] ) );
+				$show_plugin_title = mb_strlen( $smp_plugin_title ) > 0;
 
 				$animation_class = $use_animation ? ' class="animated ' . $animation_style . '"' : '';
 				$content        .= '<div id="popup" style="' . esc_attr( $popup_css ) . '"' . $animation_class . '>';
@@ -307,7 +307,7 @@ class SCP_Popup {
 				$content .= '<div class="section" style="width:' . esc_attr( $container_width ) . 'px !important;height:' . esc_attr( $container_height ) . 'px !important;">';
 
 				if ( $show_plugin_title ) {
-					$content .= '<div class="plugin-title">' . $scp_plugin_title . '</div>';
+					$content .= '<div class="plugin-title">' . $smp_plugin_title . '</div>';
 				}
 
 				if ( 1 === $active_providers_count && '1' === $options['setting_hide_tabs_if_one_widget_is_active'] ) {
@@ -317,7 +317,7 @@ class SCP_Popup {
 					$icon_size                   = 'fa-' . $options['setting_icons_size_on_desktop'];
 
 					if ( $use_icons_instead_of_labels ) {
-						$content .= '<ul class="scp-icons scp-icons-desktop">';
+						$content .= '<ul class="smp-icons smp-icons-desktop">';
 					} else {
 						$content .= '<ul class="tabs"' . ( $align_tabs_to_center ? 'style="text-align:center;"' : '' ) . '>';
 					}
@@ -373,9 +373,9 @@ class SCP_Popup {
 			if ( ! $wp_is_mobile ) {
 				if ( '1' === $options['setting_show_button_to_close_widget'] ) {
 					$button_to_close_widget_style = $options['setting_button_to_close_widget_style'];
-					$button_to_close_widget_class = 'link' === $button_to_close_widget_style ? '' : 'scp-' . $button_to_close_widget_style . '-button';
+					$button_to_close_widget_class = 'link' === $button_to_close_widget_style ? '' : 'smp-' . $button_to_close_widget_style . '-button';
 
-					$content .= '<div class="dont-show-widget scp-button ' . esc_attr( $button_to_close_widget_class ) . '">';
+					$content .= '<div class="dont-show-widget smp-button ' . esc_attr( $button_to_close_widget_class ) . '">';
 					$content .= '<a href="#" class="close">' . esc_html( $options['setting_button_to_close_widget_title'] ) . '</a>';
 					$content .= '</div>';
 				}
@@ -384,12 +384,10 @@ class SCP_Popup {
 			$content .= '</div>';
 		}
 
-		// Окно SCP выводим только после создания его в DOM-дереве
-
 		if ( $wp_is_mobile ) {
 			$content .= '<script>
 				jQuery(document).ready(function($) {
-					if (is_scp_cookie_present()) return;';
+					if (is_smp_cookie_present()) return;';
 
 					$any_event_active = false;
 
@@ -438,26 +436,26 @@ class SCP_Popup {
 					// Проверяем событие "Не учитывать куки при клике на CSS-селектор"
 					if ( when_should_the_popup_appear_has_event( $when_should_the_popup_appear, 'after_clicking_on_element' ) ) {
 						if ( empty( $popup_will_appear_after_clicking_on_element ) || ! $do_not_use_cookies_after_click_on_element ) {
-							$content .= 'if (is_scp_cookie_present()) return;';
+							$content .= 'if (is_smp_cookie_present()) return;';
 						}
 					} else {
-						$content .= 'if (is_scp_cookie_present()) return;';
+						$content .= 'if (is_smp_cookie_present()) return;';
 					}
 
 					if ( $use_facebook ) {
-						$content .= 'scp_prependFacebook($);';
+						$content .= 'smp_prependFacebook($);';
 					}
 
 					if ( $use_vkontakte ) {
-						$content .= 'scp_prependVK($);';
+						$content .= 'smp_prependVK($);';
 					}
 
 					if ( $use_googleplus ) {
-						$content .= 'scp_prependGooglePlus($);';
+						$content .= 'smp_prependGooglePlus($);';
 					}
 
 					if ( $use_pinterest ) {
-						$content .= 'scp_prependPinterest($);';
+						$content .= 'smp_prependPinterest($);';
 					}
 
 					$any_event_active = false;

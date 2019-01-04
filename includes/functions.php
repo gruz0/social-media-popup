@@ -49,7 +49,7 @@ function who_should_see_the_popup_has_event( $haystack, $needle ) {
  *
  * @return boolean
  */
-function is_scp_cookie_present() {
+function is_smp_cookie_present() {
 	return ( ! empty( $_COOKIE['social-community-popup'] ) && 'true' === $_COOKIE['social-community-popup'] );
 }
 
@@ -119,4 +119,14 @@ function smp_render_settings_tabs( $tabs, $current_tab, $page_suffix = '' ) {
 	// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo $content;
 	// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+}
+
+/**
+ * Convert integer value to stringified boolean
+ *
+ * @param string $variable Value
+ * @return string
+ */
+function smp_stringify_boolean( $variable ) {
+	return ( '1' === $variable ? 'true' : 'false' );
 }

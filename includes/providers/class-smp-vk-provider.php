@@ -2,17 +2,16 @@
 /**
  * VK.com Template
  *
- * @package    Social_Media_Popup
- * @subpackage SCP_Template
- * @author     Alexander Kadyrov
- * @license    http://www.gnu.org/copyleft/gpl.html GNU General Public License
- * @link       https://github.com/gruz0/social-media-popup
+ * @package Social_Media_Popup
+ * @author  Alexander Kadyrov
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link    https://github.com/gruz0/social-media-popup
  */
 
 /**
- * SCP_VK_Provider
+ * SMP_VK_Provider
  */
-class SCP_VK_Provider extends SCP_Provider {
+class SMP_VK_Provider extends SMP_Provider {
 	/**
 	 * Return widget is active
 	 *
@@ -44,9 +43,9 @@ class SCP_VK_Provider extends SCP_Provider {
 	/**
 	 * Return widget container
 	 *
-	 * @uses SCP_Template()->use_events_tracking()
-	 * @uses SCP_Template()->push_social_media_trigger_to_google_analytics()
-	 * @uses SCP_Template()->push_social_network_and_action_to_google_analytics()
+	 * @uses SMP_Template()->use_events_tracking()
+	 * @uses SMP_Template()->push_social_media_trigger_to_google_analytics()
+	 * @uses SMP_Template()->push_social_network_and_action_to_google_analytics()
 	 *
 	 * @since 0.7.5
 	 *
@@ -70,14 +69,14 @@ class SCP_VK_Provider extends SCP_Provider {
 		}
 
 		$content .= '<script type="text/javascript" src="//vk.com/js/api/openapi.js?105"></script>
-			<div id="scp_vk_groups" style="height:250px !important;"></div>
+			<div id="smp_vk_groups" style="height:250px !important;"></div>
 			<script type="text/javascript">
 				var vk_initialized = 0;
-				var scp_vk_container_height  = parseInt("' . self::get_option_as_escaped_string( 'setting_vkontakte_height' ) . '");
+				var smp_vk_container_height  = parseInt("' . self::get_option_as_escaped_string( 'setting_vkontakte_height' ) . '");
 
 				function initialize_VK_Widgets() {
-					if (jQuery("#scp_vk_groups iframe").length && jQuery("#scp_vk_groups iframe").height() < scp_vk_container_height) {
-						jQuery("#scp_vk_groups iframe").height(scp_vk_container_height);
+					if (jQuery("#smp_vk_groups iframe").length && jQuery("#smp_vk_groups iframe").height() < smp_vk_container_height) {
+						jQuery("#smp_vk_groups iframe").height(smp_vk_container_height);
 					}
 
 					if (vk_initialized) return;
@@ -88,7 +87,7 @@ class SCP_VK_Provider extends SCP_Provider {
 						VK.Observer.subscribe("widgets.groups.joined", function f() {';
 
 							if ( self::get_option_as_boolean( 'setting_vkontakte_close_window_after_join' ) ) {
-								$content .= 'scp_destroyPlugin(scp.showWindowAfterReturningNDays);';
+								$content .= 'smp_destroyPlugin(smp_cookies.showWindowAfterReturningNDays);';
 							}
 
 							if ( self::$template->use_events_tracking() && self::get_option_as_boolean( 'tracking_use_vkontakte' ) ) {
@@ -107,7 +106,7 @@ class SCP_VK_Provider extends SCP_Provider {
 
 						$content .= '});
 
-						VK.Widgets.Group("scp_vk_groups", {
+						VK.Widgets.Group("smp_vk_groups", {
 							mode: '    . self::get_option_as_escaped_string( 'setting_vkontakte_layout' ) . ',
 							width: "'  . self::get_option_as_integer( 'setting_vkontakte_width' ) . '",
 							height: "' . self::get_option_as_integer( 'setting_vkontakte_height' ) . '",
@@ -120,18 +119,18 @@ class SCP_VK_Provider extends SCP_Provider {
 					});
 				}
 
-				function scp_prependVK($) {
+				function smp_prependVK($) {
 					$vk_tab = $("' . self::$tabs_id . ' .vk-tab");
 
-					var scp_vk_interval = setInterval(function() {
-						var container_height_is_too_small = jQuery("#scp_vk_groups iframe").height() < scp_vk_container_height;
+					var smp_vk_interval = setInterval(function() {
+						var container_height_is_too_small = jQuery("#smp_vk_groups iframe").height() < smp_vk_container_height;
 
-						if (jQuery("#scp_vk_groups iframe").length > 0 || container_height_is_too_small) {
-							jQuery("#scp_vk_groups iframe").height(scp_vk_container_height);
+						if (jQuery("#smp_vk_groups iframe").length > 0 || container_height_is_too_small) {
+							jQuery("#smp_vk_groups iframe").height(smp_vk_container_height);
 
-							container_height_is_too_small = jQuery("#scp_vk_groups iframe").height() < scp_vk_container_height;
+							container_height_is_too_small = jQuery("#smp_vk_groups iframe").height() < smp_vk_container_height;
 							if (!container_height_is_too_small) {
-								setTimeout(function() { clearInterval(scp_vk_interval); }, 3000);
+								setTimeout(function() { clearInterval(smp_vk_interval); }, 3000);
 							}
 						}
 					}, 1000);

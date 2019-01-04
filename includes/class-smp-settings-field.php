@@ -2,18 +2,18 @@
 /**
  * Settings Fields Class
  *
- * @package    Social_Media_Popup
- * @author     Alexander Kadyrov
- * @license    http://www.gnu.org/copyleft/gpl.html GNU General Public License
- * @link       https://github.com/gruz0/social-media-popup
+ * @package Social_Media_Popup
+ * @author  Alexander Kadyrov
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link    https://github.com/gruz0/social-media-popup
  */
 
 /**
- * SCP_Settings_Field
+ * SMP_Settings_Field
  *
  * @since 0.7.6
  */
-class SCP_Settings_Field {
+class SMP_Settings_Field {
 	/**
 	 * Callback-шаблон для формирования текстового поля на странице настроек
 	 *
@@ -74,7 +74,7 @@ class SCP_Settings_Field {
 	 *
 	 * @param array $args Options
 	 *
-	 * @uses Social_Media_Popup::get_scp_prefix()
+	 * @uses Social_Media_Popup::get_prefix()
 	 */
 	public static function settings_field_tabs_order( $args ) {
 		$field = $args['field'];
@@ -82,11 +82,11 @@ class SCP_Settings_Field {
 
 		$values = ( $value ) ? explode( ',', $value ) : array();
 
-		$scp_prefix = Social_Media_Popup::get_scp_prefix();
+		$prefix = Social_Media_Popup::get_prefix();
 
-		$html = '<ul id="scp-sortable">';
+		$html = '<ul id="smp-sortable">';
 		foreach ( $values as $key ) {
-			$setting_value = get_option( $scp_prefix . 'setting_use_' . $key );
+			$setting_value = get_option( $prefix . 'setting_use_' . $key );
 			$class         = $setting_value ? '' : ' disabled';
 
 			$html .= '<li class="ui-state-default' . $class . '">' . esc_html( $key ) . '</li>';
@@ -244,7 +244,7 @@ class SCP_Settings_Field {
 			'5x' => '5x',
 		);
 
-		self::render_select_with_options( $items, $value, $field, 'scp_icon_size' );
+		self::render_select_with_options( $items, $value, $field, $field );
 	}
 
 	/**
@@ -293,11 +293,11 @@ class SCP_Settings_Field {
 		$field = $args['field'];
 		$value = esc_attr( get_option( $field ) );
 
-		$html  = '<input type="text" id="scp_background_image" name="' . $field . '" value="' . $value . '" />';
-		$html .= '<input id="scp_upload_background_image" type="button" class="button" value="' . esc_attr( 'Upload Image', 'social-media-popup' ) . '" /><br />';
+		$html  = '<input type="text" id="smp_background_image" name="' . $field . '" value="' . $value . '" />';
+		$html .= '<input id="smp_upload_background_image" type="button" class="button" value="' . esc_attr( 'Upload Image', 'social-media-popup' ) . '" /><br />';
 
 		if ( ! empty( $value ) ) {
-			$html .= '<div class="scp-background-image"><img src="' . $value . '" /></div>';
+			$html .= '<div class="smp-background-image"><img src="' . $value . '" /></div>';
 		}
 
 		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -310,7 +310,7 @@ class SCP_Settings_Field {
 	 *
 	 * @param array $args Options
 	 *
-	 * @uses SCP_Settings_Field::render_checkboxes_with_hidden_field()
+	 * @uses SMP_Settings_Field::render_checkboxes_with_hidden_field()
 	 */
 	public static function settings_field_when_should_the_popup_appear( $args ) {
 		$options = array(
@@ -328,7 +328,7 @@ class SCP_Settings_Field {
 	 *
 	 * @param array $args Options
 	 *
-	 * @uses SCP_Settings_Field::render_checkboxes_with_hidden_field()
+	 * @uses SMP_Settings_Field::render_checkboxes_with_hidden_field()
 	 */
 	public static function settings_field_who_should_see_the_popup( $args ) {
 		$options = array(
@@ -379,7 +379,7 @@ class SCP_Settings_Field {
 	 *
 	 * @param array $args Options
 	 *
-	 * @uses SCP_Settings_Field::render_checkboxes_with_hidden_field()
+	 * @uses SMP_Settings_Field::render_checkboxes_with_hidden_field()
 	 */
 	public static function settings_field_facebook_tabs( $args ) {
 		$options = array(
@@ -558,7 +558,7 @@ class SCP_Settings_Field {
 	 *
 	 * @param array $args Options
 	 *
-	 * @uses SCP_Settings_Field::render_checkboxes_with_hidden_field()
+	 * @uses SMP_Settings_Field::render_checkboxes_with_hidden_field()
 	 */
 	public static function settings_field_twitter_chrome( $args ) {
 		$options = array(
@@ -579,8 +579,8 @@ class SCP_Settings_Field {
 	 * @param array  $options Options
 	 *
 	 * @since 0.7.6
-	 * @used_by SCP_Settings_Field::settings_field_twitter_chrome()
-	 * @used_by SCP_Settings_Field::settings_field_facebook_tabs()
+	 * @used_by SMP_Settings_Field::settings_field_twitter_chrome()
+	 * @used_by SMP_Settings_Field::settings_field_facebook_tabs()
 	 */
 	private static function render_checkboxes_with_hidden_field( $field, $options ) {
 		$value = esc_attr( get_option( $field ) );
@@ -650,10 +650,9 @@ class SCP_Settings_Field {
 	 * @param string $value Current value
 	 * @param string $name  Name attribute
 	 * @param string $id    ID attribute
-	 * @param string $class Class attribute
 	 */
-	private static function render_select_with_options( $items, $value, $name, $id, $class = '' ) {
-		$select_format = '<select name="%s" id="%s" class="%s">%s</select>';
+	private static function render_select_with_options( $items, $value, $name, $id ) {
+		$select_format = '<select name="%s" id="%s">%s</select>';
 		$option_format = '<option value="%s"%s>%s</option>';
 
 		$html = '';
@@ -666,7 +665,6 @@ class SCP_Settings_Field {
 			$select_format,
 			$name,  // Select name
 			$id,    // Select ID
-			$class, // Select class
 			$html
 		);
 		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped

@@ -9,9 +9,9 @@
  */
 
 /**
- * SCP_Template class
+ * SMP_Template class
  */
-class SCP_Template {
+class SMP_Template {
 	/**
 	 * Template options
 	 *
@@ -80,7 +80,7 @@ class SCP_Template {
 	}
 
 	/**
-	 * Returns JS code to show SCP window by jQuery
+	 * Returns JS code to show SMP window by jQuery
 	 *
 	 * @since 0.7.3
 	 * @since 0.7.5 Add using event tracking
@@ -100,7 +100,7 @@ class SCP_Template {
 		}
 
 		if ( wp_is_mobile() ) {
-			$content .= 'jQuery("#scp_mobile").show();';
+			$content .= 'jQuery("#smp_mobile").show();';
 		} else {
 			$content .= 'jQuery("#social-community-popup").show();';
 		}
@@ -135,7 +135,7 @@ class SCP_Template {
 	 * @since 0.7.3
 	 *
 	 * @param boolean $close_by_clicking_anywhere If it is equals to true then window will close by click outside container
-	 * @param string  $after_n_days Timeout to show SCP window again
+	 * @param string  $after_n_days Timeout to show SMP window again
 	 * @return string
 	 */
 	function render_close_widget( $close_by_clicking_anywhere, $after_n_days ) {
@@ -147,7 +147,7 @@ class SCP_Template {
 
 		$after_n_days = absint( esc_attr( $after_n_days ) );
 		return 'jQuery("' . $selector_to_close_widget . '").on("click", function() {
-			scp_destroyPlugin(' . $after_n_days . ');
+			smp_destroyPlugin(' . $after_n_days . ');
 			return false;
 		});';
 	}
@@ -157,15 +157,15 @@ class SCP_Template {
 	 *
 	 * @since 0.7.4
 	 *
-	 * @param string $after_n_days Timeout to show SCP window again
+	 * @param string $after_n_days Timeout to show SMP window again
 	 * @return string
 	 */
 	function render_close_widget_on_mobile( $after_n_days ) {
-		$selector_to_close_widget = '#scp_mobile .scp-close a';
+		$selector_to_close_widget = '#smp_mobile .smp-close a';
 		$after_n_days             = absint( esc_attr( $after_n_days ) );
 
 		return 'jQuery("' . $selector_to_close_widget . '").on("click", function() {
-			scp_destroyPlugin(' . $after_n_days . ', "#scp_mobile");
+			smp_destroyPlugin(' . $after_n_days . ', "#smp_mobile");
 			return false;
 		});';
 	}
@@ -175,8 +175,8 @@ class SCP_Template {
 	 *
 	 * @since 0.7.3
 	 *
-	 * @param boolean $close_when_esc_pressed If it is equals to true then SCP window will close by ESC pressed
-	 * @param string  $after_n_days Timeout to show SCP window again
+	 * @param boolean $close_when_esc_pressed If it is equals to true then SMP window will close by ESC pressed
+	 * @param string  $after_n_days Timeout to show SMP window again
 	 * @return string
 	 */
 	function render_close_widget_when_esc_pressed( $close_when_esc_pressed, $after_n_days ) {
@@ -187,7 +187,7 @@ class SCP_Template {
 
 			$content .= 'jQuery(document).on("keydown", function(e) {
 				if ( e.keyCode == 27 ) {
-					scp_destroyPlugin(' . $after_n_days . ');
+					smp_destroyPlugin(' . $after_n_days . ');
 				}
 			});';
 		}
@@ -229,7 +229,7 @@ class SCP_Template {
 			$calculated_delay = ( $popup_will_appear_after_n_seconds > 0 ? $popup_will_appear_after_n_seconds * 1000 : 1000 );
 
 			$content .= 'setTimeout(function() {
-				if (is_scp_cookie_present()) return false;';
+				if (is_smp_cookie_present()) return false;';
 
 				if ( $this->_options['use_events_tracking'] ) {
 					$content .= $this->push_google_analytics_event_on_show_window(
@@ -291,7 +291,7 @@ class SCP_Template {
 				$content .= 'jQuery("' . $popup_will_appear_after_clicking_on_element . '").on("click", function() {';
 
 					if ( ! $do_not_use_cookies_after_click_on_element ) {
-						$content .= 'if (is_scp_cookie_present()) return false;';
+						$content .= 'if (is_smp_cookie_present()) return false;';
 					}
 
 					if ( $this->_options['use_events_tracking'] ) {
@@ -357,9 +357,9 @@ class SCP_Template {
 
 			$content .= 'var showWindowAgain = true;
 			jQuery(window).scroll(function() {
-				if (is_scp_cookie_present()) return false;
+				if (is_smp_cookie_present()) return false;
 
-				if (showWindowAgain && scp_getScrollPercentage() >= ' . $popup_will_appear_after_scrolling_down_n_percent . ') {';
+				if (showWindowAgain && smp_getScrollPercentage() >= ' . $popup_will_appear_after_scrolling_down_n_percent . ') {';
 
 					if ( $this->_options['use_events_tracking'] ) {
 						$content .= $this->push_google_analytics_event_on_show_window(
@@ -413,7 +413,7 @@ class SCP_Template {
 			$any_event_active = true;
 
 			$content .= 'jQuery(document).on("mouseleave", function(e) {
-				if (is_scp_cookie_present()) return;
+				if (is_smp_cookie_present()) return;
 
 				var scroll = window.pageYOffset || document.documentElement.scrollTop;
 				if((e.pageY - scroll) < 7) {';
@@ -513,9 +513,9 @@ class SCP_Template {
 	 *
 	 * @since 0.7.5
 	 *
-	 * @used_by SCP_Facebook_Provider::container()
-	 * @used_by SCP_VK_Provider::container()
-	 * @used_by SCP_Twitter_Provider::container()
+	 * @used_by SMP_Facebook_Provider::container()
+	 * @used_by SMP_VK_Provider::container()
+	 * @used_by SMP_Twitter_Provider::container()
 	 *
 	 * @param string $action Action to send. Example: subscribe, unsubscribe, etc.
 	 * @return string
@@ -543,9 +543,9 @@ class SCP_Template {
 	 *
 	 * @since 0.7.5
 	 *
-	 * @used_by SCP_Facebook_Provider::container()
-	 * @used_by SCP_VK_Provider::container()
-	 * @used_by SCP_Twitter_Provider::container()
+	 * @used_by SMP_Facebook_Provider::container()
+	 * @used_by SMP_VK_Provider::container()
+	 * @used_by SMP_Twitter_Provider::container()
 	 *
 	 * @param string $network Social network name (Facebook, VK, Twitter, etc.)
 	 * @param string $event_type Type description (like, unlike, etc.)

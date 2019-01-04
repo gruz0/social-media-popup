@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) or exit;
 	<h2><?php esc_html_e( 'Pinterest', 'social-media-popup' ); ?></h2>
 
 	<form method="post" action="options.php">
-		<?php wp_nonce_field( 'scp-update-pinterest-options' ); ?>
+		<?php wp_nonce_field( 'smp-update-pinterest-options' ); ?>
 		<?php settings_fields( SMP_PREFIX . '-group-pinterest' ); ?>
 		<?php do_settings_fields( SMP_PREFIX . '-group-pinterest', SMP_PREFIX . '-group-pinterest' ); ?>
 		<?php do_settings_sections( SMP_PREFIX . '_pinterest_options' ); ?>

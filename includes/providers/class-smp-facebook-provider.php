@@ -2,17 +2,16 @@
 /**
  * Facebook Template
  *
- * @package    Social_Media_Popup
- * @subpackage SCP_Template
- * @author     Alexander Kadyrov
- * @license    http://www.gnu.org/copyleft/gpl.html GNU General Public License
- * @link       https://github.com/gruz0/social-media-popup
+ * @package Social_Media_Popup
+ * @author  Alexander Kadyrov
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link    https://github.com/gruz0/social-media-popup
  */
 
 /**
- * SCP_Facebook_Provider
+ * SMP_Facebook_Provider
  */
-class SCP_Facebook_Provider extends SCP_Provider {
+class SMP_Facebook_Provider extends SMP_Provider {
 	/**
 	 * Facebook API Version
 	 *
@@ -51,30 +50,28 @@ class SCP_Facebook_Provider extends SCP_Provider {
 	/**
 	 * Render widget container
 	 *
-	 * @uses scp_to_bool()
-	 * @uses SCP_Template()->use_events_tracking()
-	 * @uses SCP_Template()->push_social_media_trigger_to_google_analytics()
-	 * @uses SCP_Template()->push_social_network_and_action_to_google_analytics()
-	 * @uses SCP_Facebook_Provider::prepare_facebook_widget()
-	 * @uses SCP_Facebook_Provider::prepare_facebook_content()
-	 * @uses SCP_Facebook_Provider::prepare_facebook_events()
+	 * @uses smp_stringify_boolean()
+	 * @uses SMP_Template()->use_events_tracking()
+	 * @uses SMP_Template()->push_social_media_trigger_to_google_analytics()
+	 * @uses SMP_Template()->push_social_network_and_action_to_google_analytics()
+	 * @uses SMP_Facebook_Provider::prepare_facebook_widget()
+	 * @uses SMP_Facebook_Provider::prepare_facebook_content()
+	 * @uses SMP_Facebook_Provider::prepare_facebook_events()
 	 *
-	 * @uses_by SCP_Facebook_Provider::container();
+	 * @uses_by SMP_Facebook_Provider::container();
 	 *
 	 * @since 0.7.5
 	 *
 	 * @return string
 	 */
 	public static function container() {
-		$close_window_after_join = self::get_option_as_boolean( 'setting_facebook_close_window_after_join' );
-
 		$content = '<div class="box">';
 
 		$content .= self::widget_description( 'setting_facebook_show_description', 'setting_facebook_description' );
 
 		$content .= self::prepare_facebook_widget();
 
-		$content .= '<script>function scp_prependFacebook($) {';
+		$content .= '<script>function smp_prependFacebook($) {';
 
 		$content .= self::prepare_facebook_content();
 		$content .= self::prepare_facebook_events();
@@ -91,7 +88,7 @@ class SCP_Facebook_Provider extends SCP_Provider {
 	 *
 	 * @since 0.7.5
 	 *
-	 * @used_by SCP_Facebook_Provider::container();
+	 * @used_by SMP_Facebook_Provider::container();
 	 *
 	 * @return string
 	 */
@@ -102,10 +99,10 @@ class SCP_Facebook_Provider extends SCP_Provider {
 			. 'width="'                      . self::get_option_as_integer( 'setting_facebook_width' ) . '" '
 			. 'data-height="'                . self::get_option_as_integer( 'setting_facebook_height' ) . '" '
 			. 'height="'                     . self::get_option_as_integer( 'setting_facebook_height' ) . '" '
-			. 'data-hide-cover="'            . scp_to_bool( self::get_option_as_escaped_string( 'setting_facebook_hide_cover' ) ) . '" '
-			. 'data-show-facepile="'         . scp_to_bool( self::get_option_as_escaped_string( 'setting_facebook_show_facepile' ) ) . '" '
-			. 'data-adapt-container-width="' . scp_to_bool( self::get_option_as_escaped_string( 'setting_facebook_adapt_container_width' ) ) . '" '
-			. 'data-small-header="'          . scp_to_bool( self::get_option_as_escaped_string( 'setting_facebook_use_small_header' ) ) . '" '
+			. 'data-hide-cover="'            . smp_stringify_boolean( self::get_option_as_escaped_string( 'setting_facebook_hide_cover' ) ) . '" '
+			. 'data-show-facepile="'         . smp_stringify_boolean( self::get_option_as_escaped_string( 'setting_facebook_show_facepile' ) ) . '" '
+			. 'data-adapt-container-width="' . smp_stringify_boolean( self::get_option_as_escaped_string( 'setting_facebook_adapt_container_width' ) ) . '" '
+			. 'data-small-header="'          . smp_stringify_boolean( self::get_option_as_escaped_string( 'setting_facebook_use_small_header' ) ) . '" '
 			. 'data-tabs="'                  . self::get_option_as_escaped_string( 'setting_facebook_tabs' ) . '" '
 			. '></div>';
 	}
@@ -115,7 +112,7 @@ class SCP_Facebook_Provider extends SCP_Provider {
 	 *
 	 * @since 0.7.5
 	 *
-	 * @used_by SCP_Facebook_Provider::container();
+	 * @used_by SMP_Facebook_Provider::container();
 	 *
 	 * @return string
 	 */
@@ -148,7 +145,7 @@ class SCP_Facebook_Provider extends SCP_Provider {
 	 *
 	 * @since 0.7.5
 	 *
-	 * @used_by SCP_Facebook_Provider::container();
+	 * @used_by SMP_Facebook_Provider::container();
 	 *
 	 * @return string
 	 */
@@ -156,10 +153,10 @@ class SCP_Facebook_Provider extends SCP_Provider {
 		$facebook_events = '<script>';
 
 		// Формирует колбэк для обработки событий при закрытии окна и подписке на группу
-		$facebook_events .= 'var scp_facebook_page_like_callback = function(url, html_element) {';
+		$facebook_events .= 'var smp_facebook_page_like_callback = function(url, html_element) {';
 
 		if ( absint( self::$options['setting_facebook_close_window_after_join'] ) ) {
-			$facebook_events .= 'scp_destroyPlugin(scp.showWindowAfterReturningNDays);';
+			$facebook_events .= 'smp_destroyPlugin(smp_cookies.showWindowAfterReturningNDays);';
 		}
 
 		// FIXME: Should be refactored with self::use_widget() and move second condition to it
@@ -171,7 +168,7 @@ class SCP_Facebook_Provider extends SCP_Provider {
 		$facebook_events .= '};';
 
 		// Формирует колбэк для обработки событий при отписке от группы
-		$facebook_events .= 'var scp_facebook_page_unlike_callback = function(url, html_element) {';
+		$facebook_events .= 'var smp_facebook_page_unlike_callback = function(url, html_element) {';
 
 		// FIXME: Should be refactored with self::use_widget() and move second condition to it
 		if ( self::$template->use_events_tracking() && self::get_option_as_boolean( 'tracking_use_facebook' ) ) {
@@ -191,14 +188,14 @@ class SCP_Facebook_Provider extends SCP_Provider {
 					version: "v' . self::API_VERSION . '"
 				});
 
-				FB.Event.subscribe("edge.create", scp_facebook_page_like_callback);
-				FB.Event.subscribe("edge.remove", scp_facebook_page_unlike_callback);
+				FB.Event.subscribe("edge.create", smp_facebook_page_like_callback);
+				FB.Event.subscribe("edge.remove", smp_facebook_page_unlike_callback);
 			};
 		} else {
 			smp_facebookInterval = setInterval(function() {
 				if ( typeof FB === "object" ) {
-					FB.Event.subscribe("edge.create", scp_facebook_page_like_callback);
-					FB.Event.subscribe("edge.remove", scp_facebook_page_unlike_callback);
+					FB.Event.subscribe("edge.create", smp_facebook_page_like_callback);
+					FB.Event.subscribe("edge.remove", smp_facebook_page_unlike_callback);
 					clearInterval(smp_facebookInterval);
 				}
 			}, 1000);

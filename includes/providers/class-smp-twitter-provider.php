@@ -2,17 +2,16 @@
 /**
  * Twitter Template
  *
- * @package    Social_Media_Popup
- * @subpackage SCP_Template
- * @author     Alexander Kadyrov
- * @license    http://www.gnu.org/copyleft/gpl.html GNU General Public License
- * @link       https://github.com/gruz0/social-media-popup
+ * @package Social_Media_Popup
+ * @author  Alexander Kadyrov
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link    https://github.com/gruz0/social-media-popup
  */
 
 /**
- * SCP_Twitter_Provider
+ * SMP_Twitter_Provider
  */
-class SCP_Twitter_Provider extends SCP_Provider {
+class SMP_Twitter_Provider extends SMP_Provider {
 	/**
 	 * Return widget is active
 	 *
@@ -95,9 +94,9 @@ class SCP_Twitter_Provider extends SCP_Provider {
 	/**
 	 * Return JavaScript
 	 *
-	 * @uses SCP_Template()->use_events_tracking()
-	 * @uses SCP_Template()->push_social_media_trigger_to_google_analytics()
-	 * @uses SCP_Template()->push_social_network_and_action_to_google_analytics()
+	 * @uses SMP_Template()->use_events_tracking()
+	 * @uses SMP_Template()->push_social_media_trigger_to_google_analytics()
+	 * @uses SMP_Template()->push_social_network_and_action_to_google_analytics()
 	 * @used_by self::container()
 	 *
 	 * @since 0.7.5
@@ -122,13 +121,11 @@ class SCP_Twitter_Provider extends SCP_Provider {
 			return t;
 			}(document, "script", "twitter-wjs"));
 
-			var scp_Twitter_closeWindowAfterJoiningGroup = ' . self::get_option_as_integer( 'setting_twitter_close_window_after_join' ) . ';
-
-			function scp_followIntentToAnalytics(intentEvent) {
+			function smp_followIntentToAnalytics(intentEvent) {
 				if (!intentEvent) return;';
 
 				if ( absint( self::$options['setting_twitter_close_window_after_join'] ) ) {
-					$content .= 'scp_destroyPlugin(scp.showWindowAfterReturningNDays);';
+					$content .= 'smp_destroyPlugin(smp_cookies.showWindowAfterReturningNDays);';
 				}
 
 				if ( self::$template->use_events_tracking() && self::get_option_as_boolean( 'tracking_use_twitter' ) ) {
@@ -139,7 +136,7 @@ class SCP_Twitter_Provider extends SCP_Provider {
 			$content .= '}
 
 			twttr.ready(function(twttr) {
-				twttr.events.bind("follow", scp_followIntentToAnalytics);
+				twttr.events.bind("follow", smp_followIntentToAnalytics);
 			});
 		</script>';
 
@@ -149,7 +146,7 @@ class SCP_Twitter_Provider extends SCP_Provider {
 	/**
 	 * Return Follow Button container
 	 *
-	 * @uses scp_to_bool()
+	 * @uses smp_stringify_boolean()
 	 * @used_by self::container()
 	 *
 	 * @since 0.7.5
@@ -160,8 +157,8 @@ class SCP_Twitter_Provider extends SCP_Provider {
 		return '<div style="text-align:' . self::get_option_as_escaped_string( 'setting_twitter_follow_button_align_by' ) . ';padding-top:10px;">'
 			. '<a class="twitter-follow-button" '
 			. 'href="//twitter.com/'    . self::get_option_as_escaped_string( 'setting_twitter_username' ) . '" '
-			. 'data-show-count="'       . scp_to_bool( self::get_option_as_escaped_string( 'setting_twitter_show_count' ) ) . '" '
-			. 'data-show-screen-name="' . scp_to_bool( self::get_option_as_escaped_string( 'setting_twitter_show_screen_name' ) ) . '" '
+			. 'data-show-count="'       . smp_stringify_boolean( self::get_option_as_escaped_string( 'setting_twitter_show_count' ) ) . '" '
+			. 'data-show-screen-name="' . smp_stringify_boolean( self::get_option_as_escaped_string( 'setting_twitter_show_screen_name' ) ) . '" '
 			. 'data-size="'             . ( self::get_option_as_boolean( 'setting_twitter_follow_button_large_size' ) ? 'large' : '' ) . '" '
 			. 'lang="'                  . self::get_option_as_escaped_string( 'setting_twitter_locale' ) . '" '
 			. '>' . esc_html( 'Follow', 'social-media-popup' ) . ' @' . self::get_option_as_escaped_string( 'setting_twitter_username' ) . '</a></div>';
