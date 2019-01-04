@@ -28,5 +28,8 @@ before_script:
 
 script:
   - phpunit
-  - cd wp-tests/spec && bundle exec rspec test.rb
-  - cd ../../ && php phpcs/bin/phpcs --colors --standard=phpcs.xml -s .
+  - cd wp-tests/spec && bundle exec rspec test.rb && cd ../../
+  - pwd
+  - ls
+  - ls wpcs
+  - php phpcs/bin/phpcs --colors --standard=phpcs.xml -s .
