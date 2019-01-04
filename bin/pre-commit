@@ -16,7 +16,7 @@ fi
 
 echo -e "${green}[Assets][Info]: Checking Assets Style${NC}"
 
-gulp
+npm test
 
 if [ $? -ne 0 ]; then
 echo -e "${red}[Assets][Error]: Fix the issues and commit again${NC}"

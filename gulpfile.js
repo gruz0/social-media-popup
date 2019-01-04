@@ -3,8 +3,22 @@
 let gulp     = require('gulp');
 let rename   = require('gulp-rename');
 let jshint   = require('gulp-jshint');
+let stylish  = require('jshint-stylish');
 let minifyJS = require('gulp-minify');
 let cleanCSS = require('gulp-clean-css');
+
+function lint_js(cb) {
+	gulp
+		.src([
+			'assets/js/*.js',
+			'!assets/js/*.min.js'
+		])
+		.pipe(jshint())
+		.pipe(jshint.reporter(stylish))
+		.pipe(jshint.reporter('fail'));
+
+	cb();
+}
 
 function minify_js(cb) {
 	gulp
@@ -12,8 +26,6 @@ function minify_js(cb) {
 			'assets/js/*.js',
 			'!assets/js/*.min.js'
 		])
-		.pipe(jshint())
-		.pipe(jshint.reporter('default'))
 		.pipe(minifyJS({
 			ext:{
 				min:'.min.js'
@@ -43,3 +55,4 @@ function clean_css(cb) {
 }
 
 gulp.task('default', gulp.series([minify_js, clean_css]));
+gulp.task('lint', gulp.series([lint_js]));
