@@ -1,8 +1,8 @@
-.social-community-popup-settings { }
-	.social-community-popup-settings table {width:70%;}
-	.social-community-popup-settings table tbody th {width:45%;}
-	.social-community-popup-settings table input[type=text] {width:350px;}
-	.social-community-popup-settings .copyright {text-align:right;font-size:small;}
+.social-media-popup-settings { }
+	.social-media-popup-settings table {width:70%;}
+	.social-media-popup-settings table tbody th {width:45%;}
+	.social-media-popup-settings table input[type=text] {width:350px;}
+	.social-media-popup-settings .copyright {text-align:right;font-size:small;}
 
 #smp-sortable {width:50%;margin-top:0;}
 #smp-sortable li {padding:5px 10px;}

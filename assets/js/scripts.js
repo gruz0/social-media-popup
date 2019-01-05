@@ -1,3 +1,6 @@
+var smp_container_id = '#social_media_popup';
+var smp_cookie_name = 'social-media-popup';
+
 var smp_eventFired = false;
 var smp_firedEventDescription = '';
 
@@ -8,24 +11,24 @@ var smp_Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012
 jQuery(document).ready(function($){
 	smp_renderPopup();
 
-	$('#social-community-popup ul.tabs, #social-community-popup ul.smp-icons').on('click', 'li:not(.current)', function() {
+	$(smp_container_id + ' ul.tabs, ' + smp_container_id + ' ul.smp-icons').on('click', 'li:not(.current)', function() {
 		$(this).addClass('current').siblings().removeClass('current')
 			.parents('div.section').find('div.box').eq($(this).index()).fadeIn(150).siblings('div.box').hide();
 	});
 
-	$('#social-community-popup ul.tabs li:first, #social-community-popup ul.smp-icons li:first').addClass('current');
-	$('#social-community-popup .section .box:first').addClass('visible');
+	$(smp_container_id + ' ul.tabs li:first, ' + smp_container_id + ' ul.smp-icons li:first').addClass('current');
+	$(smp_container_id + ' .section .box:first').addClass('visible');
 });
 
 function is_smp_cookie_present() {
-	return (smp_getCookie('social-community-popup') && smp_getCookie('social-community-popup') == 'true');
+	return (smp_getCookie(smp_cookie_name) && smp_getCookie(smp_cookie_name) == 'true');
 }
 
 function smp_destroyPlugin(after_n_days, container_id) {
 	var date = new Date( new Date().getTime() + (1000 * 60 * 60 * 24 * after_n_days) );
-	smp_setCookie("social-community-popup", "true", { "expires": date, "path": "/" } );
+	smp_setCookie(smp_cookie_name, "true", { "expires": date, "path": "/" } );
 	smp_deleteCookie('smp-page-views');
-	jQuery(container_id || '#social-community-popup').hide();
+	jQuery(container_id || smp_container_id).hide();
 }
 
 function smp_renderPopup() {

@@ -11,7 +11,7 @@
 defined( 'ABSPATH' ) or exit;
 ?>
 
-<div class="wrap social-community-popup-settings">
+<div class="wrap social-media-popup-settings">
 	<h2><?php esc_html_e( 'Pinterest', 'social-media-popup' ); ?></h2>
 
 	<form method="post" action="options.php">

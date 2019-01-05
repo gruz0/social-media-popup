@@ -24,7 +24,7 @@ if ( ! empty( $subtab ) ) {
 }
 ?>
 
-<div class="wrap social-community-popup-settings">
+<div class="wrap social-media-popup-settings">
 	<h2>Social Media Popup</h2>
 
 	<?php smp_settings_tabs( $tab, $subtab ); ?>
