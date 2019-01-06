@@ -15,7 +15,7 @@ $slug           = ! empty( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab
 $tab            = smp_validate_and_sanitize_tab( $slug, $available_tabs );
 ?>
 
-<div class="wrap social-community-popup-settings">
+<div class="wrap social-media-popup-settings">
 	<h2><?php esc_html_e( 'Twitter', 'social-media-popup' ); ?></h2>
 
 	<?php smp_twitter_settings_tabs( $tab ); ?>

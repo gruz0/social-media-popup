@@ -102,7 +102,7 @@ class SMP_Template {
 		if ( wp_is_mobile() ) {
 			$content .= 'jQuery("#smp_mobile").show();';
 		} else {
-			$content .= 'jQuery("#social-community-popup").show();';
+			$content .= 'jQuery("#social_media_popup").show();';
 		}
 
 		return $content;
@@ -140,9 +140,9 @@ class SMP_Template {
 	 */
 	function render_close_widget( $close_by_clicking_anywhere, $after_n_days ) {
 		if ( $close_by_clicking_anywhere ) {
-			$selector_to_close_widget = '#social-community-popup .parent_popup, #social-community-popup .close';
+			$selector_to_close_widget = '#social_media_popup .parent_popup, #social_media_popup .close';
 		} else {
-			$selector_to_close_widget = '#social-community-popup .close';
+			$selector_to_close_widget = '#social_media_popup .close';
 		}
 
 		$after_n_days = absint( esc_attr( $after_n_days ) );

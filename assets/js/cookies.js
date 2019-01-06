@@ -1,3 +1,5 @@
+var smp_cookie_name = 'social-media-popup';
+
 function smp_setCookie(name, value, options) {
 	options = options || {};
 	var expires = options.expires;
@@ -46,7 +48,7 @@ function smp_deleteCookie(name) {
 
 function smp_clearAllPluginCookies() {
 	if (window.confirm(window.smp_cookies.clearCookiesMessage)) {
-		smp_deleteCookie('social-community-popup');
+		smp_deleteCookie(smp_cookie_name);
 		smp_deleteCookie('smp-page-views');
 		document.location.reload(true);
 	}

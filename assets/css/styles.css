@@ -1,10 +1,10 @@
-#social-community-popup {
+#social_media_popup {
 	height: 100%;
 	width: 100%;
 	display:none;
 }
 
-	#social-community-popup .parent_popup {
+	#social_media_popup .parent_popup {
 		height: 100% !important;
 		position: fixed;
 		width: 100% !important;
@@ -13,7 +13,7 @@
 		left: 0;
 	}
 
-	#social-community-popup #popup {
+	#social_media_popup #popup {
 		background-color: #fff;
 		z-index:99999;
 		left:0;
@@ -24,7 +24,7 @@
 		margin:auto;
 	}
 
-		#social-community-popup #popup a.close-outside.close {
+		#social_media_popup #popup a.close-outside.close {
 			font:bold normal 20px/20px Arial;
 			position:absolute;
 			display:block;
@@ -40,7 +40,7 @@
 			right:-20px;
 		}
 
-	#social-community-popup .section {
+	#social_media_popup .section {
 		overflow:hidden;
 		display:block;
 		margin:10px auto;
@@ -48,7 +48,7 @@
 	}
 
 		/* Кнопка закрытия окна в заголовке окна */
-		#social-community-popup .top-close .close {
+		#social_media_popup .top-close .close {
 			position:absolute;
 			top:10px;
 			right:0;
@@ -62,7 +62,7 @@
 			color:#333;
 		}
 
-		#social-community-popup .plugin-title {
+		#social_media_popup .plugin-title {
 			display:block;
 			padding-bottom:12px;
 			width:98%;
@@ -71,17 +71,17 @@
 			color:#666;
 		}
 
-			#social-community-popup .plugin-title p {
+			#social_media_popup .plugin-title p {
 				margin:0;
 				padding:0;
 			}
 
-		#social-community-popup .section .tabs {
+		#social_media_popup .section .tabs {
 			list-style:none;
 			margin:0 0 15px 0 !important;
 			padding:0;
 		}
-			#social-community-popup .section .tabs li {
+			#social_media_popup .section .tabs li {
 				display:inline-block;
 				margin:0 8px 0 0;
 				padding:0;
@@ -90,19 +90,20 @@
 				font:normal normal 11pt/13pt Arial;
 				color:#111 !important;
 			}
-			#social-community-popup .section .tabs li span {
+			#social_media_popup .section .tabs li span {
 				border-bottom:1px dashed;
 				font-size:125%;
 			}
-			#social-community-popup .section .tabs li:hover span,
-			#social-community-popup .section .tabs li.current span {
+			#social_media_popup .section .tabs li:hover span,
+			#social_media_popup .section .tabs li.current span {
 				border-bottom:1px dashed #fff;
 			}
-			#social-community-popup .section .tabs .current {color:#c00 !important;font-weight:bold;}
+			#social_media_popup .section .tabs .current {color:#c00 !important;font-weight:bold;}
 
 			/* Кнопка закрытия окна */
-			#social-community-popup .section .tabs li.last-item {float:right;}
-				#social-community-popup .section .tabs li.last-item span {border:0;
+			#social_media_popup .section .tabs li.last-item {float:right;}
+				#social_media_popup .section .tabs li.last-item span {
+					border:0;
 					display:block;
 					width:16px;
 					cursor:pointer;
@@ -113,23 +114,23 @@
 					padding-top:3px;
 				}
 
-		#social-community-popup .box { display: none; clear:left; }
-		#social-community-popup .box.visible { display: block; }
-		#social-community-popup .box p {
+		#social_media_popup .box { display: none; clear:left; }
+		#social_media_popup .box.visible { display: block; }
+		#social_media_popup .box p {
 			font:normal normal 11pt/13pt Arial;
 			margin:0 0 10px 0;
 			padding:0;
 		}
 
-	#social-community-popup .dont-show-widget {
+	#social_media_popup .dont-show-widget {
 		display:none;
 		text-align:center;
 		margin-bottom:3px;
 	}
-		#social-community-popup .dont-show-widget a,
-		#social-community-popup .dont-show-widget a:link,
-		#social-community-popup .dont-show-widget a:active,
-		#social-community-popup .dont-show-widget a:visited {
+		#social_media_popup .dont-show-widget a,
+		#social_media_popup .dont-show-widget a:link,
+		#social_media_popup .dont-show-widget a:active,
+		#social_media_popup .dont-show-widget a:visited {
 			font:normal normal 10pt/10pt Arial;
 			float:none !important;
 			text-shadow:none;
@@ -137,41 +138,41 @@
 			text-decoration:none;
 		}
 
-		#social-community-popup .dont-show-widget.smp-button a {
+		#social_media_popup .dont-show-widget.smp-button a {
 			padding:5px 10px;
 			border-radius:3px;
 			color:#ddd !important;
 		}
 
-		#social-community-popup .dont-show-widget.smp-green-button a,
-		#social-community-popup .dont-show-widget.smp-green-button a:link,
-		#social-community-popup .dont-show-widget.smp-green-button a:active,
-		#social-community-popup .dont-show-widget.smp-green.button a:visited {
+		#social_media_popup .dont-show-widget.smp-green-button a,
+		#social_media_popup .dont-show-widget.smp-green-button a:link,
+		#social_media_popup .dont-show-widget.smp-green-button a:active,
+		#social_media_popup .dont-show-widget.smp-green.button a:visited {
 			background-color:#8c8;
 			color:#111 !important;
 		}
 
-		#social-community-popup .dont-show-widget.smp-red-button a,
-		#social-community-popup .dont-show-widget.smp-red-button a:link,
-		#social-community-popup .dont-show-widget.smp-red-button a:active,
-		#social-community-popup .dont-show-widget.smp-red.button a:visited {
+		#social_media_popup .dont-show-widget.smp-red-button a,
+		#social_media_popup .dont-show-widget.smp-red-button a:link,
+		#social_media_popup .dont-show-widget.smp-red-button a:active,
+		#social_media_popup .dont-show-widget.smp-red.button a:visited {
 			background-color:#f99;
 			color:#111 !important;
 		}
 
-		#social-community-popup .dont-show-widget.smp-blue-button a,
-		#social-community-popup .dont-show-widget.smp-blue-button a:link,
-		#social-community-popup .dont-show-widget.smp-blue-button a:active,
-		#social-community-popup .dont-show-widget.smp-blue.button a:visited {
+		#social_media_popup .dont-show-widget.smp-blue-button a,
+		#social_media_popup .dont-show-widget.smp-blue-button a:link,
+		#social_media_popup .dont-show-widget.smp-blue-button a:active,
+		#social_media_popup .dont-show-widget.smp-blue.button a:visited {
 			background-color:#77e;
 			color:#fff !important;
 		}
 
 
-	#social-community-popup .widget-description {color:#333 !important;}
-		#social-community-popup .widget-description img {border:0 !important;margin:0;}
+	#social_media_popup .widget-description {color:#333 !important;}
+		#social_media_popup .widget-description img {border:0 !important;margin:0;}
 
-#social-community-popup .twitter-follow-button {margin-bottom:0 !important;}
+#social_media_popup .twitter-follow-button {margin-bottom:0 !important;}
 
 /* Фон меню быстрого доступа к настройкам плагина при активном режиме отладки */
 .smp-debug-mode {background: rgba(159, 0, 0, 1) !important;}

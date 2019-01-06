@@ -268,7 +268,7 @@ class SMP_Popup {
 				$content .= '</ul>';
 
 			} else {
-				$content .= '<div id="social-community-popup">';
+				$content .= '<div id="social_media_popup">';
 
 				$parent_popup_styles                  = '';
 				$parent_popup_css                     = array();

@@ -217,10 +217,10 @@ class SMP_Provider {
 		}
 
 		if ( '1' === self::$options['setting_use_icons_instead_of_labels_in_tabs'] ) {
-			return '#social-community-popup .smp-icons';
+			return '#social_media_popup .smp-icons';
 		}
 
-		return '#social-community-popup .tabs';
+		return '#social_media_popup .tabs';
 	}
 
 	/**
