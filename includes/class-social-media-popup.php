@@ -3956,6 +3956,10 @@ class Social_Media_Popup {
 	 * @return string
 	 */
 	private function js_asset_filename( $part, $version ) {
+		if ( $this->is_dockerized() ) {
+			return SMP_ASSETS_URL . "js/${part}.js?" . rand();
+		}
+
 		return SMP_ASSETS_URL . "js/${part}.min.js?" . $version;
 	}
 
@@ -3973,6 +3977,19 @@ class Social_Media_Popup {
 	 * @return string
 	 */
 	private function css_asset_filename( $part, $version ) {
+		if ( $this->is_dockerized() ) {
+			return SMP_ASSETS_URL . "css/${part}.css?" . rand();
+		}
+
 		return SMP_ASSETS_URL . "css/${part}.min.css?" . $version;
+	}
+
+	/**
+	 * Check if plugin running inside Docker container
+	 *
+	 * @return boolean
+	 */
+	private function is_dockerized() {
+		return 1 == $_ENV['DOCKERIZED'];
 	}
 }
