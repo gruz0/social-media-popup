@@ -7,7 +7,9 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "gulp lint"
+    "test": "gulp lint",
+    "start": "gulp",
+    "build": "gulp build --prod"
   },
   "repository": {
     "type": "git",
@@ -25,13 +27,30 @@
   },
   "homepage": "https://github.com/gruz0/social-media-popup#readme",
   "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "@babel/register": "^7.0.0",
+    "autoprefixer": "^9.4.4",
+    "babel-loader": "^8.0.5",
+    "browser-sync": "^2.26.3",
+    "del": "^3.0.0",
+    "font-awesome": "latest",
     "gulp": "^4.0.0",
     "gulp-clean-css": "^4.0.0",
     "gulp-concat": "^2.6.1",
+    "gulp-if": "^2.0.2",
     "gulp-jshint": "^2.1.0",
     "gulp-minify": "^3.1.0",
+    "gulp-postcss": "^8.0.0",
     "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.4",
     "jshint": "^2.9.7",
-    "jshint-stylish": "^2.2.1"
+    "jshint-stylish": "^2.2.1",
+    "vinyl-named": "^1.1.0",
+    "webpack-stream": "^5.2.1"
+  },
+  "dependencies": {
+    "js-base64": "^2.5.0"
   }
 }

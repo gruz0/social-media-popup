@@ -2,10 +2,10 @@ var smp_cookie_name = 'social-media-popup';
 
 function smp_setCookie(name, value, options) {
 	options = options || {};
-	var expires = options.expires;
+	let expires = options.expires;
 
 	if (typeof expires == "number" && expires) {
-		var d = new Date();
+		let d = new Date();
 		d.setTime(d.getTime() + expires*1000);
 		expires = options.expires = d;
 	}
@@ -15,11 +15,11 @@ function smp_setCookie(name, value, options) {
 	}
 
 	value = encodeURIComponent(value);
-	var updatedCookie = name + "=" + value;
+	let updatedCookie = name + "=" + value;
 
-	for(var propName in options) {
+	for(let propName in options) {
 		updatedCookie += "; " + propName;
-		var propValue = options[propName];
+		let propValue = options[propName];
 		if (propValue !== true) {
 			updatedCookie += "=" + propValue;
 		}
@@ -27,24 +27,27 @@ function smp_setCookie(name, value, options) {
 
 	document.cookie = updatedCookie;
 }
+window.smp_setCookie = smp_setCookie;
 
 function smp_getCookie(name) {
-	var nameEQ = name + "=";
-	var ca = document.cookie.split(';');
+	let nameEQ = name + "=";
+	let ca = document.cookie.split(';');
 
-	for(var i=0;i < ca.length;i++) {
-		var c = ca[i];
+	for(let i=0;i < ca.length;i++) {
+		let c = ca[i];
 		while (c.charAt(0)==' ') c = c.substring(1,c.length);
 		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
 	}
 
 	return null;
 }
+window.smp_getCookie = smp_getCookie;
 
 function smp_deleteCookie(name) {
-	var date = new Date().getTime();
+	let date = new Date().getTime();
 	smp_setCookie(name, '', { expires: date - 3600, path: '/' });
 }
+window.smp_deleteCookie = smp_deleteCookie;
 
 function smp_clearAllPluginCookies() {
 	if (window.confirm(window.smp_cookies.clearCookiesMessage)) {
@@ -53,3 +56,4 @@ function smp_clearAllPluginCookies() {
 		document.location.reload(true);
 	}
 }
+window.smp_clearAllPluginCookies = smp_clearAllPluginCookies;
