@@ -3671,7 +3671,6 @@ class Social_Media_Popup {
 			array( 'jquery', 'wp-color-picker' )
 		);
 
-		wp_enqueue_style( 'animate-css', '//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css' );
 		wp_enqueue_script( SMP_PREFIX . '-admin-js' );
 	}
 
@@ -3849,14 +3848,8 @@ class Social_Media_Popup {
 
 		$this->render_popup_window( $version, $prefix );
 
-		wp_register_style( SMP_PREFIX . '-css', $this->css_asset_filename( 'styles', $version ) );
+		wp_register_style( SMP_PREFIX . '-css', $this->css_asset_filename( 'bundle', $version ) );
 		wp_enqueue_style( SMP_PREFIX . '-css' );
-
-		wp_enqueue_style( 'font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' );
-
-		if ( '1' === get_option( $prefix . 'setting_use_animation' ) ) {
-			wp_enqueue_style( 'animate-css', '//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css' );
-		}
 	}
 
 	/**
@@ -3873,7 +3866,7 @@ class Social_Media_Popup {
 		$encoded_content = preg_replace( "~[\n\r\t]~", '', $content );
 		$encoded_content = base64_encode( $encoded_content );
 
-		wp_register_script( SMP_PREFIX . '-js', $this->js_asset_filename( 'scripts', $version ), array( 'jquery' ) );
+		wp_register_script( SMP_PREFIX . '-js', $this->js_asset_filename( 'bundle', $version ), array( 'jquery' ) );
 		wp_localize_script(
 			SMP_PREFIX . '-js',
 			'smp',
@@ -3956,11 +3949,7 @@ class Social_Media_Popup {
 	 * @return string
 	 */
 	private function js_asset_filename( $part, $version ) {
-		if ( $this->is_dockerized() ) {
-			return SMP_ASSETS_URL . "js/${part}.js?" . rand();
-		}
-
-		return SMP_ASSETS_URL . "js/${part}.min.js?" . $version;
+		return SMP_ASSETS_URL . "js/${part}.js?" . ( $this->is_dockerized() ? rand() : $version );
 	}
 
 	/**
@@ -3971,17 +3960,13 @@ class Social_Media_Popup {
 	 *
 	 * @since 0.7.6
 	 *
-	 * @param string $part    Filename's part (eg. admin, styles, etc.)
+	 * @param string $part    Filename's part (eg. admin, bundle, etc.)
 	 * @param string $version Plugin's version
 	 *
 	 * @return string
 	 */
 	private function css_asset_filename( $part, $version ) {
-		if ( $this->is_dockerized() ) {
-			return SMP_ASSETS_URL . "css/${part}.css?" . rand();
-		}
-
-		return SMP_ASSETS_URL . "css/${part}.min.css?" . $version;
+		return SMP_ASSETS_URL . "css/${part}.css?" . ( $this->is_dockerized() ? rand() : $version );
 	}
 
 	/**

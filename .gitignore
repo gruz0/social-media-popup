@@ -5,6 +5,7 @@
 .DS_Store
 .php.tags
 .data
+dist/*
 node_modules
 phpcs
 wpcs
