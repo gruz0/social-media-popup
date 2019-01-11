@@ -23,12 +23,7 @@ This section describes how to install the plugin and get it working.
 2. Extract files from the archive
 3. Activate the plugin through the 'Plugins' menu in WordPress
 
-## Known issues
+## Contributing
 
-### Invalid permissions for /wp-content directory
+Check [CONTRIBUTING.md](https://github.com/gruz0/social-media-popup/blob/master/CONTRIBUTING.md) file for more details.
 
-Run inside your host Operating System:
-
-```bash
-make fix_permissions
-```
