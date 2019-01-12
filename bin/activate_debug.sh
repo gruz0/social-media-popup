@@ -12,3 +12,4 @@ if [ $? -ne 0 ]; then
   sed -i -e "/'WP_DEBUG'/adefine('WP_DEBUG_LOG', true);" wp-config.php
 fi
 
+chown -R www-data:www-data /var/www/html/
