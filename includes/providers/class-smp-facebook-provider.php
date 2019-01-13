@@ -17,7 +17,7 @@ class SMP_Facebook_Provider extends SMP_Provider {
 	 *
 	 * @since 0.7.5
 	 */
-	const API_VERSION = '2.10';
+	const API_VERSION = '3.2';
 
 	/**
 	 * Return widget is active
