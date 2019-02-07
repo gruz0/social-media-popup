@@ -1,12 +1,6 @@
 jQuery(document).ready(function($){
 	const SCP_PREFIX = 'scp-';
 
-	// Клик по табу и открытие соответствующей вкладки
-	$('#smp_welcome_screen ul.tabs').on('click', 'li:not(.current)', function() {
-		$(this).addClass('current').siblings().removeClass('current')
-		.parents('#smp_welcome_screen').find('div.box').eq($(this).index()).fadeIn(150).siblings('div.box').hide();
-	});
-
 	// Add Color Picker
 	const colorFields = [];
 	colorFields.push('#scp-setting_overlay_color');

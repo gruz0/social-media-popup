@@ -57,7 +57,7 @@ class Social_Media_Popup {
 	public static function activate() {
 		if ( ! current_user_can( 'activate_plugins' ) ) return;
 
-		set_transient( '_smp_welcome_screen', true, 30 );
+		set_transient( '_smp_redirect', true, 30 );
 
 		self::upgrade();
 	}
@@ -1020,10 +1020,12 @@ class Social_Media_Popup {
 			add_action( 'admin_notices', array( $this, 'add_debug_mode_notice' ) );
 		}
 
-		if ( ! get_transient( '_smp_welcome_screen' ) ) return;
-		delete_transient( '_smp_welcome_screen' );
+		if ( ! get_transient( '_smp_redirect' ) ) return;
+		delete_transient( '_smp_redirect' );
+
 		if ( is_network_admin() || isset( $_GET['activate-multi'] ) ) return;
-		wp_safe_redirect( add_query_arg( array( 'page' => SMP_PREFIX . '_about' ), admin_url( 'index.php' ) ) );
+
+		wp_safe_redirect( add_query_arg( array( 'page' => SMP_PREFIX ), admin_url( 'admin.php' ) ) );
 	}
 
 	/**
@@ -3488,14 +3490,6 @@ class Social_Media_Popup {
 	 * Добавление пункта меню
 	 */
 	public function add_menu() {
-		add_dashboard_page(
-			esc_html( 'Welcome To Social Media Popup Welcome Screen', 'social-media-popup' ),
-			esc_html( 'Welcome To Social Media Popup Welcome Screen', 'social-media-popup' ),
-			'read',
-			SMP_PREFIX . '_about',
-			array( & $this, 'plugin_welcome_screen' )
-		);
-
 		add_menu_page(
 			esc_html( 'Social Media Popup Options', 'social-media-popup' ),
 			esc_html( 'SMP Options', 'social-media-popup' ),
@@ -3705,20 +3699,6 @@ class Social_Media_Popup {
 		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $content;
 		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
-	}
-
-	/**
-	 * Страница приветствия после установки плагина
-	 */
-	public function plugin_welcome_screen() {
-		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html( 'You do not have sufficient permissions to access this page.', 'social-media-popup' ) );
-		}
-
-		$prefix  = self::get_prefix();
-		$version = get_option( $prefix . 'version' );
-
-		include( SMP_TEMPLATES_DIR . 'welcome-screen.php' );
 	}
 
 	/**
