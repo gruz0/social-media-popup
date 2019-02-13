@@ -17,19 +17,11 @@ class SMP_Popup {
 	/**
 	 * Prepare popup HTML
 	 *
-	 * @param string $prefix Plugin prefix
 	 * @return string
 	 */
-	public static function render( $prefix ) {
-		$options     = array();
-		$all_options = wp_load_alloptions();
-
-		foreach ( $all_options as $name => $value ) {
-			if ( stristr( $name, $prefix ) ) {
-				$name             = str_replace( $prefix, '', $name );
-				$options[ $name ] = $value;
-			}
-		}
+	public static function render() {
+		// FIXME: It should be passed as argument
+		$options = SMP_Options::get_options();
 
 		$events_descriptions = array(
 			'window_showed_immediately'       => $options['tracking_event_label_window_showed_immediately'],
@@ -44,16 +36,14 @@ class SMP_Popup {
 			'on_exit_intent'                  => $options['tracking_event_label_on_exit_intent'],
 		);
 
-		$debug_mode = '1' === $options['setting_debug_mode'];
-
 		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 		$template_options = array(
-			'use_events_tracking'                             => '1' === $options['use_events_tracking'],
-			'do_not_use_tracking_in_debug_mode'               => ( $debug_mode && '1' === $options['do_not_use_tracking_in_debug_mode'] ),
-			'push_events_to_aquisition_social_plugins'        => '1' === $options['push_events_to_aquisition_social_plugins'],
-			'push_events_when_displaying_window'              => '1' === $options['push_events_when_displaying_window'],
-			'push_events_when_subscribing_on_social_networks' => '1' === $options['push_events_when_subscribing_on_social_networks'],
-			'add_window_events_descriptions'                  => '1' === $options['add_window_events_descriptions'],
+			'use_events_tracking'                             => $options['use_events_tracking'],
+			'do_not_use_tracking_in_debug_mode'               => $options['setting_debug_mode'] && $options['do_not_use_tracking_in_debug_mode'],
+			'push_events_to_aquisition_social_plugins'        => $options['push_events_to_aquisition_social_plugins'],
+			'push_events_when_displaying_window'              => $options['push_events_when_displaying_window'],
+			'push_events_when_subscribing_on_social_networks' => $options['push_events_when_subscribing_on_social_networks'],
+			'add_window_events_descriptions'                  => $options['add_window_events_descriptions'],
 		);
 		// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 
@@ -63,7 +53,7 @@ class SMP_Popup {
 		);
 
 		// При включённом режиме отладки плагин работает только для администратора сайта
-		if ( $debug_mode ) {
+		if ( $options['setting_debug_mode'] ) {
 			if ( ! current_user_can( 'manage_options' ) ) {
 				return;
 			}
@@ -91,11 +81,10 @@ class SMP_Popup {
 			}
 		}
 
-		$show_on_mobile = '1' === $options['setting_show_on_mobile_devices'];
-		$wp_is_mobile   = wp_is_mobile();
+		$wp_is_mobile = wp_is_mobile();
 
 		// Отключаем работу плагина на мобильных устройствах
-		if ( $wp_is_mobile && ! $show_on_mobile ) return;
+		if ( $wp_is_mobile && ! $options['setting_show_on_mobile_devices'] ) return;
 
 		$after_n_days = absint( $options['setting_display_after_n_days'] );
 
@@ -113,11 +102,11 @@ class SMP_Popup {
 		$popup_will_appear_after_n_seconds                = absint( $options['popup_will_appear_after_n_seconds'] );
 		$popup_will_appear_after_clicking_on_element      = $options['popup_will_appear_after_clicking_on_element'];
 		$popup_will_appear_after_scrolling_down_n_percent = absint( $options['popup_will_appear_after_scrolling_down_n_percent'] );
-		$popup_will_appear_on_exit_intent                 = '1' === $options['popup_will_appear_on_exit_intent'];
+		$popup_will_appear_on_exit_intent                 = $options['popup_will_appear_on_exit_intent'];
 
 		// Дополнительные события
-		$event_hide_element_after_click_on_it      = '1' === $options['event_hide_element_after_click_on_it'];
-		$do_not_use_cookies_after_click_on_element = '1' === $options['do_not_use_cookies_after_click_on_element'];
+		$event_hide_element_after_click_on_it      = $options['event_hide_element_after_click_on_it'];
+		$do_not_use_cookies_after_click_on_element = $options['do_not_use_cookies_after_click_on_element'];
 
 		//
 		// Кому показывать окно
@@ -186,29 +175,14 @@ class SMP_Popup {
 			return;
 		}
 
-		// Социальные сети
-		$use_facebook      = '1' === $options['setting_use_facebook'];
-		$use_vkontakte     = '1' === $options['setting_use_vkontakte'];
-		$use_odnoklassniki = '1' === $options['setting_use_odnoklassniki'];
-		$use_googleplus    = '1' === $options['setting_use_googleplus'];
-		$use_twitter       = '1' === $options['setting_use_twitter'];
-		$use_pinterest     = '1' === $options['setting_use_pinterest'];
-
 		// Настройка плагина
 		$tabs_order                      = explode( ',', $options['setting_tabs_order'] );
 		$container_width                 = absint( $options['setting_container_width'] );
 		$container_height                = absint( $options['setting_container_height'] );
 		$border_radius                   = absint( $options['setting_border_radius'] );
-		$close_by_clicking_anywhere      = '1' === $options['setting_close_popup_by_clicking_anywhere'];
-		$close_when_esc_pressed          = '1' === $options['setting_close_popup_when_esc_pressed'];
 		$show_close_button_in            = $options['setting_show_close_button_in'];
-		$overlay_color                   = $options['setting_overlay_color'];
-		$overlay_opacity                 = absint( $options['setting_overlay_opacity'] );
-		$align_tabs_to_center            = absint( $options['setting_align_tabs_to_center'] );
 		$delay_before_show_bottom_button = absint( $options['setting_delay_before_show_bottom_button'] );
 		$background_image                = esc_url( $options['setting_background_image'] );
-		$use_animation                   = '1' === $options['setting_use_animation'];
-		$animation_style                 = esc_attr( $options['setting_animation_style'] );
 
 		//
 		// START RENDER
@@ -220,7 +194,7 @@ class SMP_Popup {
 
 		$active_providers = array();
 		foreach ( SMP_Provider::available_providers() as $provider_name ) {
-			$provider = SMP_Provider::create( $provider_name, $options );
+			$provider = SMP_Provider::create( $provider_name );
 
 			if ( $provider->is_active() ) {
 				$active_providers[ $provider_name ] = $provider;
@@ -272,8 +246,8 @@ class SMP_Popup {
 
 				$parent_popup_styles                  = '';
 				$parent_popup_css                     = array();
-				$parent_popup_css['background-color'] = $overlay_color;
-				$parent_popup_css['opacity']          = '0.' . ( absint( $overlay_opacity ) / 10.0 );
+				$parent_popup_css['background-color'] = $options['setting_overlay_color'];
+				$parent_popup_css['opacity']          = '0.' . ( absint( $options['setting_overlay_opacity'] ) / 10.0 );
 
 				foreach ( $parent_popup_css as $selector => $value ) {
 					$parent_popup_styles .= "${selector}: ${value}; ";
@@ -291,7 +265,7 @@ class SMP_Popup {
 				$smp_plugin_title  = trim( str_replace( "\r\n", '<br />', $options['setting_plugin_title'] ) );
 				$show_plugin_title = mb_strlen( $smp_plugin_title ) > 0;
 
-				$animation_class = $use_animation ? ' class="animated ' . $animation_style . '"' : '';
+				$animation_class = $options['setting_use_animation'] ? ' class="animated ' . esc_attr( $options['setting_animation_style'] ) . '"' : '';
 				$content        .= '<div id="popup" style="' . esc_attr( $popup_css ) . '"' . $animation_class . '>';
 
 				if ( $show_plugin_title && 'inside' === $show_close_button_in ) {
@@ -310,16 +284,16 @@ class SMP_Popup {
 					$content .= '<div class="plugin-title">' . $smp_plugin_title . '</div>';
 				}
 
-				if ( 1 === $active_providers_count && '1' === $options['setting_hide_tabs_if_one_widget_is_active'] ) {
+				if ( 1 === $active_providers_count && $options['setting_hide_tabs_if_one_widget_is_active'] ) {
 
 				} else {
-					$use_icons_instead_of_labels = '1' === $options['setting_use_icons_instead_of_labels_in_tabs'];
+					$use_icons_instead_of_labels = $options['setting_use_icons_instead_of_labels_in_tabs'];
 					$icon_size                   = 'fa-' . $options['setting_icons_size_on_desktop'];
 
 					if ( $use_icons_instead_of_labels ) {
 						$content .= '<ul class="smp-icons smp-icons-desktop">';
 					} else {
-						$content .= '<ul class="tabs"' . ( $align_tabs_to_center ? 'style="text-align:center;"' : '' ) . '>';
+						$content .= '<ul class="tabs"' . ( $options['setting_align_tabs_to_center'] ? 'style="text-align:center;"' : '' ) . '>';
 					}
 
 					for ( $idx = 0, $size = count( $tabs_order ); $idx < $size; $idx++ ) {
@@ -350,7 +324,8 @@ class SMP_Popup {
 					// Не показываем кнопку закрытия в случае выбора иконок в табах
 					if ( ! $use_icons_instead_of_labels ) {
 						if ( ! $show_plugin_title && 'inside' === $show_close_button_in ) {
-							$content .= '<li class="last-item"><span class="close" title="' . esc_attr( 'Close Modal Dialog', 'social-media-popup' ) . '">&times;</span></li>';
+							$content .= '<li class="last-item"><span class="close" title="'
+								. esc_attr( 'Close Modal Dialog', 'social-media-popup' ) . '">&times;</span></li>';
 						}
 					}
 
@@ -371,7 +346,7 @@ class SMP_Popup {
 			$content .= '</div>';
 
 			if ( ! $wp_is_mobile ) {
-				if ( '1' === $options['setting_show_button_to_close_widget'] ) {
+				if ( $options['setting_show_button_to_close_widget'] ) {
 					$button_to_close_widget_style = $options['setting_button_to_close_widget_style'];
 					$button_to_close_widget_class = 'link' === $button_to_close_widget_style ? '' : 'smp-' . $button_to_close_widget_style . '-button';
 
@@ -442,19 +417,19 @@ class SMP_Popup {
 						$content .= 'if (is_smp_cookie_present()) return;';
 					}
 
-					if ( $use_facebook ) {
+					if ( $options['setting_use_facebook'] ) {
 						$content .= 'smp_prependFacebook($);';
 					}
 
-					if ( $use_vkontakte ) {
+					if ( $options['setting_use_vkontakte'] ) {
 						$content .= 'smp_prependVK($);';
 					}
 
-					if ( $use_googleplus ) {
+					if ( $options['setting_use_googleplus'] ) {
 						$content .= 'smp_prependGooglePlus($);';
 					}
 
-					if ( $use_pinterest ) {
+					if ( $options['setting_use_pinterest'] ) {
 						$content .= 'smp_prependPinterest($);';
 					}
 
@@ -500,8 +475,8 @@ class SMP_Popup {
 						$content .= $template->render_show_bottom_button( $delay_before_show_bottom_button );
 					}
 
-					$content .= $template->render_close_widget( $close_by_clicking_anywhere, $after_n_days );
-					$content .= $template->render_close_widget_when_esc_pressed( $close_when_esc_pressed, $after_n_days );
+					$content .= $template->render_close_widget( $options['setting_close_popup_by_clicking_anywhere'], $after_n_days );
+					$content .= $template->render_close_widget_when_esc_pressed( $options['setting_close_popup_when_esc_pressed'], $after_n_days );
 
 				$content .= '});
 			</script>';

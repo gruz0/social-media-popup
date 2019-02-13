@@ -3,11 +3,11 @@ jQuery(document).ready(function($){
 
 	// Add Color Picker
 	const colorFields = [];
-	colorFields.push('#scp-setting_overlay_color');
-	colorFields.push('#scp-setting_vkontakte_color_background');
-	colorFields.push('#scp-setting_vkontakte_color_text');
-	colorFields.push('#scp-setting_vkontakte_color_button');
-	colorFields.push('#scp-setting_twitter_link_color');
+	colorFields.push('#setting_overlay_color');
+	colorFields.push('#setting_vkontakte_color_background');
+	colorFields.push('#setting_vkontakte_color_text');
+	colorFields.push('#setting_vkontakte_color_button');
+	colorFields.push('#setting_twitter_link_color');
 
 	$(colorFields.join(',')).wpColorPicker();
 
@@ -35,7 +35,7 @@ jQuery(document).ready(function($){
 				$('#smp-sortable li').each(function() {
 					networks.push($(this).text());
 				});
-				$('#scp-setting_tabs_order').val(networks.join(','));
+				$('#setting_tabs_order').val(networks.join(','));
 			}
 		});
 		$('ul, li').disableSelection();
@@ -71,12 +71,12 @@ jQuery(document).ready(function($){
 			relatedObjectPrefix = '';
 		}
 
-		const $checkboxes = $('.' + SCP_PREFIX + checkboxSuffix);
+		const $checkboxes = $('.smp-' + checkboxSuffix);
 
 		if ($checkboxes.length == 0) return;
 
 		$checkboxes.each(function() {
-			let $relatedObject = $('#' + SCP_PREFIX + relatedObjectPrefix + $(this).val());
+			let $relatedObject = $('#' + relatedObjectPrefix + $(this).val());
 			let checked = $(this).is(':checked');
 
 			if (checked) {
@@ -87,8 +87,8 @@ jQuery(document).ready(function($){
 
 			switch($(this).val()) {
 				case 'after_clicking_on_element': {
-					$('#' + SCP_PREFIX + 'event_hide_element_after_click_on_it').prop('disabled', !checked);
-					$('#' + SCP_PREFIX + 'do_not_use_cookies_after_click_on_element').prop('disabled', !checked);
+					$('#event_hide_element_after_click_on_it').prop('disabled', !checked);
+					$('#do_not_use_cookies_after_click_on_element').prop('disabled', !checked);
 					break;
 				}
 			}
@@ -104,7 +104,7 @@ jQuery(document).ready(function($){
 	 * @param {string} relatedObjectPrefix
 	 */
 	function prepareResultStringForEvents(checkboxClassName, targetObjectSuffix, relatedObjectPrefix) {
-		let $result      = $('#' + SCP_PREFIX + targetObjectSuffix);
+		let $result      = $('#' + targetObjectSuffix);
 		let resultString = '';
 		let className    = checkboxClassName;
 
@@ -119,22 +119,22 @@ jQuery(document).ready(function($){
 		setRelatedObjectStateDependsOnCheckbox(targetObjectSuffix, relatedObjectPrefix);
 	}
 
-	$('.' + SCP_PREFIX + 'when_should_the_popup_appear').on('click', function() {
+	$('.smp-when_should_the_popup_appear').on('click', function() {
 		let className = '.' + $(this).attr('class');
 		prepareResultStringForEvents(className, 'when_should_the_popup_appear', 'popup_will_appear_');
 	});
 
-	$('.' + SCP_PREFIX + 'who_should_see_the_popup').on('click', function() {
+	$('.smp-who_should_see_the_popup').on('click', function() {
 		let className = '.' + $(this).attr('class');
 		prepareResultStringForEvents(className, 'who_should_see_the_popup');
 	});
 
-	$('.' + SCP_PREFIX + 'setting_facebook_tabs').on('click', function() {
+	$('.smp-setting_facebook_tabs').on('click', function() {
 		let className = '.' + $(this).attr('class');
 		prepareResultStringForEvents(className, 'setting_facebook_tabs');
 	});
 
-	$('.' + SCP_PREFIX + 'setting_twitter_chrome').on('click', function() {
+	$('.smp-setting_twitter_chrome').on('click', function() {
 		let className = '.' + $(this).attr('class');
 		prepareResultStringForEvents(className, 'setting_twitter_chrome');
 	});

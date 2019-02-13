@@ -119,7 +119,7 @@ class SMP_Template {
 	function render_show_bottom_button( $delay_before_show_bottom_button ) {
 		$content = '';
 
-		$delay_before_show_bottom_button = absint( esc_attr( $delay_before_show_bottom_button ) );
+		$delay_before_show_bottom_button = absint( $delay_before_show_bottom_button );
 		if ( $delay_before_show_bottom_button > 0 ) {
 			$content = 'setTimeout(function() { jQuery(".dont-show-widget").show(); }, ' . ( $delay_before_show_bottom_button * 1000 ) . ');';
 		} else {
@@ -145,7 +145,7 @@ class SMP_Template {
 			$selector_to_close_widget = '#social_media_popup .close';
 		}
 
-		$after_n_days = absint( esc_attr( $after_n_days ) );
+		$after_n_days = absint( $after_n_days );
 		return 'jQuery("' . $selector_to_close_widget . '").on("click", function() {
 			smp_destroyPlugin(' . $after_n_days . ');
 			return false;
@@ -161,11 +161,8 @@ class SMP_Template {
 	 * @return string
 	 */
 	function render_close_widget_on_mobile( $after_n_days ) {
-		$selector_to_close_widget = '#smp_mobile .smp-close a';
-		$after_n_days             = absint( esc_attr( $after_n_days ) );
-
-		return 'jQuery("' . $selector_to_close_widget . '").on("click", function() {
-			smp_destroyPlugin(' . $after_n_days . ', "#smp_mobile");
+		return 'jQuery("#smp_mobile .smp-close a").on("click", function() {
+			smp_destroyPlugin(' . absint( $after_n_days ) . ', "#smp_mobile");
 			return false;
 		});';
 	}
@@ -183,11 +180,9 @@ class SMP_Template {
 		$content = '';
 
 		if ( $close_when_esc_pressed ) {
-			$after_n_days = absint( esc_attr( $after_n_days ) );
-
 			$content .= 'jQuery(document).on("keydown", function(e) {
 				if ( e.keyCode == 27 ) {
-					smp_destroyPlugin(' . $after_n_days . ');
+					smp_destroyPlugin(' . absint( $after_n_days ) . ');
 				}
 			});';
 		}
@@ -288,7 +283,7 @@ class SMP_Template {
 			$any_event_active = true;
 
 			if ( ! empty( $popup_will_appear_after_clicking_on_element ) ) {
-				$content .= 'jQuery("' . $popup_will_appear_after_clicking_on_element . '").on("click", function() {';
+				$content .= 'jQuery("' . esc_html( $popup_will_appear_after_clicking_on_element ) . '").on("click", function() {';
 
 					if ( ! $do_not_use_cookies_after_click_on_element ) {
 						$content .= 'if (is_smp_cookie_present()) return false;';
@@ -359,7 +354,7 @@ class SMP_Template {
 			jQuery(window).scroll(function() {
 				if (is_smp_cookie_present()) return false;
 
-				if (showWindowAgain && smp_getScrollPercentage() >= ' . $popup_will_appear_after_scrolling_down_n_percent . ') {';
+				if (showWindowAgain && smp_getScrollPercentage() >= ' . absint( $popup_will_appear_after_scrolling_down_n_percent ) . ') {';
 
 					if ( $this->_options['use_events_tracking'] ) {
 						$content .= $this->push_google_analytics_event_on_show_window(

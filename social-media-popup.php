@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) or exit;
  * Author: Alexander Kadyrov
  * Author URI: http://gruz0.ru/
  * Text Domain: social-media-popup
- * Version: 0.7.6
+ * Version: 1.0.0
  * License: GPL2
  * Minimum PHP: 5.3
  * Minimum WP: 3.5
@@ -25,11 +25,11 @@ defined( 'ABSPATH' ) or exit;
 
 if ( ! array_key_exists( 'social-media-popup', $GLOBALS ) ) {
 	if ( ! class_exists( 'Social_Media_Popup' ) ) {
-
 		register_activation_hook( __FILE__, array( 'Social_Media_Popup', 'activate' ) );
 		register_deactivation_hook( __FILE__, array( 'Social_Media_Popup', 'deactivate' ) );
 		register_uninstall_hook( __FILE__, array( 'Social_Media_Popup', 'uninstall' ) );
 
+		define( 'SMP_PREFIX',        'social_media_popup' );
 		define( 'SMP_DIR',            dirname( __FILE__ ) . DIRECTORY_SEPARATOR );
 		define( 'SMP_INCLUDES_DIR',   SMP_DIR . 'includes' . DIRECTORY_SEPARATOR );
 		define( 'SMP_TEMPLATES_DIR',  SMP_DIR . 'templates' . DIRECTORY_SEPARATOR );
@@ -37,7 +37,15 @@ if ( ! array_key_exists( 'social-media-popup', $GLOBALS ) ) {
 		define( 'SMP_PLUGIN_DIRNAME', dirname( plugin_basename( __FILE__ ) ) . DIRECTORY_SEPARATOR );
 		define( 'SMP_ASSETS_URL',     plugin_dir_url( __FILE__ ) . 'dist/' );
 
-		include( SMP_INCLUDES_DIR . 'class-social-media-popup.php' );
+		require_once( SMP_INCLUDES_DIR . 'functions.php' );
+		require_once( SMP_INCLUDES_DIR . 'class-smp-options.php' );
+		require_once( SMP_INCLUDES_DIR . 'class-smp-sanitizer.php' );
+		require_once( SMP_INCLUDES_DIR . 'class-smp-settings-field.php' );
+		require_once( SMP_INCLUDES_DIR . 'class-smp-template.php' );
+		require_once( SMP_INCLUDES_DIR . 'class-smp-popup.php' );
+		require_once( SMP_INCLUDES_DIR . 'class-smp-validator.php' );
+		require_once( SMP_INCLUDES_DIR . 'providers/class-smp-provider.php' );
+		require_once( SMP_INCLUDES_DIR . 'class-social-media-popup.php' );
 
 		$social_media_popup = new Social_Media_Popup();
 
