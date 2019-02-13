@@ -24,7 +24,7 @@ class SMP_Settings_Field {
 	 */
 	public static function settings_field_hidden_section( $args ) {
 		$section = $args['section'];
-		$format  = '<input type="text" name="%s" value="%s" />';
+		$format  = '<input type="hidden" name="%s" value="%s" />';
 
 		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo sprintf( $format, 'smp_section', $section );
@@ -611,8 +611,7 @@ class SMP_Settings_Field {
 		$checkbox_format .= '<label for="smp-%s">%s</label>';
 		$checkbox_format .= '<br />';
 
-		// FIXME: It should be changed to 'hidden'
-		$hidden_field_format = '<input type="text" id="%s" name="%s" value="%s" />';
+		$hidden_field_format = '<input type="hidden" id="%s" name="%s" value="%s" />';
 
 		$html = '';
 		foreach ( $options as $key => $label ) {
