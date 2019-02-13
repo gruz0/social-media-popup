@@ -151,7 +151,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_debug_mode',
 			)
 		);
@@ -163,7 +162,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_tabs_order',
 			)
 		);
@@ -175,7 +173,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_close_popup_by_clicking_anywhere',
 			)
 		);
@@ -187,7 +184,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_close_popup_when_esc_pressed',
 			)
 		);
@@ -199,7 +195,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_show_on_mobile_devices',
 			)
 		);
@@ -211,7 +206,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_show_admin_bar_menu',
 			)
 		);
@@ -252,7 +246,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_plugin_title',
 			)
 		);
@@ -264,7 +257,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_use_animation',
 			)
 		);
@@ -276,7 +268,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_animation_style',
 			)
 		);
@@ -288,7 +279,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_use_icons_instead_of_labels_in_tabs',
 			)
 		);
@@ -300,7 +290,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_icons_size_on_desktop',
 			)
 		);
@@ -312,7 +301,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_hide_tabs_if_one_widget_is_active',
 			)
 		);
@@ -324,7 +312,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_align_tabs_to_center',
 			)
 		);
@@ -336,7 +323,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_show_close_button_in',
 			)
 		);
@@ -348,7 +334,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_show_button_to_close_widget',
 			)
 		);
@@ -360,7 +345,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_button_to_close_widget_title',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . __( "Thanks! Please don't show me popup.", 'social-media-popup' ),
 			)
@@ -373,7 +357,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_button_to_close_widget_style',
 			)
 		);
@@ -385,7 +368,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_delay_before_show_bottom_button',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '10',
 			)
@@ -398,7 +380,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_container_width',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '400',
 				'required' => true,
@@ -412,7 +393,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_container_height',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '400',
 				'required' => true,
@@ -426,7 +406,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_border_radius',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '10',
 			)
@@ -439,7 +418,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_overlay_color',
 			)
 		);
@@ -451,7 +429,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_overlay_opacity',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '80',
 			)
@@ -464,7 +441,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_background_image',
 			)
 		);
@@ -509,7 +485,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_plugin_title_on_mobile_devices',
 			)
 		);
@@ -521,7 +496,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_icons_size_on_mobile_devices',
 			)
 		);
@@ -570,7 +544,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'when_should_the_popup_appear',
 			)
 		);
@@ -582,7 +555,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'popup_will_appear_after_n_seconds',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '5',
 				'required' => true,
@@ -596,7 +568,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'popup_will_appear_after_clicking_on_element',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '#my-button, .entry .button',
 				'required' => true,
@@ -610,7 +581,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'event_hide_element_after_click_on_it',
 			)
 		);
@@ -622,7 +592,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'do_not_use_cookies_after_click_on_element',
 			)
 		);
@@ -634,7 +603,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'popup_will_appear_after_scrolling_down_n_percent',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '70',
 				'required' => true,
@@ -648,7 +616,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'popup_will_appear_on_exit_intent',
 			)
 		);
@@ -689,7 +656,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'who_should_see_the_popup',
 			)
 		);
@@ -701,7 +667,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'visitor_opened_at_least_n_number_of_pages',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '2',
 				'required' => true,
@@ -715,7 +680,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'visitor_registered_and_role_equals_to',
 			)
 		);
@@ -727,7 +691,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_display_after_n_days',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '15',
 				'required' => true,
@@ -791,7 +754,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'use_events_tracking',
 			)
 		);
@@ -803,7 +765,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'do_not_use_tracking_in_debug_mode',
 			)
 		);
@@ -848,7 +809,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'google_analytics_tracking_id',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . 'UA-12345678-0',
 				'required' => true,
@@ -862,7 +822,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'push_events_to_aquisition_social_plugins',
 			)
 		);
@@ -907,7 +866,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'push_events_when_displaying_window',
 			)
 		);
@@ -919,7 +877,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'tracking_event_label_window_showed_immediately',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . __( 'Show immediately', 'social-media-popup' ),
 			)
@@ -932,7 +889,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'tracking_event_label_window_showed_with_delay',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . __( 'Show after delay before it rendered', 'social-media-popup' ),
 			)
@@ -945,7 +901,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'tracking_event_label_window_showed_after_click',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . __( 'Show after click on CSS-selector', 'social-media-popup' ),
 			)
@@ -958,7 +913,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'tracking_event_label_window_showed_on_scrolling_down',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . __( 'Show after scrolling down', 'social-media-popup' ),
 			)
@@ -971,7 +925,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'tracking_event_label_window_showed_on_exit_intent',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . __( 'Show on exit intent', 'social-media-popup' ),
 			)
@@ -1017,7 +970,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'push_events_when_subscribing_on_social_networks',
 			)
 		);
@@ -1029,7 +981,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'add_window_events_descriptions',
 			)
 		);
@@ -1041,7 +992,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'tracking_event_label_no_events_fired',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . __( '(no events fired)', 'social-media-popup' ),
 			)
@@ -1054,7 +1004,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'tracking_event_label_on_delay',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . __( 'After delay before show widget', 'social-media-popup' ),
 			)
@@ -1067,7 +1016,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'tracking_event_label_after_click',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . __( 'After click on CSS-selector', 'social-media-popup' ),
 			)
@@ -1080,7 +1028,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'tracking_event_label_on_scrolling_down',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . __( 'On window scrolling down', 'social-media-popup' ),
 			)
@@ -1093,7 +1040,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'tracking_event_label_on_exit_intent',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . __( 'On exit intent', 'social-media-popup' ),
 			)
@@ -1135,7 +1081,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_remove_settings_on_uninstall',
 			)
 		);
@@ -1193,7 +1138,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_use_facebook',
 			)
 		);
@@ -1205,7 +1149,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_facebook_tab_caption',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . 'Facebook',
 			)
@@ -1218,7 +1161,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_facebook_show_description',
 			)
 		);
@@ -1230,7 +1172,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_facebook_description',
 			)
 		);
@@ -1242,7 +1183,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_facebook_application_id',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '123456789012345',
 			)
@@ -1255,7 +1195,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_facebook_page_url',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . 'https://www.facebook.com/gruz0.ru/',
 				'required' => true,
@@ -1269,7 +1208,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_facebook_locale',
 			)
 		);
@@ -1281,7 +1219,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_facebook_width',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '400',
 				'required' => true,
@@ -1295,7 +1232,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_facebook_height',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '400',
 				'required' => true,
@@ -1309,7 +1245,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_facebook_adapt_container_width',
 			)
 		);
@@ -1321,7 +1256,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_facebook_use_small_header',
 			)
 		);
@@ -1333,7 +1267,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_facebook_hide_cover',
 			)
 		);
@@ -1345,7 +1278,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_facebook_show_facepile',
 			)
 		);
@@ -1357,7 +1289,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_facebook_tabs',
 			)
 		);
@@ -1369,7 +1300,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_facebook_close_window_after_join',
 			)
 		);
@@ -1414,7 +1344,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'tracking_use_facebook',
 			)
 		);
@@ -1426,7 +1355,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'tracking_facebook_subscribe_event',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . __( 'Subscribe on Facebook', 'social-media-popup' ),
 			)
@@ -1439,7 +1367,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'tracking_facebook_unsubscribe_event',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . __( 'Unsubscribe from Facebook', 'social-media-popup' ),
 			)
@@ -1498,7 +1425,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_use_vkontakte',
 			)
 		);
@@ -1510,7 +1436,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_vkontakte_tab_caption',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . __( 'VK', 'social-media-popup' ),
 			)
@@ -1523,7 +1448,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_vkontakte_show_description',
 			)
 		);
@@ -1535,7 +1459,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_vkontakte_description',
 			)
 		);
@@ -1547,7 +1470,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_vkontakte_application_id',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '1234567',
 			)
@@ -1560,7 +1482,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_vkontakte_page_or_group_id',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '12345678',
 				'required' => true,
@@ -1574,7 +1495,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_vkontakte_page_url',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . 'https://vk.com/ru_wp',
 				'required' => true,
@@ -1588,7 +1508,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_vkontakte_width',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '400',
 				'required' => true,
@@ -1602,7 +1521,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_vkontakte_height',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '400',
 				'required' => true,
@@ -1616,7 +1534,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_vkontakte_layout',
 			)
 		);
@@ -1628,7 +1545,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_vkontakte_color_background',
 			)
 		);
@@ -1640,7 +1556,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_vkontakte_color_text',
 			)
 		);
@@ -1652,7 +1567,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_vkontakte_color_button',
 			)
 		);
@@ -1664,7 +1578,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_vkontakte_close_window_after_join',
 			)
 		);
@@ -1734,7 +1647,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'tracking_vkontakte_unsubscribe_event',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . __( 'Unsubscribe from VK', 'social-media-popup' ),
 			)
@@ -1776,7 +1688,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_use_odnoklassniki',
 			)
 		);
@@ -1788,7 +1699,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_odnoklassniki_tab_caption',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . __( 'Odnoklassniki', 'social-media-popup' ),
 			)
@@ -1801,7 +1711,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_odnoklassniki_show_description',
 			)
 		);
@@ -1813,7 +1722,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_odnoklassniki_description',
 			)
 		);
@@ -1825,7 +1733,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_odnoklassniki_group_id',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '12345678901234',
 				'required' => true,
@@ -1839,7 +1746,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_odnoklassniki_group_url',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . 'https://ok.ru/group/57122812461115',
 				'required' => true,
@@ -1853,7 +1759,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_odnoklassniki_width',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '400',
 				'required' => true,
@@ -1867,7 +1772,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_odnoklassniki_height',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '400',
 				'required' => true,
@@ -1910,7 +1814,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_use_googleplus',
 			)
 		);
@@ -1922,7 +1825,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_googleplus_tab_caption',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . 'Google+',
 			)
@@ -1935,7 +1837,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_googleplus_show_description',
 			)
 		);
@@ -1947,7 +1848,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_googleplus_description',
 			)
 		);
@@ -1959,7 +1859,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_googleplus_page_type',
 			)
 		);
@@ -1971,7 +1870,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_googleplus_page_url',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '//plus.google.com/u/0/117676776729232885815',
 				'required' => true,
@@ -1985,7 +1883,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_googleplus_layout',
 			)
 		);
@@ -1997,7 +1894,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_googleplus_locale',
 			)
 		);
@@ -2009,7 +1905,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_googleplus_size',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '400',
 				'required' => true,
@@ -2023,7 +1918,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_googleplus_theme',
 			)
 		);
@@ -2035,7 +1929,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_googleplus_show_cover_photo',
 			)
 		);
@@ -2047,7 +1940,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_googleplus_show_tagline',
 			)
 		);
@@ -2106,7 +1998,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_use_twitter',
 			)
 		);
@@ -2118,7 +2009,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_twitter_tab_caption',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . __( 'Twitter', 'social-media-popup' ),
 			)
@@ -2131,7 +2021,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_twitter_show_description',
 			)
 		);
@@ -2143,7 +2032,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_twitter_description',
 			)
 		);
@@ -2155,7 +2043,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_twitter_username',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . 'gruz0',
 				'required' => true,
@@ -2169,7 +2056,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_twitter_locale',
 			)
 		);
@@ -2181,7 +2067,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_twitter_first_widget',
 			)
 		);
@@ -2193,7 +2078,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_twitter_close_window_after_join',
 			)
 		);
@@ -2238,7 +2122,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_twitter_use_follow_button',
 			)
 		);
@@ -2250,7 +2133,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_twitter_show_count',
 			)
 		);
@@ -2262,7 +2144,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_twitter_show_screen_name',
 			)
 		);
@@ -2274,7 +2155,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_twitter_follow_button_large_size',
 			)
 		);
@@ -2286,7 +2166,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_twitter_follow_button_align_by',
 			)
 		);
@@ -2331,7 +2210,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_twitter_use_timeline',
 			)
 		);
@@ -2343,7 +2221,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_twitter_theme',
 			)
 		);
@@ -2355,7 +2232,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_twitter_link_color',
 			)
 		);
@@ -2367,7 +2243,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_twitter_tweet_limit',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '3',
 			)
@@ -2380,7 +2255,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_twitter_show_replies',
 			)
 		);
@@ -2392,7 +2266,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_twitter_width',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '400',
 				'required' => true,
@@ -2406,7 +2279,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_twitter_height',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '400',
 				'required' => true,
@@ -2420,7 +2292,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_twitter_chrome',
 			)
 		);
@@ -2465,7 +2336,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'tracking_use_twitter',
 			)
 		);
@@ -2477,7 +2347,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'tracking_twitter_event',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . __( 'Follow on Twitter', 'social-media-popup' ),
 			)
@@ -2519,7 +2388,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_use_pinterest',
 			)
 		);
@@ -2531,7 +2399,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_pinterest_tab_caption',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . __( 'Pinterest', 'social-media-popup' ),
 			)
@@ -2544,7 +2411,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_pinterest_show_description',
 			)
 		);
@@ -2556,7 +2422,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_pinterest_description',
 			)
 		);
@@ -2568,7 +2433,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_pinterest_profile_url',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . 'http://ru.pinterest.com/gruz0/',
 				'required' => true,
@@ -2582,7 +2446,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_pinterest_image_width',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '60',
 				'required' => true,
@@ -2596,7 +2459,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_pinterest_width',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '380',
 				'required' => true,
@@ -2610,7 +2472,6 @@ class Social_Media_Popup {
 			$options_page,
 			$section,
 			array(
-				'section' => $section,
 				'field' => 'setting_pinterest_height',
 				'placeholder' => __( 'Example: ', 'social-media-popup' ) . '300',
 				'required' => true,
@@ -3257,11 +3118,7 @@ class Social_Media_Popup {
 			return;
 		}
 
-		$section = $_POST['smp_section'];
-		$input   = isset( $_POST['smp_options'] ) ? array_shift( $_POST['smp_options'] ) : array();
-
-		$values = SMP_Sanitizer::sanitize( $section, $input );
-
+		$values = SMP_Sanitizer::sanitize( $_POST['smp_section'], $_POST['smp_options'] );
 		SMP_Options::merge_options( $values );
 	}
 }
