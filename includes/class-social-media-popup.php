@@ -62,7 +62,7 @@ class Social_Media_Popup {
 	 */
 	public static function upgrade() {
 		if ( false === SMP_Options::get_option( 'version' ) ) {
-			SMP_Options::initialize_options();
+			SMP_Options::set_default_options();
 		}
 
 		// Automatically activate debug mode after reactivating plugin

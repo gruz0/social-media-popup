@@ -26,24 +26,24 @@ class SMP_Options {
 	/**
 	 * Get option by name
 	 *
-	 * @param string  $name Name
-	 * @param boolean $default Default
+	 * @param string $name Name
 	 * @return mixed
 	 */
-	public static function get_option( $name, $default = false ) {
-		if ( false === self::$_options || count( self::$_options ) == 0 ) {
-			self::$_options = self::load_options();
-
-			if ( count( self::$_options ) == 0 ) {
-				return $default;
-			}
-		}
-
-		if ( isset( self::$_options[ $name ] ) ) {
+	public static function get_option( $name ) {
+		if ( self::initialize_options() && isset( self::$_options[ $name ] ) ) {
 			return self::$_options[ $name ];
 		}
 
-		return $default;
+		return false;
+	}
+
+	/**
+	 * Load options
+	 *
+	 * @return array
+	 */
+	public static function get_options() {
+		return self::load_options();
 	}
 
 	/**
@@ -53,19 +53,11 @@ class SMP_Options {
 	 * @param mixed  $value Value
 	 */
 	public static function update_option( $name, $value ) {
-		$option = self::load_options();
-		$option = array_merge( $option, array( $name => $value ) );
+		if ( empty( $name ) ) {
+			return;
+		}
 
-		update_option( 'social_media_popup', $option );
-	}
-
-	/**
-	 * Update options
-	 *
-	 * @param array $options Options
-	 */
-	public static function update_options( $options ) {
-		update_option( 'social_media_popup', (array) $options );
+		self::merge_options( array( $name => $value ) );
 	}
 
 	/**
@@ -90,18 +82,9 @@ class SMP_Options {
 	}
 
 	/**
-	 * Load options
-	 *
-	 * @return array
+	 * Initialize options with default values
 	 */
-	public static function get_options() {
-		return self::load_options();
-	}
-
-	/**
-	 * Initialize options with defaul values
-	 */
-	public static function initialize_options() {
+	public static function set_default_options() {
 		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.LongIndexSpaceBeforeDoubleArrow
 		$options = array(
 			//
@@ -334,7 +317,7 @@ class SMP_Options {
 		);
 		// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.LongIndexSpaceBeforeDoubleArrow
 
-		SMP_Options::update_options( $options );
+		self::update_options( $options );
 	}
 
 	/**
@@ -345,5 +328,31 @@ class SMP_Options {
 	private static function load_options() {
 		$option = get_option( 'social_media_popup' );
 		return ( false === $option ) ? array() : (array) $option;
+	}
+
+	/**
+	 * Load options
+	 *
+	 * @return boolean
+	 */
+	private static function initialize_options() {
+		if ( false === self::$_options || count( self::$_options ) == 0 ) {
+			self::$_options = self::load_options();
+
+			if ( count( self::$_options ) == 0 ) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Update options
+	 *
+	 * @param array $options Options
+	 */
+	private static function update_options( $options ) {
+		update_option( 'social_media_popup', (array) $options );
 	}
 }
