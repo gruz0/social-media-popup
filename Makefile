@@ -24,4 +24,4 @@ install_linters:
 # Use it only inside Docker container (after `make shell` in the repo directory)
 tests:
 	cd /var/www/html/wp-content/plugins/social-media-popup
-	./vendor/bin/phpunit --bootstrap vendor/autoload.php tests/*.php
+	./vendor/bin/phpunit
