@@ -23,51 +23,45 @@ defined( 'ABSPATH' ) or exit;
  * Minimum WP: 3.5
  */
 
-if ( ! array_key_exists( 'social-media-popup', $GLOBALS ) ) {
-	if ( ! class_exists( 'Social_Media_Popup' ) ) {
-		register_activation_hook( __FILE__, array( 'Social_Media_Popup', 'activate' ) );
-		register_deactivation_hook( __FILE__, array( 'Social_Media_Popup', 'deactivate' ) );
-		register_uninstall_hook( __FILE__, array( 'Social_Media_Popup', 'uninstall' ) );
+define( 'SMP_PREFIX', 'social_media_popup' );
 
-		define( 'SMP_PREFIX',        'social_media_popup' );
-		define( 'SMP_DIR',            dirname( __FILE__ ) . DIRECTORY_SEPARATOR );
-		define( 'SMP_INCLUDES_DIR',   SMP_DIR . 'includes' . DIRECTORY_SEPARATOR );
-		define( 'SMP_TEMPLATES_DIR',  SMP_DIR . 'templates' . DIRECTORY_SEPARATOR );
-		define( 'SMP_PLUGIN_URL',     plugin_dir_url( __FILE__ ) );
-		define( 'SMP_PLUGIN_DIRNAME', dirname( plugin_basename( __FILE__ ) ) . DIRECTORY_SEPARATOR );
-		define( 'SMP_ASSETS_URL',     plugin_dir_url( __FILE__ ) . 'dist/' );
+if ( ! class_exists( 'Social_Media_Popup' ) ) {
+	register_activation_hook( __FILE__, array( 'Social_Media_Popup', 'activate' ) );
+	register_deactivation_hook( __FILE__, array( 'Social_Media_Popup', 'deactivate' ) );
+	register_uninstall_hook( __FILE__, array( 'Social_Media_Popup', 'uninstall' ) );
 
-		require_once( SMP_INCLUDES_DIR . 'functions.php' );
-		require_once( SMP_INCLUDES_DIR . 'class-smp-options.php' );
-		require_once( SMP_INCLUDES_DIR . 'class-smp-sanitizer.php' );
-		require_once( SMP_INCLUDES_DIR . 'class-smp-settings-field.php' );
-		require_once( SMP_INCLUDES_DIR . 'class-smp-template.php' );
-		require_once( SMP_INCLUDES_DIR . 'class-smp-popup.php' );
-		require_once( SMP_INCLUDES_DIR . 'class-smp-validator.php' );
-		require_once( SMP_INCLUDES_DIR . 'providers/class-smp-provider.php' );
-		require_once( SMP_INCLUDES_DIR . 'class-social-media-popup.php' );
+	define( 'SMP_DIR',            dirname( __FILE__ ) . DIRECTORY_SEPARATOR );
+	define( 'SMP_INCLUDES_DIR',   SMP_DIR . 'includes' . DIRECTORY_SEPARATOR );
+	define( 'SMP_TEMPLATES_DIR',  SMP_DIR . 'templates' . DIRECTORY_SEPARATOR );
+	define( 'SMP_PLUGIN_URL',     plugin_dir_url( __FILE__ ) );
+	define( 'SMP_PLUGIN_DIRNAME', dirname( plugin_basename( __FILE__ ) ) . DIRECTORY_SEPARATOR );
+	define( 'SMP_ASSETS_URL',     plugin_dir_url( __FILE__ ) . 'dist/' );
 
-		$social_media_popup = new Social_Media_Popup();
+	require_once( SMP_INCLUDES_DIR . 'functions.php' );
+	require_once( SMP_INCLUDES_DIR . 'class-smp-options.php' );
+	require_once( SMP_INCLUDES_DIR . 'class-smp-sanitizer.php' );
+	require_once( SMP_INCLUDES_DIR . 'class-smp-settings-field.php' );
+	require_once( SMP_INCLUDES_DIR . 'class-smp-template.php' );
+	require_once( SMP_INCLUDES_DIR . 'class-smp-popup.php' );
+	require_once( SMP_INCLUDES_DIR . 'class-smp-validator.php' );
+	require_once( SMP_INCLUDES_DIR . 'providers/class-smp-provider.php' );
+	require_once( SMP_INCLUDES_DIR . 'class-social-media-popup.php' );
 
-		// Uses by PHPUnit
-		$GLOBALS['social-media-popup'] = $social_media_popup;
+	new Social_Media_Popup();
 
-		if ( isset( $social_media_popup ) ) {
-			/**
-			 * Add Settings link to plugins list
-			 *
-			 * @param array $links Links
-			 * @return array
-			 */
-			function social_media_popup_plugin_settings_link( $links ) {
-				$settings_link = '<a href="admin.php?page=social_media_popup">' . esc_html( 'Settings', 'social-media-popup' ) . '</a>';
-				array_unshift( $links, $settings_link );
-				return $links;
-			}
-
-			$plugin = plugin_basename( __FILE__ );
-			add_filter( 'plugin_action_links_' . $plugin, 'social_media_popup_plugin_settings_link' );
-		}
+	/**
+	 * Add Settings link to plugins list
+	 *
+	 * @param array $links Links
+	 * @return array
+	 */
+	function social_media_popup_plugin_settings_link( $links ) {
+		$settings_link = '<a href="admin.php?page=social_media_popup">' . esc_html( 'Settings', 'social-media-popup' ) . '</a>';
+		array_unshift( $links, $settings_link );
+		return $links;
 	}
+
+	$plugin = plugin_basename( __FILE__ );
+	add_filter( 'plugin_action_links_' . $plugin, 'social_media_popup_plugin_settings_link' );
 }
 
