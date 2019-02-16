@@ -12,6 +12,8 @@
  * SMP_Provider
  */
 class SMP_Provider {
+	const AVAILABLE_PROVIDERS = array( 'facebook', 'vkontakte', 'odnoklassniki', 'googleplus', 'twitter', 'pinterest' );
+
 	/**
 	 * Tabs UL identifier to use in providers JS-prepend* functions
 	 *
@@ -34,7 +36,7 @@ class SMP_Provider {
 	 * @return array
 	 */
 	public static function available_providers() {
-		return array( 'facebook', 'vkontakte', 'odnoklassniki', 'googleplus', 'twitter', 'pinterest' );
+		return self::AVAILABLE_PROVIDERS;
 	}
 
 	/**
