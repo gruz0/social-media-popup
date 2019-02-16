@@ -29,7 +29,7 @@ class SMP_Sanitizer {
 		switch ( $section ) {
 			case SMP_PREFIX . '-section-common':
 				$values['setting_debug_mode']                       = isset( $input['setting_debug_mode'] ) ? 1 : 0;
-				$values['setting_tabs_order']                       = sanitize_text_field( $input['setting_tabs_order'] );
+				$values['setting_tabs_order']                       = self::sanitize_setting_tabs_order( $input['setting_tabs_order'] );
 				$values['setting_close_popup_by_clicking_anywhere'] = isset( $input['setting_close_popup_by_clicking_anywhere'] ) ? 1 : 0;
 				$values['setting_close_popup_when_esc_pressed']     = isset( $input['setting_close_popup_when_esc_pressed'] ) ? 1 : 0;
 				$values['setting_show_on_mobile_devices']           = isset( $input['setting_show_on_mobile_devices'] ) ? 1 : 0;
@@ -279,5 +279,33 @@ class SMP_Sanitizer {
 		}
 
 		return $values;
+	}
+
+	/**
+	 * Sanitize field `setting_tabs_order`
+	 *
+	 * @param string $value Value
+	 * @return string
+	 */
+	private static function sanitize_setting_tabs_order( $value ) {
+		$values = self::clean_array( explode( ',', $value ) );
+		$diff   = array_diff( $values, SMP_Provider::AVAILABLE_PROVIDERS );
+
+		return join( ',', array_diff( $values, $diff ) );
+	}
+
+	/**
+	 * Lowercase and trim each array item.
+	 * After that delete empty items and uniqueize array
+	 *
+	 * @param array $items Items
+	 * @return array
+	 */
+	private static function clean_array( $items ) {
+		$lowercase_and_trim = function( $item ) {
+			return strtolower( trim( $item ) );
+		};
+
+		return array_unique( array_filter( array_map( $lowercase_and_trim, $items ) ) );
 	}
 }
