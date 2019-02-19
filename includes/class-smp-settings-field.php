@@ -126,6 +126,43 @@ class SMP_Settings_Field {
 		$field = $args['field'];
 		$value = esc_attr( SMP_Options::get_option( $field ) );
 
+		$styles = self::get_animation_styles();
+
+		$html   = '<select id="smp_animation_style" name="smp_options['. $field . ']">';
+		$format = '<option value="%s"%s>%s</option>';
+
+		for ( $idx = 0; $idx < count( $styles ); $idx++ ) {
+			$options        = '';
+			$optgroup_label = '';
+
+			foreach ( $styles[ $idx ] as $key => $label ) {
+				if ( 'optgroup' === $key ) {
+					$optgroup_label = $label;
+					continue;
+				}
+
+				$options .= sprintf( $format, $key, selected( $value, $key, false ), esc_html( $label ) );
+			}
+
+			$html .= '<optgroup label="' . $optgroup_label . '">' . $options . '</optgroup>';
+		}
+
+		$html .= '</select>';
+
+		$html .= ' <input type="button" class="button" id="smp_play_animation" value="' . esc_attr( 'Play Animation', 'social-media-popup' ) . '">';
+		$html .= '<br /><div id="smp_animation" class="animated notice-success">Social Media Popup</div>';
+
+		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $html;
+		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+
+	/**
+	 * Returns animation styles as key/value array
+	 *
+	 * @return array
+	 */
+	public static function get_animation_styles() {
 		$attention_seekers = array(
 			'optgroup'   => 'Attention Seekers',
 			'bounce'     => 'Bounce',
@@ -198,7 +235,7 @@ class SMP_Settings_Field {
 			'rollIn'   => 'Roll In',
 		);
 
-		$styles = array(
+		return array(
 			$attention_seekers,
 			$bouncing_entrances,
 			$fading_entrances,
@@ -209,33 +246,6 @@ class SMP_Settings_Field {
 			$zoom_entrances,
 			$specials,
 		);
-		$html   = '<select id="smp_animation_style" name="smp_options['. $field . ']">';
-		$format = '<option value="%s"%s>%s</option>';
-
-		for ( $idx = 0; $idx < count( $styles ); $idx++ ) {
-			$options        = '';
-			$optgroup_label = '';
-
-			foreach ( $styles[ $idx ] as $key => $label ) {
-				if ( 'optgroup' === $key ) {
-					$optgroup_label = $label;
-					continue;
-				}
-
-				$options .= sprintf( $format, $key, selected( $value, $key, false ), esc_html( $label ) );
-			}
-
-			$html .= '<optgroup label="' . $optgroup_label . '">' . $options . '</optgroup>';
-		}
-
-		$html .= '</select>';
-
-		$html .= ' <input type="button" class="button" id="smp_play_animation" value="' . esc_attr( 'Play Animation', 'social-media-popup' ) . '">';
-		$html .= '<br /><div id="smp_animation" class="animated notice-success">Social Media Popup</div>';
-
-		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo $html;
-		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -249,15 +259,22 @@ class SMP_Settings_Field {
 		$field = $args['field'];
 		$value = esc_attr( SMP_Options::get_option( $field ) );
 
-		$items = array(
+		self::render_select_with_options( $field, self::get_icons_sizes(), $value );
+	}
+
+	/**
+	 * Returns icons sizes
+	 *
+	 * @return array
+	 */
+	public static function get_icons_sizes() {
+		return array(
 			'lg' => __( 'Normal Size', 'social-media-popup' ),
 			'2x' => '2x',
 			'3x' => '3x',
 			'4x' => '4x',
 			'5x' => '5x',
 		);
-
-		self::render_select_with_options( $field, $items, $value );
 	}
 
 	/**
@@ -269,13 +286,20 @@ class SMP_Settings_Field {
 		$field = $args['field'];
 		$value = esc_attr( SMP_Options::get_option( $field ) );
 
-		$items = array(
+		self::render_radio_buttons( $field, self::get_close_button_in_items(), $value );
+	}
+
+	/**
+	 * Returns array of positions where close button will be displayed
+	 *
+	 * @return array
+	 */
+	public static function get_close_button_in() {
+		return array(
 			'inside'  => __( 'Inside Container', 'social-media-popup' ),
 			'outside' => __( 'Outside Container', 'social-media-popup' ),
 			'none'    => __( "Don't show", 'social-media-popup' ),
 		);
-
-		self::render_radio_buttons( $field, $items, $value );
 	}
 
 	/**
@@ -287,14 +311,21 @@ class SMP_Settings_Field {
 		$field = $args['field'];
 		$value = esc_attr( SMP_Options::get_option( $field ) );
 
-		$items = array(
+		self::render_radio_buttons( $field, self::get_close_button_styles(), $value );
+	}
+
+	/**
+	 * Returns close button style variations
+	 *
+	 * @return array
+	 */
+	public static function get_close_button_styles() {
+		return array(
 			'link'  => __( 'Link', 'social-media-popup' ),
 			'green' => __( 'Green Button', 'social-media-popup' ),
 			'blue'  => __( 'Blue Button', 'social-media-popup' ),
 			'red'   => __( 'Red Button', 'social-media-popup' ),
 		);
-
-		self::render_radio_buttons( $field, $items, $value );
 	}
 
 	/**

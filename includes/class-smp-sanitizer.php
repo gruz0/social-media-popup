@@ -29,7 +29,7 @@ class SMP_Sanitizer {
 		switch ( $section ) {
 			case SMP_PREFIX . '-section-common':
 				$values['setting_debug_mode']                       = isset( $input['setting_debug_mode'] ) ? 1 : 0;
-				$values['setting_tabs_order']                       = self::sanitize_setting_tabs_order( $input['setting_tabs_order'] );
+				$values['setting_tabs_order']                       = self::sanitize_tabs_order( $input['setting_tabs_order'] );
 				$values['setting_close_popup_by_clicking_anywhere'] = isset( $input['setting_close_popup_by_clicking_anywhere'] ) ? 1 : 0;
 				$values['setting_close_popup_when_esc_pressed']     = isset( $input['setting_close_popup_when_esc_pressed'] ) ? 1 : 0;
 				$values['setting_show_on_mobile_devices']           = isset( $input['setting_show_on_mobile_devices'] ) ? 1 : 0;
@@ -40,28 +40,28 @@ class SMP_Sanitizer {
 			case SMP_PREFIX . '-section-common-view':
 				$values['setting_plugin_title']                        = wp_kses_post( $input['setting_plugin_title'] );
 				$values['setting_use_animation']                       = isset( $input['setting_use_animation'] ) ? 1 : 0;
-				$values['setting_animation_style']                     = sanitize_text_field( $input['setting_animation_style'] );
+				$values['setting_animation_style']                     = self::sanitize_animation_style( $input['setting_animation_style'] );
 				$values['setting_use_icons_instead_of_labels_in_tabs'] = isset( $input['setting_use_icons_instead_of_labels_in_tabs'] ) ? 1 : 0;
-				$values['setting_icons_size_on_desktop']               = sanitize_text_field( $input['setting_icons_size_on_desktop'] );
+				$values['setting_icons_size_on_desktop']               = self::sanitize_icons_size( $input['setting_icons_size_on_desktop'] );
 				$values['setting_hide_tabs_if_one_widget_is_active']   = isset( $input['setting_hide_tabs_if_one_widget_is_active'] ) ? 1 : 0;
 				$values['setting_container_width']                     = absint( $input['setting_container_width'] );
 				$values['setting_container_height']                    = absint( $input['setting_container_height'] );
 				$values['setting_border_radius']                       = absint( $input['setting_border_radius'] );
-				$values['setting_show_close_button_in']                = sanitize_text_field( $input['setting_show_close_button_in'] );
+				$values['setting_show_close_button_in']                = self::sanitize_show_close_button_in( $input['setting_show_close_button_in'] );
 				$values['setting_show_button_to_close_widget']         = isset( $input['setting_show_button_to_close_widget'] ) ? 1 : 0;
 				$values['setting_button_to_close_widget_title']        = sanitize_text_field( $input['setting_button_to_close_widget_title'] );
-				$values['setting_button_to_close_widget_style']        = sanitize_text_field( $input['setting_button_to_close_widget_style'] );
+				$values['setting_button_to_close_widget_style']        = self::sanitize_button_to_close_widget_style( $input['setting_button_to_close_widget_style'] );
 				$values['setting_delay_before_show_bottom_button']     = absint( $input['setting_delay_before_show_bottom_button'] );
-				$values['setting_overlay_color']                       = sanitize_text_field( $input['setting_overlay_color'] );
-				$values['setting_overlay_opacity']                     = absint( $input['setting_overlay_opacity'] );
+				$values['setting_overlay_color']                       = self::sanitize_hex_color( $input['setting_overlay_color'] );
+				$values['setting_overlay_opacity']                     = self::sanitize_overlay_opacity( $input['setting_overlay_opacity'] );
 				$values['setting_align_tabs_to_center']                = isset( $input['setting_align_tabs_to_center'] ) ? 1 : 0;
-				$values['setting_background_image']                    = sanitize_text_field( $input['setting_background_image'] );
+				$values['setting_background_image']                    = self::sanitize_background_image( $input['setting_background_image'] );
 
 				break;
 
 			case SMP_PREFIX . '-section-common-view-mobile':
 				$values['setting_plugin_title_on_mobile_devices'] = wp_kses_post( $input['setting_plugin_title_on_mobile_devices'] );
-				$values['setting_icons_size_on_mobile_devices']   = sanitize_text_field( $input['setting_icons_size_on_mobile_devices'] );
+				$values['setting_icons_size_on_mobile_devices']   = self::sanitize_icons_size( $input['setting_icons_size_on_mobile_devices'] );
 
 				break;
 
@@ -287,11 +287,110 @@ class SMP_Sanitizer {
 	 * @param string $value Value
 	 * @return string
 	 */
-	private static function sanitize_setting_tabs_order( $value ) {
+	private static function sanitize_tabs_order( $value ) {
 		$values = self::clean_array( explode( ',', $value ) );
 		$diff   = array_diff( $values, SMP_Provider::AVAILABLE_PROVIDERS );
 
 		return join( ',', array_diff( $values, $diff ) );
+	}
+
+	/**
+	 * Sanitize field `setting_animation_style`
+	 *
+	 * @param string $value Value
+	 * @return string
+	 */
+	private static function sanitize_animation_style( $value ) {
+		$values = SMP_Settings_Field::get_animation_styles();
+
+		foreach ( $values as $optgroup => $items ) {
+			if ( isset( $items[ $value ] ) ) {
+				return $value;
+			}
+		}
+
+		return 'bounce';
+	}
+
+	/**
+	 * Sanitize field `setting_icons_size`
+	 *
+	 * @param string $value Value
+	 * @return string
+	 */
+	private static function sanitize_icons_size( $value ) {
+		$values = SMP_Settings_Field::get_icons_sizes();
+
+		if ( isset( $values[ $value ] ) ) {
+			return $value;
+		}
+
+		return 'lg';
+	}
+
+	/**
+	 * Sanitize field `setting_show_close_button_in`
+	 *
+	 * @param string $value Value
+	 * @return string
+	 */
+	private static function sanitize_show_close_button_in( $value ) {
+		$values = SMP_Settings_Field::get_close_button_in();
+
+		if ( isset( $values[ $value ] ) ) {
+			return $value;
+		}
+
+		return 'inside';
+	}
+
+	/**
+	 * Sanitize field `setting_button_to_close_widget_style`
+	 *
+	 * @param string $value Value
+	 * @return string
+	 */
+	private static function sanitize_button_to_close_widget_style( $value ) {
+		$values = SMP_Settings_Field::get_close_button_styles();
+
+		if ( isset( $values[ $value ] ) ) {
+			return $value;
+		}
+
+		return 'link';
+	}
+
+	/**
+	 * Sanitize field `setting_overlay_opacity`
+	 *
+	 * @param string $value Value
+	 * @return integer
+	 */
+	private static function sanitize_overlay_opacity( $value ) {
+		$value = absint( $value );
+
+		return ( $value >= 0 && $value <= 100 ) ? $value : 80;
+	}
+
+	/**
+	 * Sanitize field `setting_background_image`
+	 *
+	 * @param string $value Value
+	 * @return string
+	 */
+	private static function sanitize_background_image( $value ) {
+		return ( filter_var( $value, FILTER_VALIDATE_URL ) ) ? trim( $value ) : '';
+	}
+
+	/**
+	 * Sanitize HEX colors
+	 *
+	 * @param string $value Value
+	 * @param string $default Default value
+	 * @return string
+	 */
+	private static function sanitize_hex_color( $value, $default = '#000000' ) {
+		return preg_match( '/^#([[:xdigit:]]{3}){1,2}$/', $value ) ? $value : $default;
 	}
 
 	/**
