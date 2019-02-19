@@ -80,4 +80,19 @@ final class SMP_Sanitizer_Test extends TestCase {
 		$this->assertEquals( 1, $result['setting_align_tabs_to_center'] );
 		$this->assertEquals( '', $result['setting_background_image'] );
 	}
+
+	/**
+	 * Sanitize General > Mobile View section
+	 */
+	public function testCanBeSanitizedSectionCommonMobile(): void {
+		$values = array(
+			'setting_plugin_title_on_mobile_devices' => 'Title<script>alert("qwe");</script>',
+			'setting_icons_size_on_mobile_devices'   => 'qwe',
+		);
+
+		$result = SMP_Sanitizer::sanitize( SMP_PREFIX . '-section-common-view-mobile', $values );
+
+		$this->assertEquals( 'Titlealert("qwe");', $result['setting_plugin_title_on_mobile_devices'] );
+		$this->assertEquals( 'lg', $result['setting_icons_size_on_mobile_devices'] );
+	}
 }
