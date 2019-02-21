@@ -11,7 +11,8 @@ include '../../../wp-load.php';
  * SMP_Sanitizer Test
  */
 final class SMP_Sanitizer_Test extends TestCase {
-	const SECTION_COMMON_GENERAL = SMP_PREFIX . '-section-common';
+	const SECTION_COMMON_GENERAL      = SMP_PREFIX . '-section-common';
+	const SECTION_COMMON_VIEW_DESKTOP = SMP_PREFIX . '-section-common-view';
 
 	/**
 	 * Checks if checkbox is not checked then it will return `1` otherwise `0`
@@ -20,10 +21,21 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * @param string $option_name Option name
 	 */
 	public function sanitizeCheckbox( $section, $option_name ) {
-		$value    = rand( 2, 99 );
-		$expected = 1;
-		$result   = SMP_Sanitizer::sanitize( self::SECTION_COMMON_GENERAL, array( $option_name => $value ) );
+		$value  = rand( 2, 99 );
+		$result = SMP_Sanitizer::sanitize( $section, array( $option_name => $value ) );
 		$this->assertEquals( 1, $result[ $option_name ] );
+	}
+
+	/**
+	 * Sanitize option's integer value
+	 *
+	 * @param string $section     Section
+	 * @param string $option_name Option name
+	 * @param string $value       Value
+	 */
+	public function sanitizeInteger( $section, $option_name, $value ) {
+		$result = SMP_Sanitizer::sanitize( $section, array( $option_name => $value ) );
+		$this->assertEquals( absint( $value ), $result[ $option_name ] );
 	}
 
 	/**
@@ -74,50 +86,174 @@ final class SMP_Sanitizer_Test extends TestCase {
 	}
 
 	/**
-	 * Sanitize General > Desktop View section
+	 * Sanitize setting_plugin_title
 	 */
-	public function testCanBeSanitizedSectionCommonDesktop(): void {
-		$values = array(
-			'setting_plugin_title'                        => 'Title<script>alert("qwe");</script>',
-			'setting_use_animation'                       => 2,
-			'setting_animation_style'                     => 'qwe',
-			'setting_use_icons_instead_of_labels_in_tabs' => 2,
-			'setting_icons_size_on_desktop'               => 'qwe',
-			'setting_hide_tabs_if_one_widget_is_active'   => 2,
-			'setting_container_width'                     => '400',
-			'setting_container_height'                    => '400',
-			'setting_border_radius'                       => '30',
-			'setting_show_close_button_in'                => 'qwe',
-			'setting_show_button_to_close_widget'         => 2,
-			'setting_button_to_close_widget_title'        => "Please, don't show me again!",
-			'setting_button_to_close_widget_style'        => 'qwe',
-			'setting_delay_before_show_bottom_button'     => '3',
-			'setting_overlay_color'                       => 'qwe',
-			'setting_overlay_opacity'                     => 105,
-			'setting_align_tabs_to_center'                => 2,
-			'setting_background_image'                    => 'localhost/image.png',
-		);
+	public function testCanBeSanitizedSettingPluginTitle(): void {
+		$key      = 'setting_plugin_title';
+		$value    = 'Title<script>alert("qwe");</script>';
+		$expected = 'Titlealert("qwe");';
 
-		$result = SMP_Sanitizer::sanitize( SMP_PREFIX . '-section-common-view', $values );
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_VIEW_DESKTOP, array( $key => $value ) );
+		$this->assertEquals( $expected, $result[ $key ] );
+	}
 
-		$this->assertEquals( 'Titlealert("qwe");', $result['setting_plugin_title'] );
-		$this->assertEquals( 1, $result['setting_use_animation'] );
-		$this->assertEquals( 'bounce', $result['setting_animation_style'] );
-		$this->assertEquals( 1, $result['setting_use_icons_instead_of_labels_in_tabs'] );
-		$this->assertEquals( 'lg', $result['setting_icons_size_on_desktop'] );
-		$this->assertEquals( 1, $result['setting_hide_tabs_if_one_widget_is_active'] );
-		$this->assertEquals( 400, $result['setting_container_width'] );
-		$this->assertEquals( 400, $result['setting_container_height'] );
-		$this->assertEquals( 30, $result['setting_border_radius'] );
-		$this->assertEquals( 'inside', $result['setting_show_close_button_in'] );
-		$this->assertEquals( 1, $result['setting_show_button_to_close_widget'] );
-		$this->assertEquals( "Please, don't show me again!", $result['setting_button_to_close_widget_title'] );
-		$this->assertEquals( 'link', $result['setting_button_to_close_widget_style'] );
-		$this->assertEquals( 3, $result['setting_delay_before_show_bottom_button'] );
-		$this->assertEquals( '#000000', $result['setting_overlay_color'] );
-		$this->assertEquals( 80, $result['setting_overlay_opacity'] );
-		$this->assertEquals( 1, $result['setting_align_tabs_to_center'] );
-		$this->assertEquals( '', $result['setting_background_image'] );
+	/**
+	 * Sanitize setting_use_animation
+	 */
+	public function testCanBeSanitizedSettingUseAnimation(): void {
+		$this->sanitizeCheckbox( self::SECTION_COMMON_VIEW_DESKTOP, 'setting_use_animation' );
+	}
+
+	/**
+	 * Sanitize setting_animation_style
+	 */
+	public function testCanBeSanitizedSettingAnimationStyle(): void {
+		$key      = 'setting_animation_style';
+		$value    = 'qwe';
+		$expected = 'bounce';
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_VIEW_DESKTOP, array( $key => $value ) );
+		$this->assertEquals( $expected, $result[ $key ] );
+	}
+
+	/**
+	 * Sanitize setting_use_icons_instead_of_labels_in_tabs
+	 */
+	public function testCanBeSanitizedSettingUseIconsInsteadOfLabelsInTabs(): void {
+		$this->sanitizeCheckbox( self::SECTION_COMMON_VIEW_DESKTOP, 'setting_use_icons_instead_of_labels_in_tabs' );
+	}
+
+	/**
+	 * Sanitize setting_icons_size_on_desktop
+	 */
+	public function testCanBeSanitizedSettingIconsSizeOnDesktop(): void {
+		$key      = 'setting_icons_size_on_desktop';
+		$value    = 'qwe';
+		$expected = 'lg';
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_VIEW_DESKTOP, array( $key => $value ) );
+		$this->assertEquals( $expected, $result[ $key ] );
+	}
+
+	/**
+	 * Sanitize setting_hide_tabs_if_one_widget_is_active
+	 */
+	public function testCanBeSanitizedSettingHideTabsIfOneWidgetIsActive(): void {
+		$this->sanitizeCheckbox( self::SECTION_COMMON_VIEW_DESKTOP, 'setting_hide_tabs_if_one_widget_is_active' );
+	}
+
+	/**
+	 * Sanitize setting_container_width
+	 */
+	public function testCanBeSanitizedSettingContainerWidth(): void {
+		$this->sanitizeInteger( self::SECTION_COMMON_VIEW_DESKTOP, 'setting_container_width', '400' );
+	}
+
+	/**
+	 * Sanitize setting_container_height
+	 */
+	public function testCanBeSanitizedSettingContainerHeight(): void {
+		$this->sanitizeInteger( self::SECTION_COMMON_VIEW_DESKTOP, 'setting_container_height', '400' );
+	}
+
+	/**
+	 * Sanitize setting_border_radius
+	 */
+	public function testCanBeSanitizedSettingBorderRadius(): void {
+		$this->sanitizeInteger( self::SECTION_COMMON_VIEW_DESKTOP, 'setting_border_radius', '30' );
+	}
+
+	/**
+	 * Sanitize setting_show_close_button_in
+	 */
+	public function testCanBeSanitizedSettingShowCloseButtonIn(): void {
+		$key      = 'setting_show_close_button_in';
+		$value    = 'qwe';
+		$expected = 'inside';
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_VIEW_DESKTOP, array( $key => $value ) );
+		$this->assertEquals( $expected, $result[ $key ] );
+	}
+
+	/**
+	 * Sanitize setting_show_button_to_close_widget
+	 */
+	public function testCanBeSanitizedSettingShowButtonToCloseWidget(): void {
+		$this->sanitizeCheckbox( self::SECTION_COMMON_VIEW_DESKTOP, 'setting_show_button_to_close_widget' );
+	}
+
+	/**
+	 * Sanitize setting_button_to_close_widget_title
+	 */
+	public function testCanBeSanitizedSettingButtonToCloseWidgetTitle(): void {
+		$key      = 'setting_button_to_close_widget_title';
+		$value    = "<b><script></script>Please, don't show me again!</b>";
+		$expected = "Please, don't show me again!";
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_VIEW_DESKTOP, array( $key => $value ) );
+		$this->assertEquals( $expected, $result[ $key ] );
+	}
+
+	/**
+	 * Sanitize setting_button_to_close_widget_style
+	 */
+	public function testCanBeSanitizedSettingButtonToCloseWidgetStyle(): void {
+		$key      = 'setting_button_to_close_widget_style';
+		$value    = 'qwe';
+		$expected = 'link';
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_VIEW_DESKTOP, array( $key => $value ) );
+		$this->assertEquals( $expected, $result[ $key ] );
+	}
+
+	/**
+	 * Sanitize setting_delay_before_show_bottom_button
+	 */
+	public function testCanBeSanitizedSettingDelayBeforeShowBottomButton(): void {
+		$this->sanitizeInteger( self::SECTION_COMMON_VIEW_DESKTOP, 'setting_delay_before_show_bottom_button', '3' );
+	}
+
+	/**
+	 * Sanitize setting_overlay_color
+	 */
+	public function testCanBeSanitizedSettingOverlayColor(): void {
+		$key      = 'setting_overlay_color';
+		$value    = 'qwe';
+		$expected = '#000000';
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_VIEW_DESKTOP, array( $key => $value ) );
+		$this->assertEquals( $expected, $result[ $key ] );
+	}
+
+	/**
+	 * Sanitize setting_overlay_opacity
+	 */
+	public function testCanBeSanitizedSettingOverlayOpacity(): void {
+		$key      = 'setting_overlay_opacity';
+		$value    = 105;
+		$expected = 80;
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_VIEW_DESKTOP, array( $key => $value ) );
+		$this->assertEquals( $expected, $result[ $key ] );
+	}
+
+	/**
+	 * Sanitize setting_align_tabs_to_center
+	 */
+	public function testCanBeSanitizedSettingAlignTabsToCenter(): void {
+		$this->sanitizeCheckbox( self::SECTION_COMMON_VIEW_DESKTOP, 'setting_align_tabs_to_center' );
+	}
+
+	/**
+	 * Sanitize setting_background_image
+	 */
+	public function testCanBeSanitizedSettingBackgroundImage(): void {
+		$key      = 'setting_background_image';
+		$value    = 'localhost/image.png';
+		$expected = '';
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_VIEW_DESKTOP, array( $key => $value ) );
+		$this->assertEquals( $expected, $result[ $key ] );
 	}
 
 	/**
