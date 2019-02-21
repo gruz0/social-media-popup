@@ -13,6 +13,7 @@ include '../../../wp-load.php';
 final class SMP_Sanitizer_Test extends TestCase {
 	const SECTION_COMMON_GENERAL      = SMP_PREFIX . '-section-common';
 	const SECTION_COMMON_VIEW_DESKTOP = SMP_PREFIX . '-section-common-view';
+	const SECTION_COMMON_VIEW_MOBILE  = SMP_PREFIX . '-section-common-view-mobile';
 
 	/**
 	 * Checks if checkbox is not checked then it will return `1` otherwise `0`
@@ -257,17 +258,26 @@ final class SMP_Sanitizer_Test extends TestCase {
 	}
 
 	/**
-	 * Sanitize General > Mobile View section
+	 * Sanitize setting_plugin_title_on_mobile_devices
 	 */
-	public function testCanBeSanitizedSectionCommonMobile(): void {
-		$values = array(
-			'setting_plugin_title_on_mobile_devices' => 'Title<script>alert("qwe");</script>',
-			'setting_icons_size_on_mobile_devices'   => 'qwe',
-		);
+	public function testCanBeSanitizedSettingPluginTitleOnMobileDevices(): void {
+		$key      = 'setting_plugin_title_on_mobile_devices';
+		$value    = 'Title<script>alert("qwe");</script>';
+		$expected = 'Titlealert("qwe");';
 
-		$result = SMP_Sanitizer::sanitize( SMP_PREFIX . '-section-common-view-mobile', $values );
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_VIEW_MOBILE, array( $key => $value ) );
+		$this->assertEquals( $expected, $result[ $key ] );
+	}
 
-		$this->assertEquals( 'Titlealert("qwe");', $result['setting_plugin_title_on_mobile_devices'] );
-		$this->assertEquals( 'lg', $result['setting_icons_size_on_mobile_devices'] );
+	/**
+	 * Sanitize setting_icons_size_on_mobile_devices
+	 */
+	public function testCanBeSanitizedSettingIconsSizeOnMobileDevices(): void {
+		$key      = 'setting_icons_size_on_mobile_devices';
+		$value    = 'qwe';
+		$expected = 'lg';
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_VIEW_MOBILE, array( $key => $value ) );
+		$this->assertEquals( $expected, $result[ $key ] );
 	}
 }
