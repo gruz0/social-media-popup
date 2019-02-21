@@ -14,15 +14,23 @@ final class SMP_Sanitizer_Test extends TestCase {
 	const SECTION_COMMON_GENERAL = SMP_PREFIX . '-section-common';
 
 	/**
+	 * Checks if checkbox is not checked then it will return `1` otherwise `0`
+	 *
+	 * @param string $section     Section
+	 * @param string $option_name Option name
+	 */
+	public function sanitizeCheckbox( $section, $option_name ) {
+		$value    = rand( 2, 99 );
+		$expected = 1;
+		$result   = SMP_Sanitizer::sanitize( self::SECTION_COMMON_GENERAL, array( $option_name => $value ) );
+		$this->assertEquals( 1, $result[ $option_name ] );
+	}
+
+	/**
 	 * Sanitize setting_debug_mode
 	 */
 	public function testCanBeSanitizedSettingDebugMode(): void {
-		$key      = 'setting_debug_mode';
-		$value    = 2;
-		$expected = 1;
-
-		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_GENERAL, array( $key => $value ) );
-		$this->assertEquals( $expected, $result[ $key ] );
+		$this->sanitizeCheckbox( self::SECTION_COMMON_GENERAL, 'setting_debug_mode' );
 	}
 
 	/**
@@ -41,48 +49,28 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * Sanitize setting_close_popup_by_clicking_anywhere
 	 */
 	public function testCanBeSanitizedSettingClosePopupByClickingAnywhere(): void {
-		$key      = 'setting_close_popup_by_clicking_anywhere';
-		$value    = 3;
-		$expected = 1;
-
-		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_GENERAL, array( $key => $value ) );
-		$this->assertEquals( $expected, $result[ $key ] );
+		$this->sanitizeCheckbox( self::SECTION_COMMON_GENERAL, 'setting_close_popup_by_clicking_anywhere' );
 	}
 
 	/**
 	 * Sanitize setting_close_popup_when_esc_pressed
 	 */
 	public function testCanBeSanitizedSettingClosePopupWhenEscPressed(): void {
-		$key      = 'setting_close_popup_when_esc_pressed';
-		$value    = 4;
-		$expected = 1;
-
-		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_GENERAL, array( $key => $value ) );
-		$this->assertEquals( $expected, $result[ $key ] );
+		$this->sanitizeCheckbox( self::SECTION_COMMON_GENERAL, 'setting_close_popup_when_esc_pressed' );
 	}
 
 	/**
 	 * Sanitize setting_show_on_mobile_devices
 	 */
 	public function testCanBeSanitizedSettingShowOnMobileDevices(): void {
-		$key      = 'setting_show_on_mobile_devices';
-		$value    = 5;
-		$expected = 1;
-
-		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_GENERAL, array( $key => $value ) );
-		$this->assertEquals( $expected, $result[ $key ] );
+		$this->sanitizeCheckbox( self::SECTION_COMMON_GENERAL, 'setting_show_on_mobile_devices' );
 	}
 
 	/**
 	 * Sanitize setting_show_admin_bar_menu
 	 */
 	public function testCanBeSanitizedSettingShowAdminBarMenu(): void {
-		$key      = 'setting_show_admin_bar_menu';
-		$value    = 6;
-		$expected = 1;
-
-		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_GENERAL, array( $key => $value ) );
-		$this->assertEquals( $expected, $result[ $key ] );
+		$this->sanitizeCheckbox( self::SECTION_COMMON_GENERAL, 'setting_show_admin_bar_menu' );
 	}
 
 	/**
