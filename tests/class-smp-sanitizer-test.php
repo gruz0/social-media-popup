@@ -11,9 +11,17 @@ include '../../../wp-load.php';
  * SMP_Sanitizer Test
  */
 final class SMP_Sanitizer_Test extends TestCase {
-	const SECTION_COMMON_GENERAL      = SMP_PREFIX . '-section-common';
-	const SECTION_COMMON_VIEW_DESKTOP = SMP_PREFIX . '-section-common-view';
-	const SECTION_COMMON_VIEW_MOBILE  = SMP_PREFIX . '-section-common-view-mobile';
+	const SECTION_COMMON_GENERAL        = SMP_PREFIX . '-section-common';
+	const SECTION_COMMON_VIEW_DESKTOP   = SMP_PREFIX . '-section-common-view';
+	const SECTION_COMMON_VIEW_MOBILE    = SMP_PREFIX . '-section-common-view-mobile';
+	const SECTION_COMMON_EVENTS_GENERAL = SMP_PREFIX . '-section-common-events-general';
+
+	/**
+	 * Set default options
+	 */
+	public function setUp() {
+		SMP_Options::set_default_options();
+	}
 
 	/**
 	 * Checks if checkbox is not checked then it will return `1` otherwise `0`
@@ -279,5 +287,155 @@ final class SMP_Sanitizer_Test extends TestCase {
 
 		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_VIEW_MOBILE, array( $key => $value ) );
 		$this->assertEquals( $expected, $result[ $key ] );
+	}
+
+	/**
+	 * Sanitize when_should_the_popup_appear
+	 */
+	public function testCanBeSanitizedSettingWhenShouldThePopupAppear(): void {
+		$values = array(
+			'when_should_the_popup_appear'                     => ' after_n_seconds, after_clicking_on_element  ,after_n_seconds,after_scrolling_down_n_percent, on_exit_intent, ,',
+			'popup_will_appear_after_n_seconds'                => '-30',
+			'popup_will_appear_after_clicking_on_element'      => ' #my-button, .entry .button йцу123',
+			'event_hide_element_after_click_on_it'             => 2,
+			'do_not_use_cookies_after_click_on_element'        => 3,
+			'popup_will_appear_after_scrolling_down_n_percent' => '-70',
+			'popup_will_appear_on_exit_intent'                 => 4,
+		);
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_EVENTS_GENERAL, $values );
+		$this->assertEquals(
+			'after_n_seconds,after_clicking_on_element,after_scrolling_down_n_percent,on_exit_intent',
+			$result['when_should_the_popup_appear']
+		);
+	}
+
+	/**
+	 * Sanitize popup_will_appear_after_n_seconds
+	 */
+	public function testCanBeSanitizedSettingPopupWillAppearAfterNSeconds(): void {
+		// If the key exists in the array then apply `absint` to the value
+		$values = array(
+			'when_should_the_popup_appear'      => 'after_n_seconds,',
+			'popup_will_appear_after_n_seconds' => '-30',
+		);
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_EVENTS_GENERAL, $values );
+		$this->assertEquals( 30, $result['popup_will_appear_after_n_seconds'] );
+
+		// If the key does not exist in the array then return 0
+		$values = array(
+			'when_should_the_popup_appear' => '',
+		);
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_EVENTS_GENERAL, $values );
+		$this->assertEquals( 0, $result['popup_will_appear_after_n_seconds'] );
+
+		// If the key exists but dependent option is empty then delete key from array
+		$values = array(
+			'when_should_the_popup_appear'      => 'after_n_seconds,',
+			'popup_will_appear_after_n_seconds' => ' ',
+		);
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_EVENTS_GENERAL, $values );
+		$this->assertEquals( '', $result['when_should_the_popup_appear'] );
+		$this->assertEquals( 0, $result['popup_will_appear_after_n_seconds'] );
+	}
+
+	/**
+	 * Sanitize popup_will_appear_after_clicking_on_element
+	 */
+	public function testCanBeSanitizedSettingPopupWillAppearAfterClickingOnElement(): void {
+		// If the key exists in the array then clean up the values of dependent options
+		$values = array(
+			'when_should_the_popup_appear'                => 'after_clicking_on_element,',
+			'popup_will_appear_after_clicking_on_element' => ' #my-button, .entry .button йцу123',
+			'event_hide_element_after_click_on_it'        => 2,
+			'do_not_use_cookies_after_click_on_element'   => 3,
+		);
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_EVENTS_GENERAL, $values );
+		$this->assertEquals( '#my-button, .entry .button 123', $result['popup_will_appear_after_clicking_on_element'] );
+		$this->assertEquals( 1, $result['event_hide_element_after_click_on_it'] );
+		$this->assertEquals( 1, $result['do_not_use_cookies_after_click_on_element'] );
+
+		// If the key does not exist in the array then clean values of dependent options
+		$values = array( 'when_should_the_popup_appear' => '' );
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_EVENTS_GENERAL, $values );
+		$this->assertEquals( '', $result['popup_will_appear_after_clicking_on_element'] );
+		$this->assertEquals( 0, $result['event_hide_element_after_click_on_it'] );
+		$this->assertEquals( 0, $result['do_not_use_cookies_after_click_on_element'] );
+
+		// If the key exists but all values of dependent options are empty or not checked then delete key from array
+		$values = array(
+			'when_should_the_popup_appear'                => 'after_clicking_on_element,',
+			'popup_will_appear_after_clicking_on_element' => ' ',
+			'event_hide_element_after_click_on_it'        => 0,
+			'do_not_use_cookies_after_click_on_element'   => 0,
+		);
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_EVENTS_GENERAL, $values );
+		$this->assertEquals( '', $result['when_should_the_popup_appear'] );
+		$this->assertEquals( '', $result['popup_will_appear_after_clicking_on_element'] );
+		$this->assertEquals( 0, $result['event_hide_element_after_click_on_it'] );
+		$this->assertEquals( 0, $result['do_not_use_cookies_after_click_on_element'] );
+	}
+
+	/**
+	 * Sanitize popup_will_appear_after_scrolling_down_n_percent
+	 */
+	public function testCanBeSanitizedSettingPopupWillAppearAfterScrollingDownNPercent(): void {
+		// If the key exists in the array then apply `absint` to the value
+		$values = array(
+			'when_should_the_popup_appear'                     => 'after_scrolling_down_n_percent,',
+			'popup_will_appear_after_scrolling_down_n_percent' => '-70',
+		);
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_EVENTS_GENERAL, $values );
+		$this->assertEquals( 70, $result['popup_will_appear_after_scrolling_down_n_percent'] );
+
+		// If the dependent option value is lower than 100 then return default value
+		$values = array(
+			'when_should_the_popup_appear'                     => 'after_scrolling_down_n_percent,',
+			'popup_will_appear_after_scrolling_down_n_percent' => '110',
+		);
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_EVENTS_GENERAL, $values );
+		$this->assertEquals( 70, $result['popup_will_appear_after_scrolling_down_n_percent'] );
+
+		// If the key does not exist in the array then return 0
+		$values = array(
+			'when_should_the_popup_appear' => '',
+		);
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_EVENTS_GENERAL, $values );
+		$this->assertEquals( 0, $result['popup_will_appear_after_scrolling_down_n_percent'] );
+	}
+
+	/**
+	 * Sanitize popup_will_appear_on_exit_intent
+	 */
+	public function testCanBeSanitizedSettingPopupWillAppearAfterOnExitIntent(): void {
+		// If the key exists in the array then clean up the values of dependent options
+		$values = array(
+			'when_should_the_popup_appear'     => 'on_exit_intent,',
+			'popup_will_appear_on_exit_intent' => 2,
+		);
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_EVENTS_GENERAL, $values );
+		$this->assertEquals( 1, $result['popup_will_appear_on_exit_intent'] );
+
+		// If the key does not exist in the array then clean values of dependent options
+		$values = array( 'when_should_the_popup_appear' => '' );
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_EVENTS_GENERAL, $values );
+		$this->assertEquals( 0, $result['popup_will_appear_on_exit_intent'] );
+
+		// If the key exists but dependent option is not checked then delete key from array
+		$values = array(
+			'when_should_the_popup_appear'     => 'on_exit_intent,',
+			'popup_will_appear_on_exit_intent' => 0,
+		);
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_EVENTS_GENERAL, $values );
+		$this->assertEquals( '', $result['when_should_the_popup_appear'] );
+		$this->assertEquals( 0, $result['popup_will_appear_on_exit_intent'] );
 	}
 }

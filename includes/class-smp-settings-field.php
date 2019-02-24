@@ -357,16 +357,21 @@ class SMP_Settings_Field {
 	 * @uses SMP_Settings_Field::render_checkboxes_with_hidden_field()
 	 */
 	public static function settings_field_when_should_the_popup_appear( $args ) {
-		$field = $args['field'];
+		self::render_checkboxes_with_hidden_field( $args['field'], self::get_when_should_the_popup_appear() );
+	}
 
-		$options = array(
+	/**
+	 * Returns values for option `when_should_the_popup_appear`
+	 *
+	 * @return array
+	 */
+	public static function get_when_should_the_popup_appear() {
+		return array(
 			'after_n_seconds'                => __( 'Popup will appear after N second(s)', 'social-media-popup' ),
 			'after_clicking_on_element'      => __( 'Popup will appear after clicking on the given CSS selector', 'social-media-popup' ),
 			'after_scrolling_down_n_percent' => __( 'Popup will appear after a visitor has scrolled on your page at least N percent', 'social-media-popup' ),
 			'on_exit_intent'                 => __( 'Popup will appear on exit-intent (when mouse has moved out from the page)', 'social-media-popup' ),
 		);
-
-		self::render_checkboxes_with_hidden_field( $field, $options );
 	}
 
 	/**

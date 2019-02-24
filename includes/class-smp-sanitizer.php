@@ -66,28 +66,68 @@ class SMP_Sanitizer {
 				break;
 
 			case SMP_PREFIX . '-section-common-events-general':
-				$values['when_should_the_popup_appear'] = sanitize_text_field( $input['when_should_the_popup_appear'] );
-				$when_should_the_popup_appear           = explode( ',', $values['when_should_the_popup_appear'] );
+				// $when_should_the_popup_appear = explode( ',', sanitize_text_field( $input['when_should_the_popup_appear'] ) );
+				$when_should_the_popup_appear = self::sanitize_when_should_the_popup_appear( $input['when_should_the_popup_appear'] );
 
-				$values['popup_will_appear_after_n_seconds'] =
-					in_array( 'after_n_seconds', $when_should_the_popup_appear )
-					? absint( $input['popup_will_appear_after_n_seconds'] )
-					: 0;
+				// sanitize popup_will_appear_after_n_seconds
+				if ( in_array( 'after_n_seconds', $when_should_the_popup_appear ) ) {
+					$value = absint( $input['popup_will_appear_after_n_seconds'] );
 
-				$values['popup_will_appear_after_clicking_on_element'] =
-					in_array( 'after_clicking_on_element', $when_should_the_popup_appear )
-					? sanitize_text_field( $input['popup_will_appear_after_clicking_on_element'] )
-					: '';
+					if ( $value > 0 ) {
+						$values['popup_will_appear_after_n_seconds'] = $value;
+					} else {
+						$when_should_the_popup_appear = array_diff( $when_should_the_popup_appear, array( 'after_n_seconds' ) );
+					}
+				}
 
-				$values['event_hide_element_after_click_on_it']      = isset( $input['event_hide_element_after_click_on_it'] ) ? 1 : 0;
-				$values['do_not_use_cookies_after_click_on_element'] = isset( $input['do_not_use_cookies_after_click_on_element'] ) ? 1 : 0;
+				// sanitize popup_will_appear_after_clicking_on_element
+				if ( in_array( 'after_clicking_on_element', $when_should_the_popup_appear ) ) {
+					$popup_will_appear_after_clicking_on_element = sanitize_text_field( $input['popup_will_appear_after_clicking_on_element'] );
+					$event_hide_element_after_click_on_it        = self::sanitize_checkbox( $input['event_hide_element_after_click_on_it'] );
+					$do_not_use_cookies_after_click_on_element   = self::sanitize_checkbox( $input['do_not_use_cookies_after_click_on_element'] );
 
-				$values['popup_will_appear_after_scrolling_down_n_percent'] =
-					in_array( 'after_scrolling_down_n_percent', $when_should_the_popup_appear )
-					? absint( $input['popup_will_appear_after_scrolling_down_n_percent'] )
-					: 0;
+					if ( empty( $popup_will_appear_after_clicking_on_element ) &&
+						! $event_hide_element_after_click_on_it &&
+						! $do_not_use_cookies_after_click_on_element ) {
 
-				$values['popup_will_appear_on_exit_intent'] = isset( $input['popup_will_appear_on_exit_intent'] ) ? 1 : 0;
+						$when_should_the_popup_appear = array_diff( $when_should_the_popup_appear, array( 'after_clicking_on_element' ) );
+					} else {
+						if ( ! empty( $popup_will_appear_after_clicking_on_element ) ) {
+							$values['popup_will_appear_after_clicking_on_element'] =
+								preg_replace( '/[^a-z\d#,\.\- ]*/i', '', sanitize_text_field( $input['popup_will_appear_after_clicking_on_element'] ) );
+						}
+
+						$values['event_hide_element_after_click_on_it']      = $event_hide_element_after_click_on_it;
+						$values['do_not_use_cookies_after_click_on_element'] = $do_not_use_cookies_after_click_on_element;
+					}
+				} else {
+					$values['popup_will_appear_after_clicking_on_element'] = '';
+					$values['event_hide_element_after_click_on_it']        = 0;
+					$values['do_not_use_cookies_after_click_on_element']   = 0;
+				}
+
+				// sanitize popup_will_appear_after_scrolling_down_n_percent
+				if ( in_array( 'after_scrolling_down_n_percent', $when_should_the_popup_appear ) ) {
+					$value = absint( $input['popup_will_appear_after_scrolling_down_n_percent'] );
+					$values['popup_will_appear_after_scrolling_down_n_percent'] = $value > 100 ? 70 : $value;
+				} else {
+					$values['popup_will_appear_after_scrolling_down_n_percent'] = 0;
+				}
+
+				// sanitize popup_will_appear_on_exit_intent
+				if ( in_array( 'on_exit_intent', $when_should_the_popup_appear ) ) {
+					$value = self::sanitize_checkbox( $input['popup_will_appear_on_exit_intent'] );
+
+					if ( $value ) {
+						$values['popup_will_appear_on_exit_intent'] = $value;
+					} else {
+						$when_should_the_popup_appear = array_diff( $when_should_the_popup_appear, array( 'on_exit_intent' ) );
+					}
+				} else {
+					$values['popup_will_appear_on_exit_intent'] = 0;
+				}
+
+				$values['when_should_the_popup_appear'] = join( ',', $when_should_the_popup_appear );
 
 				break;
 
@@ -373,6 +413,26 @@ class SMP_Sanitizer {
 	}
 
 	/**
+	 * Sanitize field `when_should_the_popup_appear`
+	 *
+	 * @param array $values Values
+	 * @return array
+	 */
+	private static function sanitize_when_should_the_popup_appear( $values ) {
+		$when_should_the_popup_appear = SMP_Settings_Field::get_when_should_the_popup_appear();
+		$result                       = [];
+
+		$values = self::clean_array( explode( ',', $values ) );
+		foreach ( $values as $value ) {
+			if ( isset( $when_should_the_popup_appear[ $value ] ) ) {
+				$result[] = $value;
+			}
+		}
+
+		return $result;
+	}
+
+	/**
 	 * Sanitize field `setting_background_image`
 	 *
 	 * @param string $value Value
@@ -406,5 +466,15 @@ class SMP_Sanitizer {
 		};
 
 		return array_unique( array_filter( array_map( $lowercase_and_trim, $items ) ) );
+	}
+
+	/**
+	 * Checks if checkbox value is checked
+	 *
+	 * @param mixed $value Value
+	 * @return boolean
+	 */
+	private static function sanitize_checkbox( $value ) {
+		return ( isset( $value ) && 0 != absint( $value ) ) ? 1 : 0;
 	}
 }
