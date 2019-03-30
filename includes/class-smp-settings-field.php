@@ -382,14 +382,19 @@ class SMP_Settings_Field {
 	 * @uses SMP_Settings_Field::render_checkboxes_with_hidden_field()
 	 */
 	public static function settings_field_who_should_see_the_popup( $args ) {
-		$field = $args['field'];
+		self::render_checkboxes_with_hidden_field( $args['field'], self::get_who_should_see_the_popup() );
+	}
 
-		$options = array(
+	/**
+	 * Returns values for option `who_should_see_the_popup`
+	 *
+	 * @return array
+	 */
+	public static function get_who_should_see_the_popup() {
+		return array(
 			'visitor_opened_at_least_n_number_of_pages' => __( 'Visitor opened at least N number of page(s)', 'social-media-popup' ),
 			'visitor_registered_and_role_equals_to'     => __( 'Registered Users Who Should See the Popup', 'social-media-popup' ),
 		);
-
-		self::render_checkboxes_with_hidden_field( $field, $options );
 	}
 
 	/**
@@ -401,13 +406,20 @@ class SMP_Settings_Field {
 		$field = $args['field'];
 		$value = esc_attr( SMP_Options::get_option( $field ) );
 
-		$items = array(
+		self::render_select_with_options( $field, self::get_visitor_registered_and_role_equals_to(), $value );
+	}
+
+	/**
+	 * Returns values for option `visitor_registered_and_role_equals_to`
+	 *
+	 * @return array
+	 */
+	public static function get_visitor_registered_and_role_equals_to() {
+		return array(
 			'all_registered_users'                => __( 'All Registered Users', 'social-media-popup' ),
 			'exclude_administrators'              => __( 'All Registered Users Exclude Administrators', 'social-media-popup' ),
 			'exclude_administrators_and_managers' => __( 'All Registered Users Exclude Administrators and Managers', 'social-media-popup' ),
 		);
-
-		self::render_select_with_options( $field, $items, $value );
 	}
 
 	/**

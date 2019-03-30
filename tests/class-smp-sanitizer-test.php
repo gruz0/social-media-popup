@@ -15,6 +15,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	const SECTION_COMMON_VIEW_DESKTOP   = SMP_PREFIX . '-section-common-view';
 	const SECTION_COMMON_VIEW_MOBILE    = SMP_PREFIX . '-section-common-view-mobile';
 	const SECTION_COMMON_EVENTS_GENERAL = SMP_PREFIX . '-section-common-events-general';
+	const SECTION_COMMON_EVENTS_WHO     = SMP_PREFIX . '-section-common-events-who';
 
 	/**
 	 * Set default options
@@ -43,8 +44,17 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * @param string $value       Value
 	 */
 	public function sanitizeInteger( $section, $option_name, $value ) {
+		// Is should converts to a positive value
 		$result = SMP_Sanitizer::sanitize( $section, array( $option_name => $value ) );
 		$this->assertEquals( absint( $value ), $result[ $option_name ] );
+
+		// Check for a value below zero
+		$result = SMP_Sanitizer::sanitize( $section, array( $option_name => -absint( $value ) ) );
+		$this->assertEquals( absint( $value ), $result[ $option_name ] );
+
+		// Check for incorrect value
+		$result = SMP_Sanitizer::sanitize( $section, array( $option_name => 'abc' ) );
+		$this->assertEquals( 0, $result[ $option_name ] );
 	}
 
 	/**
@@ -437,5 +447,86 @@ final class SMP_Sanitizer_Test extends TestCase {
 		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_EVENTS_GENERAL, $values );
 		$this->assertEquals( '', $result['when_should_the_popup_appear'] );
 		$this->assertEquals( 0, $result['popup_will_appear_on_exit_intent'] );
+	}
+
+	/**
+	 * Sanitize who_should_see_the_popup
+	 */
+	public function testCanBeSanitizedSettingWhoShouldSeeThePopup(): void {
+		$values = array(
+			'who_should_see_the_popup'                  => ' visitor_opened_at_least_n_number_of_pages, visitor_registered_and_role_equals_to, ',
+			'visitor_opened_at_least_n_number_of_pages' => '-3',
+			'visitor_registered_and_role_equals_to'     => 'all_registered_users',
+		);
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_EVENTS_WHO, $values );
+		$this->assertEquals(
+			'visitor_opened_at_least_n_number_of_pages,visitor_registered_and_role_equals_to',
+			$result['who_should_see_the_popup']
+		);
+	}
+
+	/**
+	 * Sanitize visitor_opened_at_least_n_number_of_pages
+	 */
+	public function testCanBeSanitizedSettingVisitorOpenedAtLeastNNumberOfPages(): void {
+		// If the key exists in the array then apply `absint` to the value
+		$values = array(
+			'who_should_see_the_popup'                  => 'visitor_opened_at_least_n_number_of_pages,',
+			'visitor_opened_at_least_n_number_of_pages' => '-2',
+		);
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_EVENTS_WHO, $values );
+		$this->assertEquals( 2, $result['visitor_opened_at_least_n_number_of_pages'] );
+
+		// If the key does not exist in the array then return 0
+		$values = array(
+			'who_should_see_the_popup' => '',
+		);
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_EVENTS_WHO, $values );
+		$this->assertEquals( 0, $result['visitor_opened_at_least_n_number_of_pages'] );
+
+		// If the key exists but dependent option is empty then delete key from array
+		$values = array(
+			'who_should_see_the_popup' => 'visitor_opened_at_least_n_number_of_pages,',
+			'visitor_opened_at_least_n_number_of_pages' => ' ',
+		);
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_EVENTS_WHO, $values );
+		$this->assertEquals( '', $result['who_should_see_the_popup'] );
+		$this->assertEquals( 0, $result['visitor_opened_at_least_n_number_of_pages'] );
+	}
+
+	/**
+	 * Sanitize visitor_registered_and_role_equals_to
+	 */
+	public function testCanBeSanitizedSettingVisitorRegisteredAndRoleEqualsTo(): void {
+		$expected = 'all_registered_users';
+
+		// If the key does not exist in the array then return default value
+		$values = array(
+			'who_should_see_the_popup'              => 'visitor_registered_and_role_equals_to',
+			'visitor_registered_and_role_equals_to' => 'test',
+		);
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_EVENTS_WHO, $values );
+		$this->assertEquals( $expected, $result['visitor_registered_and_role_equals_to'] );
+
+		// If the value is empty then return default value
+		$values = array(
+			'who_should_see_the_popup' => 'visitor_registered_and_role_equals_to',
+			'visitor_registered_and_role_equals_to' => '',
+		);
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_EVENTS_WHO, $values );
+		$this->assertEquals( $expected, $result['visitor_registered_and_role_equals_to'] );
+	}
+
+	/**
+	 * Sanitize setting_display_after_n_days
+	 */
+	public function testCanBeSanitizedSettingDisplayAfterNDays(): void {
+		$this->sanitizeInteger( self::SECTION_COMMON_EVENTS_WHO, 'setting_display_after_n_days', '70' );
 	}
 }

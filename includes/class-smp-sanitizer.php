@@ -66,7 +66,6 @@ class SMP_Sanitizer {
 				break;
 
 			case SMP_PREFIX . '-section-common-events-general':
-				// $when_should_the_popup_appear = explode( ',', sanitize_text_field( $input['when_should_the_popup_appear'] ) );
 				$when_should_the_popup_appear = self::sanitize_when_should_the_popup_appear( $input['when_should_the_popup_appear'] );
 
 				// sanitize popup_will_appear_after_n_seconds
@@ -132,20 +131,27 @@ class SMP_Sanitizer {
 				break;
 
 			case SMP_PREFIX . '-section-common-events-who':
-				$values['who_should_see_the_popup'] = sanitize_text_field( $input['who_should_see_the_popup'] );
-				$who_should_see_the_popup           = explode( ',', $values['who_should_see_the_popup'] );
+				$who_should_see_the_popup = self::sanitize_who_should_see_the_popup( $input['who_should_see_the_popup'] );
 
-				$values['visitor_opened_at_least_n_number_of_pages'] =
-					in_array( 'visitor_opened_at_least_n_number_of_pages', $who_should_see_the_popup )
-					? absint( $input['visitor_opened_at_least_n_number_of_pages'] )
-					: 0;
+				// sanitize popup_will_appear_after_n_seconds
+				if ( in_array( 'visitor_opened_at_least_n_number_of_pages', $who_should_see_the_popup ) ) {
+					$value = absint( $input['visitor_opened_at_least_n_number_of_pages'] );
 
-				$values['visitor_registered_and_role_equals_to'] =
-					in_array( 'visitor_registered_and_role_equals_to', $who_should_see_the_popup )
-					? sanitize_text_field( $input['visitor_registered_and_role_equals_to'] )
-					: 'all_registered_users';
+					if ( $value > 0 ) {
+						$values['visitor_opened_at_least_n_number_of_pages'] = $value;
+					} else {
+						$who_should_see_the_popup = array_diff( $who_should_see_the_popup, array( 'visitor_opened_at_least_n_number_of_pages' ) );
+					}
+				}
+
+				// sanitize visitor_registered_and_role_equals_to
+				if ( in_array( 'visitor_registered_and_role_equals_to', $who_should_see_the_popup ) ) {
+					$values['visitor_registered_and_role_equals_to'] = self::sanitize_visitor_registered_and_role_equals_to( $input['visitor_registered_and_role_equals_to'] );
+				}
 
 				$values['setting_display_after_n_days'] = absint( $input['setting_display_after_n_days'] );
+
+				$values['who_should_see_the_popup'] = join( ',', $who_should_see_the_popup );
 
 				break;
 
@@ -430,6 +436,42 @@ class SMP_Sanitizer {
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Sanitize field `who_should_see_the_popup`
+	 *
+	 * @param array $values Values
+	 * @return array
+	 */
+	private static function sanitize_who_should_see_the_popup( $values ) {
+		$who_should_see_the_popup = SMP_Settings_Field::get_who_should_see_the_popup();
+		$result                   = [];
+
+		$values = self::clean_array( explode( ',', $values ) );
+		foreach ( $values as $value ) {
+			if ( isset( $who_should_see_the_popup[ $value ] ) ) {
+				$result[] = $value;
+			}
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Sanitize field `visitor_registered_and_role_equals_to`
+	 *
+	 * @param string $value Value
+	 * @return string
+	 */
+	private static function sanitize_visitor_registered_and_role_equals_to( $value ) {
+		$values = SMP_Settings_Field::get_visitor_registered_and_role_equals_to();
+
+		if ( isset( $values[ $value ] ) ) {
+			return $value;
+		}
+
+		return 'all_registered_users';
 	}
 
 	/**
