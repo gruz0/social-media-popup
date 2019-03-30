@@ -11,12 +11,13 @@ include '../../../wp-load.php';
  * SMP_Sanitizer Test
  */
 final class SMP_Sanitizer_Test extends TestCase {
-	const SECTION_COMMON_GENERAL          = SMP_PREFIX . '-section-common';
-	const SECTION_COMMON_VIEW_DESKTOP     = SMP_PREFIX . '-section-common-view';
-	const SECTION_COMMON_VIEW_MOBILE      = SMP_PREFIX . '-section-common-view-mobile';
-	const SECTION_COMMON_EVENTS_GENERAL   = SMP_PREFIX . '-section-common-events-general';
-	const SECTION_COMMON_EVENTS_WHO       = SMP_PREFIX . '-section-common-events-who';
-	const SECTION_COMMON_TRACKING_GENERAL = SMP_PREFIX . '-section-common-tracking-general';
+	const SECTION_COMMON_GENERAL                   = SMP_PREFIX . '-section-common';
+	const SECTION_COMMON_VIEW_DESKTOP              = SMP_PREFIX . '-section-common-view';
+	const SECTION_COMMON_VIEW_MOBILE               = SMP_PREFIX . '-section-common-view-mobile';
+	const SECTION_COMMON_EVENTS_GENERAL            = SMP_PREFIX . '-section-common-events-general';
+	const SECTION_COMMON_EVENTS_WHO                = SMP_PREFIX . '-section-common-events-who';
+	const SECTION_COMMON_TRACKING_GENERAL          = SMP_PREFIX . '-section-common-tracking-general';
+	const SECTION_COMMON_TRACKING_GOOGLE_ANALYTICS = SMP_PREFIX . '-section-common-tracking-google-analytics';
 
 	/**
 	 * Set default options
@@ -543,5 +544,24 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 */
 	public function testCanBeSanitizedSettingDoNotUseTrackingInDebugMode(): void {
 		$this->sanitizeCheckbox( self::SECTION_COMMON_TRACKING_GENERAL, 'do_not_use_tracking_in_debug_mode' );
+	}
+
+	/**
+	 * Sanitize google_analytics_tracking_id
+	 */
+	public function testCanBeSanitizedSettingGoogleAnalyticsTrackingId(): void {
+		$key      = 'google_analytics_tracking_id';
+		$value    = '   UA-123456-111йцукен! ';
+		$expected = 'UA-123456-111';
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_TRACKING_GOOGLE_ANALYTICS, array( $key => $value ) );
+		$this->assertEquals( $expected, $result[ $key ] );
+	}
+
+	/**
+	 * Sanitize push_events_to_aquisition_social_plugins
+	 */
+	public function testCanBeSanitizedSettingPushEventsToAquisitionSocialPlugins(): void {
+		$this->sanitizeCheckbox( self::SECTION_COMMON_TRACKING_GOOGLE_ANALYTICS, 'push_events_to_aquisition_social_plugins' );
 	}
 }

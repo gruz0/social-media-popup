@@ -162,8 +162,8 @@ class SMP_Sanitizer {
 				break;
 
 			case SMP_PREFIX . '-section-common-tracking-google-analytics':
-				$values['google_analytics_tracking_id']             = sanitize_text_field( $input['google_analytics_tracking_id'] );
-				$values['push_events_to_aquisition_social_plugins'] = isset( $input['push_events_to_aquisition_social_plugins'] ) ? 1 : 0;
+				$values['google_analytics_tracking_id']             = self::sanitize_google_analytics_tracking_id( $input['google_analytics_tracking_id'] );
+				$values['push_events_to_aquisition_social_plugins'] = self::sanitize_checkbox( $input['push_events_to_aquisition_social_plugins'] );
 
 				break;
 
@@ -482,6 +482,16 @@ class SMP_Sanitizer {
 	 */
 	private static function sanitize_background_image( $value ) {
 		return ( filter_var( $value, FILTER_VALIDATE_URL ) ) ? trim( $value ) : '';
+	}
+
+	/**
+	 * Sanitize field `google_analytics_tracking_id`
+	 *
+	 * @param string $value Value
+	 * @return string
+	 */
+	private static function sanitize_google_analytics_tracking_id( $value ) {
+		return preg_replace( '/[^\w\-]+/i', '', $value );
 	}
 
 	/**
