@@ -156,8 +156,8 @@ class SMP_Sanitizer {
 				break;
 
 			case SMP_PREFIX . '-section-common-tracking-general':
-				$values['use_events_tracking']               = isset( $input['use_events_tracking'] ) ? 1 : 0;
-				$values['do_not_use_tracking_in_debug_mode'] = isset( $input['do_not_use_tracking_in_debug_mode'] ) ? 1 : 0;
+				$values['use_events_tracking']               = self::sanitize_checkbox( $input['use_events_tracking'] );
+				$values['do_not_use_tracking_in_debug_mode'] = self::sanitize_checkbox( $input['do_not_use_tracking_in_debug_mode'] );
 
 				break;
 
