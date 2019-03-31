@@ -75,6 +75,20 @@ final class SMP_Sanitizer_Test extends TestCase {
 	}
 
 	/**
+	 * Sanitize option's text value with wp_kses_post function
+	 *
+	 * @param string $section     Section
+	 * @param string $option_name Option name
+	 */
+	public function sanitizeKses( $section, $option_name ): void {
+		$value    = 'Title<script>alert("qwe");</script>';
+		$expected = 'Titlealert("qwe");';
+
+		$result = SMP_Sanitizer::sanitize( $section, array( $option_name => $value ) );
+		$this->assertEquals( $expected, $result[ $option_name ] );
+	}
+
+	/**
 	 * Sanitize setting_debug_mode
 	 */
 	public function testCanBeSanitizedSettingDebugMode(): void {
@@ -125,12 +139,8 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * Sanitize setting_plugin_title
 	 */
 	public function testCanBeSanitizedSettingPluginTitle(): void {
-		$key      = 'setting_plugin_title';
-		$value    = 'Title<script>alert("qwe");</script>';
-		$expected = 'Titlealert("qwe");';
-
-		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_VIEW_DESKTOP, array( $key => $value ) );
-		$this->assertEquals( $expected, $result[ $key ] );
+		$key = 'setting_plugin_title';
+		$this->sanitizeKses( self::SECTION_COMMON_VIEW_DESKTOP, $key );
 	}
 
 	/**
@@ -222,12 +232,8 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * Sanitize setting_button_to_close_widget_title
 	 */
 	public function testCanBeSanitizedSettingButtonToCloseWidgetTitle(): void {
-		$key      = 'setting_button_to_close_widget_title';
-		$value    = "<b><script></script>Please, don't show me again!</b>";
-		$expected = "Please, don't show me again!";
-
-		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_VIEW_DESKTOP, array( $key => $value ) );
-		$this->assertEquals( $expected, $result[ $key ] );
+		$key = 'setting_button_to_close_widget_title';
+		$this->sanitizeText( self::SECTION_COMMON_VIEW_DESKTOP, $key );
 	}
 
 	/**
@@ -296,12 +302,8 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * Sanitize setting_plugin_title_on_mobile_devices
 	 */
 	public function testCanBeSanitizedSettingPluginTitleOnMobileDevices(): void {
-		$key      = 'setting_plugin_title_on_mobile_devices';
-		$value    = 'Title<script>alert("qwe");</script>';
-		$expected = 'Titlealert("qwe");';
-
-		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_VIEW_MOBILE, array( $key => $value ) );
-		$this->assertEquals( $expected, $result[ $key ] );
+		$key = 'setting_plugin_title_on_mobile_devices';
+		$this->sanitizeKses( self::SECTION_COMMON_VIEW_MOBILE, $key );
 	}
 
 	/**
