@@ -18,6 +18,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	const SECTION_COMMON_EVENTS_WHO                = SMP_PREFIX . '-section-common-events-who';
 	const SECTION_COMMON_TRACKING_GENERAL          = SMP_PREFIX . '-section-common-tracking-general';
 	const SECTION_COMMON_TRACKING_GOOGLE_ANALYTICS = SMP_PREFIX . '-section-common-tracking-google-analytics';
+	const SECTION_COMMON_TRACKING_WINDOW_EVENTS    = SMP_PREFIX . '-section-common-tracking-window-events';
 
 	/**
 	 * Set default options
@@ -57,6 +58,20 @@ final class SMP_Sanitizer_Test extends TestCase {
 		// Check for incorrect value
 		$result = SMP_Sanitizer::sanitize( $section, array( $option_name => 'abc' ) );
 		$this->assertEquals( 0, $result[ $option_name ] );
+	}
+
+	/**
+	 * Sanitize option's text value from HTML tags
+	 *
+	 * @param string $section     Section
+	 * @param string $option_name Option name
+	 */
+	public function sanitizeText( $section, $option_name ): void {
+		$value       = 'TextBox Value';
+		$dirty_value = "<b><script></script>${value}</b>";
+
+		$result = SMP_Sanitizer::sanitize( $section, array( $option_name => $dirty_value ) );
+		$this->assertEquals( $value, $result[ $option_name ] );
 	}
 
 	/**
@@ -563,5 +578,52 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 */
 	public function testCanBeSanitizedSettingPushEventsToAquisitionSocialPlugins(): void {
 		$this->sanitizeCheckbox( self::SECTION_COMMON_TRACKING_GOOGLE_ANALYTICS, 'push_events_to_aquisition_social_plugins' );
+	}
+
+	/**
+	 * Sanitize push_events_when_displaying_window
+	 */
+	public function testCanBeSanitizedSettingPushEventsWhenDisplayingWindow(): void {
+		$this->sanitizeCheckbox( self::SECTION_COMMON_TRACKING_WINDOW_EVENTS, 'push_events_when_displaying_window' );
+	}
+
+	/**
+	 * Sanitize tracking_event_label_window_showed_immediately
+	 */
+	public function testCanBeSanitizedSettingTrackingEventLabelWindowShowedImmediately(): void {
+		$key = 'tracking_event_label_window_showed_immediately';
+		$this->sanitizeText( self::SECTION_COMMON_TRACKING_WINDOW_EVENTS, $key );
+	}
+
+	/**
+	 * Sanitize tracking_event_label_window_showed_with_delay
+	 */
+	public function testCanBeSanitizedSettingTrackingEventLabelWindowShowedWithDelay(): void {
+		$key = 'tracking_event_label_window_showed_with_delay';
+		$this->sanitizeText( self::SECTION_COMMON_TRACKING_WINDOW_EVENTS, $key );
+	}
+
+	/**
+	 * Sanitize tracking_event_label_window_showed_after_click
+	 */
+	public function testCanBeSanitizedSettingTrackingEventLabelWindowShowedAfterClick(): void {
+		$key = 'tracking_event_label_window_showed_after_click';
+		$this->sanitizeText( self::SECTION_COMMON_TRACKING_WINDOW_EVENTS, $key );
+	}
+
+	/**
+	 * Sanitize tracking_event_label_window_showed_on_scrolling_down
+	 */
+	public function testCanBeSanitizedSettingTrackingEventLabelWindowShowedOnScrollingDown(): void {
+		$key = 'tracking_event_label_window_showed_on_scrolling_down';
+		$this->sanitizeText( self::SECTION_COMMON_TRACKING_WINDOW_EVENTS, $key );
+	}
+
+	/**
+	 * Sanitize tracking_event_label_window_showed_on_exit_intent
+	 */
+	public function testCanBeSanitizedSettingTrackingEventLabelWindowShowedOnExitIntent(): void {
+		$key = 'tracking_event_label_window_showed_on_exit_intent';
+		$this->sanitizeText( self::SECTION_COMMON_TRACKING_WINDOW_EVENTS, $key );
 	}
 }
