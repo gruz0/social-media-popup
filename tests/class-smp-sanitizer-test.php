@@ -19,6 +19,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	const SECTION_COMMON_TRACKING_GENERAL          = SMP_PREFIX . '-section-common-tracking-general';
 	const SECTION_COMMON_TRACKING_GOOGLE_ANALYTICS = SMP_PREFIX . '-section-common-tracking-google-analytics';
 	const SECTION_COMMON_TRACKING_WINDOW_EVENTS    = SMP_PREFIX . '-section-common-tracking-window-events';
+	const SECTION_COMMON_TRACKING_SOCIAL_EVENTS    = SMP_PREFIX . '-section-common-tracking-social-events';
 
 	/**
 	 * Set default options
@@ -627,5 +628,59 @@ final class SMP_Sanitizer_Test extends TestCase {
 	public function testCanBeSanitizedSettingTrackingEventLabelWindowShowedOnExitIntent(): void {
 		$key = 'tracking_event_label_window_showed_on_exit_intent';
 		$this->sanitizeText( self::SECTION_COMMON_TRACKING_WINDOW_EVENTS, $key );
+	}
+
+	/**
+	 * Sanitize push_events_when_subscribing_on_social_networks
+	 */
+	public function testCanBeSanitizedSettingPushEventsWhenSubscribingOnSocialNetworks(): void {
+		$this->sanitizeCheckbox( self::SECTION_COMMON_TRACKING_SOCIAL_EVENTS, 'push_events_when_subscribing_on_social_networks' );
+	}
+
+	/**
+	 * Sanitize add_window_events_descriptions
+	 */
+	public function testCanBeSanitizedSettingAddWindowEventsDescriptions(): void {
+		$this->sanitizeCheckbox( self::SECTION_COMMON_TRACKING_SOCIAL_EVENTS, 'add_window_events_descriptions' );
+	}
+
+	/**
+	 * Sanitize tracking_event_label_no_events_fired
+	 */
+	public function testCanBeSanitizedSettingTrackingEventLabelNoEventsFired(): void {
+		$key = 'tracking_event_label_no_events_fired';
+		$this->sanitizeText( self::SECTION_COMMON_TRACKING_SOCIAL_EVENTS, $key );
+	}
+
+	/**
+	 * Sanitize tracking_event_label_on_delay
+	 */
+	public function testCanBeSanitizedSettingTrackingEventLabelOnDelay(): void {
+		$key = 'tracking_event_label_on_delay';
+		$this->sanitizeText( self::SECTION_COMMON_TRACKING_SOCIAL_EVENTS, $key );
+	}
+
+	/**
+	 * Sanitize tracking_event_label_after_click
+	 */
+	public function testCanBeSanitizedSettingTrackingEventLabelAfterClick(): void {
+		$key = 'tracking_event_label_after_click';
+		$this->sanitizeText( self::SECTION_COMMON_TRACKING_SOCIAL_EVENTS, $key );
+	}
+
+	/**
+	 * Sanitize tracking_event_label_on_scrolling_down
+	 */
+	public function testCanBeSanitizedSettingTrackingEventLabelOnScrollingDown(): void {
+		$key = 'tracking_event_label_on_scrolling_down';
+		$this->sanitizeText( self::SECTION_COMMON_TRACKING_SOCIAL_EVENTS, $key );
+	}
+
+	/**
+	 * Sanitize tracking_event_label_on_exit_intent
+	 */
+	public function testCanBeSanitizedSettingTrackingEventLabelOnExitIntent(): void {
+		$key = 'tracking_event_label_on_exit_intent';
+		$this->sanitizeText( self::SECTION_COMMON_TRACKING_SOCIAL_EVENTS, $key );
 	}
 }
