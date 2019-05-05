@@ -20,6 +20,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	const SECTION_COMMON_TRACKING_GOOGLE_ANALYTICS = SMP_PREFIX . '-section-common-tracking-google-analytics';
 	const SECTION_COMMON_TRACKING_WINDOW_EVENTS    = SMP_PREFIX . '-section-common-tracking-window-events';
 	const SECTION_COMMON_TRACKING_SOCIAL_EVENTS    = SMP_PREFIX . '-section-common-tracking-social-events';
+	const SECTION_COMMON_MANAGEMENT                = SMP_PREFIX . '-section-common-management';
 
 	/**
 	 * Set default options
@@ -682,5 +683,12 @@ final class SMP_Sanitizer_Test extends TestCase {
 	public function testCanBeSanitizedSettingTrackingEventLabelOnExitIntent(): void {
 		$key = 'tracking_event_label_on_exit_intent';
 		$this->sanitizeText( self::SECTION_COMMON_TRACKING_SOCIAL_EVENTS, $key );
+	}
+
+	/**
+	 * Sanitize setting_remove_settings_on_uninstall
+	 */
+	public function testCanBeSanitizedSettingRemoveSettingsOnUninstall(): void {
+		$this->sanitizeCheckbox( self::SECTION_COMMON_MANAGEMENT, 'setting_remove_settings_on_uninstall' );
 	}
 }
