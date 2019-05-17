@@ -286,7 +286,9 @@ class SMP_Settings_Field {
 		$field = $args['field'];
 		$value = esc_attr( SMP_Options::get_option( $field ) );
 
-		self::render_radio_buttons( $field, self::get_close_button_in_items(), $value );
+		// FIXME: It should be covered with tests
+		// For example: when function used self::get_close_button_in_items() it raised an error
+		self::render_radio_buttons( $field, self::get_close_button_in(), $value );
 	}
 
 	/**
