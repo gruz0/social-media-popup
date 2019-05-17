@@ -69,7 +69,7 @@ class SMP_Sanitizer {
 				$when_should_the_popup_appear = self::sanitize_when_should_the_popup_appear( $input['when_should_the_popup_appear'] );
 
 				// sanitize popup_will_appear_after_n_seconds
-				if ( in_array( 'after_n_seconds', $when_should_the_popup_appear ) ) {
+				if ( in_array( 'after_n_seconds', $when_should_the_popup_appear, true ) ) {
 					$value = absint( $input['popup_will_appear_after_n_seconds'] );
 
 					if ( $value > 0 ) {
@@ -80,7 +80,7 @@ class SMP_Sanitizer {
 				}
 
 				// sanitize popup_will_appear_after_clicking_on_element
-				if ( in_array( 'after_clicking_on_element', $when_should_the_popup_appear ) ) {
+				if ( in_array( 'after_clicking_on_element', $when_should_the_popup_appear, true ) ) {
 					$popup_will_appear_after_clicking_on_element = sanitize_text_field( $input['popup_will_appear_after_clicking_on_element'] );
 					$event_hide_element_after_click_on_it        = self::sanitize_checkbox( $input['event_hide_element_after_click_on_it'] );
 					$do_not_use_cookies_after_click_on_element   = self::sanitize_checkbox( $input['do_not_use_cookies_after_click_on_element'] );
@@ -106,7 +106,7 @@ class SMP_Sanitizer {
 				}
 
 				// sanitize popup_will_appear_after_scrolling_down_n_percent
-				if ( in_array( 'after_scrolling_down_n_percent', $when_should_the_popup_appear ) ) {
+				if ( in_array( 'after_scrolling_down_n_percent', $when_should_the_popup_appear, true ) ) {
 					$value = absint( $input['popup_will_appear_after_scrolling_down_n_percent'] );
 					$values['popup_will_appear_after_scrolling_down_n_percent'] = $value > 100 ? 70 : $value;
 				} else {
@@ -114,7 +114,7 @@ class SMP_Sanitizer {
 				}
 
 				// sanitize popup_will_appear_on_exit_intent
-				if ( in_array( 'on_exit_intent', $when_should_the_popup_appear ) ) {
+				if ( in_array( 'on_exit_intent', $when_should_the_popup_appear, true ) ) {
 					$value = self::sanitize_checkbox( $input['popup_will_appear_on_exit_intent'] );
 
 					if ( $value ) {
@@ -134,7 +134,7 @@ class SMP_Sanitizer {
 				$who_should_see_the_popup = self::sanitize_who_should_see_the_popup( $input['who_should_see_the_popup'] );
 
 				// sanitize popup_will_appear_after_n_seconds
-				if ( in_array( 'visitor_opened_at_least_n_number_of_pages', $who_should_see_the_popup ) ) {
+				if ( in_array( 'visitor_opened_at_least_n_number_of_pages', $who_should_see_the_popup, true ) ) {
 					$value = absint( $input['visitor_opened_at_least_n_number_of_pages'] );
 
 					if ( $value > 0 ) {
@@ -145,7 +145,7 @@ class SMP_Sanitizer {
 				}
 
 				// sanitize visitor_registered_and_role_equals_to
-				if ( in_array( 'visitor_registered_and_role_equals_to', $who_should_see_the_popup ) ) {
+				if ( in_array( 'visitor_registered_and_role_equals_to', $who_should_see_the_popup, true ) ) {
 					$values['visitor_registered_and_role_equals_to'] = self::sanitize_visitor_registered_and_role_equals_to( $input['visitor_registered_and_role_equals_to'] );
 				}
 
@@ -527,6 +527,6 @@ class SMP_Sanitizer {
 	 * @return boolean
 	 */
 	private static function sanitize_checkbox( $value ) {
-		return ( isset( $value ) && 0 != absint( $value ) ) ? 1 : 0;
+		return ( isset( $value ) && 0 !== absint( $value ) ) ? 1 : 0;
 	}
 }

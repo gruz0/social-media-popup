@@ -66,7 +66,7 @@ class SMP_Options {
 	 * @param array $options Options
 	 */
 	public static function merge_options( $options ) {
-		if ( count( $options ) == 0 ) {
+		if ( count( $options ) === 0 ) {
 			return;
 		}
 
@@ -336,10 +336,10 @@ class SMP_Options {
 	 * @return boolean
 	 */
 	private static function initialize_options() {
-		if ( false === self::$_options || count( self::$_options ) == 0 ) {
+		if ( false === self::$_options || count( self::$_options ) === 0 ) {
 			self::$_options = self::load_options();
 
-			if ( count( self::$_options ) == 0 ) {
+			if ( count( self::$_options ) === 0 ) {
 				return false;
 			}
 		}
