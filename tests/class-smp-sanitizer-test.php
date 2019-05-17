@@ -380,12 +380,12 @@ final class SMP_Sanitizer_Test extends TestCase {
 		// If the key exists in the array then clean up the values of dependent options
 		$values = array(
 			'when_should_the_popup_appear'                => 'after_clicking_on_element,',
-			'popup_will_appear_after_clicking_on_element' => ' #my-button, .entry .button йцу123',
+			'popup_will_appear_after_clicking_on_element' => ' #my-button_new, .entry .button йцу123',
 			'event_hide_element_after_click_on_it'        => 2,
 			'do_not_use_cookies_after_click_on_element'   => 3,
 		);
 		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_EVENTS_GENERAL, $values );
-		$this->assertEquals( '#my-button, .entry .button 123', $result['popup_will_appear_after_clicking_on_element'] );
+		$this->assertEquals( '#my-button_new, .entry .button 123', $result['popup_will_appear_after_clicking_on_element'] );
 		$this->assertEquals( 1, $result['event_hide_element_after_click_on_it'] );
 		$this->assertEquals( 1, $result['do_not_use_cookies_after_click_on_element'] );
 

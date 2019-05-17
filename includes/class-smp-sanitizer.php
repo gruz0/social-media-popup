@@ -93,7 +93,7 @@ class SMP_Sanitizer {
 					} else {
 						if ( ! empty( $popup_will_appear_after_clicking_on_element ) ) {
 							$values['popup_will_appear_after_clicking_on_element'] =
-								preg_replace( '/[^a-z\d#,\.\- ]*/i', '', sanitize_text_field( $input['popup_will_appear_after_clicking_on_element'] ) );
+								preg_replace( '/[^a-z\d#,\.\-_ ]*/i', '', sanitize_text_field( $input['popup_will_appear_after_clicking_on_element'] ) );
 						}
 
 						$values['event_hide_element_after_click_on_it']      = $event_hide_element_after_click_on_it;
