@@ -24,6 +24,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	const SECTION_FACEBOOK_GENERAL                 = SMP_PREFIX . '-section-facebook-general';
 	const SECTION_FACEBOOK_TRACKING                = SMP_PREFIX . '-section-facebook-tracking';
 	const SECTION_VK_GENERAL                       = SMP_PREFIX . '-section-vkontakte-general';
+	const SECTION_VK_TRACKING                      = SMP_PREFIX . '-section-vkontakte-tracking';
 
 	/**
 	 * Set default options
@@ -963,5 +964,26 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 */
 	public function testCanBeSanitizedSettingVkontakteCloseWindowAfterJoin(): void {
 		$this->sanitizeCheckbox( self::SECTION_VK_GENERAL, 'setting_vkontakte_close_window_after_join' );
+	}
+
+	/**
+	 * Sanitize tracking_use_vkontakte
+	 */
+	public function testCanBeSanitizedSettingTrackingUseVkontakte(): void {
+		$this->sanitizeCheckbox( self::SECTION_VK_TRACKING, 'tracking_use_vkontakte' );
+	}
+
+	/**
+	 * Sanitize tracking_vkontakte_subscribe_event
+	 */
+	public function testCanBeSanitizedSettingTrackingVkontakteSubscribeEvent(): void {
+		$this->sanitizeText( self::SECTION_VK_TRACKING, 'tracking_vkontakte_subscribe_event' );
+	}
+
+	/**
+	 * Sanitize tracking_vkontakte_unsubscribe_event
+	 */
+	public function testCanBeSanitizedSettingTrackingVkontakteUnsubscribeEvent(): void {
+		$this->sanitizeText( self::SECTION_VK_TRACKING, 'tracking_vkontakte_unsubscribe_event' );
 	}
 }
