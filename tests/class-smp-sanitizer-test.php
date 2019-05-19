@@ -21,6 +21,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	const SECTION_COMMON_TRACKING_WINDOW_EVENTS    = SMP_PREFIX . '-section-common-tracking-window-events';
 	const SECTION_COMMON_TRACKING_SOCIAL_EVENTS    = SMP_PREFIX . '-section-common-tracking-social-events';
 	const SECTION_COMMON_MANAGEMENT                = SMP_PREFIX . '-section-common-management';
+	const SECTION_FACEBOOK_GENERAL                 = SMP_PREFIX . '-section-facebook-general';
 
 	/**
 	 * Set default options
@@ -85,6 +86,20 @@ final class SMP_Sanitizer_Test extends TestCase {
 	public function sanitizeKses( $section, $option_name ): void {
 		$value    = 'Title<script>alert("qwe");</script>';
 		$expected = 'Titlealert("qwe");';
+
+		$result = SMP_Sanitizer::sanitize( $section, array( $option_name => $value ) );
+		$this->assertEquals( $expected, $result[ $option_name ] );
+	}
+
+	/**
+	 * Sanitize option's text value with esc_url function
+	 *
+	 * @param string $section     Section
+	 * @param string $option_name Option name
+	 */
+	public function sanitizeUrl( $section, $option_name ): void {
+		$value    = 'example.com/page';
+		$expected = 'http://example.com/page';
 
 		$result = SMP_Sanitizer::sanitize( $section, array( $option_name => $value ) );
 		$this->assertEquals( $expected, $result[ $option_name ] );
@@ -690,5 +705,116 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 */
 	public function testCanBeSanitizedSettingRemoveSettingsOnUninstall(): void {
 		$this->sanitizeCheckbox( self::SECTION_COMMON_MANAGEMENT, 'setting_remove_settings_on_uninstall' );
+	}
+
+	/**
+	 * Sanitize setting_use_facebook
+	 */
+	public function testCanBeSanitizedSettingUseFacebook(): void {
+		$this->sanitizeCheckbox( self::SECTION_FACEBOOK_GENERAL, 'setting_use_facebook' );
+	}
+
+	/**
+	 * Sanitize setting_facebook_tab_caption
+	 */
+	public function testCanBeSanitizedSettingFacebookTabCaption(): void {
+		$key = 'setting_facebook_tab_caption';
+		$this->sanitizeText( self::SECTION_FACEBOOK_GENERAL, $key );
+	}
+
+	/**
+	 * Sanitize setting_facebook_show_description
+	 */
+	public function testCanBeSanitizedSettingFacebookShowDescription(): void {
+		$this->sanitizeCheckbox( self::SECTION_FACEBOOK_GENERAL, 'setting_facebook_show_description' );
+	}
+
+	/**
+	 * Sanitize setting_facebook_application_id
+	 */
+	public function testCanBeSanitizedSettingFacebookApplicationId(): void {
+		$key = 'setting_facebook_application_id';
+		$this->sanitizeText( self::SECTION_FACEBOOK_GENERAL, $key );
+	}
+
+	/**
+	 * Sanitize setting_facebook_page_url
+	 */
+	public function testCanBeSanitizedSettingFacebookPageUrl(): void {
+		$key = 'setting_facebook_page_url';
+		$this->sanitizeUrl( self::SECTION_FACEBOOK_GENERAL, $key );
+	}
+
+	/**
+	 * Sanitize setting_facebook_locale
+	 */
+	public function testCanBeSanitizedSettingFacebookLocale(): void {
+		$key      = 'setting_facebook_locale';
+		$value    = 'qwe';
+		$expected = 'en_US';
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_FACEBOOK_GENERAL, array( $key => $value ) );
+		$this->assertEquals( $expected, $result[ $key ] );
+	}
+
+	/**
+	 * Sanitize setting_facebook_width
+	 */
+	public function testCanBeSanitizedSettingFacebookWidth(): void {
+		$this->sanitizeInteger( self::SECTION_FACEBOOK_GENERAL, 'setting_facebook_width', '400' );
+	}
+
+	/**
+	 * Sanitize setting_facebook_height
+	 */
+	public function testCanBeSanitizedSettingFacebookHeight(): void {
+		$this->sanitizeInteger( self::SECTION_FACEBOOK_GENERAL, 'setting_facebook_height', '400' );
+	}
+
+	/**
+	 * Sanitize setting_facebook_use_small_header
+	 */
+	public function testCanBeSanitizedSettingFacebookUseSmallHeader(): void {
+		$this->sanitizeCheckbox( self::SECTION_FACEBOOK_GENERAL, 'setting_facebook_use_small_header' );
+	}
+
+	/**
+	 * Sanitize setting_facebook_hide_cover
+	 */
+	public function testCanBeSanitizedSettingFacebookHideCover(): void {
+		$this->sanitizeCheckbox( self::SECTION_FACEBOOK_GENERAL, 'setting_facebook_hide_cover' );
+	}
+
+	/**
+	 * Sanitize setting_facebook_show_facepile
+	 */
+	public function testCanBeSanitizedSettingFacebookShowFacepile(): void {
+		$this->sanitizeCheckbox( self::SECTION_FACEBOOK_GENERAL, 'setting_facebook_show_facepile' );
+	}
+
+	/**
+	 * Sanitize setting_facebook_tabs
+	 */
+	public function testCanBeSanitizedSettingFacebookTabs(): void {
+		$values = array(
+			'setting_facebook_tabs' => ' timeline, messages, test, events ',
+		);
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_FACEBOOK_GENERAL, $values );
+		$this->assertEquals( 'timeline,messages,events', $result['setting_facebook_tabs'] );
+	}
+
+	/**
+	 * Sanitize setting_facebook_adapt_container_width
+	 */
+	public function testCanBeSanitizedSettingFacebookAdaptContainerWidth(): void {
+		$this->sanitizeCheckbox( self::SECTION_FACEBOOK_GENERAL, 'setting_facebook_adapt_container_width' );
+	}
+
+	/**
+	 * Sanitize setting_facebook_close_window_after_join
+	 */
+	public function testCanBeSanitizedSettingFacebookCloseWindowAfterJoin(): void {
+		$this->sanitizeCheckbox( self::SECTION_FACEBOOK_GENERAL, 'setting_facebook_close_window_after_join' );
 	}
 }

@@ -433,12 +433,19 @@ class SMP_Settings_Field {
 		$field = $args['field'];
 		$value = esc_attr( SMP_Options::get_option( $field ) );
 
-		$items = array(
+		self::render_radio_buttons( $field, self::get_facebook_locales(), $value );
+	}
+
+	/**
+	 * Returns Facebook locales
+	 *
+	 * @return array
+	 */
+	public static function get_facebook_locales() {
+		return array(
 			'ru_RU' => __( 'Russian', 'social-media-popup' ),
 			'en_US' => __( 'English', 'social-media-popup' ),
 		);
-
-		self::render_radio_buttons( $field, $items, $value );
 	}
 
 	/**
@@ -449,15 +456,20 @@ class SMP_Settings_Field {
 	 * @uses SMP_Settings_Field::render_checkboxes_with_hidden_field()
 	 */
 	public static function settings_field_facebook_tabs( $args ) {
-		$field = $args['field'];
+		self::render_checkboxes_with_hidden_field( $args['field'], self::get_facebook_tabs() );
+	}
 
-		$options = array(
+	/**
+	 * Returns values for option `setting_facebook_tabs`
+	 *
+	 * @return array
+	 */
+	public static function get_facebook_tabs() {
+		return array(
 			'timeline' => __( 'Timelime', 'social-media-popup' ),
 			'messages' => __( 'Messages', 'social-media-popup' ),
 			'events'   => __( 'Events', 'social-media-popup' ),
 		);
-
-		self::render_checkboxes_with_hidden_field( $field, $options );
 	}
 
 	/**

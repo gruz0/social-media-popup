@@ -200,13 +200,13 @@ class SMP_Sanitizer {
 				$values['setting_facebook_description']             = wp_kses_post( $input['setting_facebook_description'] );
 				$values['setting_facebook_application_id']          = sanitize_text_field( $input['setting_facebook_application_id'] );
 				$values['setting_facebook_page_url']                = esc_url( $input['setting_facebook_page_url'] );
-				$values['setting_facebook_locale']                  = sanitize_text_field( $input['setting_facebook_locale'] );
+				$values['setting_facebook_locale']                  = self::sanitize_facebook_locale( $input['setting_facebook_locale'] );
 				$values['setting_facebook_width']                   = absint( $input['setting_facebook_width'] );
 				$values['setting_facebook_height']                  = absint( $input['setting_facebook_height'] );
 				$values['setting_facebook_use_small_header']        = self::sanitize_checkbox( $input['setting_facebook_use_small_header'] );
 				$values['setting_facebook_hide_cover']              = self::sanitize_checkbox( $input['setting_facebook_hide_cover'] );
 				$values['setting_facebook_show_facepile']           = self::sanitize_checkbox( $input['setting_facebook_show_facepile'] );
-				$values['setting_facebook_tabs']                    = sanitize_text_field( $input['setting_facebook_tabs'] );
+				$values['setting_facebook_tabs']                    = self::sanitize_facebook_tabs( $input['setting_facebook_tabs'] );
 				$values['setting_facebook_adapt_container_width']   = self::sanitize_checkbox( $input['setting_facebook_adapt_container_width'] );
 				$values['setting_facebook_close_window_after_join'] = self::sanitize_checkbox( $input['setting_facebook_close_window_after_join'] );
 
@@ -492,6 +492,42 @@ class SMP_Sanitizer {
 	 */
 	private static function sanitize_google_analytics_tracking_id( $value ) {
 		return preg_replace( '/[^\w\-]+/i', '', $value );
+	}
+
+	/**
+	 * Sanitize field `setting_facebook_locale`
+	 *
+	 * @param string $value Value
+	 * @return string
+	 */
+	private static function sanitize_facebook_locale( $value ) {
+		$values = SMP_Settings_Field::get_facebook_locales();
+
+		if ( isset( $values[ $value ] ) ) {
+			return $value;
+		}
+
+		return 'en_US';
+	}
+
+	/**
+	 * Sanitize field `setting_facebook_tabs`
+	 *
+	 * @param array $values Values
+	 * @return array
+	 */
+	private static function sanitize_facebook_tabs( $values ) {
+		$facebook_tabs = SMP_Settings_Field::get_facebook_tabs();
+		$result        = [];
+
+		$values = self::clean_array( explode( ',', $values ) );
+		foreach ( $values as $value ) {
+			if ( isset( $facebook_tabs[ $value ] ) ) {
+				$result[] = $value;
+			}
+		}
+
+		return join( $result, ',' );
 	}
 
 	/**

@@ -1204,6 +1204,7 @@ class Social_Media_Popup {
 		add_settings_field(
 			'setting_facebook_locale',
 			esc_html( 'Facebook Locale', 'social-media-popup' ),
+			// FIXME: It should be replaced with settings_field_input_text
 			array( 'SMP_Settings_Field', 'settings_field_facebook_locale' ),
 			$options_page,
 			$section,
