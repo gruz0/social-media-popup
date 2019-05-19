@@ -224,15 +224,15 @@ class SMP_Sanitizer {
 				$values['setting_vkontakte_tab_caption']             = sanitize_text_field( $input['setting_vkontakte_tab_caption'] );
 				$values['setting_vkontakte_show_description']        = self::sanitize_checkbox( $input['setting_vkontakte_show_description'] );
 				$values['setting_vkontakte_description']             = wp_kses_post( $input['setting_vkontakte_description'] );
-				$values['setting_vkontakte_application_id']          = sanitize_text_field( $input['setting_vkontakte_application_id'] );
-				$values['setting_vkontakte_page_or_group_id']        = sanitize_text_field( $input['setting_vkontakte_page_or_group_id'] );
+				$values['setting_vkontakte_application_id']          = absint( $input['setting_vkontakte_application_id'] );
+				$values['setting_vkontakte_page_or_group_id']        = absint( $input['setting_vkontakte_page_or_group_id'] );
 				$values['setting_vkontakte_page_url']                = esc_url( $input['setting_vkontakte_page_url'] );
 				$values['setting_vkontakte_width']                   = absint( $input['setting_vkontakte_width'] );
 				$values['setting_vkontakte_height']                  = absint( $input['setting_vkontakte_height'] );
-				$values['setting_vkontakte_layout']                  = absint( $input['setting_vkontakte_layout'] );
-				$values['setting_vkontakte_color_background']        = sanitize_text_field( $input['setting_vkontakte_color_background'] );
-				$values['setting_vkontakte_color_text']              = sanitize_text_field( $input['setting_vkontakte_color_text'] );
-				$values['setting_vkontakte_color_button']            = sanitize_text_field( $input['setting_vkontakte_color_button'] );
+				$values['setting_vkontakte_layout']                  = self::sanitize_vkontakte_layout( $input['setting_vkontakte_layout'] );
+				$values['setting_vkontakte_color_background']        = self::sanitize_hex_color( $input['setting_vkontakte_color_background'] );
+				$values['setting_vkontakte_color_text']              = self::sanitize_hex_color( $input['setting_vkontakte_color_text'] );
+				$values['setting_vkontakte_color_button']            = self::sanitize_hex_color( $input['setting_vkontakte_color_button'] );
 				$values['setting_vkontakte_close_window_after_join'] = self::sanitize_checkbox( $input['setting_vkontakte_close_window_after_join'] );
 
 				break;
@@ -528,6 +528,22 @@ class SMP_Sanitizer {
 		}
 
 		return join( $result, ',' );
+	}
+
+	/**
+	 * Sanitize field `setting_vkontakte_layout`
+	 *
+	 * @param string $value Value
+	 * @return string
+	 */
+	private static function sanitize_vkontakte_layout( $value ) {
+		$values = SMP_Settings_Field::get_vkontakte_layout();
+
+		if ( isset( $values[ $value ] ) ) {
+			return $value;
+		}
+
+		return '0';
 	}
 
 	/**

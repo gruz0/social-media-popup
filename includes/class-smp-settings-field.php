@@ -481,13 +481,20 @@ class SMP_Settings_Field {
 		$field = $args['field'];
 		$value = esc_attr( SMP_Options::get_option( $field ) );
 
-		$items = array(
+		self::render_radio_buttons( $field, self::get_vkontakte_layout(), $value );
+	}
+
+	/**
+	 * Returns values for option `setting_vkontakte_layout`
+	 *
+	 * @return array
+	 */
+	public static function get_vkontakte_layout() {
+		return array(
 			'0' => __( 'Members', 'social-media-popup' ),
 			'1' => __( 'Name', 'social-media-popup' ),
 			'2' => __( 'News', 'social-media-popup' ),
 		);
-
-		self::render_radio_buttons( $field, $items, $value );
 	}
 
 	/**

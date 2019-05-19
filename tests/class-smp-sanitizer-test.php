@@ -23,6 +23,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	const SECTION_COMMON_MANAGEMENT                = SMP_PREFIX . '-section-common-management';
 	const SECTION_FACEBOOK_GENERAL                 = SMP_PREFIX . '-section-facebook-general';
 	const SECTION_FACEBOOK_TRACKING                = SMP_PREFIX . '-section-facebook-tracking';
+	const SECTION_VK_GENERAL                       = SMP_PREFIX . '-section-vkontakte-general';
 
 	/**
 	 * Set default options
@@ -845,5 +846,123 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 */
 	public function testCanBeSanitizedSettingTrackingFacebookUnsubscribeEvent(): void {
 		$this->sanitizeText( self::SECTION_FACEBOOK_TRACKING, 'tracking_facebook_unsubscribe_event' );
+	}
+
+	/**
+	 * Sanitize setting_use_vkontakte
+	 */
+	public function testCanBeSanitizedSettingUseVkontakte(): void {
+		$this->sanitizeCheckbox( self::SECTION_VK_GENERAL, 'setting_use_vkontakte' );
+	}
+
+	/**
+	 * Sanitize setting_vkontakte_tab_caption
+	 */
+	public function testCanBeSanitizedSettingVkontakteTabCaption(): void {
+		$this->sanitizeText( self::SECTION_VK_GENERAL, 'setting_vkontakte_tab_caption' );
+	}
+
+	/**
+	 * Sanitize setting_vkontakte_show_description
+	 */
+	public function testCanBeSanitizedSettingVkontakteShowDescription(): void {
+		$this->sanitizeCheckbox( self::SECTION_VK_GENERAL, 'setting_vkontakte_show_description' );
+	}
+
+	/**
+	 * Sanitize setting_vkontakte_description
+	 */
+	public function testCanBeSanitizedSettingVkontakteDescription(): void {
+		$this->sanitizeKses( self::SECTION_VK_GENERAL, 'setting_vkontakte_description' );
+	}
+
+	/**
+	 * Sanitize setting_vkontakte_application_id
+	 */
+	public function testCanBeSanitizedSettingVkontakteApplicationId(): void {
+		$this->sanitizeInteger( self::SECTION_VK_GENERAL, 'setting_vkontakte_application_id', PHP_INT_MAX );
+	}
+
+	/**
+	 * Sanitize setting_vkontakte_page_or_group_id
+	 */
+	public function testCanBeSanitizedSettingVkontaktePageOrGroupId(): void {
+		$this->sanitizeInteger( self::SECTION_VK_GENERAL, 'setting_vkontakte_page_or_group_id', PHP_INT_MAX );
+	}
+
+	/**
+	 * Sanitize setting_vkontakte_page_url
+	 */
+	public function testCanBeSanitizedSettingVkontaktePageUrl(): void {
+		$this->sanitizeUrl( self::SECTION_VK_GENERAL, 'setting_vkontakte_page_url' );
+	}
+
+	/**
+	 * Sanitize setting_vkontakte_width
+	 */
+	public function testCanBeSanitizedSettingVkontakteWidth(): void {
+		$this->sanitizeInteger( self::SECTION_VK_GENERAL, 'setting_vkontakte_width', '400' );
+	}
+
+	/**
+	 * Sanitize setting_vkontakte_height
+	 */
+	public function testCanBeSanitizedSettingVkontakteHeight(): void {
+		$this->sanitizeInteger( self::SECTION_VK_GENERAL, 'setting_vkontakte_height', '400' );
+	}
+
+	/**
+	 * Sanitize setting_vkontakte_layout
+	 */
+	public function testCanBeSanitizedSettingVkontakteLayout(): void {
+		$key      = 'setting_vkontakte_layout';
+		$value    = 'qwe';
+		$expected = '0';
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_VK_GENERAL, array( $key => $value ) );
+		$this->assertEquals( $expected, $result[ $key ] );
+	}
+
+	/**
+	 * Sanitize setting_vkontakte_color_background
+	 */
+	public function testCanBeSanitizedSettingVkontakteColorBackground(): void {
+		$key      = 'setting_vkontakte_color_background';
+		$value    = 'qwe';
+		$expected = '#000000';
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_VK_GENERAL, array( $key => $value ) );
+		$this->assertEquals( $expected, $result[ $key ] );
+	}
+
+	/**
+	 * Sanitize setting_vkontakte_color_text
+	 */
+	public function testCanBeSanitizedSettingVkontakteColorText(): void {
+		$key      = 'setting_vkontakte_color_text';
+		$value    = 'qwe';
+		$expected = '#000000';
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_VK_GENERAL, array( $key => $value ) );
+		$this->assertEquals( $expected, $result[ $key ] );
+	}
+
+	/**
+	 * Sanitize setting_vkontakte_color_button
+	 */
+	public function testCanBeSanitizedSettingVkontakteColorButton(): void {
+		$key      = 'setting_vkontakte_color_button';
+		$value    = 'qwe';
+		$expected = '#000000';
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_VK_GENERAL, array( $key => $value ) );
+		$this->assertEquals( $expected, $result[ $key ] );
+	}
+
+	/**
+	 * Sanitize setting_vkontakte_close_window_after_join
+	 */
+	public function testCanBeSanitizedSettingVkontakteCloseWindowAfterJoin(): void {
+		$this->sanitizeCheckbox( self::SECTION_VK_GENERAL, 'setting_vkontakte_close_window_after_join' );
 	}
 }
