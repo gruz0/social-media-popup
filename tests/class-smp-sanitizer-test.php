@@ -731,6 +731,13 @@ final class SMP_Sanitizer_Test extends TestCase {
 	}
 
 	/**
+	 * Sanitize setting_facebook_description
+	 */
+	public function testCanBeSanitizedSettingFacebookDescription(): void {
+		$this->sanitizeKses( self::SECTION_FACEBOOK_GENERAL, 'setting_facebook_description' );
+	}
+
+	/**
 	 * Sanitize setting_facebook_application_id
 	 */
 	public function testCanBeSanitizedSettingFacebookApplicationId(): void {
