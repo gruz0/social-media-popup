@@ -742,8 +742,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * Sanitize setting_facebook_application_id
 	 */
 	public function testCanBeSanitizedSettingFacebookApplicationId(): void {
-		$key = 'setting_facebook_application_id';
-		$this->sanitizeText( self::SECTION_FACEBOOK_GENERAL, $key );
+		$this->sanitizeInteger( self::SECTION_FACEBOOK_GENERAL, 'setting_facebook_application_id', PHP_INT_MAX );
 	}
 
 	/**

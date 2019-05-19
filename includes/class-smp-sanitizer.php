@@ -198,7 +198,7 @@ class SMP_Sanitizer {
 				$values['setting_facebook_tab_caption']             = sanitize_text_field( $input['setting_facebook_tab_caption'] );
 				$values['setting_facebook_show_description']        = self::sanitize_checkbox( $input['setting_facebook_show_description'] );
 				$values['setting_facebook_description']             = wp_kses_post( $input['setting_facebook_description'] );
-				$values['setting_facebook_application_id']          = sanitize_text_field( $input['setting_facebook_application_id'] );
+				$values['setting_facebook_application_id']          = absint( $input['setting_facebook_application_id'] );
 				$values['setting_facebook_page_url']                = esc_url( $input['setting_facebook_page_url'] );
 				$values['setting_facebook_locale']                  = self::sanitize_facebook_locale( $input['setting_facebook_locale'] );
 				$values['setting_facebook_width']                   = absint( $input['setting_facebook_width'] );
