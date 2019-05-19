@@ -22,6 +22,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	const SECTION_COMMON_TRACKING_SOCIAL_EVENTS    = SMP_PREFIX . '-section-common-tracking-social-events';
 	const SECTION_COMMON_MANAGEMENT                = SMP_PREFIX . '-section-common-management';
 	const SECTION_FACEBOOK_GENERAL                 = SMP_PREFIX . '-section-facebook-general';
+	const SECTION_FACEBOOK_TRACKING                = SMP_PREFIX . '-section-facebook-tracking';
 
 	/**
 	 * Set default options
@@ -816,5 +817,26 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 */
 	public function testCanBeSanitizedSettingFacebookCloseWindowAfterJoin(): void {
 		$this->sanitizeCheckbox( self::SECTION_FACEBOOK_GENERAL, 'setting_facebook_close_window_after_join' );
+	}
+
+	/**
+	 * Sanitize tracking_use_facebook
+	 */
+	public function testCanBeSanitizedSettingTrackingUseFacebook(): void {
+		$this->sanitizeCheckbox( self::SECTION_FACEBOOK_TRACKING, 'tracking_use_facebook' );
+	}
+
+	/**
+	 * Sanitize tracking_facebook_subscribe_event
+	 */
+	public function testCanBeSanitizedSettingTrackingFacebookSubscribeEvent(): void {
+		$this->sanitizeText( self::SECTION_FACEBOOK_TRACKING, 'tracking_facebook_subscribe_event' );
+	}
+
+	/**
+	 * Sanitize tracking_facebook_unsubscribe_event
+	 */
+	public function testCanBeSanitizedSettingTrackingFacebookUnsubscribeEvent(): void {
+		$this->sanitizeText( self::SECTION_FACEBOOK_TRACKING, 'tracking_facebook_unsubscribe_event' );
 	}
 }
