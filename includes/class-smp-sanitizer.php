@@ -277,9 +277,9 @@ class SMP_Sanitizer {
 				$values['setting_twitter_tab_caption']             = sanitize_text_field( $input['setting_twitter_tab_caption'] );
 				$values['setting_twitter_show_description']        = self::sanitize_checkbox( $input['setting_twitter_show_description'] );
 				$values['setting_twitter_description']             = wp_kses_post( $input['setting_twitter_description'] );
-				$values['setting_twitter_username']                = sanitize_text_field( $input['setting_twitter_username'] );
-				$values['setting_twitter_locale']                  = sanitize_text_field( $input['setting_twitter_locale'] );
-				$values['setting_twitter_first_widget']            = sanitize_text_field( $input['setting_twitter_first_widget'] );
+				$values['setting_twitter_username']                = self::sanitize_twitter_username( $input['setting_twitter_username'] );
+				$values['setting_twitter_locale']                  = self::sanitize_twitter_locale( $input['setting_twitter_locale'] );
+				$values['setting_twitter_first_widget']            = self::sanitize_twitter_first_widget( $input['setting_twitter_first_widget'] );
 				$values['setting_twitter_close_window_after_join'] = self::sanitize_checkbox( $input['setting_twitter_close_window_after_join'] );
 
 				break;
@@ -544,6 +544,48 @@ class SMP_Sanitizer {
 		}
 
 		return '0';
+	}
+
+	/**
+	 * Sanitize field `setting_twitter_username`
+	 *
+	 * @param string $value Value
+	 * @return string
+	 */
+	private static function sanitize_twitter_username( $value ) {
+		return preg_replace( '/[^\w]+/i', '', $value );
+	}
+
+	/**
+	 * Sanitize field `setting_twitter_locale`
+	 *
+	 * @param string $value Value
+	 * @return string
+	 */
+	private static function sanitize_twitter_locale( $value ) {
+		$values = SMP_Settings_Field::get_twitter_locales();
+
+		if ( isset( $values[ $value ] ) ) {
+			return $value;
+		}
+
+		return 'en';
+	}
+
+	/**
+	 * Sanitize field `setting_twitter_first_widget`
+	 *
+	 * @param string $value Value
+	 * @return string
+	 */
+	private static function sanitize_twitter_first_widget( $value ) {
+		$values = SMP_Settings_Field::get_twitter_widgets();
+
+		if ( isset( $values[ $value ] ) ) {
+			return $value;
+		}
+
+		return 'follow_button';
 	}
 
 	/**

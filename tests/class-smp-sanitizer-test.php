@@ -26,6 +26,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	const SECTION_VK_GENERAL                       = SMP_PREFIX . '-section-vkontakte-general';
 	const SECTION_VK_TRACKING                      = SMP_PREFIX . '-section-vkontakte-tracking';
 	const SECTION_OK_GENERAL                       = SMP_PREFIX . '-section-odnoklassniki';
+	const SECTION_TWITTER_GENERAL                  = SMP_PREFIX . '-section-twitter-general';
 
 	/**
 	 * Set default options
@@ -1042,5 +1043,76 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 */
 	public function testCanBeSanitizedSettingOdnoklassnikiHeight(): void {
 		$this->sanitizeInteger( self::SECTION_OK_GENERAL, 'setting_odnoklassniki_height', '400' );
+	}
+
+	/**
+	 * Sanitize setting_use_twitter
+	 */
+	public function testCanBeSanitizedSettingUseTwitter(): void {
+		$this->sanitizeCheckbox( self::SECTION_TWITTER_GENERAL, 'setting_use_twitter' );
+	}
+
+	/**
+	 * Sanitize setting_twitter_tab_caption
+	 */
+	public function testCanBeSanitizedSettingTwitterTabCaption(): void {
+		$this->sanitizeText( self::SECTION_TWITTER_GENERAL, 'setting_twitter_tab_caption' );
+	}
+
+	/**
+	 * Sanitize setting_twitter_show_description
+	 */
+	public function testCanBeSanitizedSettingTwitterShowDescription(): void {
+		$this->sanitizeCheckbox( self::SECTION_TWITTER_GENERAL, 'setting_twitter_show_description' );
+	}
+
+	/**
+	 * Sanitize setting_twitter_description
+	 */
+	public function testCanBeSanitizedSettingTwitterDescription(): void {
+		$this->sanitizeKses( self::SECTION_TWITTER_GENERAL, 'setting_twitter_description' );
+	}
+
+	/**
+	 * Sanitize setting_twitter_username
+	 */
+	public function testCanBeSanitizedSettingTwitterUsername(): void {
+		$key      = 'setting_twitter_username';
+		$value    = '@gruz0-Я';
+		$expected = 'gruz0';
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_TWITTER_GENERAL, array( $key => $value ) );
+		$this->assertEquals( $expected, $result[ $key ] );
+	}
+
+	/**
+	 * Sanitize setting_twitter_locale
+	 */
+	public function testCanBeSanitizedSettingTwitterLocale(): void {
+		$key      = 'setting_twitter_locale';
+		$value    = 'qwe';
+		$expected = 'en';
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_TWITTER_GENERAL, array( $key => $value ) );
+		$this->assertEquals( $expected, $result[ $key ] );
+	}
+
+	/**
+	 * Sanitize setting_twitter_first_widget
+	 */
+	public function testCanBeSanitizedSettingTwitterFirstWidget(): void {
+		$key      = 'setting_twitter_first_widget';
+		$value    = 'qwe';
+		$expected = 'follow_button';
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_TWITTER_GENERAL, array( $key => $value ) );
+		$this->assertEquals( $expected, $result[ $key ] );
+	}
+
+	/**
+	 * Sanitize setting_twitter_close_window_after_join
+	 */
+	public function testCanBeSanitizedSettingTwitterCloseWindowAfterJoin(): void {
+		$this->sanitizeCheckbox( self::SECTION_TWITTER_GENERAL, 'setting_twitter_close_window_after_join' );
 	}
 }

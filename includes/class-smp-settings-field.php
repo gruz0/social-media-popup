@@ -577,12 +577,19 @@ class SMP_Settings_Field {
 		$field = $args['field'];
 		$value = esc_attr( SMP_Options::get_option( $field ) );
 
-		$items = array(
+		self::render_radio_buttons( $field, self::get_twitter_locales(), $value );
+	}
+
+	/**
+	 * Returns Twitter locales
+	 *
+	 * @return array
+	 */
+	public static function get_twitter_locales() {
+		return array(
 			'ru' => __( 'Russian', 'social-media-popup' ),
 			'en' => __( 'English', 'social-media-popup' ),
 		);
-
-		self::render_radio_buttons( $field, $items, $value );
 	}
 
 	/**
@@ -596,12 +603,19 @@ class SMP_Settings_Field {
 		$field = $args['field'];
 		$value = esc_attr( SMP_Options::get_option( $field ) );
 
-		$items = array(
+		self::render_radio_buttons( $field, self::get_twitter_widgets(), $value );
+	}
+
+	/**
+	 * Returns Twitter widgets
+	 *
+	 * @return array
+	 */
+	public static function get_twitter_widgets() {
+		return array(
 			'follow_button' => __( 'Follow Button', 'social-media-popup' ),
 			'timeline'      => __( 'Timeline', 'social-media-popup' ),
 		);
-
-		self::render_radio_buttons( $field, $items, $value );
 	}
 
 	/**
