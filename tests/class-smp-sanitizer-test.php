@@ -25,6 +25,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	const SECTION_FACEBOOK_TRACKING                = SMP_PREFIX . '-section-facebook-tracking';
 	const SECTION_VK_GENERAL                       = SMP_PREFIX . '-section-vkontakte-general';
 	const SECTION_VK_TRACKING                      = SMP_PREFIX . '-section-vkontakte-tracking';
+	const SECTION_OK_GENERAL                       = SMP_PREFIX . '-section-odnoklassniki';
 
 	/**
 	 * Set default options
@@ -985,5 +986,61 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 */
 	public function testCanBeSanitizedSettingTrackingVkontakteUnsubscribeEvent(): void {
 		$this->sanitizeText( self::SECTION_VK_TRACKING, 'tracking_vkontakte_unsubscribe_event' );
+	}
+
+	/**
+	 * Sanitize setting_use_odnoklassniki
+	 */
+	public function testCanBeSanitizedSettingUseOdnoklassniki(): void {
+		$this->sanitizeCheckbox( self::SECTION_OK_GENERAL, 'setting_use_odnoklassniki' );
+	}
+
+	/**
+	 * Sanitize setting_odnoklassniki_tab_caption
+	 */
+	public function testCanBeSanitizedSettingOdnoklassnikiTabCaption(): void {
+		$this->sanitizeText( self::SECTION_OK_GENERAL, 'setting_odnoklassniki_tab_caption' );
+	}
+
+	/**
+	 * Sanitize setting_odnoklassniki_show_description
+	 */
+	public function testCanBeSanitizedSettingOdnoklassnikiShowDescription(): void {
+		$this->sanitizeCheckbox( self::SECTION_OK_GENERAL, 'setting_odnoklassniki_show_description' );
+	}
+
+	/**
+	 * Sanitize setting_odnoklassniki_description
+	 */
+	public function testCanBeSanitizedSettingOdnoklassnikiDescription(): void {
+		$this->sanitizeKses( self::SECTION_OK_GENERAL, 'setting_odnoklassniki_description' );
+	}
+
+	/**
+	 * Sanitize setting_odnoklassniki_page_or_group_id
+	 */
+	public function testCanBeSanitizedSettingOdnoklassnikiGroupId(): void {
+		$this->sanitizeInteger( self::SECTION_OK_GENERAL, 'setting_odnoklassniki_group_id', PHP_INT_MAX );
+	}
+
+	/**
+	 * Sanitize setting_odnoklassniki_page_url
+	 */
+	public function testCanBeSanitizedSettingOdnoklassnikiGroupUrl(): void {
+		$this->sanitizeUrl( self::SECTION_OK_GENERAL, 'setting_odnoklassniki_group_url' );
+	}
+
+	/**
+	 * Sanitize setting_odnoklassniki_width
+	 */
+	public function testCanBeSanitizedSettingOdnoklassnikiWidth(): void {
+		$this->sanitizeInteger( self::SECTION_OK_GENERAL, 'setting_odnoklassniki_width', '400' );
+	}
+
+	/**
+	 * Sanitize setting_odnoklassniki_height
+	 */
+	public function testCanBeSanitizedSettingOdnoklassnikiHeight(): void {
+		$this->sanitizeInteger( self::SECTION_OK_GENERAL, 'setting_odnoklassniki_height', '400' );
 	}
 }

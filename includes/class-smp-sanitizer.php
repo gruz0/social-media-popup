@@ -249,7 +249,7 @@ class SMP_Sanitizer {
 				$values['setting_odnoklassniki_tab_caption']      = sanitize_text_field( $input['setting_odnoklassniki_tab_caption'] );
 				$values['setting_odnoklassniki_show_description'] = self::sanitize_checkbox( $input['setting_odnoklassniki_show_description'] );
 				$values['setting_odnoklassniki_description']      = wp_kses_post( $input['setting_odnoklassniki_description'] );
-				$values['setting_odnoklassniki_group_id']         = sanitize_text_field( $input['setting_odnoklassniki_group_id'] );
+				$values['setting_odnoklassniki_group_id']         = absint( $input['setting_odnoklassniki_group_id'] );
 				$values['setting_odnoklassniki_group_url']        = esc_url( $input['setting_odnoklassniki_group_url'] );
 				$values['setting_odnoklassniki_width']            = absint( $input['setting_odnoklassniki_width'] );
 				$values['setting_odnoklassniki_height']           = absint( $input['setting_odnoklassniki_height'] );
