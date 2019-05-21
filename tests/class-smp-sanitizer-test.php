@@ -27,6 +27,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	const SECTION_VK_TRACKING                      = SMP_PREFIX . '-section-vkontakte-tracking';
 	const SECTION_OK_GENERAL                       = SMP_PREFIX . '-section-odnoklassniki';
 	const SECTION_TWITTER_GENERAL                  = SMP_PREFIX . '-section-twitter-general';
+	const SECTION_TWITTER_FOLLOW_BUTTON            = SMP_PREFIX . '-section-twitter-follow-button';
 
 	/**
 	 * Set default options
@@ -1114,5 +1115,45 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 */
 	public function testCanBeSanitizedSettingTwitterCloseWindowAfterJoin(): void {
 		$this->sanitizeCheckbox( self::SECTION_TWITTER_GENERAL, 'setting_twitter_close_window_after_join' );
+	}
+
+	/**
+	 * Sanitize setting_twitter_use_follow_button
+	 */
+	public function testCanBeSanitizedSettingTwitterUseFollowButton(): void {
+		$this->sanitizeCheckbox( self::SECTION_TWITTER_FOLLOW_BUTTON, 'setting_twitter_use_follow_button' );
+	}
+
+	/**
+	 * Sanitize setting_twitter_show_count
+	 */
+	public function testCanBeSanitizedSettingTwitterShowCount(): void {
+		$this->sanitizeCheckbox( self::SECTION_TWITTER_FOLLOW_BUTTON, 'setting_twitter_show_count' );
+	}
+
+	/**
+	 * Sanitize setting_twitter_show_screen_name
+	 */
+	public function testCanBeSanitizedSettingTwitterShowScreenName(): void {
+		$this->sanitizeCheckbox( self::SECTION_TWITTER_FOLLOW_BUTTON, 'setting_twitter_show_screen_name' );
+	}
+
+	/**
+	 * Sanitize setting_twitter_follow_button_large_size
+	 */
+	public function testCanBeSanitizedSettingTwitterFollowButtonLargeSize(): void {
+		$this->sanitizeCheckbox( self::SECTION_TWITTER_FOLLOW_BUTTON, 'setting_twitter_follow_button_large_size' );
+	}
+
+	/**
+	 * Sanitize setting_twitter_follow_button_align_by
+	 */
+	public function testCanBeSanitizedSettingTwitterFollowButtonAlignBy(): void {
+		$key      = 'setting_twitter_follow_button_align_by';
+		$value    = 'qwe';
+		$expected = 'left';
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_TWITTER_FOLLOW_BUTTON, array( $key => $value ) );
+		$this->assertEquals( $expected, $result[ $key ] );
 	}
 }

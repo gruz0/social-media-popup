@@ -289,7 +289,7 @@ class SMP_Sanitizer {
 				$values['setting_twitter_show_count']               = self::sanitize_checkbox( $input['setting_twitter_show_count'] );
 				$values['setting_twitter_show_screen_name']         = self::sanitize_checkbox( $input['setting_twitter_show_screen_name'] );
 				$values['setting_twitter_follow_button_large_size'] = self::sanitize_checkbox( $input['setting_twitter_follow_button_large_size'] );
-				$values['setting_twitter_follow_button_align_by']   = sanitize_text_field( $input['setting_twitter_follow_button_align_by'] );
+				$values['setting_twitter_follow_button_align_by']   = self::sanitize_twitter_follow_button_alignment( $input['setting_twitter_follow_button_align_by'] );
 
 				break;
 
@@ -586,6 +586,22 @@ class SMP_Sanitizer {
 		}
 
 		return 'follow_button';
+	}
+
+	/**
+	 * Sanitize field `setting_twitter_follow_button_align_by`
+	 *
+	 * @param string $value Value
+	 * @return string
+	 */
+	private static function sanitize_twitter_follow_button_alignment( $value ) {
+		$values = SMP_Settings_Field::get_twitter_follow_button_alignments();
+
+		if ( isset( $values[ $value ] ) ) {
+			return $value;
+		}
+
+		return 'left';
 	}
 
 	/**

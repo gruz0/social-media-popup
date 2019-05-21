@@ -629,13 +629,20 @@ class SMP_Settings_Field {
 		$field = $args['field'];
 		$value = esc_attr( SMP_Options::get_option( $field ) );
 
-		$items = array(
+		self::render_select_with_options( $field, self::get_twitter_follow_button_alignments(), $value );
+	}
+
+	/**
+	 * Returns Twitter Follow Button alignments
+	 *
+	 * @return array
+	 */
+	public static function get_twitter_follow_button_alignments() {
+		return array(
 			'left'   => __( 'Left', 'social-media-popup' ),
 			'center' => __( 'Center', 'social-media-popup' ),
 			'right'  => __( 'Right', 'social-media-popup' ),
 		);
-
-		self::render_select_with_options( $field, $items, $value );
 	}
 
 	/**
