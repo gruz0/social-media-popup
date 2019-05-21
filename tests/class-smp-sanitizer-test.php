@@ -40,81 +40,6 @@ final class SMP_Sanitizer_Test extends TestCase {
 	}
 
 	/**
-	 * Checks if checkbox is not checked then it will return `1` otherwise `0`
-	 *
-	 * @param string $section     Section
-	 * @param string $option_name Option name
-	 */
-	public function sanitizeCheckbox( $section, $option_name ) {
-		$value  = rand( 2, 99 );
-		$result = SMP_Sanitizer::sanitize( $section, array( $option_name => $value ) );
-		$this->assertEquals( 1, $result[ $option_name ] );
-	}
-
-	/**
-	 * Sanitize option's integer value
-	 *
-	 * @param string $section     Section
-	 * @param string $option_name Option name
-	 * @param string $value       Value
-	 */
-	public function sanitizeInteger( $section, $option_name, $value ) {
-		// Is should converts to a positive value
-		$result = SMP_Sanitizer::sanitize( $section, array( $option_name => $value ) );
-		$this->assertEquals( absint( $value ), $result[ $option_name ] );
-
-		// Check for a value below zero
-		$result = SMP_Sanitizer::sanitize( $section, array( $option_name => -absint( $value ) ) );
-		$this->assertEquals( absint( $value ), $result[ $option_name ] );
-
-		// Check for incorrect value
-		$result = SMP_Sanitizer::sanitize( $section, array( $option_name => 'abc' ) );
-		$this->assertEquals( 0, $result[ $option_name ] );
-	}
-
-	/**
-	 * Sanitize option's text value from HTML tags
-	 *
-	 * @param string $section     Section
-	 * @param string $option_name Option name
-	 */
-	public function sanitizeText( $section, $option_name ): void {
-		$value       = 'TextBox Value';
-		$dirty_value = "<b><script></script>${value}</b>";
-
-		$result = SMP_Sanitizer::sanitize( $section, array( $option_name => $dirty_value ) );
-		$this->assertEquals( $value, $result[ $option_name ] );
-	}
-
-	/**
-	 * Sanitize option's text value with wp_kses_post function
-	 *
-	 * @param string $section     Section
-	 * @param string $option_name Option name
-	 */
-	public function sanitizeKses( $section, $option_name ): void {
-		$value    = 'Title<script>alert("qwe");</script>';
-		$expected = 'Titlealert("qwe");';
-
-		$result = SMP_Sanitizer::sanitize( $section, array( $option_name => $value ) );
-		$this->assertEquals( $expected, $result[ $option_name ] );
-	}
-
-	/**
-	 * Sanitize option's text value with esc_url function
-	 *
-	 * @param string $section     Section
-	 * @param string $option_name Option name
-	 */
-	public function sanitizeUrl( $section, $option_name ): void {
-		$value    = 'example.com/page';
-		$expected = 'http://example.com/page';
-
-		$result = SMP_Sanitizer::sanitize( $section, array( $option_name => $value ) );
-		$this->assertEquals( $expected, $result[ $option_name ] );
-	}
-
-	/**
 	 * Sanitize setting_debug_mode
 	 */
 	public function testCanBeSanitizedSettingDebugMode(): void {
@@ -1284,5 +1209,80 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 */
 	public function testCanBeSanitizedSettingPinterestHeight(): void {
 		$this->sanitizeInteger( self::SECTION_PINTEREST_GENERAL, 'setting_pinterest_height', '400' );
+	}
+
+	/**
+	 * Checks if checkbox is not checked then it will return `1` otherwise `0`
+	 *
+	 * @param string $section     Section
+	 * @param string $option_name Option name
+	 */
+	private function sanitizeCheckbox( $section, $option_name ) {
+		$value  = rand( 2, 99 );
+		$result = SMP_Sanitizer::sanitize( $section, array( $option_name => $value ) );
+		$this->assertEquals( 1, $result[ $option_name ] );
+	}
+
+	/**
+	 * Sanitize option's integer value
+	 *
+	 * @param string $section     Section
+	 * @param string $option_name Option name
+	 * @param string $value       Value
+	 */
+	private function sanitizeInteger( $section, $option_name, $value ) {
+		// Is should converts to a positive value
+		$result = SMP_Sanitizer::sanitize( $section, array( $option_name => $value ) );
+		$this->assertEquals( absint( $value ), $result[ $option_name ] );
+
+		// Check for a value below zero
+		$result = SMP_Sanitizer::sanitize( $section, array( $option_name => -absint( $value ) ) );
+		$this->assertEquals( absint( $value ), $result[ $option_name ] );
+
+		// Check for incorrect value
+		$result = SMP_Sanitizer::sanitize( $section, array( $option_name => 'abc' ) );
+		$this->assertEquals( 0, $result[ $option_name ] );
+	}
+
+	/**
+	 * Sanitize option's text value from HTML tags
+	 *
+	 * @param string $section     Section
+	 * @param string $option_name Option name
+	 */
+	private function sanitizeText( $section, $option_name ): void {
+		$value       = 'TextBox Value';
+		$dirty_value = "<b><script></script>${value}</b>";
+
+		$result = SMP_Sanitizer::sanitize( $section, array( $option_name => $dirty_value ) );
+		$this->assertEquals( $value, $result[ $option_name ] );
+	}
+
+	/**
+	 * Sanitize option's text value with wp_kses_post function
+	 *
+	 * @param string $section     Section
+	 * @param string $option_name Option name
+	 */
+	private function sanitizeKses( $section, $option_name ): void {
+		$value    = 'Title<script>alert("qwe");</script>';
+		$expected = 'Titlealert("qwe");';
+
+		$result = SMP_Sanitizer::sanitize( $section, array( $option_name => $value ) );
+		$this->assertEquals( $expected, $result[ $option_name ] );
+	}
+
+	/**
+	 * Sanitize option's text value with esc_url function
+	 *
+	 * @param string $section     Section
+	 * @param string $option_name Option name
+	 */
+	private function sanitizeUrl( $section, $option_name ): void {
+		$value    = 'example.com/page';
+		$expected = 'http://example.com/page';
+
+		$result = SMP_Sanitizer::sanitize( $section, array( $option_name => $value ) );
+		$this->assertEquals( $expected, $result[ $option_name ] );
 	}
 }
