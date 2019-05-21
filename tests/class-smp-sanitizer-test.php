@@ -165,8 +165,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * Sanitize setting_plugin_title
 	 */
 	public function testCanBeSanitizedSettingPluginTitle(): void {
-		$key = 'setting_plugin_title';
-		$this->sanitizeKses( self::SECTION_COMMON_VIEW_DESKTOP, $key );
+		$this->sanitizeKses( self::SECTION_COMMON_VIEW_DESKTOP, 'setting_plugin_title' );
 	}
 
 	/**
@@ -258,8 +257,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * Sanitize setting_button_to_close_widget_title
 	 */
 	public function testCanBeSanitizedSettingButtonToCloseWidgetTitle(): void {
-		$key = 'setting_button_to_close_widget_title';
-		$this->sanitizeText( self::SECTION_COMMON_VIEW_DESKTOP, $key );
+		$this->sanitizeText( self::SECTION_COMMON_VIEW_DESKTOP, 'setting_button_to_close_widget_title' );
 	}
 
 	/**
@@ -328,8 +326,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * Sanitize setting_plugin_title_on_mobile_devices
 	 */
 	public function testCanBeSanitizedSettingPluginTitleOnMobileDevices(): void {
-		$key = 'setting_plugin_title_on_mobile_devices';
-		$this->sanitizeKses( self::SECTION_COMMON_VIEW_MOBILE, $key );
+		$this->sanitizeKses( self::SECTION_COMMON_VIEW_MOBILE, 'setting_plugin_title_on_mobile_devices' );
 	}
 
 	/**
@@ -619,40 +616,35 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * Sanitize tracking_event_label_window_showed_immediately
 	 */
 	public function testCanBeSanitizedSettingTrackingEventLabelWindowShowedImmediately(): void {
-		$key = 'tracking_event_label_window_showed_immediately';
-		$this->sanitizeText( self::SECTION_COMMON_TRACKING_WINDOW_EVENTS, $key );
+		$this->sanitizeText( self::SECTION_COMMON_TRACKING_WINDOW_EVENTS, 'tracking_event_label_window_showed_immediately' );
 	}
 
 	/**
 	 * Sanitize tracking_event_label_window_showed_with_delay
 	 */
 	public function testCanBeSanitizedSettingTrackingEventLabelWindowShowedWithDelay(): void {
-		$key = 'tracking_event_label_window_showed_with_delay';
-		$this->sanitizeText( self::SECTION_COMMON_TRACKING_WINDOW_EVENTS, $key );
+		$this->sanitizeText( self::SECTION_COMMON_TRACKING_WINDOW_EVENTS, 'tracking_event_label_window_showed_with_delay' );
 	}
 
 	/**
 	 * Sanitize tracking_event_label_window_showed_after_click
 	 */
 	public function testCanBeSanitizedSettingTrackingEventLabelWindowShowedAfterClick(): void {
-		$key = 'tracking_event_label_window_showed_after_click';
-		$this->sanitizeText( self::SECTION_COMMON_TRACKING_WINDOW_EVENTS, $key );
+		$this->sanitizeText( self::SECTION_COMMON_TRACKING_WINDOW_EVENTS, 'tracking_event_label_window_showed_after_click' );
 	}
 
 	/**
 	 * Sanitize tracking_event_label_window_showed_on_scrolling_down
 	 */
 	public function testCanBeSanitizedSettingTrackingEventLabelWindowShowedOnScrollingDown(): void {
-		$key = 'tracking_event_label_window_showed_on_scrolling_down';
-		$this->sanitizeText( self::SECTION_COMMON_TRACKING_WINDOW_EVENTS, $key );
+		$this->sanitizeText( self::SECTION_COMMON_TRACKING_WINDOW_EVENTS, 'tracking_event_label_window_showed_on_scrolling_down' );
 	}
 
 	/**
 	 * Sanitize tracking_event_label_window_showed_on_exit_intent
 	 */
 	public function testCanBeSanitizedSettingTrackingEventLabelWindowShowedOnExitIntent(): void {
-		$key = 'tracking_event_label_window_showed_on_exit_intent';
-		$this->sanitizeText( self::SECTION_COMMON_TRACKING_WINDOW_EVENTS, $key );
+		$this->sanitizeText( self::SECTION_COMMON_TRACKING_WINDOW_EVENTS, 'tracking_event_label_window_showed_on_exit_intent' );
 	}
 
 	/**
@@ -673,40 +665,35 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * Sanitize tracking_event_label_no_events_fired
 	 */
 	public function testCanBeSanitizedSettingTrackingEventLabelNoEventsFired(): void {
-		$key = 'tracking_event_label_no_events_fired';
-		$this->sanitizeText( self::SECTION_COMMON_TRACKING_SOCIAL_EVENTS, $key );
+		$this->sanitizeText( self::SECTION_COMMON_TRACKING_SOCIAL_EVENTS, 'tracking_event_label_no_events_fired' );
 	}
 
 	/**
 	 * Sanitize tracking_event_label_on_delay
 	 */
 	public function testCanBeSanitizedSettingTrackingEventLabelOnDelay(): void {
-		$key = 'tracking_event_label_on_delay';
-		$this->sanitizeText( self::SECTION_COMMON_TRACKING_SOCIAL_EVENTS, $key );
+		$this->sanitizeText( self::SECTION_COMMON_TRACKING_SOCIAL_EVENTS, 'tracking_event_label_on_delay' );
 	}
 
 	/**
 	 * Sanitize tracking_event_label_after_click
 	 */
 	public function testCanBeSanitizedSettingTrackingEventLabelAfterClick(): void {
-		$key = 'tracking_event_label_after_click';
-		$this->sanitizeText( self::SECTION_COMMON_TRACKING_SOCIAL_EVENTS, $key );
+		$this->sanitizeText( self::SECTION_COMMON_TRACKING_SOCIAL_EVENTS, 'tracking_event_label_after_click' );
 	}
 
 	/**
 	 * Sanitize tracking_event_label_on_scrolling_down
 	 */
 	public function testCanBeSanitizedSettingTrackingEventLabelOnScrollingDown(): void {
-		$key = 'tracking_event_label_on_scrolling_down';
-		$this->sanitizeText( self::SECTION_COMMON_TRACKING_SOCIAL_EVENTS, $key );
+		$this->sanitizeText( self::SECTION_COMMON_TRACKING_SOCIAL_EVENTS, 'tracking_event_label_on_scrolling_down' );
 	}
 
 	/**
 	 * Sanitize tracking_event_label_on_exit_intent
 	 */
 	public function testCanBeSanitizedSettingTrackingEventLabelOnExitIntent(): void {
-		$key = 'tracking_event_label_on_exit_intent';
-		$this->sanitizeText( self::SECTION_COMMON_TRACKING_SOCIAL_EVENTS, $key );
+		$this->sanitizeText( self::SECTION_COMMON_TRACKING_SOCIAL_EVENTS, 'tracking_event_label_on_exit_intent' );
 	}
 
 	/**
@@ -727,8 +714,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * Sanitize setting_facebook_tab_caption
 	 */
 	public function testCanBeSanitizedSettingFacebookTabCaption(): void {
-		$key = 'setting_facebook_tab_caption';
-		$this->sanitizeText( self::SECTION_FACEBOOK_GENERAL, $key );
+		$this->sanitizeText( self::SECTION_FACEBOOK_GENERAL, 'setting_facebook_tab_caption' );
 	}
 
 	/**
@@ -756,8 +742,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * Sanitize setting_facebook_page_url
 	 */
 	public function testCanBeSanitizedSettingFacebookPageUrl(): void {
-		$key = 'setting_facebook_page_url';
-		$this->sanitizeUrl( self::SECTION_FACEBOOK_GENERAL, $key );
+		$this->sanitizeUrl( self::SECTION_FACEBOOK_GENERAL, 'setting_facebook_page_url' );
 	}
 
 	/**
@@ -1256,8 +1241,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * Sanitize setting_pinterest_tab_caption
 	 */
 	public function testCanBeSanitizedSettingPinterestTabCaption(): void {
-		$key = 'setting_pinterest_tab_caption';
-		$this->sanitizeText( self::SECTION_PINTEREST_GENERAL, $key );
+		$this->sanitizeText( self::SECTION_PINTEREST_GENERAL, 'setting_pinterest_tab_caption' );
 	}
 
 	/**
@@ -1278,8 +1262,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * Sanitize setting_pinterest_profile_url
 	 */
 	public function testCanBeSanitizedSettingPinterestProfileUrl(): void {
-		$key = 'setting_pinterest_profile_url';
-		$this->sanitizeUrl( self::SECTION_PINTEREST_GENERAL, $key );
+		$this->sanitizeUrl( self::SECTION_PINTEREST_GENERAL, 'setting_pinterest_profile_url' );
 	}
 
 	/**
