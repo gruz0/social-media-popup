@@ -188,12 +188,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * Sanitize setting_overlay_color
 	 */
 	public function testCanBeSanitizedSettingOverlayColor(): void {
-		$key      = 'setting_overlay_color';
-		$value    = 'qwe';
-		$expected = '#000000';
-
-		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_VIEW_DESKTOP, array( $key => $value ) );
-		$this->assertEquals( $expected, $result[ $key ] );
+		$this->sanitizeColor( self::SECTION_COMMON_VIEW_DESKTOP, 'setting_overlay_color' );
 	}
 
 	/**
@@ -808,36 +803,21 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * Sanitize setting_vkontakte_color_background
 	 */
 	public function testCanBeSanitizedSettingVkontakteColorBackground(): void {
-		$key      = 'setting_vkontakte_color_background';
-		$value    = 'qwe';
-		$expected = '#000000';
-
-		$result = SMP_Sanitizer::sanitize( self::SECTION_VK_GENERAL, array( $key => $value ) );
-		$this->assertEquals( $expected, $result[ $key ] );
+		$this->sanitizeColor( self::SECTION_VK_GENERAL, 'setting_vkontakte_color_background' );
 	}
 
 	/**
 	 * Sanitize setting_vkontakte_color_text
 	 */
 	public function testCanBeSanitizedSettingVkontakteColorText(): void {
-		$key      = 'setting_vkontakte_color_text';
-		$value    = 'qwe';
-		$expected = '#000000';
-
-		$result = SMP_Sanitizer::sanitize( self::SECTION_VK_GENERAL, array( $key => $value ) );
-		$this->assertEquals( $expected, $result[ $key ] );
+		$this->sanitizeColor( self::SECTION_VK_GENERAL, 'setting_vkontakte_color_text' );
 	}
 
 	/**
 	 * Sanitize setting_vkontakte_color_button
 	 */
 	public function testCanBeSanitizedSettingVkontakteColorButton(): void {
-		$key      = 'setting_vkontakte_color_button';
-		$value    = 'qwe';
-		$expected = '#000000';
-
-		$result = SMP_Sanitizer::sanitize( self::SECTION_VK_GENERAL, array( $key => $value ) );
-		$this->assertEquals( $expected, $result[ $key ] );
+		$this->sanitizeColor( self::SECTION_VK_GENERAL, 'setting_vkontakte_color_button' );
 	}
 
 	/**
@@ -1038,12 +1018,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * Sanitize setting_twitter_link_color
 	 */
 	public function testCanBeSanitizedSettingTwitterLinkColor(): void {
-		$key      = 'setting_twitter_link_color';
-		$value    = 'qwe';
-		$expected = '#000000';
-
-		$result = SMP_Sanitizer::sanitize( self::SECTION_TWITTER_TIMELINE, array( $key => $value ) );
-		$this->assertEquals( $expected, $result[ $key ] );
+		$this->sanitizeColor( self::SECTION_TWITTER_TIMELINE, 'setting_twitter_link_color' );
 	}
 
 	/**
@@ -1241,5 +1216,16 @@ final class SMP_Sanitizer_Test extends TestCase {
 	private function sanitizeDictionary( $section, $option_name, $expected ): void {
 		$result = SMP_Sanitizer::sanitize( $section, array( $option_name => 'qwe' ) );
 		$this->assertEquals( $expected, $result[ $option_name ] );
+	}
+
+	/**
+	 * Sanitize color
+	 *
+	 * @param string $section     Section
+	 * @param string $option_name Option name
+	 */
+	private function sanitizeColor( $section, $option_name ): void {
+		$result = SMP_Sanitizer::sanitize( $section, array( $option_name => 'qwe' ) );
+		$this->assertEquals( '#000000', $result[ $option_name ] );
 	}
 }
