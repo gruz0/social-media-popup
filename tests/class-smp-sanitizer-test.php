@@ -29,6 +29,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	const SECTION_TWITTER_GENERAL                  = SMP_PREFIX . '-section-twitter-general';
 	const SECTION_TWITTER_FOLLOW_BUTTON            = SMP_PREFIX . '-section-twitter-follow-button';
 	const SECTION_TWITTER_TIMELINE                 = SMP_PREFIX . '-section-twitter-timeline';
+	const SECTION_TWITTER_TRACKING                 = SMP_PREFIX . '-section-twitter-tracking';
 
 	/**
 	 * Set default options
@@ -1227,5 +1228,19 @@ final class SMP_Sanitizer_Test extends TestCase {
 
 		$result = SMP_Sanitizer::sanitize( self::SECTION_TWITTER_TIMELINE, $values );
 		$this->assertEquals( 'noheader,nofooter,noborders,noscrollbars,transparent', $result['setting_twitter_chrome'] );
+	}
+
+	/**
+	 * Sanitize tracking_use_twitter
+	 */
+	public function testCanBeSanitizedSettingTrackingUseTwitter(): void {
+		$this->sanitizeCheckbox( self::SECTION_TWITTER_TRACKING, 'tracking_use_twitter' );
+	}
+
+	/**
+	 * Sanitize tracking_twitter_subscribe_event
+	 */
+	public function testCanBeSanitizedSettingTrackingTwitterEvent(): void {
+		$this->sanitizeText( self::SECTION_TWITTER_TRACKING, 'tracking_twitter_event' );
 	}
 }
