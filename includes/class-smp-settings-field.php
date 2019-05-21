@@ -654,12 +654,19 @@ class SMP_Settings_Field {
 		$field = $args['field'];
 		$value = esc_attr( SMP_Options::get_option( $field ) );
 
-		$items = array(
+		self::render_radio_buttons( $field, self::get_twitter_themes(), $value );
+	}
+
+	/**
+	 * Returns Twitter themes
+	 *
+	 * @return array
+	 */
+	public static function get_twitter_themes() {
+		return array(
 			'light' => __( 'Light', 'social-media-popup' ),
 			'dark'  => __( 'Dark', 'social-media-popup' ),
 		);
-
-		self::render_radio_buttons( $field, $items, $value );
 	}
 
 	/**
@@ -670,17 +677,22 @@ class SMP_Settings_Field {
 	 * @uses SMP_Settings_Field::render_checkboxes_with_hidden_field()
 	 */
 	public static function settings_field_twitter_chrome( $args ) {
-		$field = $args['field'];
+		self::render_checkboxes_with_hidden_field( $args['field'], self::get_twitter_chromes() );
+	}
 
-		$options = array(
+	/**
+	 * Returns values for option `setting_twitter_chrome`
+	 *
+	 * @return array
+	 */
+	public static function get_twitter_chromes() {
+		return array(
 			'noheader'     => __( 'No Header', 'social-media-popup' ),
 			'nofooter'     => __( 'No Footer', 'social-media-popup' ),
 			'noborders'    => __( 'No Borders', 'social-media-popup' ),
 			'noscrollbars' => __( 'No Scrollbars', 'social-media-popup' ),
 			'transparent'  => __( 'Transparent (Removes the background color)', 'social-media-popup' ),
 		);
-
-		self::render_checkboxes_with_hidden_field( $field, $options );
 	}
 
 	/**

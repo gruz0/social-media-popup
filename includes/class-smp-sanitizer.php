@@ -295,13 +295,13 @@ class SMP_Sanitizer {
 
 			case SMP_PREFIX . '-section-twitter-timeline':
 				$values['setting_twitter_use_timeline'] = self::sanitize_checkbox( $input['setting_twitter_use_timeline'] );
-				$values['setting_twitter_theme']        = sanitize_text_field( $input['setting_twitter_theme'] );
-				$values['setting_twitter_link_color']   = sanitize_text_field( $input['setting_twitter_link_color'] );
+				$values['setting_twitter_theme']        = self::sanitize_twitter_theme( $input['setting_twitter_theme'] );
+				$values['setting_twitter_link_color']   = self::sanitize_hex_color( $input['setting_twitter_link_color'] );
 				$values['setting_twitter_tweet_limit']  = absint( $input['setting_twitter_tweet_limit'] );
 				$values['setting_twitter_show_replies'] = self::sanitize_checkbox( $input['setting_twitter_show_replies'] );
 				$values['setting_twitter_width']        = absint( $input['setting_twitter_width'] );
 				$values['setting_twitter_height']       = absint( $input['setting_twitter_height'] );
-				$values['setting_twitter_chrome']       = sanitize_text_field( $input['setting_twitter_chrome'] );
+				$values['setting_twitter_chrome']       = self::sanitize_twitter_chrome( $input['setting_twitter_chrome'] );
 
 				break;
 
@@ -602,6 +602,42 @@ class SMP_Sanitizer {
 		}
 
 		return 'left';
+	}
+
+	/**
+	 * Sanitize field `setting_twitter_theme`
+	 *
+	 * @param string $value Value
+	 * @return string
+	 */
+	private static function sanitize_twitter_theme( $value ) {
+		$values = SMP_Settings_Field::get_twitter_themes();
+
+		if ( isset( $values[ $value ] ) ) {
+			return $value;
+		}
+
+		return 'light';
+	}
+
+	/**
+	 * Sanitize field `setting_twitter_chrome`
+	 *
+	 * @param array $values Values
+	 * @return array
+	 */
+	private static function sanitize_twitter_chrome( $values ) {
+		$twitter_chromes = SMP_Settings_Field::get_twitter_chromes();
+		$result          = [];
+
+		$values = self::clean_array( explode( ',', $values ) );
+		foreach ( $values as $value ) {
+			if ( isset( $twitter_chromes[ $value ] ) ) {
+				$result[] = $value;
+			}
+		}
+
+		return join( $result, ',' );
 	}
 
 	/**

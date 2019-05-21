@@ -28,6 +28,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	const SECTION_OK_GENERAL                       = SMP_PREFIX . '-section-odnoklassniki';
 	const SECTION_TWITTER_GENERAL                  = SMP_PREFIX . '-section-twitter-general';
 	const SECTION_TWITTER_FOLLOW_BUTTON            = SMP_PREFIX . '-section-twitter-follow-button';
+	const SECTION_TWITTER_TIMELINE                 = SMP_PREFIX . '-section-twitter-timeline';
 
 	/**
 	 * Set default options
@@ -1155,5 +1156,76 @@ final class SMP_Sanitizer_Test extends TestCase {
 
 		$result = SMP_Sanitizer::sanitize( self::SECTION_TWITTER_FOLLOW_BUTTON, array( $key => $value ) );
 		$this->assertEquals( $expected, $result[ $key ] );
+	}
+
+	/**
+	 * Sanitize setting_twitter_use_timeline
+	 */
+	public function testCanBeSanitizedSettingTwitterUseTimeline(): void {
+		$this->sanitizeCheckbox( self::SECTION_TWITTER_TIMELINE, 'setting_twitter_use_timeline' );
+	}
+
+	/**
+	 * Sanitize setting_twitter_theme
+	 */
+	public function testCanBeSanitizedSettingTwitterTheme(): void {
+		$key      = 'setting_twitter_theme';
+		$value    = 'qwe';
+		$expected = 'light';
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_TWITTER_TIMELINE, array( $key => $value ) );
+		$this->assertEquals( $expected, $result[ $key ] );
+	}
+
+	/**
+	 * Sanitize setting_twitter_link_color
+	 */
+	public function testCanBeSanitizedSettingTwitterLinkColor(): void {
+		$key      = 'setting_twitter_link_color';
+		$value    = 'qwe';
+		$expected = '#000000';
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_TWITTER_TIMELINE, array( $key => $value ) );
+		$this->assertEquals( $expected, $result[ $key ] );
+	}
+
+	/**
+	 * Sanitize setting_twitter_tweet_limit
+	 */
+	public function testCanBeSanitizedSettingTwitterTweetLimit(): void {
+		$this->sanitizeInteger( self::SECTION_TWITTER_TIMELINE, 'setting_twitter_tweet_limit', '5' );
+	}
+
+	/**
+	 * Sanitize setting_twitter_show_replies
+	 */
+	public function testCanBeSanitizedSettingTwitterShowReplies(): void {
+		$this->sanitizeCheckbox( self::SECTION_TWITTER_TIMELINE, 'setting_twitter_show_replies' );
+	}
+
+	/**
+	 * Sanitize setting_twitter_width
+	 */
+	public function testCanBeSanitizedSettingTwitterWidth(): void {
+		$this->sanitizeInteger( self::SECTION_TWITTER_TIMELINE, 'setting_twitter_width', '400' );
+	}
+
+	/**
+	 * Sanitize setting_twitter_height
+	 */
+	public function testCanBeSanitizedSettingTwitterHeight(): void {
+		$this->sanitizeInteger( self::SECTION_TWITTER_TIMELINE, 'setting_twitter_height', '400' );
+	}
+
+	/**
+	 * Sanitize setting_twitter_chrome
+	 */
+	public function testCanBeSanitizedSettingTwitterChrome(): void {
+		$values = array(
+			'setting_twitter_chrome' => ' noheader, nofooter ,noborders ,noscrollbars   , transparent',
+		);
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_TWITTER_TIMELINE, $values );
+		$this->assertEquals( 'noheader,nofooter,noborders,noscrollbars,transparent', $result['setting_twitter_chrome'] );
 	}
 }
