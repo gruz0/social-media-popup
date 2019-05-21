@@ -104,12 +104,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * Sanitize setting_animation_style
 	 */
 	public function testCanBeSanitizedSettingAnimationStyle(): void {
-		$key      = 'setting_animation_style';
-		$value    = 'qwe';
-		$expected = 'bounce';
-
-		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_VIEW_DESKTOP, array( $key => $value ) );
-		$this->assertEquals( $expected, $result[ $key ] );
+		$this->sanitizeDictionary( self::SECTION_COMMON_VIEW_DESKTOP, 'setting_animation_style', 'bounce' );
 	}
 
 	/**
@@ -123,12 +118,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * Sanitize setting_icons_size_on_desktop
 	 */
 	public function testCanBeSanitizedSettingIconsSizeOnDesktop(): void {
-		$key      = 'setting_icons_size_on_desktop';
-		$value    = 'qwe';
-		$expected = 'lg';
-
-		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_VIEW_DESKTOP, array( $key => $value ) );
-		$this->assertEquals( $expected, $result[ $key ] );
+		$this->sanitizeDictionary( self::SECTION_COMMON_VIEW_DESKTOP, 'setting_icons_size_on_desktop', 'lg' );
 	}
 
 	/**
@@ -163,12 +153,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * Sanitize setting_show_close_button_in
 	 */
 	public function testCanBeSanitizedSettingShowCloseButtonIn(): void {
-		$key      = 'setting_show_close_button_in';
-		$value    = 'qwe';
-		$expected = 'inside';
-
-		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_VIEW_DESKTOP, array( $key => $value ) );
-		$this->assertEquals( $expected, $result[ $key ] );
+		$this->sanitizeDictionary( self::SECTION_COMMON_VIEW_DESKTOP, 'setting_show_close_button_in', 'inside' );
 	}
 
 	/**
@@ -189,12 +174,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * Sanitize setting_button_to_close_widget_style
 	 */
 	public function testCanBeSanitizedSettingButtonToCloseWidgetStyle(): void {
-		$key      = 'setting_button_to_close_widget_style';
-		$value    = 'qwe';
-		$expected = 'link';
-
-		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_VIEW_DESKTOP, array( $key => $value ) );
-		$this->assertEquals( $expected, $result[ $key ] );
+		$this->sanitizeDictionary( self::SECTION_COMMON_VIEW_DESKTOP, 'setting_button_to_close_widget_style', 'link' );
 	}
 
 	/**
@@ -258,12 +238,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * Sanitize setting_icons_size_on_mobile_devices
 	 */
 	public function testCanBeSanitizedSettingIconsSizeOnMobileDevices(): void {
-		$key      = 'setting_icons_size_on_mobile_devices';
-		$value    = 'qwe';
-		$expected = 'lg';
-
-		$result = SMP_Sanitizer::sanitize( self::SECTION_COMMON_VIEW_MOBILE, array( $key => $value ) );
-		$this->assertEquals( $expected, $result[ $key ] );
+		$this->sanitizeDictionary( self::SECTION_COMMON_VIEW_MOBILE, 'setting_icons_size_on_mobile_devices', 'lg' );
 	}
 
 	/**
@@ -674,12 +649,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * Sanitize setting_facebook_locale
 	 */
 	public function testCanBeSanitizedSettingFacebookLocale(): void {
-		$key      = 'setting_facebook_locale';
-		$value    = 'qwe';
-		$expected = 'en_US';
-
-		$result = SMP_Sanitizer::sanitize( self::SECTION_FACEBOOK_GENERAL, array( $key => $value ) );
-		$this->assertEquals( $expected, $result[ $key ] );
+		$this->sanitizeDictionary( self::SECTION_FACEBOOK_GENERAL, 'setting_facebook_locale', 'en_US' );
 	}
 
 	/**
@@ -831,12 +801,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * Sanitize setting_vkontakte_layout
 	 */
 	public function testCanBeSanitizedSettingVkontakteLayout(): void {
-		$key      = 'setting_vkontakte_layout';
-		$value    = 'qwe';
-		$expected = '0';
-
-		$result = SMP_Sanitizer::sanitize( self::SECTION_VK_GENERAL, array( $key => $value ) );
-		$this->assertEquals( $expected, $result[ $key ] );
+		$this->sanitizeDictionary( self::SECTION_VK_GENERAL, 'setting_vkontakte_layout', '0' );
 	}
 
 	/**
@@ -1003,24 +968,14 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * Sanitize setting_twitter_locale
 	 */
 	public function testCanBeSanitizedSettingTwitterLocale(): void {
-		$key      = 'setting_twitter_locale';
-		$value    = 'qwe';
-		$expected = 'en';
-
-		$result = SMP_Sanitizer::sanitize( self::SECTION_TWITTER_GENERAL, array( $key => $value ) );
-		$this->assertEquals( $expected, $result[ $key ] );
+		$this->sanitizeDictionary( self::SECTION_TWITTER_GENERAL, 'setting_twitter_locale', 'en' );
 	}
 
 	/**
 	 * Sanitize setting_twitter_first_widget
 	 */
 	public function testCanBeSanitizedSettingTwitterFirstWidget(): void {
-		$key      = 'setting_twitter_first_widget';
-		$value    = 'qwe';
-		$expected = 'follow_button';
-
-		$result = SMP_Sanitizer::sanitize( self::SECTION_TWITTER_GENERAL, array( $key => $value ) );
-		$this->assertEquals( $expected, $result[ $key ] );
+		$this->sanitizeDictionary( self::SECTION_TWITTER_GENERAL, 'setting_twitter_first_widget', 'follow_button' );
 	}
 
 	/**
@@ -1062,12 +1017,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * Sanitize setting_twitter_follow_button_align_by
 	 */
 	public function testCanBeSanitizedSettingTwitterFollowButtonAlignBy(): void {
-		$key      = 'setting_twitter_follow_button_align_by';
-		$value    = 'qwe';
-		$expected = 'left';
-
-		$result = SMP_Sanitizer::sanitize( self::SECTION_TWITTER_FOLLOW_BUTTON, array( $key => $value ) );
-		$this->assertEquals( $expected, $result[ $key ] );
+		$this->sanitizeDictionary( self::SECTION_TWITTER_FOLLOW_BUTTON, 'setting_twitter_follow_button_align_by', 'left' );
 	}
 
 	/**
@@ -1081,12 +1031,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * Sanitize setting_twitter_theme
 	 */
 	public function testCanBeSanitizedSettingTwitterTheme(): void {
-		$key      = 'setting_twitter_theme';
-		$value    = 'qwe';
-		$expected = 'light';
-
-		$result = SMP_Sanitizer::sanitize( self::SECTION_TWITTER_TIMELINE, array( $key => $value ) );
-		$this->assertEquals( $expected, $result[ $key ] );
+		$this->sanitizeDictionary( self::SECTION_TWITTER_TIMELINE, 'setting_twitter_theme', 'light' );
 	}
 
 	/**
@@ -1283,6 +1228,18 @@ final class SMP_Sanitizer_Test extends TestCase {
 		$expected = 'http://example.com/page';
 
 		$result = SMP_Sanitizer::sanitize( $section, array( $option_name => $value ) );
+		$this->assertEquals( $expected, $result[ $option_name ] );
+	}
+
+	/**
+	 * Sanitize dictionary
+	 *
+	 * @param string $section     Section
+	 * @param string $option_name Option name
+	 * @param string $expected    Expected value
+	 */
+	private function sanitizeDictionary( $section, $option_name, $expected ): void {
+		$result = SMP_Sanitizer::sanitize( $section, array( $option_name => 'qwe' ) );
 		$this->assertEquals( $expected, $result[ $option_name ] );
 	}
 }
