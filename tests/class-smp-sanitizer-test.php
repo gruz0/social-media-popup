@@ -30,6 +30,7 @@ final class SMP_Sanitizer_Test extends TestCase {
 	const SECTION_TWITTER_FOLLOW_BUTTON            = SMP_PREFIX . '-section-twitter-follow-button';
 	const SECTION_TWITTER_TIMELINE                 = SMP_PREFIX . '-section-twitter-timeline';
 	const SECTION_TWITTER_TRACKING                 = SMP_PREFIX . '-section-twitter-tracking';
+	const SECTION_PINTEREST_GENERAL                = SMP_PREFIX . '-section-pinterest';
 
 	/**
 	 * Set default options
@@ -1242,5 +1243,63 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 */
 	public function testCanBeSanitizedSettingTrackingTwitterEvent(): void {
 		$this->sanitizeText( self::SECTION_TWITTER_TRACKING, 'tracking_twitter_event' );
+	}
+
+	/**
+	 * Sanitize setting_use_pinterest
+	 */
+	public function testCanBeSanitizedSettingUsePinterest(): void {
+		$this->sanitizeCheckbox( self::SECTION_PINTEREST_GENERAL, 'setting_use_pinterest' );
+	}
+
+	/**
+	 * Sanitize setting_pinterest_tab_caption
+	 */
+	public function testCanBeSanitizedSettingPinterestTabCaption(): void {
+		$key = 'setting_pinterest_tab_caption';
+		$this->sanitizeText( self::SECTION_PINTEREST_GENERAL, $key );
+	}
+
+	/**
+	 * Sanitize setting_pinterest_show_description
+	 */
+	public function testCanBeSanitizedSettingPinterestShowDescription(): void {
+		$this->sanitizeCheckbox( self::SECTION_PINTEREST_GENERAL, 'setting_pinterest_show_description' );
+	}
+
+	/**
+	 * Sanitize setting_pinterest_description
+	 */
+	public function testCanBeSanitizedSettingPinterestDescription(): void {
+		$this->sanitizeKses( self::SECTION_PINTEREST_GENERAL, 'setting_pinterest_description' );
+	}
+
+	/**
+	 * Sanitize setting_pinterest_profile_url
+	 */
+	public function testCanBeSanitizedSettingPinterestProfileUrl(): void {
+		$key = 'setting_pinterest_profile_url';
+		$this->sanitizeUrl( self::SECTION_PINTEREST_GENERAL, $key );
+	}
+
+	/**
+	 * Sanitize setting_pinterest_image_width
+	 */
+	public function testCanBeSanitizedSettingPinterestImageWidth(): void {
+		$this->sanitizeInteger( self::SECTION_PINTEREST_GENERAL, 'setting_pinterest_image_width', '400' );
+	}
+
+	/**
+	 * Sanitize setting_pinterest_width
+	 */
+	public function testCanBeSanitizedSettingPinterestWidth(): void {
+		$this->sanitizeInteger( self::SECTION_PINTEREST_GENERAL, 'setting_pinterest_width', '400' );
+	}
+
+	/**
+	 * Sanitize setting_pinterest_height
+	 */
+	public function testCanBeSanitizedSettingPinterestHeight(): void {
+		$this->sanitizeInteger( self::SECTION_PINTEREST_GENERAL, 'setting_pinterest_height', '400' );
 	}
 }
