@@ -572,19 +572,14 @@ class SMP_Settings_Field {
 		$field = $args['field'];
 		$value = esc_attr( SMP_Options::get_option( $field ) );
 
-		self::render_radio_buttons( $field, self::get_twitter_locales(), $value );
-	}
+		$placeholder       = __( 'Example: ', 'social-media-popup' );
+		$twitter_i18n_link = '<a href="https://developer.twitter.com/en/docs/twitter-for-websites/twitter-for-websites-supported-languages/overview.html" target="_blank" rel="nofollow">%s</a>';
 
-	/**
-	 * Returns Twitter locales
-	 *
-	 * @return array
-	 */
-	public static function get_twitter_locales() {
-		return array(
-			'ru' => __( 'Russian', 'social-media-popup' ),
-			'en' => __( 'English', 'social-media-popup' ),
-		);
+		$format  = '<input type="text" name="%s" id="%s" value="%s" placeholder="%sen" required />';
+		$format .= '<br /><small>';
+		$format .= sprintf( $twitter_i18n_link, __( 'List of supported Twitter languages', 'social-media-popup' ) );
+
+		echo sprintf( $format, "smp_options[${field}]", $field, $value, $placeholder );
 	}
 
 	/**

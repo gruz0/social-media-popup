@@ -953,7 +953,12 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * Sanitize setting_twitter_locale
 	 */
 	public function testCanBeSanitizedSettingTwitterLocale(): void {
-		$this->sanitizeDictionary( self::SECTION_TWITTER_GENERAL, 'setting_twitter_locale', 'en' );
+		$key      = 'setting_twitter_locale';
+		$value    = 'я_z1';
+		$expected = 'en';
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_TWITTER_GENERAL, array( $key => $value ) );
+		$this->assertEquals( $expected, $result[ $key ] );
 	}
 
 	/**

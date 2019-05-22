@@ -554,17 +554,12 @@ class SMP_Sanitizer {
 	/**
 	 * Sanitize field `setting_twitter_locale`
 	 *
-	 * @param string $value Value
+	 * @param string $value   Value
+	 * @param string $default Default
 	 * @return string
 	 */
-	private static function sanitize_twitter_locale( $value ) {
-		$values = SMP_Settings_Field::get_twitter_locales();
-
-		if ( isset( $values[ $value ] ) ) {
-			return $value;
-		}
-
-		return 'en';
+	private static function sanitize_twitter_locale( $value, $default = 'en' ) {
+		return preg_match( '/^[a-z\-]{1,}$/i', $value ) ? $value : $default;
 	}
 
 	/**
