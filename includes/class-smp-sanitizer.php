@@ -497,17 +497,12 @@ class SMP_Sanitizer {
 	/**
 	 * Sanitize field `setting_facebook_locale`
 	 *
-	 * @param string $value Value
+	 * @param string $value   Value
+	 * @param string $default Default
 	 * @return string
 	 */
-	private static function sanitize_facebook_locale( $value ) {
-		$values = SMP_Settings_Field::get_facebook_locales();
-
-		if ( isset( $values[ $value ] ) ) {
-			return $value;
-		}
-
-		return 'en_US';
+	private static function sanitize_facebook_locale( $value, $default = 'en_US' ) {
+		return preg_match( '/^[a-z]{1,2}_[a-z]{1,2}$/i', $value ) ? $value : $default;
 	}
 
 	/**

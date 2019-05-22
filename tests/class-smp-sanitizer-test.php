@@ -644,7 +644,12 @@ final class SMP_Sanitizer_Test extends TestCase {
 	 * Sanitize setting_facebook_locale
 	 */
 	public function testCanBeSanitizedSettingFacebookLocale(): void {
-		$this->sanitizeDictionary( self::SECTION_FACEBOOK_GENERAL, 'setting_facebook_locale', 'en_US' );
+		$key      = 'setting_facebook_locale';
+		$value    = 'я_z1';
+		$expected = 'en_US';
+
+		$result = SMP_Sanitizer::sanitize( self::SECTION_FACEBOOK_GENERAL, array( $key => $value ) );
+		$this->assertEquals( $expected, $result[ $key ] );
 	}
 
 	/**

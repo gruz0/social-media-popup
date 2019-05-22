@@ -433,19 +433,14 @@ class SMP_Settings_Field {
 		$field = $args['field'];
 		$value = esc_attr( SMP_Options::get_option( $field ) );
 
-		self::render_radio_buttons( $field, self::get_facebook_locales(), $value );
-	}
+		$placeholder        = __( 'Example: ', 'social-media-popup' );
+		$facebook_i18n_link = '<a href="https://developers.facebook.com/docs/internationalization#locales" target="_blank" rel="nofollow">%s</a>';
 
-	/**
-	 * Returns Facebook locales
-	 *
-	 * @return array
-	 */
-	public static function get_facebook_locales() {
-		return array(
-			'ru_RU' => __( 'Russian', 'social-media-popup' ),
-			'en_US' => __( 'English', 'social-media-popup' ),
-		);
+		$format  = '<input type="text" name="%s" id="%s" value="%s" placeholder="%sen_US, ru_RU, tr_TR" required />';
+		$format .= '<br /><small>';
+		$format .= sprintf( $facebook_i18n_link, __( 'List of available Facebook locales', 'social-media-popup' ) );
+
+		echo sprintf( $format, "smp_options[${field}]", $field, $value, $placeholder );
 	}
 
 	/**
