@@ -3068,7 +3068,7 @@ class Social_Media_Popup {
 	 * @return string
 	 */
 	private function js_asset_filename( $part, $version ) {
-		return SMP_ASSETS_URL . "js/${part}.js?" . ( $this->is_dockerized() ? rand() : $version );
+		return SMP_ASSETS_URL . "js/${part}.js?" . ( smp_is_dockerized() ? rand() : $version );
 	}
 
 	/**
@@ -3085,19 +3085,7 @@ class Social_Media_Popup {
 	 * @return string
 	 */
 	private function css_asset_filename( $part, $version ) {
-		return SMP_ASSETS_URL . "css/${part}.css?" . ( $this->is_dockerized() ? rand() : $version );
-	}
-
-	/**
-	 * Check if plugin running inside Docker container
-	 *
-	 * @return boolean
-	 */
-	private function is_dockerized() {
-		// phpcs:disable WordPress.PHP.StrictComparisons.LooseComparison
-		// NOTE: It should be ignored because of ENV variable passes as string from docker-compose.yml
-		return 1 == $_ENV['DOCKERIZED'];
-		// phpcs:enable WordPress.PHP.StrictComparisons.LooseComparison
+		return SMP_ASSETS_URL . "css/${part}.css?" . ( smp_is_dockerized() ? rand() : $version );
 	}
 
 	/**

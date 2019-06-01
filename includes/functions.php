@@ -130,3 +130,15 @@ function smp_render_settings_tabs( $tabs, $current_tab, $page_suffix = '' ) {
 function smp_stringify_boolean( $variable ) {
 	return ( '1' === $variable ? 'true' : 'false' );
 }
+
+/**
+ * Check if plugin running inside Docker container
+ *
+ * @return boolean
+ */
+function smp_is_dockerized() {
+	// phpcs:disable WordPress.PHP.StrictComparisons.LooseComparison
+	// NOTE: It should be ignored because of ENV variable passes as string from docker-compose.yml
+	return 1 == $_ENV['DOCKERIZED'];
+	// phpcs:enable WordPress.PHP.StrictComparisons.LooseComparison
+}
