@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
 
-// FIXME: It should be wrapped with is_dockerized() to run tests inside Travis CI
-include '../../../wp-load.php';
+include_once 'includes/functions.php';
+
+if ( smp_is_dockerized() ) {
+	include_once '../../../wp-load.php';
+} else {
+	include_once 'wp-load.php';
+}
 
 /**
  * SMP_Sanitizer Test

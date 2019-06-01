@@ -8,8 +8,6 @@
  * @link     https://github.com/gruz0/social-media-popup
  */
 
-defined( 'ABSPATH' ) or exit;
-
 define( 'DEFAULT_TAB_SLUG', 'general' );
 
 /**
