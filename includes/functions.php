@@ -137,6 +137,6 @@ function smp_stringify_boolean( $variable ) {
 function smp_is_dockerized() {
 	// phpcs:disable WordPress.PHP.StrictComparisons.LooseComparison
 	// NOTE: It should be ignored because of ENV variable passes as string from docker-compose.yml
-	return 1 == $_ENV['DOCKERIZED'];
+	return isset( $_ENV['DOCKERIZED'] ) && 1 == $_ENV['DOCKERIZED'];
 	// phpcs:enable WordPress.PHP.StrictComparisons.LooseComparison
 }

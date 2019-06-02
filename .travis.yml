@@ -5,33 +5,35 @@ notifications:
   on_success: never
   on_failure: change
 
+services:
+  - mysql
+
 php:
   - nightly
+  - 7.3
+  - 7.2
   - 7.1
 
 env:
-  - WP_PROJECT_TYPE=plugin WP_VERSION=latest WP_MULTISITE=0 WP_TEST_URL=http://localhost:12000 WP_TEST_USER=test WP_TEST_USER_PASS=test
+  - TRAVIS_CI_WP_DIRECTORY=/tmp/wordpress WP_PROJECT_TYPE=plugin WP_VERSION=latest WP_MULTISITE=0 WP_TEST_URL=http://localhost:12000 WP_TEST_USER=test WP_TEST_USER_PASS=test
 
 matrix:
   allow_failures:
     - php: nightly
 
 before_script:
+  # linters
+  - make install_linters
   # tests
+  - git clone https://github.com/Seravo/wordpress-test-template wp-tests
+  - bash wp-tests/bin/install-wp-tests.sh test root '' localhost $WP_VERSION
+  # composer
   - wget https://getcomposer.org/download/1.8.4/composer.phar
   - chmod +x ./composer.phar
   - ./composer.phar install
-  - git clone https://github.com/Seravo/wordpress-test-template wp-tests
-  - bash wp-tests/bin/install-wp-tests.sh test root '' localhost $WP_VERSION
-  # linters
-  - git clone https://github.com/squizlabs/PHP_CodeSniffer.git phpcs
-  - git clone -b master https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git wpcs
-  # npm
-  - npm i -g npm
-  - npm install
 
 script:
-  - cd wp-tests/spec && bundle exec rspec test.rb && cd ../../
   - ./vendor/bin/phpunit
   - php phpcs/bin/phpcs --colors --standard=phpcs.xml -s .
   - npm test
+  - cd wp-tests/spec && bundle exec rspec test.rb

@@ -4,13 +4,9 @@ declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
 
-include_once 'includes/functions.php';
-
-if ( smp_is_dockerized() ) {
-	include_once '../../../wp-load.php';
-} else {
-	include_once 'wp-load.php';
-}
+include 'includes/functions.php';
+include 'tests/helpers.php';
+include wp_load_php_path();
 
 /**
  * SMP_Sanitizer Test
