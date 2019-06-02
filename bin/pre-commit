@@ -1,4 +1,5 @@
 #!/bin/bash
+set -ue
 
 red='\033[0;31m'
 green='\033[0;32m'
@@ -20,6 +21,15 @@ npm test
 
 if [ $? -ne 0 ]; then
 echo -e "${red}[Assets][Error]: Fix the issues and commit again${NC}"
+exit 1
+fi
+
+echo -e "${green}[FIXME, TODO][Info]: Checking FIXME and TODO occurencies${NC}"
+
+grep -rie "\(FIXME\|TODO\)" . --exclude-dir=node_modules --exclude-dir=phpcs --exclude-dir=bin --exclude-dir=.git --exclude-dir=rulesets --exclude-dir=vendor --exclude-dir=.data --exclude=tags --exclude=phpcs.xml
+
+if [ $? -eq 0 ]; then
+echo -e "${red}[FIXME, TODO][Error]: There are a lot of FIXME or TODO found${NC}"
 exit 1
 fi
 
