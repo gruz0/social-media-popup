@@ -16,7 +16,7 @@ $slug           = ! empty( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab
 $tab            = smp_validate_and_sanitize_tab( $slug, $available_tabs );
 $render_tab     = $tab;
 
-$available_subtabs = array( 'general', 'google-analytics', 'window-events', 'social-events' );
+$available_subtabs = array( 'general', 'google-analytics', 'window-events', 'social-events', 'who' );
 $subslug           = ! empty( $_GET['section'] ) ? sanitize_key( wp_unslash( $_GET['section'] ) ) : '';
 $subtab            = smp_validate_and_sanitize_tab( $subslug, $available_subtabs, '' );
 if ( ! empty( $subtab ) ) {
@@ -26,6 +26,8 @@ if ( ! empty( $subtab ) ) {
 
 <div class="wrap social-media-popup-settings">
 	<h2>Social Media Popup</h2>
+
+	<?php settings_errors( 'smp_options' ); ?>
 
 	<?php smp_settings_tabs( $tab, $subtab ); ?>
 
@@ -62,6 +64,10 @@ function smp_settings_tabs( $current_tab, $subtab ) {
 		$active = $current_tab === $tab_key ? 'nav-tab-active' : '';
 
 		switch ( $tab_key ) {
+			case 'events':
+				$tab_key .= '&section=general';
+				break;
+
 			case 'tracking':
 				$tab_key .= '&section=general';
 				break;
@@ -79,6 +85,10 @@ function smp_settings_tabs( $current_tab, $subtab ) {
 	$content .= '</h2>';
 
 	switch ( $current_tab ) {
+		case 'events':
+			$content .= smp_events_menu( $current_tab, $subtab );
+			break;
+
 		case 'tracking':
 			$content .= smp_tracking_menu( $current_tab, $subtab );
 			break;
@@ -106,6 +116,43 @@ function smp_tracking_menu( $current_tab, $current_subtab ) {
 	$subtabs['google-analytics'] = __( 'Google Analytics', 'social-media-popup' );
 	$subtabs['window-events']    = __( 'Window Events', 'social-media-popup' );
 	$subtabs['social-events']    = __( 'Social Events', 'social-media-popup' );
+
+	$subtab_template = '<a class="nav-tab %s" href="?page=%s&tab=%s&section=%s">%s</a>';
+
+	$content = '<h3 class="nav-tab-wrapper">';
+	foreach ( $subtabs as $tab_key => $tab_caption ) {
+		$active = $current_subtab === $tab_key ? 'nav-tab-active' : '';
+
+		$content .= sprintf(
+			$subtab_template,
+			esc_attr( $active ),
+			SMP_PREFIX,
+			esc_attr( $current_tab ),
+			esc_attr( $tab_key ),
+			esc_html( $tab_caption )
+		);
+	}
+
+	$content .= '</h3>';
+
+	return $content;
+}
+
+/**
+ * Render events menu items
+ *
+ * @param string $current_tab    Current tab
+ * @param string $current_subtab Secondary tab
+ *
+ * @return string
+ */
+function smp_events_menu( $current_tab, $current_subtab ) {
+	$available_tabs = array( 'general', 'who' );
+	$current_subtab = smp_validate_and_sanitize_tab( $current_subtab, $available_tabs );
+
+	$subtabs            = array();
+	$subtabs['general'] = __( 'When', 'social-media-popup' );
+	$subtabs['who']     = __( 'Who', 'social-media-popup' );
 
 	$subtab_template = '<a class="nav-tab %s" href="?page=%s&tab=%s&section=%s">%s</a>';
 

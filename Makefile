@@ -1,4 +1,4 @@
-.PHONY: help dockerize shell fix_permissions install_linters
+.PHONY: help dockerize shell fix_permissions install_linters tests
 
 help:
 	@echo 'Available targets:'
@@ -6,6 +6,7 @@ help:
 	@echo '  make shell'
 	@echo '  make fix_permissions'
 	@echo '  make install_linters'
+	@echo '  make tests'
 
 dockerize:
 	docker-compose down
@@ -19,3 +20,8 @@ fix_permissions:
 
 install_linters:
 	bin/install_linters_dependencies.sh
+
+# Use it only inside Docker container (after `make shell` in the repo directory)
+tests:
+	cd /var/www/html/wp-content/plugins/social-media-popup
+	./vendor/bin/phpunit

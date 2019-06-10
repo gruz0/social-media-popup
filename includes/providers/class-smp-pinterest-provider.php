@@ -20,7 +20,7 @@ class SMP_Pinterest_Provider extends SMP_Provider {
 	 * @return boolean
 	 */
 	public static function is_active() {
-		return self::get_option_as_boolean( 'setting_use_pinterest' );
+		return SMP_Options::get_option( 'setting_use_pinterest' );
 	}
 
 	/**
@@ -33,10 +33,10 @@ class SMP_Pinterest_Provider extends SMP_Provider {
 	public static function options() {
 		return array(
 			'default_tab_caption' => __( 'Pinterest', 'social-media-popup' ),
-			'tab_caption'         => self::get_option_as_escaped_string( 'setting_pinterest_tab_caption' ),
+			'tab_caption'         => SMP_Options::get_option( 'setting_pinterest_tab_caption' ),
 			'css_class'           => 'pinterest-tab',
 			'icon'                => 'fa-pinterest',
-			'url'                 => self::get_option_as_escaped_string( 'setting_pinterest_profile_url' ),
+			'url'                 => esc_attr( SMP_Options::get_option( 'setting_pinterest_profile_url' ) ),
 		);
 	}
 
@@ -53,10 +53,10 @@ class SMP_Pinterest_Provider extends SMP_Provider {
 		$content .= self::widget_description( 'setting_pinterest_show_description', 'setting_pinterest_description' );
 
 		$content .= '<a data-pin-do="embedUser" '
-			. 'href="'                  . self::get_option_as_escaped_string( 'setting_pinterest_profile_url' ) . '" '
-			. 'data-pin-scale-width="'  . self::get_option_as_integer( 'setting_pinterest_image_width' ) . '" '
-			. 'data-pin-board-width="'  . self::get_option_as_integer( 'setting_pinterest_width' ) . '" '
-			. 'data-pin-scale-height="' . self::get_option_as_integer( 'setting_pinterest_height' ) . '"'
+			. 'href="'                  . esc_attr( SMP_Options::get_option( 'setting_pinterest_profile_url' ) ) . '" '
+			. 'data-pin-scale-width="'  . absint( SMP_Options::get_option( 'setting_pinterest_image_width' ) ) . '" '
+			. 'data-pin-board-width="'  . absint( SMP_Options::get_option( 'setting_pinterest_width' ) ) . '" '
+			. 'data-pin-scale-height="' . absint( SMP_Options::get_option( 'setting_pinterest_height' ) ) . '"'
 			. '></a>';
 
 		$content .= '<script type="text/javascript">

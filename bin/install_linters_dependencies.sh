@@ -1,9 +1,10 @@
 #!/bin/bash
 
-rm -rf phpcs wpcs
+rm -rf phpcs rulesets
 
 git clone https://github.com/squizlabs/PHP_CodeSniffer.git phpcs
-git clone -b master https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git wpcs
+git clone -b master https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git rulesets/wpcs
+git clone -b master https://github.com/PHPCompatibility/PHPCompatibility.git rulesets/PHPCompatibility
 
 npm install
 

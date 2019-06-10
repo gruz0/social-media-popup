@@ -20,7 +20,7 @@ class SMP_GooglePlus_Provider extends SMP_Provider {
 	 * @return boolean
 	 */
 	public static function is_active() {
-		return self::get_option_as_boolean( 'setting_use_googleplus' );
+		return SMP_Options::get_option( 'setting_use_googleplus' );
 	}
 
 	/**
@@ -33,10 +33,10 @@ class SMP_GooglePlus_Provider extends SMP_Provider {
 	public static function options() {
 		return array(
 			'default_tab_caption' => __( 'Google+', 'social-media-popup' ),
-			'tab_caption'         => self::get_option_as_escaped_string( 'setting_googleplus_tab_caption' ),
+			'tab_caption'         => SMP_Options::get_option( 'setting_googleplus_tab_caption' ),
 			'css_class'           => 'google-plus-tab',
 			'icon'                => 'fa-google-plus',
-			'url'                 => self::get_option_as_escaped_string( 'setting_googleplus_page_url' ),
+			'url'                 => esc_attr( SMP_Options::get_option( 'setting_googleplus_page_url' ) ),
 		);
 	}
 
@@ -54,20 +54,20 @@ class SMP_GooglePlus_Provider extends SMP_Provider {
 
 		$content .= self::widget_description( 'setting_googleplus_show_description', 'setting_googleplus_description' );
 
-		$content .= '<div class="g-'  . self::get_option_as_escaped_string( 'setting_googleplus_page_type' ) . '" '
-			. 'data-width="'          . self::get_option_as_integer( 'setting_googleplus_size' ) . '" '
-			. 'data-href="'           . self::get_option_as_escaped_string( 'setting_googleplus_page_url' ) . '" '
-			. 'data-theme="'          . self::get_option_as_escaped_string( 'setting_googleplus_theme' ) . '" '
-			. 'data-layout="'         . self::get_option_as_escaped_string( 'setting_googleplus_layout' ) . '" '
-			. 'data-showtagline="'    . self::get_option_as_escaped_string( 'setting_googleplus_show_tagline' ) . '" '
-			. 'data-showcoverphoto="' . self::get_option_as_escaped_string( 'setting_googleplus_show_cover_photo' ) . '" '
-			. 'data-rel="'            . esc_attr( self::googleplus_relation_from_page_type() ) . '"'
+		$content .= '<div class="g-'  . esc_attr( SMP_Options::get_option( 'setting_googleplus_page_type' ) ) . '" '
+			. 'data-width="'          . absint( SMP_Options::get_option( 'setting_googleplus_size' ) ) . '" '
+			. 'data-href="'           . esc_attr( SMP_Options::get_option( 'setting_googleplus_page_url' ) ) . '" '
+			. 'data-theme="'          . esc_attr( SMP_Options::get_option( 'setting_googleplus_theme' ) ) . '" '
+			. 'data-layout="'         . esc_attr( SMP_Options::get_option( 'setting_googleplus_layout' ) ) . '" '
+			. 'data-showtagline="'    . esc_attr( SMP_Options::get_option( 'setting_googleplus_show_tagline' ) ) . '" '
+			. 'data-showcoverphoto="' . esc_attr( SMP_Options::get_option( 'setting_googleplus_show_cover_photo' ) ) . '" '
+			. 'data-rel="'            . self::googleplus_relation_from_page_type() . '"'
 			. '></div>';
 
 		$content .= '<!-- Place this tag after the last widget tag. -->
 			<script type="text/javascript">
 				var google_plus_initialized = 0;
-				var smp_googleplus_container_size = parseInt("' . self::get_option_as_escaped_string( 'setting_googleplus_size' ) . '");
+				var smp_googleplus_container_size = parseInt("' . absint( SMP_Options::get_option( 'setting_googleplus_size' ) ) . '");
 
 				function initialize_GooglePlus_Widgets() {
 					if (jQuery("#smp_googleplus_container div iframe").length && jQuery("#smp_googleplus_container div iframe").height() < smp_googleplus_container_size) {
@@ -76,7 +76,7 @@ class SMP_GooglePlus_Provider extends SMP_Provider {
 
 					if (google_plus_initialized) return;
 
-					window.___gcfg = {lang: "' . self::get_option_as_escaped_string( 'setting_googleplus_locale' ) . '"};
+					window.___gcfg = {lang: "' . esc_attr( SMP_Options::get_option( 'setting_googleplus_locale' ) ) . '"};
 
 					var po = document.createElement("script");
 					po.type  = "text/javascript";
@@ -127,7 +127,7 @@ class SMP_GooglePlus_Provider extends SMP_Provider {
 	 * @return string
 	 */
 	private static function googleplus_relation_from_page_type() {
-		switch ( self::get_option_as_escaped_string( 'setting_googleplus_page_type' ) ) {
+		switch ( SMP_Options::get_option( 'setting_googleplus_page_type' ) ) {
 			case 'page':
 				return 'publisher';
 			case 'person':

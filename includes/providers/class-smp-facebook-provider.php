@@ -27,7 +27,7 @@ class SMP_Facebook_Provider extends SMP_Provider {
 	 * @return boolean
 	 */
 	public static function is_active() {
-		return self::get_option_as_boolean( 'setting_use_facebook' );
+		return SMP_Options::get_option( 'setting_use_facebook' );
 	}
 
 	/**
@@ -40,10 +40,10 @@ class SMP_Facebook_Provider extends SMP_Provider {
 	public static function options() {
 		return array(
 			'default_tab_caption' => __( 'Facebook', 'social-media-popup' ),
-			'tab_caption'         => self::get_option_as_escaped_string( 'setting_facebook_tab_caption' ),
+			'tab_caption'         => SMP_Options::get_option( 'setting_facebook_tab_caption' ),
 			'css_class'           => 'facebook-tab',
 			'icon'                => 'fa-facebook',
-			'url'                 => self::get_option_as_escaped_string( 'setting_facebook_page_url' ),
+			'url'                 => esc_attr( SMP_Options::get_option( 'setting_facebook_page_url' ) ),
 		);
 	}
 
@@ -94,16 +94,16 @@ class SMP_Facebook_Provider extends SMP_Provider {
 	 */
 	private static function prepare_facebook_widget() {
 		return '<div class="fb-page" '
-			. 'data-href="'                  . self::get_option_as_escaped_string( 'setting_facebook_page_url' ) . '" '
-			. 'data-width="'                 . self::get_option_as_integer( 'setting_facebook_width' ) . '" '
-			. 'width="'                      . self::get_option_as_integer( 'setting_facebook_width' ) . '" '
-			. 'data-height="'                . self::get_option_as_integer( 'setting_facebook_height' ) . '" '
-			. 'height="'                     . self::get_option_as_integer( 'setting_facebook_height' ) . '" '
-			. 'data-hide-cover="'            . smp_stringify_boolean( self::get_option_as_escaped_string( 'setting_facebook_hide_cover' ) ) . '" '
-			. 'data-show-facepile="'         . smp_stringify_boolean( self::get_option_as_escaped_string( 'setting_facebook_show_facepile' ) ) . '" '
-			. 'data-adapt-container-width="' . smp_stringify_boolean( self::get_option_as_escaped_string( 'setting_facebook_adapt_container_width' ) ) . '" '
-			. 'data-small-header="'          . smp_stringify_boolean( self::get_option_as_escaped_string( 'setting_facebook_use_small_header' ) ) . '" '
-			. 'data-tabs="'                  . self::get_option_as_escaped_string( 'setting_facebook_tabs' ) . '" '
+			. 'data-href="'                  . esc_attr( SMP_Options::get_option( 'setting_facebook_page_url' ) ) . '" '
+			. 'data-width="'                 . absint( SMP_Options::get_option( 'setting_facebook_width' ) ) . '" '
+			. 'width="'                      . absint( SMP_Options::get_option( 'setting_facebook_width' ) ) . '" '
+			. 'data-height="'                . absint( SMP_Options::get_option( 'setting_facebook_height' ) ) . '" '
+			. 'height="'                     . absint( SMP_Options::get_option( 'setting_facebook_height' ) ) . '" '
+			. 'data-hide-cover="'            . smp_stringify_boolean( esc_attr( SMP_Options::get_option( 'setting_facebook_hide_cover' ) ) ) . '" '
+			. 'data-show-facepile="'         . smp_stringify_boolean( esc_attr( SMP_Options::get_option( 'setting_facebook_show_facepile' ) ) ) . '" '
+			. 'data-adapt-container-width="' . smp_stringify_boolean( esc_attr( SMP_Options::get_option( 'setting_facebook_adapt_container_width' ) ) ) . '" '
+			. 'data-small-header="'          . smp_stringify_boolean( esc_attr( SMP_Options::get_option( 'setting_facebook_use_small_header' ) ) ) . '" '
+			. 'data-tabs="'                  . esc_attr( SMP_Options::get_option( 'setting_facebook_tabs' ) ) . '" '
 			. '></div>';
 	}
 
@@ -124,8 +124,9 @@ class SMP_Facebook_Provider extends SMP_Provider {
 			. 'var js, fjs = d.getElementsByTagName(s)[0];'
 			. 'if (d.getElementById(id)) return;'
 			. 'js = d.createElement(s); js.id = id;'
-			. 'js.src = "//connect.facebook.net/' . self::get_option_as_escaped_string( 'setting_facebook_locale' )
-			. '/sdk.js#xfbml=1&appId=' .            self::get_option_as_escaped_string( 'setting_facebook_application_id' ) . '&version=v' . self::API_VERSION . '";'
+			. 'js.src = "//connect.facebook.net/' . esc_attr( SMP_Options::get_option( 'setting_facebook_locale' ) )
+			. '/sdk.js#xfbml=1&appId=' .            esc_attr( SMP_Options::get_option( 'setting_facebook_application_id' ) )
+				. '&version=v' . self::API_VERSION . '";'
 			. 'fjs.parentNode.insertBefore(js, fjs);'
 			. '}(document, "script", "facebook-jssdk"));</script>';
 
@@ -155,13 +156,13 @@ class SMP_Facebook_Provider extends SMP_Provider {
 		// Формирует колбэк для обработки событий при закрытии окна и подписке на группу
 		$facebook_events .= 'var smp_facebook_page_like_callback = function(url, html_element) {';
 
-		if ( absint( self::$options['setting_facebook_close_window_after_join'] ) ) {
+		if ( SMP_Options::get_option( 'setting_facebook_close_window_after_join' ) ) {
 			$facebook_events .= 'smp_destroyPlugin(smp_cookies.showWindowAfterReturningNDays);';
 		}
 
 		// FIXME: Should be refactored with self::use_widget() and move second condition to it
-		if ( self::$template->use_events_tracking() && self::get_option_as_boolean( 'tracking_use_facebook' ) ) {
-			$facebook_events .= self::$template->push_social_media_trigger_to_google_analytics( self::get_option_as_escaped_string( 'tracking_facebook_subscribe_event' ) );
+		if ( self::$template->use_events_tracking() && SMP_Options::get_option( 'tracking_use_facebook' ) ) {
+			$facebook_events .= self::$template->push_social_media_trigger_to_google_analytics( SMP_Options::get_option( 'tracking_facebook_subscribe_event' ) );
 			$facebook_events .= self::$template->push_social_network_and_action_to_google_analytics( 'SMP Facebook', 'Subscribe' );
 		}
 
@@ -171,8 +172,8 @@ class SMP_Facebook_Provider extends SMP_Provider {
 		$facebook_events .= 'var smp_facebook_page_unlike_callback = function(url, html_element) {';
 
 		// FIXME: Should be refactored with self::use_widget() and move second condition to it
-		if ( self::$template->use_events_tracking() && self::get_option_as_boolean( 'tracking_use_facebook' ) ) {
-			$facebook_events .= self::$template->push_social_media_trigger_to_google_analytics( self::get_option_as_escaped_string( 'tracking_facebook_unsubscribe_event' ) );
+		if ( self::$template->use_events_tracking() && SMP_Options::get_option( 'tracking_use_facebook' ) ) {
+			$facebook_events .= self::$template->push_social_media_trigger_to_google_analytics( SMP_Options::get_option( 'tracking_facebook_unsubscribe_event' ) );
 			$facebook_events .= self::$template->push_social_network_and_action_to_google_analytics( 'SMP Facebook', 'Unsubscribe' );
 		}
 
@@ -183,7 +184,7 @@ class SMP_Facebook_Provider extends SMP_Provider {
 		if ( typeof window.fbAsyncInit == "undefined" ) {
 			window.fbAsyncInit = function() {
 				FB.init({
-					appId  : "' . self::get_option_as_escaped_string( 'setting_facebook_application_id' ) . '",
+					appId  : "' . esc_attr( SMP_Options::get_option( 'setting_facebook_application_id' ) ) . '",
 					xfbml  : true,
 					version: "v' . self::API_VERSION . '"
 				});

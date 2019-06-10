@@ -12,12 +12,7 @@
  * SMP_Provider
  */
 class SMP_Provider {
-	/**
-	 * Plugin options
-	 *
-	 * @var array $options
-	 */
-	static $options = null;
+	const AVAILABLE_PROVIDERS = array( 'facebook', 'vkontakte', 'odnoklassniki', 'googleplus', 'twitter', 'pinterest' );
 
 	/**
 	 * Tabs UL identifier to use in providers JS-prepend* functions
@@ -34,13 +29,6 @@ class SMP_Provider {
 	static $template = null;
 
 	/**
-	 * Using for cached options values
-	 *
-	 * @var array $cached_option_values
-	 */
-	protected static $cached_option_values = array();
-
-	/**
 	 * Returns available providers
 	 *
 	 * @since 0.7.3
@@ -48,7 +36,7 @@ class SMP_Provider {
 	 * @return array
 	 */
 	public static function available_providers() {
-		return array( 'facebook', 'vkontakte', 'odnoklassniki', 'googleplus', 'twitter', 'pinterest' );
+		return self::AVAILABLE_PROVIDERS;
 	}
 
 	/**
@@ -71,12 +59,10 @@ class SMP_Provider {
 	 * @since 0.7.5 Delete $prefix argument
 	 *
 	 * @param string $provider Provider name (ex. facebook, vkontakte, etc.)
-	 * @param array  $options Plugin options
 	 * @throws Exception Throws Exception if the provided $provider is not exist
 	 * @return SMP_Provider
 	 */
-	public static function create( $provider, $options ) {
-		self::$options = $options;
+	public static function create( $provider ) {
 		self::$tabs_id = self::tabs_id();
 
 		// FIXME: It should be rewritten with available_providers()
@@ -216,7 +202,7 @@ class SMP_Provider {
 			return '#smp_mobile .smp-icons';
 		}
 
-		if ( '1' === self::$options['setting_use_icons_instead_of_labels_in_tabs'] ) {
+		if ( SMP_Options::get_option( 'setting_use_icons_instead_of_labels_in_tabs' ) ) {
 			return '#social_media_popup .smp-icons';
 		}
 
@@ -247,54 +233,6 @@ class SMP_Provider {
 	}
 
 	/**
-	 * Returns option by short name as escaped string
-	 *
-	 * @since 0.7.5
-	 *
-	 * @param string $option_name Option name
-	 * @return string
-	 */
-	protected static function get_option_as_escaped_string( $option_name ) {
-		if ( ! isset( self::$cached_option_values[ $option_name ] ) ) {
-			self::$cached_option_values[ $option_name ] = esc_attr( self::$options[ $option_name ] );
-		}
-
-		return self::$cached_option_values[ $option_name ];
-	}
-
-	/**
-	 * Returns option by short name as absolute integer
-	 *
-	 * @since 0.7.5
-	 *
-	 * @param string $option_name Option name
-	 * @return integer
-	 */
-	protected static function get_option_as_integer( $option_name ) {
-		if ( ! isset( self::$cached_option_values[ $option_name ] ) ) {
-			self::$cached_option_values[ $option_name ] = absint( self::$options[ $option_name ] );
-		}
-
-		return self::$cached_option_values[ $option_name ];
-	}
-
-	/**
-	 * Returns option by short name as boolean
-	 *
-	 * @since 0.7.5
-	 *
-	 * @param string $option_name Option name
-	 * @return boolean
-	 */
-	protected static function get_option_as_boolean( $option_name ) {
-		if ( ! isset( self::$cached_option_values[ $option_name ] ) ) {
-			self::$cached_option_values[ $option_name ] = '1' === self::$options[ $option_name ];
-		}
-
-		return self::$cached_option_values[ $option_name ];
-	}
-
-	/**
 	 * Returns widget's description
 	 *
 	 * @since 0.7.6
@@ -305,8 +243,8 @@ class SMP_Provider {
 	 * @return string
 	 */
 	protected static function widget_description( $show_description_option_name, $description_option_name ) {
-		if ( self::get_option_as_boolean( $show_description_option_name ) ) {
-			return '<p class="widget-description"><b>' . self::$options[ $description_option_name ] . '</b></p>';
+		if ( SMP_Options::get_option( $show_description_option_name ) ) {
+			return '<p class="widget-description"><b>' . SMP_Options::get_option( $description_option_name ) . '</b></p>';
 		}
 
 		return '';

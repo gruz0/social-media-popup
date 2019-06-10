@@ -2,17 +2,18 @@
 <ruleset name="Social-Media-Popup">
 	<description>A custom set of rules to check for a WPized WordPress project</description>
 
-	<config name="installed_paths" value="wpcs" />
-	<config name="testVerstion" value="5.3-" />
+	<config name="installed_paths" value="rulesets/wpcs,rulesets/PHPCompatibility" />
+	<config name="testVersion" value="5.4-" />
 
 	<exclude-pattern>*/phpcs/*</exclude-pattern>
-	<exclude-pattern>*/wpcs/*</exclude-pattern>
+	<exclude-pattern>*/rulesets/*</exclude-pattern>
 	<exclude-pattern>*/wp-tests/*</exclude-pattern>
 	<exclude-pattern>*/svn/*</exclude-pattern>
 	<exclude-pattern>*/assets/*</exclude-pattern>
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
 	<exclude-pattern>*/dist/*</exclude-pattern>
 	<exclude-pattern>*/*.js</exclude-pattern>
+	<exclude-pattern>*/vendor/*</exclude-pattern>
 
 	<rule ref="WordPress-Core">
 		<exclude name="Generic.PHP.ForbiddenFunctions" />
